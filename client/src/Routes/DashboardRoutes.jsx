@@ -58,10 +58,13 @@ import Sector from '../Admin/partials/dashboard/options/sector';
 import Category from '../Admin/partials/dashboard/options/category';
 import Product from '../Admin/partials/dashboard/options/product';
 
+import ProjectListing from '../Admin/partials/ProjectListing';
 import AddProject from '../Admin/partials/dashboard/AddProject';
 import Material from '../Admin/partials/dashboard/options/auctionMaterial';
 
 import Prices from "../Admin/partials/dashboard/Prices"
+
+
 
 const DashboardRoutes = () => {
   return (
@@ -296,6 +299,11 @@ const DashboardRoutes = () => {
         <Route
           path="/addproject"
           element={<PrivateRoute element={AddProject} />}
+        />
+
+        <Route
+        path='/allprojects'
+        element={<PrivateRoute element={ProjectListing}/>}
         />
 
         <Route path='/test' element={<Prices />} />

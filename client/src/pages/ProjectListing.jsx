@@ -1,302 +1,298 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {regionData, geopoliticalData} from "../constants/countriesData.js";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar.jsx";
-import Footer from "../components/Footer.jsx";
 
-const TenderCard = ({ title, deadline, location, referenceNo, tenderId}) => {
-  const navigate = useNavigate();
+const ProjectCard = ({ project }) => {
+  const [showDetails, setShowDetails] = useState(false);
 
-  const handleViewDetails = (tenderId) => {
-    navigate(`/tender/${tenderId}`, {
-      state: { tenderId },
-    });
+  const handleViewDetails = () => {
+    setShowDetails(!showDetails);
   };
 
   return (
     <div className="bg-white shadow-lg rounded-lg p-6 mb-4 border-[2px]">
-      <div className="flex justify-between">
-        <h2 className="text-xl font-bold mb-2">{title}</h2>
-        <span className="bg-green-500 text-white font-bold py-1 px-2 rounded mr-2 mb-2 h-8 ml-3">
-          Live
-        </span>
-      </div>
-      <p className="text-gray-600 mb-4">Deadline: {deadline}</p>
-      <p className="text-gray-600 mb-4">{location}</p>
-      <p className="text-gray-600 mb-4">TOT Reference No.: {referenceNo}</p>
-
+      <h2 className="text-xl font-bold mb-2">{project.companyname}</h2>
+      <p className="text-gray-600 mb-2">
+        <strong>PNR:</strong> {project.pnr}
+      </p>
+      <p className="text-gray-600 mb-2">
+        <strong>Detail:</strong> {project.detail}
+      </p>
+      {showDetails && (
+        <>
+          <p className="text-gray-600 mb-2">
+            <strong>Value:</strong> {project.value}
+          </p>
+          <p className="text-gray-600 mb-2">
+            <strong>Status:</strong> {project.status}
+          </p>
+          <p className="text-gray-600 mb-2">
+            <strong>Country:</strong> {project.country}
+          </p>
+          <p className="text-gray-600 mb-2">
+            <strong>State:</strong> {project.state}
+          </p>
+          <p className="text-gray-600 mb-2">
+            <strong>City:</strong> {project.city}
+          </p>
+          <p className="text-gray-600 mb-2">
+            <strong>Sector:</strong> {project.sector}
+          </p>
+        </>
+      )}
       <button
         className="bg-red-700 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
-        onClick={() => handleViewDetails(tenderId)}
+        onClick={handleViewDetails}
       >
-        View Details
+        {showDetails ? "Hide Details" : "View Details"}
       </button>
     </div>
   );
 };
 
-const Projects = () => {
+const ProjectList = () => {
+  const [projects, setProjects] = useState([]);
+  const [filteredProjects, setFilteredProjects] = useState([]);
   const [countries, setCountries] = useState([]);
-
-  const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedFundingAgency, setSelectedFundingAgency] = useState("");
-  const [selectedGeoPolitical, setSelectedGeoPolitical] = useState("");
-  const [selectedProduct, setSelectedProduct] = useState("");
-  const [selectedUserCategory, setUserCategory] = useState("");
-  const [tenderData, setTenderData] = useState([]);
-
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const projectsPerPage = 5;
 
-  const handleRegionChange = (e) => {
-    const selectedRegion = e.target.value;
-    setSelectedRegion(selectedRegion);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/apiTender/projects/getall")
+      .then((response) => {
+        setProjects(response.data);
+        setFilteredProjects(response.data);
+        const uniqueCountries = [
+          ...new Set(response.data.map((project) => project.country)),
+        ];
+        setCountries(uniqueCountries);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
-    // filter countries based on the selected region
-    const filteredCountries = regionData[selectedRegion] || [];
-    setCountries(filteredCountries);
-  };
+  useEffect(() => {
+    let tempProjects = projects;
+
+    if (selectedCountry !== "") {
+      tempProjects = tempProjects.filter(
+        (project) => project.country === selectedCountry
+      );
+    }
+
+    if (selectedState !== "") {
+      tempProjects = tempProjects.filter(
+        (project) => project.state === selectedState
+      );
+    }
+
+    if (selectedCity !== "") {
+      tempProjects = tempProjects.filter(
+        (project) => project.city === selectedCity
+      );
+    }
+
+    setFilteredProjects(tempProjects);
+  }, [selectedCountry, selectedState, selectedCity, projects]);
 
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
+    setCurrentPage(1);
   };
 
-  const handleProductChange = (e) => {
-    setSelectedProduct(e.target.value);
+  const handleStateChange = (e) => {
+    setSelectedState(e.target.value);
+    setCurrentPage(1);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const baseUrl = "http://localhost:5000/apiTender/tenderdetails/search";
-
-        const token = localStorage.getItem("token");
-
-        const headers = {
-          "Content-Type": "application/json",
-          auth: token,
-        };
-
-        const response = await axios.post(searchUrl, { details: detailsArray }, { headers });
-
-        if (response.status === 401) {
-          // Unauthorized - display error message
-          console.error("Unauthorized. Sign in first.");
-          
-          return;
-        }
-
-        setTenderData(response.data);
-      } catch (error) {
-        if (error.response && error.response.status === 401) {
-          console.error("Unauthorized. Sign in first.");
-          
-        } else {
-          console.error("Error fetching tender data:", error);
-        }
-      }
-    };
-
-    fetchData();
-  }, [
-    selectedCountry,
-    selectedFundingAgency,
-    selectedGeoPolitical,
-    selectedProduct,
-    selectedRegion,
-    selectedUserCategory
-  ]);
-
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = tenderData.slice(indexOfFirstItem, indexOfLastItem);
-
-  const goToNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
-
-  const goToPreviousPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
+  const handleCityChange = (e) => {
+    setSelectedCity(e.target.value);
+    setCurrentPage(1);
   };
 
   const goToPage = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  const getPageNumbers = () => {
-    const totalPages = Math.ceil(tenderData.length / itemsPerPage);
-    const maxPageNumbers = 5;
-
-    if (totalPages <= maxPageNumbers) {
-      return Array.from({ length: totalPages }, (_, index) => index + 1);
+  const nextPage = () => {
+    if (currentPage < pageNumbers) {
+      setCurrentPage(currentPage + 1);
     }
-
-    const middlePage = Math.floor(maxPageNumbers / 2);
-    let startPage = currentPage - middlePage;
-    let endPage = currentPage + middlePage;
-
-    if (startPage <= 0) {
-      startPage = 1;
-      endPage = maxPageNumbers;
-    } else if (endPage > totalPages) {
-      startPage = totalPages - maxPageNumbers + 1;
-      endPage = totalPages;
-    }
-
-    return Array.from(
-      { length: endPage - startPage + 1 },
-      (_, index) => startPage + index
-    );
   };
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
-    return date.toLocaleDateString(undefined, options);
+  const previousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const indexOfLastProject = currentPage * projectsPerPage;
+  const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+  const currentProjects = filteredProjects.slice(
+    indexOfFirstProject,
+    indexOfLastProject
+  );
+
+  const pageNumbers = Math.ceil(filteredProjects.length / projectsPerPage);
+
+  const getPageNumbers = () => {
+    const pageArray = [];
+
+    for (let i = 1; i <= pageNumbers; i++) {
+      pageArray.push(i);
+    }
+
+    return pageArray;
   };
 
   return (
-    <>
-      <div className="mx-auto p-4 max-w-7xl">
-        <div className="flex flex-col-reverse md:grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-          <div className="sm:col-span-2 md:col-span-2">
-            <h1 className="text-2xl font-bold mb-4">
-              Projects
-            </h1>
-            {currentItems.length > 0 ? (
-              <div>
-                {currentItems.map((tender, index) => (
-                  <TenderCard
-                    key={index}
-                    title={tender.summary}
-                    deadline={formatDate(tender.procurementSummary.deadline)}
-                    location={tender.procurementSummary.country}
-                    referenceNo={tender.otherInformation.totNo}
-                    tenderId={tender.tenderId}
-                  />
-                ))}
-                <div className="flex justify-between mt-4">
-                  <button
-                    className="bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
-                    onClick={() => goToPage(currentPage - 1)}
-                    disabled={currentPage === 1}
-                  >
-                    Previous Page
-                  </button>
-
-                  <div>
-                    {getPageNumbers().map((pageNumber) => (
-                      <button
-                        key={pageNumber}
-                        className={`${pageNumber === currentPage
-                          ? "bg-red-700 text-white"
-                          : "bg-gray-200 text-gray-700"
-                          } font-bold py-2 px-4 rounded mr-2`}
-                        onClick={() => goToPage(pageNumber)}
-                      >
-                        {pageNumber}
-                      </button>
-                    ))}
-                  </div>
-
-                  <button
-                    className="bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
-                    onClick={() => goToPage(currentPage + 1)}
-                    disabled={currentItems.length < itemsPerPage}
-                  >
-                    Next Page
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <p>No tenders found.</p>
-            )}
+    <div className="mx-auto p-4 max-w-7xl">
+      <div className="flex flex-col-reverse md:flex-row gap-4">
+        <div className="md:w-2/3">
+          <h1 className="text-2xl font-bold mb-4">Project List</h1>
+          {currentProjects.length > 0 ? (
+            <div className="grid gap-4">
+              {currentProjects.map((project) => (
+                <ProjectCard key={project._id} project={project} />
+              ))}
+            </div>
+          ) : (
+            <p>No projects found.</p>
+          )}
+          <div className="flex justify-center mt-4">
+            <div>
+              {getPageNumbers().map((pageNumber) => (
+                <button
+                  key={pageNumber}
+                  className={`${
+                    pageNumber === currentPage
+                      ? "bg-red-700 text-white"
+                      : "bg-gray-200 textgray-700"
+                  } font-bold py-2 px-4 rounded mr-2`}
+                  onClick={() => goToPage(pageNumber)}
+                >
+                  {pageNumber}
+                </button>
+              ))}
+            </div>
           </div>
-
-          <div className="">
-            <div className="border border-gray-300 p-4 rounded">
-              <h2 className="text-lg font-bold mb-2">Filter Projects</h2>
-              
+          <div className="flex justify-center mt-4">
+            <button
+              className="bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+              onClick={previousPage}
+              disabled={currentPage === 1}
+            >
+              Previous Page
+            </button>
+            <button
+              className="bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+              onClick={nextPage}
+              disabled={currentPage === pageNumbers}
+            >
+              Next Page
+            </button>
+          </div>
+        </div>
+        <div className="md:w-1/3">
+          <div className="border border-gray-300 p-4 rounded">
+            <h2 className="text-lg font-bold mb-2">Filters</h2>
+            <div className="mb-4">
+              <label
+                htmlFor="country"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Country
+              </label>
+              <select
+                id="country"
+                name="country"
+                value={selectedCountry}
+                onChange={handleCountryChange}
+                className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
+              >
+                <option value="">All Countries</option>
+                {countries.map((country) => (
+                  <option key={country} value={country}>
+                    {country}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {selectedCountry && (
               <div className="mb-4">
                 <label
-                  htmlFor="country"
+                  htmlFor="state"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Country
+                  State
                 </label>
                 <select
-                  id="country"
-                  name="country"
-                  value={selectedCountry}
-                  onChange={handleCountryChange}
+                  id="state"
+                  name="state"
+                  value={selectedState}
+                  onChange={handleStateChange}
                   className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
                 >
-                  <option value="">All Countries</option>
-                  {countries.map((country) => (
-                    <option key={country} value={country}>
-                      {country}
+                  <option value="">All States</option>
+                  {Array.from(
+                    new Set(
+                      projects
+                        .filter(
+                          (project) => project.country === selectedCountry
+                        )
+                        .map((project) => project.state)
+                    )
+                  ).map((state) => (
+                    <option key={state} value={state}>
+                      {state}
                     </option>
                   ))}
                 </select>
               </div>
+            )}
+            {selectedState && (
               <div className="mb-4">
                 <label
-                  htmlFor="product"
+                  htmlFor="city"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Sector
+                  City
                 </label>
                 <select
-                  id="product"
-                  name="product"
-                  value={selectedProduct}
-                  onChange={handleProductChange}
+                  id="city"
+                  name="city"
+                  value={selectedCity}
+                  onChange={handleCityChange}
                   className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
                 >
-                  <option value="">All Products</option>
-                  <option value="Rehabilitation">Rehabilitation Tenders</option>
-                  <option value="Medical Equipment">
-                    Medical Equipment Tenders
-                  </option>
-                  <option value="Bank">Bank Tenders</option>
-                  <option value="Cleaning">Cleaning Tenders</option>
-                  <option value="Construction">Construction Tenders</option>
-                  <option value="Defence">Defence Tenders</option>
-                  <option value="Electrical">Electrical Tenders</option>
-                  <option value="Security">Security Tenders</option>
-                  <option value="Transport">Transport Tenders</option>
-                  <option value="Airport">Airport Tenders</option>
-                  <option value="CCTV">CCTV Tenders</option>
-                  <option value="Education">Education Tenders</option>
-                  <option value="Energy">Energy Tenders</option>
-                  <option value="Healthcare">Healthcare Tenders</option>
-                  <option value="HR">HR Tenders</option>
-                  <option value="Insurance">Insurance Tenders</option>
-                  <option value="IT">IT Tenders</option>
-                  <option value="Medical">Medical Tenders</option>
-                  <option value="Mining">Mining Tenders</option>
-                  <option value="Oil And Gas">Oil And Gas Tenders</option>
-                  <option value="Printing">Printing Tenders</option>
-                  <option value="Solar">Solar Tenders</option>
-                  <option value="Sports">Sports Tenders</option>
-                  <option value="Telecom">Telecom Tenders</option>
-                  <option value="Tourism">Tourism Tenders</option>
-                  <option value="Training">Training Tenders</option>
+                  <option value="">All Cities</option>
+                  {Array.from(
+                    new Set(
+                      projects
+                        .filter(
+                          (project) =>
+                            project.country === selectedCountry &&
+                            project.state === selectedState
+                        )
+                        .map((project) => project.city)
+                    )
+                  ).map((city) => (
+                    <option key={city} value={city}>
+                      {city}
+                    </option>
+                  ))}
                 </select>
               </div>
-              <div className="mb-4">
-
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default Projects;
+export default ProjectList;

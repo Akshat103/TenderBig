@@ -20,7 +20,7 @@ const TenderStatistics = () => {
         };
 
         const response = await axios.get(
-          "http://localhost:5000/apiTender/tenderdetails/statistics",
+          "http://localhost:3000/apiTender/tenderdetails/statistics",
           config
         );
         setStatistics(response.data);
@@ -94,7 +94,7 @@ const TenderStatistics = () => {
 
 
   return (
-    <div>
+    <>
       <div className="p-4">
         {statistics ? (
           <>
@@ -102,179 +102,87 @@ const TenderStatistics = () => {
 
             <div className="p-4 rounded-lg dark:border-gray-700">
 
-              <div className="grid grid-cols-3 gap-20 mb-4">
-                
-                <div className="w-full lg:max-w-full lg:flex">
-                  <div className="lg:h-auto flex flex-grow flex-shrink-0 justify-center bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden border-2 border-gray-400 rounded-sm bg-slate-300 items-center">
-                  <FontAwesomeIcon icon={faCheckCircle} className="mr-3 text-8xl m-2" />
-                  </div>
-                  <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal flex-grow flex-shrink-0">
-                    <div className="flex flex-col justify-between h-full">
-                      <div className="mb-8">
-                        <div className="text-gray-900 font-bold text-xl mb-2">Total Tenders</div>
-                        <h1 className="text-2xl font-bold">{statistics.totalCount}</h1>
-                      </div>
-                      <div className="flex items-center justify-center">
-                        <div className="text-sm">
-                          <a href="#">
-                            <p className="text-green-500 font-bold leading-none">More Info</p>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+
+                <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                  <FontAwesomeIcon icon={faCheckCircle} className="text-8xl text-blue-500 mb-4" />
+                  <div className="text-gray-900 font-bold text-xl mb-2">Total Tenders</div>
+                  <h1 className="text-2xl font-bold">{statistics.totalCount}</h1>
+                  <div className="mt-4">
+                    <a href="#" className="text-blue-500 font-bold leading-none">More Info</a>
                   </div>
                 </div>
 
-                <div className="w-full lg:max-w-full lg:flex">
-                  <div className="lg:h-auto flex flex-grow flex-shrink-0 justify-center bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden border-2 border-gray-400 rounded-sm bg-slate-300 items-center">
-                  <FontAwesomeIcon icon={faClipboardCheck} className="mr-3 text-8xl m-2" />
-                  </div>
-                  <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal flex-grow flex-shrink-0">
-                    <div className="flex flex-col justify-between h-full">
-                      <div className="mb-8">
-                        <div className="text-gray-900 font-bold text-xl mb-2">Reviewed and </div>
-                        <div className="text-gray-900 font-bold text-xl mb-2">Approved Tenders </div>
-                        <h1 className="text-2xl font-bold">{statistics.activeApprovedCount}</h1>
-                      </div>
-                      <div className="flex items-center justify-center">
-                        <div className="text-sm">
-                          <a href="#">
-                            <p className="text-green-500 font-bold leading-none">More Info</p>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
+                <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                  <FontAwesomeIcon icon={faClipboardCheck} className="text-8xl text-blue-500 mb-4" />
+                  <div className="text-gray-900 font-bold text-xl mb-2">Reviewed and Approved Tenders</div>
+                  <h1 className="text-2xl font-bold">{statistics.activeApprovedCount}</h1>
+                  <div className="mt-4">
+                    <a href="#" className="text-blue-500 font-bold leading-none">More Info</a>
                   </div>
                 </div>
 
-                <div className="w-full lg:max-w-full lg:flex">
-                  <div className="lg:h-auto flex flex-grow flex-shrink-0 justify-center bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden border-2 border-gray-400 rounded-sm bg-slate-300 items-center">
-                  <FontAwesomeIcon icon={faUserShield} className="mr-3 text-8xl m-2" />
-                  </div>
-                  <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal flex-grow flex-shrink-0">
-                    <div className="flex flex-col justify-between h-full">
-                      <div className="mb-8">
-                        <div className="text-gray-900 font-bold text-xl mb-2">Admin Tenders</div>
-                        <h1 className="text-2xl font-bold">{statistics.adminCount}</h1>
-                      </div>
-                      <div className="flex items-center justify-center">
-                        <div className="text-sm">
-                          <a href="#">
-                            <p className="text-green-500 font-bold leading-none">More Info</p>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
+                <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                  <FontAwesomeIcon icon={faUserShield} className="text-8xl text-blue-500 mb-4" />
+                  <div className="text-gray-900 font-bold text-xl mb-2">Admin Tenders</div>
+                  <h1 className="text-2xl font-bold">{statistics.adminCount}</h1>
+                  <div className="mt-4">
+                    <a href="#" className="text-blue-500 font-bold leading-none">More Info</a>
                   </div>
                 </div>
 
               </div>
 
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
 
-              <div className="grid grid-cols-2 gap-20 mb-4">
-
-                <div className="flex items-center justify-center rounded h-68 bg-white">
-                  <div className="container">
-                    {renderChart()}
+                <div className="bg-white rounded-lg shadow-md p-4">
+                  <div className="flex items-center justify-center">
+                    <div className="container">
+                      {renderChart()}
+                    </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 mb-4 p-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
 
-                  <div>
-
-                    <div className="lg:h-auto flex flex-grow flex-shrink-0 justify-center bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden border-2 border-gray-400 rounded-sm bg-slate-300 items-center">
-                    <FontAwesomeIcon icon={faEye}  className="mr-3 text-8xl m-2" />
-                    </div>
-
-                    <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal flex-grow flex-shrink-0">
-
-                      <div className="flex flex-col justify-between h-full">
-                        <div className="mb-8">
-                          <div className="text-gray-900 font-bold text-xl mb-2">Reviewed Tenders</div>
-                          <h1 className="text-2xl font-bold"> {statistics.activeCount}</h1>
-                        </div>
-                        <div className="flex items-center justify-center">
-                          <div className="text-sm">
-                            <a href="#">
-                              <p className="text-green-500 font-bold leading-none">More Info</p>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-
+                  <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                    <FontAwesomeIcon icon={faEye} className="text-8xl text-blue-500 mb-4" />
+                    <div className="text-gray-900 font-bold text-xl mb-2">Reviewed Tenders</div>
+                    <h1 className="text-2xl font-bold">{statistics.activeCount}</h1>
+                    <div className="mt-4">
+                      <a href="#" className="text-blue-500 font-bold leading-none">More Info</a>
                     </div>
                   </div>
 
-
-                  <div >
-                    <div className="lg:h-auto flex flex-grow flex-shrink-0 justify-center bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden border-2 border-gray-400 rounded-sm bg-slate-300 items-center">
-                      <FontAwesomeIcon icon={faThumbsUp} className="mr-3 text-8xl m-2" />
-                    </div>
-                    <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal flex-grow flex-shrink-0">
-                      <div className="flex flex-col justify-between h-full">
-                        <div className="mb-8">
-                          <div className="text-gray-900 font-bold text-xl mb-2">Approved Tenders</div>
-                          <h1 className="text-2xl font-bold"> {statistics.approvedCount}</h1>
-                        </div>
-                        <div className="flex items-center justify-center">
-                          <div className="text-sm">
-                            <a href="#">
-                              <p className="text-green-500 font-bold leading-none">More Info</p>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
+                  <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                    <FontAwesomeIcon icon={faThumbsUp} className="text-8xl text-blue-500 mb-4" />
+                    <div className="text-gray-900 font-bold text-xl mb-2">Approved Tenders</div>
+                    <h1 className="text-2xl font-bold">{statistics.approvedCount}</h1>
+                    <div className="mt-4">
+                      <a href="#" className="text-blue-500 font-bold leading-none">More Info</a>
                     </div>
                   </div>
 
-
-                  <div>
-                    <div className="lg:h-auto flex flex-grow flex-shrink-0 justify-center bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden border-2 border-gray-400 rounded-sm bg-slate-300 items-center">
-                    <FontAwesomeIcon icon={faHammer} className="mr-3 text-8xl m-2" />
-                    </div>
-                    <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal flex-grow flex-shrink-0">
-                      <div className="flex flex-col justify-between h-full">
-                        <div className="mb-8">
-                          <div className="text-gray-900 font-bold text-xl mb-2">Contractor Tenders</div>
-                          <h1 className="text-2xl font-bold"> {statistics.contractorCount}</h1>
-                        </div>
-                        <div className="flex items-center justify-center">
-                          <div className="text-sm">
-                            <a href="#">
-                              <p className="text-green-500 font-bold leading-none">More Info</p>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
+                  <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                    <FontAwesomeIcon icon={faHammer} className="text-8xl text-blue-500 mb-4" />
+                    <div className="text-gray-900 font-bold text-xl mb-2">Contractor Tenders</div>
+                    <h1 className="text-2xl font-bold">{statistics.contractorCount}</h1>
+                    <div className="mt-4">
+                      <a href="#" className="text-blue-500 font-bold leading-none">More Info</a>
                     </div>
                   </div>
 
-                  <div>
-                    <div className="lg:h-auto flex flex-grow flex-shrink-0 justify-center bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden border-2 border-gray-400 rounded-sm bg-slate-300 items-center">
-                    <FontAwesomeIcon icon={faTools} className="mr-3 text-8xl m-2" />
-                    </div>
-                    <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal flex-grow flex-shrink-0">
-                      <div className="flex flex-col justify-between h-full">
-                        <div className="mb-8">
-                          <div className="text-gray-900 font-bold text-xl mb-2">Subcontractor Tenders</div>
-                          <h1 className="text-2xl font-bold"> {statistics.subcontractorCount}</h1>
-                        </div>
-                        <div className="flex items-center justify-center">
-                          <div className="text-sm">
-                            <a href="#">
-                              <p className="text-green-500 font-bold leading-none">More Info</p>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
+                  <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                    <FontAwesomeIcon icon={faTools} className="text-8xl text-blue-500 mb-4" />
+                    <div className="text-gray-900 font-bold text-xl mb-2">Subcontractor Tenders</div>
+                    <h1 className="text-2xl font-bold">{statistics.subcontractorCount}</h1>
+                    <div className="mt-4">
+                      <a href="#" className="text-blue-500 font-bold leading-none">More Info</a>
                     </div>
                   </div>
-
                 </div>
+
               </div>
-
-
 
             </div>
           </>
@@ -283,7 +191,7 @@ const TenderStatistics = () => {
         )}
       </div>
 
-    </div>
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 const tenderModel = require("../models/tenderModel");
 const { toTitleCase, toUpperCase, generateUUID } = require("../config/functions")
 const { regionData, geopoliticalData } = require("../config/countriesData");
+const tenderResultModel = require("../models/tenderResultModel");
 
 class Tender {
 
@@ -142,15 +143,6 @@ class Tender {
                 noticeType: tenderDetailNoticeType
             };
 
-            // console.log(req.userRole)
-            
-            // let approved, active;
-
-            // if(userRole=="admin") {
-            //     approved:true,
-            //     active:true
-            // }
-
             const newTender = new tenderModel({
                 tenderId,
                 userId,
@@ -161,10 +153,9 @@ class Tender {
                 otherInformation,
                 purchaserDetail,
                 tenderDetail,
-                approvedStatus: approved,
+                approvedStatus: false,
                 userCategory,
-                product,
-                active:true
+                product
             });
 
             newTender.save()
@@ -175,6 +166,71 @@ class Tender {
                 })
                 .catch((err) => {
                     console.log(err);
+                });
+
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json({ error: err });
+        }
+
+    }
+
+    async postAddTenderResults(req, res) {
+        let {
+            summary,
+            BRR,
+            Authority,
+            userCategory,
+            TendorNo,
+            TenderId,
+            country,
+            state,
+            city,
+            deadline,
+            contractValue,
+            tenderValue,
+            description
+
+        } = req.body;
+
+        const userId = req.userId;
+
+        try {
+            summary = toTitleCase(summary);
+
+            const tenderId = generateUUID();
+
+            const procurementSummary = {
+                country,
+                state,
+                city,
+                deadline: new Date(deadline)
+            };
+
+            const newTender = new tenderResultModel({
+                tenderId,
+                userId,
+                summary,
+                procurementSummary,
+                description,
+                BRR,
+                Authority,
+                userCategory,
+                TendorNo,
+                TenderId,
+                contractValue,
+                tenderValue,
+            });
+            console.log(newTender);
+            newTender.save()
+                .then((data) => {
+                    return res.json({
+                        success: "Tender filled successfully.",
+                    });
+                })
+                .catch((err) => {
+                    // console.log(err);
+                    console.log('not run');
                 });
 
         } catch (err) {
@@ -322,7 +378,7 @@ class Tender {
 
             const { region, geopolitical, country, sector, financier, state, city, product, userCategory } = req.query;
             const { details } = req.body;
-
+            console.log(req.body);
             if (region && regionData.hasOwnProperty(region)) {
                 const countriesInRegion = regionData[region];
                 query['procurementSummary.country'] = { $in: countriesInRegion };
@@ -352,7 +408,7 @@ class Tender {
             if (userCategory) {
                 query['userCategory'] = userCategory;
             }
-
+            console.log(details);
             let projection;
             if (details) {
                 projection = details.reduce((acc, field) => {
@@ -360,6 +416,7 @@ class Tender {
                     return acc;
                 }, {});
             }
+
 
             const results = await tenderModel.find(query, projection);
 

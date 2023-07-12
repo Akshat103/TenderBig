@@ -83,10 +83,27 @@ const SeekerForm = () => {
     
         const formattedData = selectedData.map((form) => ({
           Name: form.name,
+          "Father's Name": form.fathername,
+          "Mobile:": form.mobile,
+          "Email:": form.email ,
+          "10th Mark:": form.tenMark ,
+          "12th Mark:": form.twelveMark ,
+          
+
           "Job Post": form.jobpost,
           "Job Experience": form.jobexp,
+          "Company:": form.company,
+          "Address:": form.address ,
+          
           City: form.city,
+          " State:": form.state ,
+          "Country:": form.country ,
+          "Zip": form.zip,
+          "Past Salary":form.pastSalary,
           "Expected Salary": form.expectedSalary,
+          Resume:form.resumeUrl,
+          Photo:form.photoUrl,
+          Aadhar:form.aadharUrl,
           "Received At": formatReceivedAt(form.createdAt),
         }));
     
@@ -106,7 +123,7 @@ const SeekerForm = () => {
     
       const downloadAsPDF = () => {
         const doc = new jsPDF();
-    
+      
         const tableData = forms
           .slice(
             (currentPage - 1) * formsPerPage,
@@ -114,21 +131,82 @@ const SeekerForm = () => {
           )
           .map((form) => ({
             Name: form.name,
+            "Father's Name": form.fathername,
+            Mobile: form.mobile,
+            Email: form.email,
+            "10th Mark": form.tenMark,
+            "12th Mark": form.twelveMark,
             "Job Post": form.jobpost,
             "Job Experience": form.jobexp,
+            Company: form.company,
+            Address: form.address,
             City: form.city,
+            State: form.state,
+            Country: form.country,
+            Zip: form.zip,
+            "Past Salary": form.pastSalary,
             "Expected Salary": form.expectedSalary,
+            Resume: form.resumeUrl,
+            Photo: form.photoUrl,
+            Aadhar: form.aadharUrl,
             "Received At": formatReceivedAt(form.createdAt),
           }));
-    
+      
         const tableConfig = {
-          head: [["Name", "Job Post", "Job Experience", "City", "Expected Salary", "Received At"]],
+          headStyles: { fillColor: [63, 81, 181] },
+          bodyStyles: { valign: 'middle' },
+          columnStyles: {
+            0: { cellWidth: 25 },
+            1: { cellWidth: 40 },
+            2: { cellWidth: 30 },
+            3: { cellWidth: 30 },
+            4: { cellWidth: 20 },
+            5: { cellWidth: 20 },
+            6: { cellWidth: 40 },
+            7: { cellWidth: 40 },
+            8: { cellWidth: 40 },
+            9: { cellWidth: 40 },
+            10: { cellWidth: 20 },
+            11: { cellWidth: 20 },
+            12: { cellWidth: 20 },
+            13: { cellWidth: 20 },
+            14: { cellWidth: 25 },
+            15: { cellWidth: 30 },
+            16: { cellWidth: 20 },
+            17: { cellWidth: 20 },
+            18: { cellWidth: 20 },
+          },
+          head: [
+            [
+              "Name",
+              "Father's Name",
+              "Mobile",
+              "Email",
+              "10th Mark",
+              "12th Mark",
+              "Job Post",
+              "Job Experience",
+              "Company",
+              "Address",
+              "City",
+              "State",
+              "Country",
+              "Zip",
+              "Past Salary",
+              "Expected Salary",
+              "Resume",
+              "Photo",
+              "Aadhar",
+              "Received At",
+            ],
+          ],
           body: tableData.map((row) => Object.values(row)),
         };
-    
+      
         doc.autoTable(tableConfig);
         doc.save("forms.pdf");
       };
+      
 
 
     const [sidebarOpen, setSidebarOpen] = useState(false);

@@ -87,11 +87,24 @@ const GemRegistration = () => {
       "Contact Number": form.contact,
       Country: form.country,
       "Received At": formatReceivedAt(form.createdAt),
+      "pan Number": form.panNumber,
+      "Website Address": form.websiteAddress,
+      " GST Number": form.gst,
+      "Business Start Date ": form.startDate,
+      "Business Office Building ": form.address,
+      "Country ": form.country,
+      "State ": form.state,
+      "City ": form.city,
+      "ZIP Code ": form.zip,
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(formattedData);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Gem Registration Requests");
+    XLSX.utils.book_append_sheet(
+      workbook,
+      worksheet,
+      "Gem Registration Requests"
+    );
     const excelBuffer = XLSX.write(workbook, {
       bookType: "xlsx",
       type: "array",
@@ -104,22 +117,28 @@ const GemRegistration = () => {
   };
 
   const downloadAsPDF = () => {
-    const doc = new jsPDF();
-
+    const doc = new jsPDF("p", "mm", "a4"); // Set page size to A4
+  
     const tableData = forms
-      .slice(
-        (currentPage - 1) * formsPerPage,
-        currentPage * formsPerPage
-      )
+      .slice((currentPage - 1) * formsPerPage, currentPage * formsPerPage)
       .map((form) => ({
         "Company Name": form.companyName,
         "Contact Person Name": form.name,
-        Email: form.email,
+        "Email": form.email,
         "Contact Number": form.contact,
-        Country: form.country,
+        "Country": form.country,
         "Received At": formatReceivedAt(form.createdAt),
+        "Pan Number": form.panNumber,
+        "Website Address": form.websiteAddress,
+        "GST Number": form.gst,
+        "Business Start Date": form.startDate,
+        "Business Office Building": form.address,
+        "Country": form.country,
+        "State": form.state,
+        "City": form.city,
+        "ZIP Code": form.zip,
       }));
-
+  
     const tableConfig = {
       head: [
         [
@@ -129,14 +148,47 @@ const GemRegistration = () => {
           "Contact Number",
           "Country",
           "Received At",
+          "Pan Number",
+          "Website Address",
+          "GST Number",
+          "Business Start Date",
+          "Business Office Building",
+          "Country",
+          "State",
+          "City",
+          "ZIP Code",
         ],
       ],
       body: tableData.map((row) => Object.values(row)),
+      columnStyles: {
+        0: { cellWidth: 40 }, // Company Name
+        1: { cellWidth: 40 }, // Contact Person Name
+        2: { cellWidth: 50 }, // Email
+        3: { cellWidth: 40 }, // Contact Number
+        4: { cellWidth: 30 }, // Country
+        5: { cellWidth: 40 }, // Received At
+        6: { cellWidth: 30 }, // Pan Number
+        7: { cellWidth: 50 }, // Website Address
+        8: { cellWidth: 30 }, // GST Number
+        9: { cellWidth: 35 }, // Business Start Date
+        10: { cellWidth: 50 }, // Business Office Building
+        11: { cellWidth: 30 }, // Country
+        12: { cellWidth: 30 }, // State
+        13: { cellWidth: 30 }, // City
+        14: { cellWidth: 30 }, // ZIP Code
+      },
+      styles: {
+        cellPadding: 2,
+        fontSize: 10,
+        fontStyle: "normal",
+        valign: "middle",
+      },
     };
-
+  
     doc.autoTable(tableConfig);
     doc.save("gem_registration_requests.pdf");
   };
+  
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (

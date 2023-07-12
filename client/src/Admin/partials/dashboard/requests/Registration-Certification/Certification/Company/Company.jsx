@@ -356,7 +356,18 @@ const CompanyList = () => {
       "Company Name": form.companyName,
       "Company Profile": form.companyProfile,
       "Contact Number": form.contactNumber,
+      "Contract Person Name": form.contractPName,
+      Email: form.email,
+      GST: form.gst,
+      PAN: form.pan,
+      "Request License": form.requestLicense,
       "Working Field": form.workingField,
+      "Selected Positions": form.selectedPositions,
+      Website: form.website,
+      "Document URL": form.docUrl,
+      "PAN URL": form.panUrl,
+      "GST URL": form.gstUrl,
+      Others: form.others,
       "Received At": formatReceivedAt(form.createdAt),
     }));
 
@@ -376,23 +387,56 @@ const CompanyList = () => {
 
   const downloadAsPDF = () => {
     const doc = new jsPDF();
+  
     const tableData = forms.map((form) => [
       form.companyName,
       form.companyProfile,
       form.contactNumber,
+      form.contractPName,
+      form.email,
+      form.gst,
+      form.pan,
+      form.requestLicense,
       form.workingField,
+      form.selectedPositions,
+      form.website,
+      form.docUrl,
+      form.panUrl,
+      form.gstUrl,
+      form.others,
       formatReceivedAt(form.createdAt),
     ]);
-
+  
+    doc.setFontSize(8);
+  
     doc.autoTable({
       head: [
-        ["Company Name", "Company Profile", "Contact Number", "Working Field", "Received At"],
+        [
+          "Company Name",
+          "Company Profile",
+          "Contact Number",
+          "Contract Person Name",
+          "Email",
+          "GST",
+          "PAN",
+          "Request License",
+          "Working Field",
+          "Selected Positions",
+          "Website",
+          "Document URL",
+          "PAN URL",
+          "GST URL",
+          "Others",
+          "Received At",
+        ],
       ],
       body: tableData,
     });
-
+  
     doc.save("company-requests.pdf");
   };
+  
+  
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (

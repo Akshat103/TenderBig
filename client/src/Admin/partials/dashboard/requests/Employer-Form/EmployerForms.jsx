@@ -85,10 +85,23 @@ const EmployerForms = () => {
 
     const formattedData = selectedData.map((form) => ({
       Company: form.company,
+      "Contact Number":form.mobile,
+      "Email Address":form.email,
       "Company Work": form.cwork,
       "Job Post": form.jobexp,
+      Salary:form.salary,
+      "Company Website":form.curl,
+      "Contact Person Number":form.contactpnumber,
       "Company Profile": form.companyprofile,
+      "Registration Number": form.regno,
+      "PAN Number":form.PAN,
+      "GST Number": form.GST,
+      "Address Line 1": form.addressline1,
+      "Address Line 2": form.addressline2,
       Country: form.country,
+      State: form.state,
+      City: form.city,
+      "Zip Code": form.zipcode,
       "Received At": formatReceivedAt(form.createdAt),
     }));
 
@@ -108,7 +121,7 @@ const EmployerForms = () => {
 
   const downloadAsPDF = () => {
     const doc = new jsPDF();
-
+  
     const tableData = forms
       .slice(
         (currentPage - 1) * formsPerPage,
@@ -116,21 +129,80 @@ const EmployerForms = () => {
       )
       .map((form) => ({
         Company: form.company,
+        "Contact Number": form.mobile,
+        "Email Address": form.email,
         "Company Work": form.cwork,
         "Job Post": form.jobexp,
+        Salary: form.salary,
+        "Company Website": form.curl,
+        "Contact Person Number": form.contactpnumber,
         "Company Profile": form.companyprofile,
+        "Registration Number": form.regno,
+        "PAN Number": form.PAN,
+        "GST Number": form.GST,
+        "Address Line 1": form.addressline1,
+        "Address Line 2": form.addressline2,
         Country: form.country,
+        State: form.state,
+        City: form.city,
+        "Zip Code": form.zipcode,
         "Received At": formatReceivedAt(form.createdAt),
       }));
-
+  
     const tableConfig = {
-      head: [["Company", "Company Work", "Job Post", "Company Profile", "Country", "Received At"]],
+      headStyles: { fillColor: [63, 81, 181] },
+      bodyStyles: { valign: 'middle' },
+      columnStyles: {
+        0: { cellWidth: 30 },
+        1: { cellWidth: 30 },
+        2: { cellWidth: 40 },
+        3: { cellWidth: 40 },
+        4: { cellWidth: 30 },
+        5: { cellWidth: 25 },
+        6: { cellWidth: 45 },
+        7: { cellWidth: 45 },
+        8: { cellWidth: 50 },
+        9: { cellWidth: 50 },
+        10: { cellWidth: 50 },
+        11: { cellWidth: 40 },
+        12: { cellWidth: 40 },
+        13: { cellWidth: 20 },
+        14: { cellWidth: 20 },
+        15: { cellWidth: 20 },
+        16: { cellWidth: 20 },
+        17: { cellWidth: 20 },
+        18: { cellWidth: 25 },
+      },
+      head: [
+        [
+          "Company",
+          "Contact Number",
+          "Email Address",
+          "Company Work",
+          "Job Post",
+          "Salary",
+          "Company Website",
+          "Contact Person Number",
+          "Company Profile",
+          "Registration Number",
+          "PAN Number",
+          "GST Number",
+          "Address Line 1",
+          "Address Line 2",
+          "Country",
+          "State",
+          "City",
+          "Zip Code",
+          "Received At",
+        ],
+      ],
       body: tableData.map((row) => Object.values(row)),
     };
-
+  
     doc.autoTable(tableConfig);
     doc.save("forms.pdf");
   };
+  
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (

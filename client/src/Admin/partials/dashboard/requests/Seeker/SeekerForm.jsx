@@ -9,6 +9,9 @@ import {
     faEdit,
     faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import * as XLSX from "xlsx";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 
 const SeekerForm = () => {
     const [forms, setForms] = useState([]);
@@ -71,6 +74,63 @@ const SeekerForm = () => {
         }
     };
 
+
+    const downloadAsExcel = () => {
+        const selectedData = forms.slice(
+          (currentPage - 1) * formsPerPage,
+          currentPage * formsPerPage
+        );
+    
+        const formattedData = selectedData.map((form) => ({
+          Name: form.name,
+          "Job Post": form.jobpost,
+          "Job Experience": form.jobexp,
+          City: form.city,
+          "Expected Salary": form.expectedSalary,
+          "Received At": formatReceivedAt(form.createdAt),
+        }));
+    
+        const worksheet = XLSX.utils.json_to_sheet(formattedData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Forms");
+        const excelBuffer = XLSX.write(workbook, {
+          bookType: "xlsx",
+          type: "array",
+        });
+    
+        const data = new Blob([excelBuffer], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
+        saveAs(data, "forms.xlsx");
+      };
+    
+      const downloadAsPDF = () => {
+        const doc = new jsPDF();
+    
+        const tableData = forms
+          .slice(
+            (currentPage - 1) * formsPerPage,
+            currentPage * formsPerPage
+          )
+          .map((form) => ({
+            Name: form.name,
+            "Job Post": form.jobpost,
+            "Job Experience": form.jobexp,
+            City: form.city,
+            "Expected Salary": form.expectedSalary,
+            "Received At": formatReceivedAt(form.createdAt),
+          }));
+    
+        const tableConfig = {
+          head: [["Name", "Job Post", "Job Experience", "City", "Expected Salary", "Received At"]],
+          body: tableData.map((row) => Object.values(row)),
+        };
+    
+        doc.autoTable(tableConfig);
+        doc.save("forms.pdf");
+      };
+
+
     const [sidebarOpen, setSidebarOpen] = useState(false);
     return (
         <div className="flex h-screen overflow-hidden">
@@ -84,7 +144,21 @@ const SeekerForm = () => {
 
                     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
                         <h1 className="text-xl font-bold mb-4">Seeker Requests</h1>
-
+{/* Download buttons */}
+                <div className="flex justify-end mb-4">
+                  <button
+                    className="bg-green-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 mr-2"
+                    onClick={downloadAsExcel}
+                  >
+                    Download Excel
+                  </button>
+                  <button
+                    className="bg-red-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+                    onClick={downloadAsPDF}
+                  >
+                    Download PDF
+                  </button>
+                </div>
                         {/* Table */}
                         <div className="overflow-hidden rounded-lg border shadow-2xl">
                             <table className="min-w-full divide-y py-3 divide-gray-200 table-fixed">

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
-import { faArrowLeft, faArrowRight, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faArrowRight, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-
+import * as XLSX from "xlsx";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 
 const ContactFormList = () => {
   const [contactForms, setContactForms] = useState([]);
@@ -13,8 +14,7 @@ const ContactFormList = () => {
   const [isDescending, setIsDescending] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [formsPerPage] = useState(10);
-  const [selectedService, setSelectedService] = useState("All")
-
+  const [selectedService, setSelectedService] = useState("All");
 
   useEffect(() => {
     fetchContactForms();
@@ -37,8 +37,6 @@ const ContactFormList = () => {
       console.log(error);
     }
   };
-
-
 
   const sortForms = (forms, option, isDescending) => {
     switch (option) {
@@ -87,6 +85,67 @@ const ContactFormList = () => {
     setSelectedService("All");
   };
 
+  const downloadAsExcel = () => {
+    const selectedData = contactForms
+      .filter(
+        (form) =>
+          selectedService === "All"
+            ? true
+            : form.selectedService === selectedService
+      )
+      .map((form) => ({
+        Name: form.name,
+        Company: form.company,
+        Email: form.email,
+        "Phone Number": form.mobile,
+        "Received At": formatReceivedAt(form.createdAt),
+        Services: form.selectedService,
+      }));
+
+    const worksheet = XLSX.utils.json_to_sheet(selectedData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Forms");
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+
+    const data = new Blob([excelBuffer], {
+      type:
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    const filename = "forms.xlsx";
+    saveAs(data, filename);
+  };
+
+  const downloadAsPDF = () => {
+    const doc = new jsPDF();
+    const tableData = contactForms
+      .filter(
+        (form) =>
+          selectedService === "All"
+            ? true
+            : form.selectedService === selectedService
+      )
+      .map((form) => [
+        form.name,
+        form.company,
+        form.email,
+        form.mobile,
+        formatReceivedAt(form.createdAt),
+        form.selectedService,
+      ]);
+
+    doc.autoTable({
+      head: [
+        ["Name", "Company", "Email", "Phone Number", "Received At", "Services"],
+      ],
+      body: tableData,
+    });
+
+    doc.save("forms.pdf");
+  };
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Pagination
@@ -116,9 +175,13 @@ const ContactFormList = () => {
     }
   };
 
+  const handleDelete = (id) => {
+    // Handle the delete functionality
+  };
 
-
-  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  // const handleEdit = (id) => {
+  //   // Handle the edit functionality
+  // };
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -164,6 +227,22 @@ const ContactFormList = () => {
                 onClick={handleResetFilters}
               >
                 Reset Filters
+              </button>
+            </div>
+
+            {/* Download buttons */}
+            <div className="flex justify-end mb-4">
+              <button
+                className="bg-green-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 mr-2"
+                onClick={downloadAsExcel}
+              >
+                Download Excel
+              </button>
+              <button
+                className="bg-red-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+                onClick={downloadAsPDF}
+              >
+                Download PDF
               </button>
             </div>
 

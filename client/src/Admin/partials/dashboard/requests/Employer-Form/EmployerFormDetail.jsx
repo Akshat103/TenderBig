@@ -145,21 +145,7 @@ const downloadAsPDF = () => {
                   Employer Information
                 </h2>
 
-                {/* Download buttons */}
-                <div className="flex justify-end mb-4">
-                  <button
-                    className="bg-green-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 mr-2"
-                    onClick={downloadAsExcel}
-                  >
-                    Download Excel
-                  </button>
-                  <button
-                    className="bg-red-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
-                    onClick={downloadAsPDF}
-                  >
-                    Download PDF
-                  </button>
-                </div>
+                
                 {/* <div className="grid grid-cols-2 gap-11  "> */}
                 <div className="w-full">
                   <label className="block mb-2 text-xl font-medium ">

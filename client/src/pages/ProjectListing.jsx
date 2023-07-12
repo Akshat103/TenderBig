@@ -1,3 +1,6 @@
+
+
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -179,7 +182,7 @@ const ProjectList = () => {
               ))}
             </div>
           </div>
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center mt-4 justify-between">
             <button
               className="bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
               onClick={previousPage}

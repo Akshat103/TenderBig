@@ -293,10 +293,10 @@ function ProjectDetails() {
                         name="pnr"
                         value={editedProject.pnr}
                         onChange={handleEditChange}
-                        className="ml-2 border border-gray-300 p-1 rounded"
+                        className="ml-[94px] border border-gray-300 p-1 rounded "
                       />
                     ) : (
-                      <span className="ml-2">{project.pnr}</span>
+                      <span className="ml-[94px]">{project.pnr}</span>
                     )}
                   </p>
                   <p className="mb-2 text-gray-700">
@@ -320,10 +320,10 @@ function ProjectDetails() {
                         name="detail"
                         value={editedProject.detail}
                         onChange={handleEditChange}
-                        className="ml-2 border border-gray-300 p-1 rounded"
+                        className="ml-20 border border-gray-300 p-1 rounded"
                       />
                     ) : (
-                      <span className="ml-2">{project.detail}</span>
+                      <span className="ml-20">{project.detail}</span>
                     )}
                   </p>
                   <p className="mb-2 text-gray-700">
@@ -334,10 +334,10 @@ function ProjectDetails() {
                         name="value"
                         value={editedProject.value}
                         onChange={handleEditChange}
-                        className="ml-2 border border-gray-300 p-1 rounded"
+                        className="ml-20 border border-gray-300 p-1 rounded"
                       />
                     ) : (
-                      <span className="ml-2">{project.value}</span>
+                      <span className="ml-20">{project.value}</span>
                     )}
                   </p>
                   <p className="mb-2 text-gray-700">
@@ -348,10 +348,10 @@ function ProjectDetails() {
                         name="status"
                         value={editedProject.status}
                         onChange={handleEditChange}
-                        className="ml-2 border border-gray-300 p-1 rounded"
+                        className="ml-[75px] border border-gray-300 p-1 rounded"
                       />
                     ) : (
-                      <span className="ml-2">{project.status}</span>
+                      <span className="ml-[75px]">{project.status}</span>
                     )}
                   </p>
                   <p className="mb-2 text-gray-700">
@@ -362,10 +362,10 @@ function ProjectDetails() {
                         name="country"
                         value={editedProject.country}
                         onChange={handleEditChange}
-                        className="ml-2 border border-gray-300 p-1 rounded"
+                        className="ml-[60px] border border-gray-300 p-1 rounded"
                       />
                     ) : (
-                      <span className="ml-2">{project.country}</span>
+                      <span className="ml-[60px]">{project.country}</span>
                     )}
                   </p>
                   <p className="mb-2 text-gray-700">
@@ -376,10 +376,10 @@ function ProjectDetails() {
                         name="state"
                         value={editedProject.state}
                         onChange={handleEditChange}
-                        className="ml-2 border border-gray-300 p-1 rounded"
+                        className="ml-20 border border-gray-300 p-1 rounded"
                       />
                     ) : (
-                      <span className="ml-2">{project.state}</span>
+                      <span className="ml-20">{project.state}</span>
                     )}
                   </p>
                   <p className="mb-2 text-gray-700">
@@ -390,16 +390,16 @@ function ProjectDetails() {
                         name="city"
                         value={editedProject.city}
                         onChange={handleEditChange}
-                        className="ml-2 border border-gray-300 p-1 rounded"
+                        className="ml-[90px] border border-gray-300 p-1 rounded"
                       />
                     ) : (
-                      <span className="ml-2">{project.city}</span>
+                      <span className="ml-[90px]">{project.city}</span>
                     )}
                   </p>
                   {isEditing ? (
                     <div className="flex justify-between mt-4">
                       <button
-                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
+                        className="bg-[#111a2b] text-white font-bold py-2 px-4 rounded mr-2"
                         onClick={handleEdit}
                       >
                         Save

@@ -403,17 +403,19 @@ const IndividualDetails = () => {
                     />
                   </div>
                 </div> */}
-                                <div className="flex justify-end mt-4">
+                <div className="flex justify-between">
+
+                                <div className=" mt-4">
                                     {isEditing ? (
                                         <button
-                                            className="text-blue-500 hover:text-blue-700"
+                                        className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
                                             onClick={() => handleUpdate(formData._id)}
                                         >
                                             Save
                                         </button>
                                     ) : (
                                         <button
-                                            className="text-blue-500 hover:text-blue-700"
+                                        className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
                                             onClick={handleEdit}
                                         >
                                             <FontAwesomeIcon icon={faEdit} />
@@ -421,7 +423,7 @@ const IndividualDetails = () => {
                                         </button>
                                     )}
                                 </div>
-                                <div className="flex justify-center mt-4">
+                                <div className=" mt-4">
                                     <button
                                         className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
                                         onClick={() => updateDetails(formData._id)}
@@ -429,7 +431,7 @@ const IndividualDetails = () => {
                                         Submit
                                     </button>
                                 </div>
-                            </div>
+                            </div></div>
                         </div>
                     </div>
                 </main>

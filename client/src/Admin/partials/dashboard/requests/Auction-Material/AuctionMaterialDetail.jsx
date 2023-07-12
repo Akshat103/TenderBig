@@ -34,13 +34,16 @@ const AuctionMaterialDetail = () => {
   };
 
   function updateDetails() {
-    fetch(`http://localhost:5000/apiTender/services/aumt/auction-material/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData), // Replace formData with the updated data object
-    })
+    fetch(
+      `http://localhost:5000/apiTender/services/aumt/auction-material/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData), // Replace formData with the updated data object
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -50,7 +53,6 @@ const AuctionMaterialDetail = () => {
       })
       .catch((error) => console.log(error));
   }
-
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   if (!formData) {
@@ -103,8 +105,9 @@ const AuctionMaterialDetail = () => {
                     <Step key={index}>
                       {({ accomplished }) => (
                         <div
-                          className={`step ${accomplished ? "completed" : null
-                            }`}
+                          className={`step ${
+                            accomplished ? "completed" : null
+                          }`}
                         />
                       )}
                     </Step>
@@ -155,7 +158,10 @@ const AuctionMaterialDetail = () => {
                       value={formData.companyName}
                       readOnly={!isEditing}
                       onChange={(e) =>
-                        setFormData({ ...formData, companyName: e.target.value })
+                        setFormData({
+                          ...formData,
+                          companyName: e.target.value,
+                        })
                       }
                     />
                   </div>
@@ -207,31 +213,32 @@ const AuctionMaterialDetail = () => {
                     />
                   </div>
                 </div>
-                <div className="flex justify-end mt-4">
-                  {isEditing ? (
+                <div className="flext justify-between">
+                  <div className="">
+                    {isEditing ? (
+                      <button
+                        className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+                        onClick={() => handleUpdate(formData._id)}
+                      >
+                        Save
+                      </button>
+                    ) : (
+                      <button
+                        className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+                        onClick={handleEdit}
+                      >
+                        Edit
+                      </button>
+                    )}
+                  </div>
+                  <div className="">
                     <button
-                      className="text-blue-500 hover:text-blue-700"
-                      onClick={() => handleUpdate(formData._id)}
+                      className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+                      onClick={() => updateDetails(formData._id)}
                     >
-                      Save
+                      Submit
                     </button>
-                  ) : (
-                    <button
-                      className="text-blue-500 hover:text-blue-700"
-                      onClick={handleEdit}
-                    >
-                      <FontAwesomeIcon icon={faEdit} />
-                      Edit
-                    </button>
-                  )}
-                </div>
-                <div className="flex justify-center mt-4">
-                  <button
-                    className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
-                    onClick={() => updateDetails(formData._id)}
-                  >
-                    Submit
-                  </button>
+                  </div>
                 </div>
               </div>
             </div>

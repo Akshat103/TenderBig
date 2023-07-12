@@ -219,7 +219,7 @@ class Tender {
                 Authority,
                 userCategory,
                 TendorNo,
-                TenderId,
+                TenderId:tenderId,
                 contractValue,
                 tenderValue,
             });

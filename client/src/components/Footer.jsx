@@ -4,33 +4,31 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="footer">
-      <div
-        className=" mt-8 w-full pb-16 pt-1 px-4 md:px-6 lg:px-8 xl:px-10 text-white bg-[#212121]"
-      >
+      <div className="mt-8 w-full pb-16 pt-1 px-4 md:px-6 lg:px-8 xl:px-10 text-white bg-[#212121]">
         <div className="max-w-6xl mx-auto mb-[152px] mt-10">
           <div className="">
-            <div className="container flex justify-center cursor-pointer">
+            <div className="container flex flex-col md:flex-row justify-center cursor-pointer">
               <Link
                 to="/"
-                className="text-white-600 hover:text-black px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md"
+                className="text-white-600 hover:text-black px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md mb-3 md:mb-0 md:mr-4"
               >
                 Home
               </Link>
               <Link
                 to="/tenders"
-                className="text-white-600 hover:text-black px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md"
+                className="text-white-600 hover:text-black px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md mb-3 md:mb-0 md:mr-4"
               >
                 Tenders
               </Link>
               <Link
                 to="/gemregistration"
-                className="text-white-600 hover:text-black px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md"
+                className="text-white-600 hover:text-black px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md mb-3 md:mb-0 md:mr-4"
               >
                 Gems Registration
               </Link>
               <Link
                 to="/forms"
-                className="text-white-600 hover:text-black px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md"
+                className="text-white-600 hover:text-black px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md mb-3 md:mb-0 md:mr-4"
               >
                 Apply For Tender
               </Link>
@@ -41,14 +39,12 @@ const Footer = () => {
                 Contact
               </Link>
             </div>
-
-
             <hr className="border-white border-b-1 mb-4" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
             <div>
               <h3 className="text-xl font-sans mb-4">COMPANY</h3>
-              <ul className="mb-4 ">
+              <ul className="mb-4">
                 <li className="mb-2">
                   <a className="font-sans font-light" href="/about">
                     About Us
@@ -68,7 +64,7 @@ const Footer = () => {
             </div>
             <div>
               <h3 className="text-xl font-sans mb-4">LEGAL</h3>
-              <ul className="mb-4 ">
+              <ul className="mb-4">
                 <li className="mb-2">
                   <a className="font-sans font-light" href="/privacy">
                     Privacy Policy
@@ -83,7 +79,7 @@ const Footer = () => {
             </div>
             <div>
               <h3 className="text-xl font-sans mb-4">CONTACT</h3>
-              <ul className="mb-4 ">
+              <ul className="mb-4">
                 <li className="mb-2">
                   <span className="inline-block w-4 mr-2">
                     <img
@@ -108,12 +104,11 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-
             <div>
               <div className="">
                 <h3 className="text-xl font-sans mb-4">SOCIAL</h3>
               </div>
-              <div className="flex  space-x-4">
+              <div className="flex space-x-4">
                 <a
                   href="https://linkedin.com"
                   target="_blank"
@@ -179,7 +174,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-
     </footer>
   );
 };

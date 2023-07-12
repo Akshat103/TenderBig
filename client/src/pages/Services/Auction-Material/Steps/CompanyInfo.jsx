@@ -82,6 +82,7 @@ const Step4 = ({ formData, handleChange, handleNext, handlePrevious }) => {
             City
             <span className="text-red-700 relative top-0 right-0">*</span>
             <input
+              required
               type="text"
               name="city"
               value={formData.city}

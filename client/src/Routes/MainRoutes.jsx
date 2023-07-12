@@ -33,7 +33,7 @@ const MainRoutes = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<Projects />} />
-        <Route path='/gems' element={<GemListing/>}/>
+        <Route path='/gems' element={<GemListing />} />
         <Route path='/tenderfilling' element={<TenderFilling />}></Route>
         <Route path='/tenderfillingonline' element={<TenderFillingOnline />}></Route>
         <Route path='/tenderfillingoffline' element={<TenderFillingOffline />}></Route>

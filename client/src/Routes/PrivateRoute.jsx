@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const checkIfUserIsAdmin = () => {
   const user = JSON.parse(localStorage.getItem('user'));
-  if (user && user.userRole === 'admin') {
+  if (user && user.userRole === 'admin' || user.userRole === 'hr' || user.userRole === 'employee') {
     return true;
   } else {
     return false;

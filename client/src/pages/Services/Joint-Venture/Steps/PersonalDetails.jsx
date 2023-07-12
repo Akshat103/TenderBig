@@ -70,7 +70,7 @@ const Step3 = ({ formData, handleChange, handleNext, handlePrevious, setFormData
               Director Aadhar No
               <span className="text-red-700 relative top-0 right-0">*</span>
               <input
-                type="text"
+                type="number"
                 name="directorAadhar"
                 value={director.directorAadhar}
                 onChange={(event) => handleDirectorChange(index, event)}
@@ -83,7 +83,7 @@ const Step3 = ({ formData, handleChange, handleNext, handlePrevious, setFormData
               Director PAN No
               <span className="text-red-700 relative top-0 right-0">*</span>
               <input
-                type="text"
+                type="number"
                 name="directorPan"
                 value={director.directorPan}
                 onChange={(event) => handleDirectorChange(index, event)}

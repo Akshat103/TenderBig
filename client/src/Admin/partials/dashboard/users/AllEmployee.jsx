@@ -3,10 +3,12 @@ import axios from "axios";
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-
+import * as XLSX from "xlsx";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 function AllEmployee() {
   const [userData, setUserData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -14,9 +16,9 @@ function AllEmployee() {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
-  const AddEmployee=()=>{
-    navigate("/dashboard/addemployee")
-  }
+  const AddEmployee = () => {
+    navigate("/dashboard/addemployee");
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -40,7 +42,7 @@ function AllEmployee() {
   }, []);
 
   const showDetails = (userId) => {
-    navigate(`/dashboard/user/${userId}`)
+    navigate(`/dashboard/user/${userId}`);
   };
 
   const handleSearchChange = (e) => {
@@ -48,12 +50,15 @@ function AllEmployee() {
   };
 
   const filteredData = userData.filter((user) => {
-    const nameMatch = user.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const emailMatch = user.email.toLowerCase().includes(searchTerm.toLowerCase());  
+    const nameMatch = user.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const emailMatch = user.email
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
     // Check if any of the conditions is true
-    return (nameMatch || emailMatch);
+    return nameMatch || emailMatch;
   });
-  
 
   // Pagination
   const indexOfLastUser = currentPage * usersPerPage;
@@ -76,11 +81,73 @@ function AllEmployee() {
       setCurrentPage(currentPage + 1);
     }
   };
+  const downloadAsExcel = () => {
+    const selectedData = currentUsers.map((user) => ({
+      User: user.name,
+      Role: user.userRole,
+      Email: user.email,
+      Phone: user.phoneNumber,
+      Country: user.country,
+      City: user.city,
+      Subscription: user.subscription ? user.subscription.status : "",
+    }));
 
+    const worksheet = XLSX.utils.json_to_sheet(selectedData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+
+    const data = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    saveAs(data, "users.xlsx");
+  };
+
+  const downloadAsPDF = () => {
+    const doc = new jsPDF();
+
+    const headers = [
+      "User",
+      "Role",
+      "Email",
+      "Phone",
+      "Country",
+      "City",
+      "Subscription",
+    ];
+
+    const selectedData = currentUsers.map((user) => [
+      user.name,
+      user.userRole,
+      user.email,
+      user.phoneNumber,
+      user.country,
+      user.city,
+      user.subscription ? user.subscription.status : "",
+    ]);
+
+    const data = {
+      headers,
+      rows: selectedData,
+    };
+
+    const tableConfig = {
+      startY: 20,
+      headStyles: { fillColor: [41, 128, 185], textColor: 255 },
+      bodyStyles: { fillColor: 255, textColor: 0 },
+      alternateRowStyles: { fillColor: 245 },
+      margin: { top: 20 },
+    };
+
+    doc.autoTable(data.headers, data.rows, tableConfig);
+
+    doc.save("users.pdf");
+  };
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
-
-
     <div className="flex h-screen overflow-hidden ">
       {/* Sidebar */}
 
@@ -100,7 +167,7 @@ function AllEmployee() {
             <div className="grid grid-cols-15 gap-6">
               {/*---------> Table (Top Channels) */}
               <section className="container mx-auto p-6 font-mono overflow-x-auto">
-              <h1 className="text-xl font-bold mb-4">All Employee</h1>
+                <h1 className="text-xl font-bold mb-4">All Employee</h1>
                 <div className="flex mb-4 justify-between">
                   {/* Search bar */}
                   <input
@@ -112,12 +179,28 @@ function AllEmployee() {
                   />
                   <button
                     className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
-                  onClick={()=>{AddEmployee()}}
+                    onClick={() => {
+                      AddEmployee();
+                    }}
                   >
                     Add New Employee
                   </button>
                 </div>
-
+                {/* Download buttons */}
+                <div className="flex justify-end mb-4">
+                  <button
+                    className="bg-green-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 mr-2"
+                    onClick={downloadAsExcel}
+                  >
+                    Download Excel
+                  </button>
+                  <button
+                    className="bg-red-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+                    onClick={downloadAsPDF}
+                  >
+                    Download PDF
+                  </button>
+                </div>
                 <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
                   <div className="w-full overflow-x-auto">
                     <table className="w-full">
@@ -135,8 +218,14 @@ function AllEmployee() {
                           <tr className="text-gray-700" key={user._id}>
                             <td className="px-4 py-3 border">
                               <div className="flex items-center text-sm">
-                                <div onClick={() => { showDetails(user.userId) }}>
-                                  <p className="font-semibold text-black cursor-pointer">{user.name}</p>
+                                <div
+                                  onClick={() => {
+                                    showDetails(user.userId);
+                                  }}
+                                >
+                                  <p className="font-semibold text-black cursor-pointer">
+                                    {user.name}
+                                  </p>
                                 </div>
                               </div>
                             </td>
@@ -148,8 +237,12 @@ function AllEmployee() {
                                 {user.phoneNumber}
                               </span>
                             </td>
-                            <td className="px-4 py-3 text-sm border">{user.country}</td>
-                            <td className="px-4 py-3 text-sm border">{user.city}</td>
+                            <td className="px-4 py-3 text-sm border">
+                              {user.country}
+                            </td>
+                            <td className="px-4 py-3 text-sm border">
+                              {user.city}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -163,24 +256,27 @@ function AllEmployee() {
                         disabled={currentPage === 1}
                       >
                         <FontAwesomeIcon icon={faArrowLeft} />
-                          <path
-                            fillRule="evenodd"
-                            d="M5.293 6.707a1 1 0 010-1.414L2.414 2.343A1 1 0 113.828.93L7.586 4.686a1 1 0 010 1.414L3.828 9.07a1 1 0 11-1.414-1.414L5.293 6.707z"
-                            clipRule="evenodd"
-                          ></path>
+                        <path
+                          fillRule="evenodd"
+                          d="M5.293 6.707a1 1 0 010-1.414L2.414 2.343A1 1 0 113.828.93L7.586 4.686a1 1 0 010 1.414L3.828 9.07a1 1 0 11-1.414-1.414L5.293 6.707z"
+                          clipRule="evenodd"
+                        ></path>
                       </button>
                       <span className="px-2 text-sm">{currentPage}</span>
                       <button
                         className="px-3 py-1 rounded-full focus:outline-none focus:shadow-outline-purple"
                         onClick={nextPage}
-                        disabled={currentPage === Math.ceil(filteredData.length / usersPerPage)}
+                        disabled={
+                          currentPage ===
+                          Math.ceil(filteredData.length / usersPerPage)
+                        }
                       >
                         <FontAwesomeIcon icon={faArrowRight} />
-                          <path
-                            fillRule="evenodd"
-                            d="M14.707 13.293a1 1 0 010 1.414l-3.758 3.758a1 1 0 11-1.414-1.414L12.586 14H7a1 1 0 110-2h5.586l-3.293-3.293a1 1 0 111.414-1.414l3.758 3.758z"
-                            clipRule="evenodd"
-                          ></path>
+                        <path
+                          fillRule="evenodd"
+                          d="M14.707 13.293a1 1 0 010 1.414l-3.758 3.758a1 1 0 11-1.414-1.414L12.586 14H7a1 1 0 110-2h5.586l-3.293-3.293a1 1 0 111.414-1.414l3.758 3.758z"
+                          clipRule="evenodd"
+                        ></path>
                       </button>
                     </div>
                   </div>
@@ -189,10 +285,8 @@ function AllEmployee() {
             </div>
           </div>
         </main>
-
       </div>
     </div>
-
   );
 }
 

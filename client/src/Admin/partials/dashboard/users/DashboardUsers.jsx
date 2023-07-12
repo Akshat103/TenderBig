@@ -3,9 +3,13 @@ import axios from "axios";
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { saveAs } from "file-saver";
+import * as XLSX from "xlsx";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 
 function DashboardUsers() {
   const [userData, setUserData] = useState([]);
@@ -39,7 +43,7 @@ function DashboardUsers() {
   }, []);
 
   const showDetails = (userId) => {
-    navigate(`/dashboard/user/${userId}`)
+    navigate(`/dashboard/user/${userId}`);
   };
 
   const handleSearchChange = (e) => {
@@ -55,8 +59,12 @@ function DashboardUsers() {
   };
 
   const filteredData = userData.filter((user) => {
-    const nameMatch = user.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const emailMatch = user.email.toLowerCase().includes(searchTerm.toLowerCase());
+    const nameMatch = user.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const emailMatch = user.email
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
     const userTypeMatch =
       userType === "all" ||
       (userType === "admin" && user.userRole === "admin") ||
@@ -72,9 +80,10 @@ function DashboardUsers() {
         (!user.subscription || user.subscription.status === "inactive"));
 
     // Check if any of the conditions is true
-    return (nameMatch || emailMatch) && userTypeMatch && subscriptionStatusMatch;
+    return (
+      (nameMatch || emailMatch) && userTypeMatch && subscriptionStatusMatch
+    );
   });
-
 
   // Pagination
   const indexOfLastUser = currentPage * usersPerPage;
@@ -98,32 +107,83 @@ function DashboardUsers() {
     }
   };
 
-  const AddUser=()=>{
-navigate("/dashboard/adduser")
-  }
+  const AddUser = () => {
+    navigate("/dashboard/adduser");
+  };
 
+  const downloadAsExcel = () => {
+    const selectedData = currentUsers.map((user) => ({
+      User: user.name,
+      Role: user.userRole,
+      Email: user.email,
+      Phone: user.phoneNumber,
+      Country: user.country,
+      City: user.city,
+      Subscription: user.subscription ? user.subscription.status : "",
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(selectedData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+
+    const data = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    saveAs(data, "users.xlsx");
+  };
+
+  const downloadAsPDF = () => {
+    const doc = new jsPDF();
+  
+    const headers = ["User", "Role", "Email", "Phone", "Country", "City", "Subscription"];
+  
+    const selectedData = currentUsers.map((user) => [
+      user.name,
+      user.userRole,
+      user.email,
+      user.phoneNumber,
+      user.country,
+      user.city,
+      user.subscription ? user.subscription.status : ""
+    ]);
+  
+    const data = {
+      headers,
+      rows: selectedData
+    };
+  
+    const tableConfig = {
+      startY: 20,
+      headStyles: { fillColor: [41, 128, 185], textColor: 255 },
+      bodyStyles: { fillColor: 255, textColor: 0 },
+      alternateRowStyles: { fillColor: 245 },
+      margin: { top: 20 }
+    };
+  
+    doc.autoTable(data.headers, data.rows, tableConfig);
+  
+    doc.save("users.pdf");
+  };
+  
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
-
-
     <div className="flex h-screen overflow-hidden ">
       {/* Sidebar */}
-
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
         <main>
-          {/*  Site header 
-      import Header from '../partials/Header';
-      */}
+          {/*  Site header */}
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             {/* Dashboard actions */}
-
             {/* Cards */}
             <div className="grid grid-cols-15 gap-6">
-              {/*---------> Table (Top Channels) */}
+              {/* Table (Top Channels) */}
               <section className="container mx-auto p-6 font-mono overflow-x-auto">
                 <h1 className="text-xl font-bold mb-4">All User</h1>
                 <div className="flex mb-4  justify-between ">
@@ -161,8 +221,24 @@ navigate("/dashboard/adduser")
                   )}
                   <button
                     className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
-                  onClick={()=>{AddUser()}}>
+                    onClick={AddUser}
+                  >
                     Add New User
+                  </button>
+                </div>
+                {/* Download buttons */}
+                <div className="flex justify-end mb-4">
+                  <button
+                    className="bg-green-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 mr-2"
+                    onClick={downloadAsExcel}
+                  >
+                    Download Excel
+                  </button>
+                  <button
+                    className="bg-red-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+                    onClick={downloadAsPDF}
+                  >
+                    Download PDF
                   </button>
                 </div>
                 <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
@@ -184,8 +260,14 @@ navigate("/dashboard/adduser")
                           <tr className="text-gray-700" key={user._id}>
                             <td className="px-4 py-3 border">
                               <div className="flex items-center text-sm">
-                                <div onClick={() => { showDetails(user.userId) }}>
-                                  <p className="font-semibold text-black cursor-pointer">{user.name}</p>
+                                <div
+                                  onClick={() => {
+                                    showDetails(user.userId);
+                                  }}
+                                >
+                                  <p className="font-semibold text-black cursor-pointer">
+                                    {user.name}
+                                  </p>
                                 </div>
                               </div>
                             </td>
@@ -200,16 +282,23 @@ navigate("/dashboard/adduser")
                                 {user.phoneNumber}
                               </span>
                             </td>
-                            <td className="px-4 py-3 text-sm border">{user.country}</td>
-                            <td className="px-4 py-3 text-sm border">{user.city}</td>
+                            <td className="px-4 py-3 text-sm border">
+                              {user.country}
+                            </td>
+                            <td className="px-4 py-3 text-sm border">
+                              {user.city}
+                            </td>
                             <td className="px-4 py-3 text-xs border">
                               <span
-                                className={`px-2 py-1 font-semibold leading-tight ${!user.subscription || user.subscription.status === "inactive"
-                                  ? "text-red-700 bg-red-100"
-                                  : "text-green-700 bg-green-100"
-                                  } rounded-sm`}
+                                className={`px-2 py-1 font-semibold leading-tight ${
+                                  !user.subscription ||
+                                  user.subscription.status === "inactive"
+                                    ? "text-red-700 bg-red-100"
+                                    : "text-green-700 bg-green-100"
+                                } rounded-sm`}
                               >
-                                {user.subscription && user.subscription.status !== "inactive"
+                                {user.subscription &&
+                                user.subscription.status !== "inactive"
                                   ? "Active"
                                   : "Inactive"}
                               </span>
@@ -237,7 +326,10 @@ navigate("/dashboard/adduser")
                       <button
                         className="px-3 py-1 rounded-full focus:outline-none focus:shadow-outline-purple"
                         onClick={nextPage}
-                        disabled={currentPage === Math.ceil(filteredData.length / usersPerPage)}
+                        disabled={
+                          currentPage ===
+                          Math.ceil(filteredData.length / usersPerPage)
+                        }
                       >
                         <FontAwesomeIcon icon={faArrowRight} />
                         <path
@@ -253,10 +345,8 @@ navigate("/dashboard/adduser")
             </div>
           </div>
         </main>
-
       </div>
     </div>
-
   );
 }
 

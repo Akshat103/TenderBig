@@ -208,16 +208,18 @@ class Tender {
             };
 
             const newTender = new tenderResultModel({
-                tenderId,
                 userId,
                 summary,
-                procurementSummary,
+                country,
+                state,
+                city,
+                deadline: new Date(deadline),
                 description,
                 BRR,
                 Authority,
                 userCategory,
                 TendorNo,
-                TenderId,
+                TenderId:tenderId,
                 contractValue,
                 tenderValue,
             });
@@ -240,9 +242,71 @@ class Tender {
 
     }
 
+    async getTenderResults(req, res) {
+        try {
+          const documents = await tenderResultModel.find();
+          res.json(documents);
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ error: 'Failed to retrieve documents.' });
+        }
+      }
+
+    async getTenderResultsByTenderId(req, res) {
+        const tenderId = req.params.TenderResultId;
+        if (!tenderId) {
+            return res.json({ error: "All filled must be required" });
+        } else {
+            try {
+                let singleTender = await tenderResultModel.find({ tenderId: tenderId });
+                if (singleTender) {
+                    return res.json({ Product: singleTender });
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+    }
+
+    async updateResultsFormById(req, res) {
+        const formId = req.params.id;
+        const updatedForm = req.body;
+        console.log(formId);
+        console.log(updatedForm);
+        try {
+            const result = await tenderResultModel.findByIdAndUpdate(formId, updatedForm, { new: true });
+            if (!result) {
+                return res.status(404).json({ message: 'Form not found' });
+            }
+
+            res.json(result);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    }
+
+    async deleteResultsFormById(req, res) {
+        const formId = req.params.id;
+
+        try {
+            console.log(formId);
+            const deletedForm = await tenderResultModel.findByIdAndDelete(formId);
+            if (!deletedForm) {
+                return res.status(404).json({ message: 'Form not found' });
+            }
+
+            res.json({ message: 'Form deleted successfully' });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    }
+
+
     async postEditTender(req, res) {
         const tenderId = req.params.tenderId;
-
         let {
             summary,
             sector,

@@ -47,7 +47,7 @@ const Step4 = ({ formData, handleChange, handleSubmit, handlePrevious }) => {
             <span className="text-red-700 relative top-0 right-0">*</span>
             <input
               required
-              type="text"
+              type="number"
               name="volume"
               value={formData.volume}
               onChange={handleChange}

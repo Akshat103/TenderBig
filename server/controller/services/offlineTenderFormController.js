@@ -37,10 +37,10 @@ const getAllForms = async (req, res) => {
 const getSingleForm = async (req, res) => {
   try {
     const formId = req.params.id;
-    const form = await TenderOfflineForm.findById(formId);
-    if (!form) {
-      return res.status(404).json({ error: "Form not found" });
-    }
+    const form = await TenderOfflineForm.findByIdAndDelete(formId);
+    // if (!form) {
+    //   return res.status(404).json({ error: "Form not found" });
+    // }
     res.json(form);
   } catch (error) {
     console.error(error);

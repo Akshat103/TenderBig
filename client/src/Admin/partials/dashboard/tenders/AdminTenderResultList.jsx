@@ -6,25 +6,27 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
-function AllHR() {
+
+function AdminTenderResultList() {
   const [userData, setUserData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(8);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
-  const AddHR = () => {
-    navigate("/dashboard/addhr");
+  const AddTenderResult = () => {
+    navigate("/dashboard/tender/results/forms");
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/apiTender/userdetails/users/hr",
+          "http://localhost:5000/apiTender/userdetails/users/admin",
           {
             method: "GET",
             headers: {
@@ -85,13 +87,7 @@ function AllHR() {
 
   const downloadAsExcel = () => {
     const selectedData = currentUsers.map((user) => ({
-      User: user.name,
-      Role: user.userRole,
-      Email: user.email,
-      Phone: user.phoneNumber,
-      Country: user.country,
-      City: user.city,
-      Subscription: user.subscription ? user.subscription.status : "",
+      
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(selectedData);
@@ -112,23 +108,11 @@ function AllHR() {
     const doc = new jsPDF();
 
     const headers = [
-      "User",
-      "Role",
-      "Email",
-      "Phone",
-      "Country",
-      "City",
-      "Subscription",
+      
     ];
 
     const selectedData = currentUsers.map((user) => [
-      user.name,
-      user.userRole,
-      user.email,
-      user.phoneNumber,
-      user.country,
-      user.city,
-      user.subscription ? user.subscription.status : "",
+      
     ]);
 
     const data = {
@@ -137,17 +121,14 @@ function AllHR() {
     };
 
     const tableConfig = {
-      startY: 20,
-      headStyles: { fillColor: [41, 128, 185], textColor: 255 },
-      bodyStyles: { fillColor: 255, textColor: 0 },
-      alternateRowStyles: { fillColor: 245 },
-      margin: { top: 20 },
+      
     };
 
     doc.autoTable(data.headers, data.rows, tableConfig);
 
     doc.save("users.pdf");
   };
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <div className="flex h-screen overflow-hidden ">
@@ -169,23 +150,24 @@ function AllHR() {
             <div className="grid grid-cols-15 gap-6">
               {/*---------> Table (Top Channels) */}
               <section className="container mx-auto p-6 font-mono overflow-x-auto">
-                <h1 className="text-xl font-bold mb-4">All HR</h1>
-                <div className="flex mb-4 justify-between">
+                <h1 className="text-xl font-bold mb-4">Tender Results</h1>
+                <div className="flex mb-4  justify-between">
                   {/* Search bar */}
                   <input
                     type="text"
                     className="w-64 px-4 py-2 mr-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded shadow focus:outline-none"
-                    placeholder="Search by name or email"
+                    placeholder="Search by Tender"
                     value={searchTerm}
                     onChange={handleSearchChange}
                   />
+
                   <button
                     className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
                     onClick={() => {
-                      AddHR();
+                      AddTenderResult();
                     }}
                   >
-                    Add New HR
+                    Add New Tender Result
                   </button>
                 </div>
                 {/* Download buttons */}
@@ -203,7 +185,6 @@ function AllHR() {
                     Download PDF
                   </button>
                 </div>
-
                 <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
                   <div className="w-full overflow-x-auto">
                     <table className="w-full">
@@ -293,4 +274,4 @@ function AllHR() {
   );
 }
 
-export default AllHR;
+export default AdminTenderResultList;

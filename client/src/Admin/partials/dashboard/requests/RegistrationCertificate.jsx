@@ -10,6 +10,8 @@ const RegistrationCertification = () => {
   const [formsPerPage] = useState(10);
   const [selectedService, setSelectedService] = useState("All");
 
+
+
   useEffect(() => {
     fetchContactForms();
   }, []);
@@ -161,11 +163,10 @@ const RegistrationCertification = () => {
                   }).map((_, index) => (
                     <li key={index}>
                       <button
-                        className={`pagination-link ${
-                          currentPage === index + 1
-                            ? "pagination-link-active"
-                            : ""
-                        }`}
+                        className={`pagination-link ${currentPage === index + 1
+                          ? "pagination-link-active"
+                          : ""
+                          }`}
                         onClick={() => paginate(index + 1)}
                       >
                         {index + 1}

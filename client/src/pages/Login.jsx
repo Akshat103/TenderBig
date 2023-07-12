@@ -36,7 +36,10 @@ const Login = () => {
                 localStorage.setItem("user", JSON.stringify(data.user.data));
                 // Navigate to the desired page
                 const user = data.user.data
-                if (user.userRole == "admin") navigate("/dashboard/users");
+                if (user.userRole == "admin" || user.userRole == "hr" || user.userRole == "employee")
+                    navigate("/dashboard/users");
+                else if (user.userRole == "user")
+                    navigate('/dashboard/userDashboard')
                 else navigate("/");
                 console.log("Login successful");
             })

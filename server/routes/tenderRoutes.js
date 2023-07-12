@@ -42,4 +42,16 @@ router.get("/:userCategory", tenderController.tenderByUser);
 // tender results giving admin
 router.post("/add-tenderResults", verifyToken, isNotUser, tenderController.postAddTenderResults);
 
+// getting all tenderResults
+router.get("/alltenderResults", tenderController.getTenderResults)
+
+router.get("/tenderResults/:TenderResultId", verifyToken, tenderController.getTenderResultsByTenderId);
+
+//update tender Results form 
+router.put("/tenderResults/:TenderResultId", tenderController.updateResultsFormById);
+
+// tender Results form
+router.delete("/tenderResults/:TenderResultId", tenderController.deleteResultsFormById);
+
+
 module.exports = router;

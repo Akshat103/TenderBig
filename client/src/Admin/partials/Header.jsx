@@ -6,19 +6,20 @@ import Help from '../components/DropdownHelp';
 import UserMenu from '../components/DropdownProfile';
 import ThemeToggle from '../components/ThemeToggle';
 
-function Header({ sidebarOpen, setSidebarOpen }) {
+function Header() {
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <header className={`sticky top-0 dark:bg-[#182235] border-b border-slate-200 dark:border-slate-700 z-30`}>
+    <header className={`sticky top-0 dark:bg-[#182235] border-b border-slate-200 dark:border-slate-700 z-30 sm:flex sm:items-center sm:justify-between`}>
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 -mb-px">
           {/* Header: Left side */}
           <div className="flex">
             {/* Hamburger button */}
             <button
-              className="text-slate-500 hover:text-slate-600 lg:hidden"
+              className="text-slate-500 hover:text-slate-600 lg:hidden sm:mr-2"
               aria-controls="sidebar"
               aria-expanded={sidebarOpen}
               onClick={(e) => {
@@ -36,7 +37,28 @@ function Header({ sidebarOpen, setSidebarOpen }) {
           </div>
 
           {/* Header: Right side */}
-          
+          <div className="flex items-center">
+            {/* Search Modal */}
+            <SearchModal
+              isOpen={searchModalOpen}
+              onClose={() => setSearchModalOpen(false)}
+            />
+
+            {/* Notifications */}
+            {/* <Notifications />
+
+            {/* Help */}
+            {/* <Help />
+
+            {/* User Menu */}
+            {/* <UserMenu /> */}
+
+            {/* Theme Toggle */}
+            {/* <ThemeToggle
+              darkMode={darkMode}
+              onToggle={() => setDarkMode(!darkMode)}
+            /> */}
+          </div>
         </div>
       </div>
     </header>

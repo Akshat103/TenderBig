@@ -168,11 +168,18 @@ const ProjectList = () => {
               {getPageNumbers().map((pageNumber) => (
                 <button
                   key={pageNumber}
+<<<<<<< HEAD
                   className={`${
                     pageNumber === currentPage
                       ? "bg-red-700 text-white"
                       : "bg-gray-200 textgray-700"
                   } font-bold py-2 px-4 rounded mr-2`}
+=======
+                  className={`${pageNumber === currentPage
+                    ? "bg-red-700 text-white"
+                    : "bg-gray-200 textgray-700"
+                    } font-bold py-2 px-4 rounded mr-2`}
+>>>>>>> 61bc71124f08361316895d3c7b05892df9cd59b5
                   onClick={() => goToPage(pageNumber)}
                 >
                   {pageNumber}

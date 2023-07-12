@@ -89,8 +89,44 @@ const getFormById = async (req, res) => {
   }
 };
 
+const updateFormById = async (req, res) => {
+  const formId = req.params.id;
+  const updatedForm = req.body;
+  console.log(formId);
+  console.log(updatedForm);
+  try {
+    const result = await CompanyForm.findByIdAndUpdate(formId, updatedForm, { new: true });
+    if (!result) {
+      return res.status(404).json({ message: 'Form not found' });
+    }
+
+    res.json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const deleteFormById = async (req, res) => {
+  const formId = req.params.id;
+  try {
+    console.log(formId);
+    const deletedForm = await CompanyForm.findByIdAndDelete(formId);
+    if (!deletedForm) {
+      return res.status(404).json({ message: 'Form not found' });
+    }
+
+    res.json({ message: 'Form deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 module.exports = {
   submitForm,
   getAllForms,
   getFormById,
+  updateFormById,
+  deleteFormById
 };

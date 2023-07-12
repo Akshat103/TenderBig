@@ -20,6 +20,7 @@ router.post('/licenses', optionsController.insertLicenses);
 // Route for inserting auctionMaterial
 router.post('/auctionmaterials', optionsController.insertAuctionMaterial);
 
+
 // Route for removing a value from sectors array
 router.delete('/sectors/:value', optionsController.removeSector);
 

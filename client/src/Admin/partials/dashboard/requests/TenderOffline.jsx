@@ -1,57 +1,39 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const TenderOffline = () => {
-  const [contactForms, setContactForms] = useState([]);
-  const [sortOption, setSortOption] = useState("receivedAt");
+  const [forms, setForms] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [formsPerPage] = useState(10);
-  const [selectedService, setSelectedService] = useState("All");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchContactForms();
+    // Fetch data from the API
+    fetch("http://localhost:5000/apiTender/services/tender/offline/getall")
+      .then((response) => response.json())
+      .then((data) => setForms(data))
+      .catch((error) => console.log(error));
   }, []);
 
-  const fetchContactForms = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(
-        "http://localhost:5000/apiTender/services/tender/offline/getall",
-        {
-          headers: {
-            auth: token,
-          },
-        }
-      );
-
-      setContactForms(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const sortForms = (forms, option, isDescending) => {
-    switch (option) {
-      case "receivedAt":
-        return forms.sort((a, b) => {
-          const dateA = new Date(a.createdAt);
-          const dateB = new Date(b.createdAt);
-          return isDescending ? dateB - dateA : dateA - dateB;
-        });
-      case "name":
-        return forms.sort((a, b) => a.name.localeCompare(b.name));
-      case "company":
-        return forms.sort((a, b) => a.company.localeCompare(b.company));
-      case "email":
-        return forms.sort((a, b) => a.email.localeCompare(b.email));
-      case "mobile":
-        return forms.sort((a, b) => a.mobile.localeCompare(b.mobile));
-      default:
-        return forms;
-    }
-  };
+  function deleteFormById(id) {
+    fetch(`http://localhost:5000/apiTender/services/tender/offline/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        setForms(forms.filter((form) => form._id !== id));
+      })
+      .catch((error) => console.log(error));
+  }
 
   const formatReceivedAt = (dateString) => {
     const date = new Date(dateString);
@@ -63,32 +45,28 @@ const TenderOffline = () => {
     return formattedDate;
   };
 
-  const handleSortOptionChange = (option) => {
-    setSortOption(option);
+  // const viewDetails = (id) => {
+  //   navigate(`/dashboard/seekerrequests/${id}`);
+  // };
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
-  const handleServiceChange = (service) => {
-    setSelectedService(service);
+  const previousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
-  const handleResetFilters = () => {
-    setSelectedService("All");
+  const nextPage = () => {
+    const totalPages = Math.ceil(forms.length / formsPerPage);
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
   };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  // Pagination
-  const indexOfLastForm = currentPage * formsPerPage;
-  const indexOfFirstForm = indexOfLastForm - formsPerPage;
-  const currentForms = contactForms
-    .filter(
-      (form) =>
-        selectedService === "All" ? true : form.selectedService === selectedService
-    )
-    .slice(indexOfFirstForm, indexOfLastForm);
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
@@ -99,95 +77,112 @@ const TenderOffline = () => {
           {/* Site header */}
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto overflow-x-auto">
+          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <h1 className="text-xl font-bold mb-4">Requests for Career & Man Power</h1>
+
             {/* Table */}
-            <div className="shadow overflow-hidden rounded-lg border overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+            <div className="overflow-hidden rounded-lg border shadow-2xl">
+              <table className="min-w-full divide-y py-3 divide-gray-200 table-fixed">
+                <thead className="bg-gray-200">
                   <tr>
-                    <th
-                      className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
+                    <th className="py-4 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider border-b w-1/6">
                       Name
                     </th>
-                    <th
-                      className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
+                    <th className="py-3 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider border-b w-1/6">
                       Company
                     </th>
-                    <th
-                      className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
+                    <th className="py-3 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider border-b w-1/6">
                       Email
                     </th>
-                    <th
-                      className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
+                    <th className="py-3 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider border-b w-1/6">
                       Mobile
                     </th>
-                    <th
-                      className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
+                    <th className="py-3 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider border-b w-1/6">
                       Aadhar Number
                     </th>
-                    <th
-                      className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
+                    <th className="py-3 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider border-b w-1/6">
                       Role
                     </th>
-                    <th
-                      className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer border-b">
+
+                    <th className="py-3 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider cursor-pointer border-b w-1/6">
                       Received At
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {currentForms.map((form) => (
-                    <tr key={form.id}>
-                      <td className="py-2 px-4 whitespace-nowrap border-b">
-                        {form.name}
-                      </td>
-                      <td className="py-2 px-4 whitespace-nowrap border-b">
-                        {form.company}
-                      </td>
-                      <td className="py-2 px-4 whitespace-nowrap border-b">
-                        {form.email}
-                      </td>
-                      <td className="py-2 px-4 whitespace-nowrap border-b">
-                        {form.mobile}
-                      </td>
-                      <td className="py-2 px-4 whitespace-nowrap border-b">
-                        {form.aadhar}
-                      </td>
-                      <td className="py-2 px-4 whitespace-nowrap border-b">
-                        {form.role}
-                      </td>
-                      <td className="py-2 px-4 whitespace-nowrap border-b">
-                        {formatReceivedAt(form.createdAt)}
-                      </td>
-                    </tr>
-                  ))}
+                  {forms
+                    .slice(
+                      (currentPage - 1) * formsPerPage,
+                      currentPage * formsPerPage
+                    )
+                    .map((form) => (
+                      <tr key={form._id}>
+                        <td
+                          className="py-2 px-4 font-medium whitespace-nowrap border-b w-1/6"
+
+                        >
+                          {form.name}
+                        </td>
+                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/6">
+                          {form.company}
+                        </td>
+                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/6">
+                          {form.email}
+                        </td>
+                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/6">
+                          {form.mobile}
+                        </td>
+                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/6">
+                          {form.aadhar}
+                        </td>
+                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/6">
+                          {form.role}
+                        </td>
+                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/6">
+                          {formatReceivedAt(form.createdAt)}
+                        </td>
+                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/10">
+                          {/* <button
+                            className="text-blue-500 hover:text-blue-700"
+                            onClick={() => viewDetails(form._id)}
+                          >
+                            <FontAwesomeIcon icon={faEdit} />
+                          </button> */}
+                        </td>
+                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/10">
+                          <button
+                            className="text-red-500 hover:text-red-700"
+                            onClick={() => deleteFormById(form._id)}
+                          >
+                            <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
-            </div>
-
-            {/* Pagination */}
-            <div className="px-4 sm:px-6 lg:px-8 py-2 flex justify-center">
-              <nav className="flex items-center">
-                <ul className="pagination flex space-x-3">
-                  {Array.from({
-                    length: Math.ceil(contactForms.length / formsPerPage),
-                  }).map((_, index) => (
-                    <li key={index}>
-                      <button
-                        className={`pagination-link ${
-                          currentPage === index + 1
-                            ? "pagination-link-active"
-                            : ""
-                        }`}
-                        onClick={() => paginate(index + 1)}
-                      >
-                        {index + 1}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+              <div className="flex justify-between px-4 py-3 bg-gray-100 border-t border-gray-200 sm:px-6">
+                <div className="flex items-center">
+                  <button
+                    className="px-3 py-1 rounded-full focus:outline-none focus:shadow-outline-purple"
+                    onClick={previousPage}
+                    disabled={currentPage === 1}
+                  >
+                    <FontAwesomeIcon icon={faArrowLeft} />
+                  </button>
+                  <span className="px-2 text-sm">{currentPage}</span>
+                  <button
+                    className="px-3 py-1 rounded-full focus:outline-none focus:shadow-outline-purple"
+                    onClick={nextPage}
+                    disabled={
+                      currentPage ===
+                      Math.ceil(forms.length / formsPerPage)
+                    }
+                  >
+                    <FontAwesomeIcon icon={faArrowRight} />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </main>

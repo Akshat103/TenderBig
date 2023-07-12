@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const tenderResultModel = new mongoose.Schema(
     {
-        tenderId: {
+        TenderId: {
             type: String,
             required: true
         },
@@ -14,15 +14,13 @@ const tenderResultModel = new mongoose.Schema(
             type: String,
             required: true
         },
-        procurementSummary: {
-            country: {
-                type: String,
-                required: true
-            },
-            state: {
-                type: String,
-                required: true
-            },
+        country: {
+            type: String,
+            required: true
+        },
+        state: {
+            type: String,
+            required: true
         },
         BRR: {
             type: String,
@@ -57,7 +55,6 @@ const tenderResultModel = new mongoose.Schema(
             required: true
         }
     }
-    , { timestamps: true }
 
 );
 

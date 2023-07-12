@@ -1,18 +1,54 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Sidebar from "../../../../../Sidebar";
 import Header from "../../../../../Header";
+import { ProgressBar, Step } from 'react-step-progress-bar';
+import 'react-step-progress-bar/styles.css';
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const IndividualDetails = () => {
     const [formData, setFormData] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
     const { id } = useParams();
     useEffect(() => {
         // Fetch data from the API
         fetch(`http://localhost:5000/apiTender/services/icert/certification/${id}`)
             .then((response) => response.json())
-            .then((data) => setFormData(data))
+            .then((data) => {
+                setFormData(data)
+            })
             .catch((error) => console.log(error));
     }, [id]);
+
+    const handleEdit = () => {
+        setIsEditing(true);
+    };
+
+    const handleUpdate = (id) => {
+        // Perform update logic here with the updated form data
+        // You can send a request to the API to update the data
+        // After updating, set isEditing to false to exit editing mode
+        setIsEditing(false);
+    };
+
+    function updateDetails() {
+        fetch(`http://localhost:5000/apiTender/services/icert/certification/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData), // Replace formData with the updated data object
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                alert('form submitted')
+                // Perform any necessary actions after successful update
+                // For example, you can navigate to a different page or display a success message
+            })
+            .catch((error) => console.log(error));
+    }
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
     if (!formData) {
@@ -28,15 +64,18 @@ const IndividualDetails = () => {
                         <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
                             <div className="flex justify-center">
                                 <div className="bg-white rounded-lg shadow-lg p-6">
-                                    <h2 className="text-xl font-bold mb-4">Individual Detail</h2>
+                                    <h2 className="text-xl font-bold mb-4">Auction Material Detail</h2>
                                 </div>
                             </div>
                         </div>
                     </main>
                 </div>
-            </div >
+            </div>
         );
     }
+    const stepNames = ['Tender Name', 'Company Name', /* Add step names here */];
+
+    const progress = Math.round((formData.currentStep / (stepNames.length - 1)) * 100);
     return (
         <div className="flex h-screen overflow-hidden">
             {/* Sidebar */}
@@ -47,46 +86,352 @@ const IndividualDetails = () => {
                     {/* Site header */}
                     <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-
                     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-                        <div className="flex justify-center">
-                            <div className="bg-white rounded-lg shadow-lg p-6">
-                                <h2 className="text-xl font-bold mb-4">Individual Detail</h2>
-                                <div className="grid grid-cols-2">
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div>
-                                            <p className="font-bold">Name: {formData.name}</p>
-                                            <p className="font-bold">Father's Name: {formData.fatherName}</p>
-                                            <p className="font-bold">Date of Birth: {formData.dob}</p>
-                                            <p className="font-bold">Aadhar Number: {formData.aadharNumber}</p>
-                                            <p className="font-bold">PAN Number: {formData.panNumber}</p>
-                                            <p className="font-bold">Working Field: {formData.workingField}</p>
-                                            <p className="font-bold">Company Address 1: {formData.companyaddress1}</p>
-                                            <p className="font-bold">Company Address 2: {formData.companyaddress2}</p>
-                                            <p className="font-bold">City: {formData.companycity}</p>
-                                            <p className="font-bold">State: {formData.companystate}</p>
-                                            <p className="font-bold">Zip Code: {formData.zipcode}</p>
-                                            <p className="font-bold">Country: {formData.companycountry}</p>
-                                            <p className="font-bold">Others: {formData.others}</p>
-                                        </div>
-
-                                        <div>
-                                            <p className="font-bold">Mobile Number: {formData.mobileNumber}</p>
-                                            <p className="font-bold">Email: {formData.email}</p>
-                                            <p className="font-bold">Request License: {formData.requestLicense}</p>
-                                            <p className="font-bold">Photo:</p>
-                                            <img src={formData.photoUrl} alt="Photo" className="max-w-full h-auto" />
-                                            <p className="font-bold">Aadhar Card:</p>
-                                            <img src={formData.aadharUrl} alt="Aadhar Card" className="max-w-full h-auto" />
-                                            <p className="font-bold">PAN Card:</p>
-                                            <img src={formData.panUrl} alt="PAN Card" className="max-w-full h-auto" />
-                                            <p className="font-bold">Signature:</p>
-                                            <img src={formData.signatureUrl} alt="Signature" className="max-w-full h-auto" />
-                                        </div>
-                                    </div>
+                        <div className="flex justify-center flex-shrink">
+                            <div className="bg-white rounded-lg  p-20 shadow-2xl w-3/4">
+                                <ProgressBar
+                                    percent={progress}
+                                    filledBackground="linear-gradient(to right, #fefb72, #f0bb31)"
+                                >
+                                    {stepNames.map((_, index) => (
+                                        <Step key={index}>
+                                            {({ accomplished }) => (
+                                                <div className={`step ${accomplished ? 'completed' : null}`} />
+                                            )}
+                                        </Step>
+                                    ))}
+                                </ProgressBar>
+                                <h2 className="text-3xl font-bold mb-4 mt-6 text-center">Individual Detail</h2>
+                                {/* <div className="grid grid-cols-2 gap-11  "> */}
+                                <div className="w-full">
+                                    <label className="block mb-2 text-xl font-medium ">Father's Name:</label>
+                                    <input
+                                        type="text"
+                                        className="border text-lg border-gray-300 py-4 bg-gray-200 rounded-md px-9 p-2 me-12 w-full"
+                                        value={formData.fatherName}
+                                        readOnly={!isEditing}
+                                        onChange={(e) =>
+                                            setFormData({ ...formData, fatherName: e.target.value })
+                                        }
+                                    />
                                 </div>
 
-                            </div>
+                                {/* </div> */}
+                                <div className="grid grid-cols-2 mb-4 mt-4 gap-11">
+                                    <div>
+                                        <label className="block mb-2 text-xl font-medium">Date of Birth:</label>
+                                        <input
+                                            type="text"
+                                            className="border text-lg  border-gray-300 rounded-md p-2  py-4 w-full bg-gray-200"
+                                            value={formData.dob}
+                                            readOnly={!isEditing}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, dob: e.target.value })
+                                            }
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block mb-2 text-xl font-medium">Aadhar Number:</label>
+                                        <input
+                                            type="text"
+                                            className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                                            value={formData.aadharNumber}
+                                            readOnly={!isEditing}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, aadharNumber: e.target.value })
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-11">
+                                    <div>
+                                        <label className="block mb-2 text-xl font-medium">PAN Number:</label>
+                                        <input
+                                            type="text"
+                                            className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full  bg-gray-200"
+                                            value={formData.panNumber}
+                                            readOnly={!isEditing}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, panNumber: e.target.value })
+                                            }
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block mb-2 text-xl font-medium">Working Field:</label>
+                                        <input
+                                            type="text"
+                                            className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                                            value={formData.workingField}
+                                            readOnly={!isEditing}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, workingField: e.target.value })
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-11">
+                                    <div>
+                                        <label className="block mb-2 text-xl font-medium">Company Address 1:</label>
+                                        <input
+                                            type="text"
+                                            className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                                            value={formData.companyaddress1}
+                                            readOnly={!isEditing}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, companyaddress1: e.target.value })
+                                            }
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block mb-2 text-xl font-medium">Company Address 2:</label>
+                                        <input
+                                            type="text"
+                                            className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                                            value={formData.companyaddress2}
+                                            readOnly={!isEditing}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, companyaddress2: e.target.value })
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-11">
+                                    <div>
+                                        <label className="block mb-2 text-xl font-medium">City:</label>
+                                        <input
+                                            type="text"
+                                            className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                                            value={formData.companycity}
+                                            readOnly={!isEditing}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, companycity: e.target.value })
+                                            }
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block mb-2 text-xl font-medium">State:</label>
+                                        <input
+                                            type="text"
+                                            className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                                            value={formData.companystate}
+                                            readOnly={!isEditing}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, companystate: e.target.value })
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-11">
+                                    <div>
+                                        <label className="block mb-2 text-xl font-medium">Zip Code:</label>
+                                        <input
+                                            type="text"
+                                            className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                                            value={formData.zipcode}
+                                            readOnly={!isEditing}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, zipcode: e.target.value })
+                                            }
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block mb-2 text-xl font-medium">Country:</label>
+                                        <input
+                                            type="text"
+                                            className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                                            value={formData.companycountry}
+                                            readOnly={!isEditing}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, companycountry: e.target.value })
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-11">
+                                    <div>
+                                        <label className="block mb-2 text-xl font-medium">Others:</label>
+                                        <input
+                                            type="text"
+                                            className="border text-lg border-gray-300 py-4 bg-gray-200 rounded-md p-2 w-full"
+                                            value={formData.others}
+                                            readOnly={!isEditing}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, others: e.target.value })
+                                            }
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block mb-2 text-xl font-medium">PMobile Number:</label>
+                                        <input
+                                            type="text"
+                                            className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                                            value={formData.mobileNumber}
+                                            readOnly={!isEditing}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, mobileNumber: e.target.value })
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-11">
+                                    <div>
+                                        <label className="block mb-2 text-xl font-medium">Email:</label>
+                                        <input
+                                            type="text"
+                                            className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                                            value={formData.email}
+                                            readOnly={!isEditing}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, email: e.target.value })
+                                            }
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block mb-2 text-xl font-medium">Request License:</label>
+                                        <input
+                                            type="text"
+                                            className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                                            value={formData.requestLicense}
+                                            readOnly={!isEditing}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, requestLicense: e.target.value })
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-11">
+                                    <div>
+                                        <label className="block mb-2 text-xl font-medium">Photo</label>
+                                        <input
+                                            type="text"
+                                            className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                                            value={formData.photoUrl}
+                                            readOnly={!isEditing}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, name: e.target.value })
+                                            }
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block mb-2 text-xl font-medium">Aadhar Card:</label>
+                                        <input
+                                            type="text"
+                                            className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                                            value={formData.aadharUrl}
+                                            readOnly={!isEditing}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, name: e.target.value })
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-11">
+                                    <div>
+                                        <label className="block mb-2 text-xl font-medium">PAN Card:</label>
+                                        <input
+                                            type="text"
+                                            className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                                            value={formData.panUrl}
+                                            readOnly={!isEditing}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, name: e.target.value })
+                                            }
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block mb-2 text-xl font-medium">Signature:</label>
+                                        <input
+                                            type="text"
+                                            className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                                            value={formData.signatureUrl}
+                                            readOnly={!isEditing}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, name: e.target.value })
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                                {/* <div className="grid grid-cols-2 gap-11">
+                  <div>
+                    <label className="block mb-2 text-xl font-medium">CIN Upload:</label>
+                    <input
+                      type="text"
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      value={data.companyUploads.cinUpload[0]}
+                      readOnly={!isEditing}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                    />
+                  </div>
+                  <div>
+                    <label className="block mb-2 text-xl font-medium">GST Upload:</label>
+                    <input
+                      type="text"
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      value={data.companyUploads.gstUpload[0]}
+                      readOnly={!isEditing}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-11">
+                  <div>
+                    <label className="block mb-2 text-xl font-medium">PAN Upload:</label>
+                    <input
+                      type="text"
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      value={data.companyUploads.panUpload[0]}
+                      readOnly={!isEditing}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                    />
+                  </div>
+                  <div>
+                    <label className="block mb-2 text-xl font-medium">PAN:</label>
+                    <input
+                      type="text"
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      value={data.pan}
+                      readOnly={!isEditing}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                    />
+                  </div>
+                </div> */}
+                <div className="flex justify-between">
+
+                                <div className=" mt-4">
+                                    {isEditing ? (
+                                        <button
+                                        className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+                                            onClick={() => handleUpdate(formData._id)}
+                                        >
+                                            Save
+                                        </button>
+                                    ) : (
+                                        <button
+                                        className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+                                            onClick={handleEdit}
+                                        >
+                                            <FontAwesomeIcon icon={faEdit} />
+                                            Edit
+                                        </button>
+                                    )}
+                                </div>
+                                <div className=" mt-4">
+                                    <button
+                                        className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+                                        onClick={() => updateDetails(formData._id)}
+                                    >
+                                        Submit
+                                    </button>
+                                </div>
+                            </div></div>
                         </div>
                     </div>
                 </main>

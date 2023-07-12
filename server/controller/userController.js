@@ -1,4 +1,15 @@
+
+const AuctionMaterialForm = require("../models/services/AuctionMaterials/auctionmaterials");
+const EmployerForm = require("../models/services/CareerManPower/employerModel");
+const SeekerForm = require("../models/services/CareerManPower/seekerModel");
+const CompanyForm = require("../models/services/Registration&Certification/companyCertificationModel");
+const IndividualForm = require("../models/services/Registration&Certification/indivisualCertificationModel");
+const RegistrationForm = require("../models/services/Registration&Certification/registrationModel");
 const userModel = require("../models/userModel");
+const jointventureForm = require("../models/services/JointVenture/jointventure");
+const TenderOnlineModel = require("../models/services/Tenders/onlineFormModel");
+const gemregistrationForm = require("../models/services/GemRegistration/gemregistration");
+const TenderOfflineForm = require("../models/services/Tenders/offlineFormModel");
 
 class User {
 
@@ -132,6 +143,66 @@ class User {
             res.status(500).json({ error: 'Server Error' });
         }
     }
+
+    async DetailsById(req, res) {
+        const userId = req.params.id;
+        const allForms = [];
+        try {
+            const auctionMaterialFormCount = await AuctionMaterialForm.countDocuments({ userId: userId });
+            const auctionMaterialFormLatest = await AuctionMaterialForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            allForms.push({ formName: 'Auction Material', number: auctionMaterialFormCount, latestForm: auctionMaterialFormLatest });
+    
+            const companyFormCount = await CompanyForm.countDocuments({ userId: userId });
+            const companyFormLatest = await CompanyForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            allForms.push({ formName: 'Company', number: companyFormCount, latestForm: companyFormLatest });
+    
+            const employerFormCount = await EmployerForm.countDocuments({ userId: userId });
+            const employerFormLatest = await EmployerForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            allForms.push({ formName: 'employer', number: employerFormCount, latestForm: employerFormLatest });
+    
+            const seekerFormCount = await SeekerForm.countDocuments({ userId: userId });
+            const seekerFormLatest = await SeekerForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            allForms.push({ formName: 'seeker', number: seekerFormCount, latestForm: seekerFormLatest });
+    
+            const iCertificationFormCount = await IndividualForm.countDocuments({ userId: userId });
+            const iCertificationFormLatest = await IndividualForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            allForms.push({ formName: 'Individual Certification', number: iCertificationFormCount, latestForm: iCertificationFormLatest });
+    
+            const companyCertificationFormCount = await CompanyForm.countDocuments({ userId: userId });
+            const companyCertificationFormLatest = await CompanyForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            allForms.push({ formName: 'Company Certification', number: companyCertificationFormCount, latestForm: companyCertificationFormLatest });
+    
+            const registrationFormCount = await RegistrationForm.countDocuments({ userId: userId });
+            const registrationFormLatest = await RegistrationForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            allForms.push({ formName: 'registration', number: registrationFormCount, latestForm: registrationFormLatest });
+    
+            const jointVentureFormCount = await jointventureForm.countDocuments({ userId: userId });
+            const jointVentureFormLatest = await jointventureForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            allForms.push({ formName: 'joint venture', number: jointVentureFormCount, latestForm: jointVentureFormLatest });
+    
+            const tenderOfflineFormCount = await TenderOfflineForm.countDocuments({ userId: userId });
+            const tenderOfflineFormLatest = await TenderOfflineForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            allForms.push({ formName: 'Tender Offline', number: tenderOfflineFormCount, latestForm: tenderOfflineFormLatest });
+    
+            const tenderOnlineFormCount = await TenderOnlineModel.countDocuments({ userId: userId });
+            const tenderOnlineFormLatest = await TenderOnlineModel.findOne({ userId: userId }).sort({ createdAt: -1 });
+            allForms.push({ formName: 'Tender Online', number: tenderOnlineFormCount, latestForm: tenderOnlineFormLatest });
+    
+            const gemRegistrationFormCount = await gemregistrationForm.countDocuments({ userId: userId });
+            const gemRegistrationFormLatest = await gemregistrationForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            allForms.push({ formName: 'Gem Registration', number: gemRegistrationFormCount, latestForm: gemRegistrationFormLatest });
+    
+            console.log(allForms);
+            res.json(allForms);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Server Error' });
+        }
+    }
+    
+    
+    
+    
 }
 
 const usersController = new User();

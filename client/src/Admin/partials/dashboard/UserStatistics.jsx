@@ -34,7 +34,7 @@ const UserStatistics = () => {
       };
 
       const response = await axios.get(
-        'http://localhost:3000/apiTender/userdetails/statistics',
+        'http://localhost:5000/apiTender/userdetails/statistics',
         config
       );
       setStatistics(response.data);
@@ -111,7 +111,7 @@ const UserStatistics = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
                 <div className="flex items-center justify-center rounded h-68 bg-white mb-4">
-                  <div className="container">{renderChart()}</div>
+                  <div className="container" style={{ width: "500px", height: "500px" }}>{renderChart()}</div>
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -162,26 +162,26 @@ const UserStatistics = () => {
               </div>
 
               <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
-                  <FaUser className="text-8xl text-blue-500 mb-4" />
-                  <div className="text-gray-900 font-bold text-xl mb-2">Regular</div>
-                  <h1 className="text-2xl font-bold">{statistics.userCount}</h1>
-                  <div className="mt-4">
-                    <a href="#" className="text-blue-500 font-bold leading-none">
-                      More Info
-                    </a>
-                  </div>
+                <FaUser className="text-8xl text-blue-500 mb-4" />
+                <div className="text-gray-900 font-bold text-xl mb-2">Regular</div>
+                <h1 className="text-2xl font-bold">{statistics.userCount}</h1>
+                <div className="mt-4">
+                  <a href="#" className="text-blue-500 font-bold leading-none">
+                    More Info
+                  </a>
                 </div>
+              </div>
 
-                <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
-                  <FaCheckCircle className="text-8xl text-blue-500 mb-4" />
-                  <div className="text-gray-900 font-bold text-xl mb-2">Subscription Active</div>
-                  <h1 className="text-2xl font-bold">{statistics.activeSubscriptionCount}</h1>
-                  <div className="mt-4">
-                    <a href="#" className="text-blue-500 font-bold leading-none">
-                      More Info
-                    </a>
-                  </div>
+              <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                <FaCheckCircle className="text-8xl text-blue-500 mb-4" />
+                <div className="text-gray-900 font-bold text-xl mb-2">Subscription Active</div>
+                <h1 className="text-2xl font-bold">{statistics.activeSubscriptionCount}</h1>
+                <div className="mt-4">
+                  <a href="#" className="text-blue-500 font-bold leading-none">
+                    More Info
+                  </a>
                 </div>
+              </div>
             </div>
           </div>
         </>

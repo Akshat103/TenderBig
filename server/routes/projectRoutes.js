@@ -14,4 +14,10 @@ router.get('/:id', projectController.getProjectById);
 // Search projects by sector, country, or both
 router.get('/search', projectController.searchProjects);
 
+
+router.put('/:id', projectController.updateProjectById);
+
+router.put('/:id', projectController.deleteProjectById);
+
+
 module.exports = router;

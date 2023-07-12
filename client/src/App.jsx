@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import DashboardRoutes from './Routes/DashboardRoutes';
 import MainRoutes from './Routes/MainRoutes';
+// import UserCards from './userCards/UserDetails';
 
 const App = () => {
   return (
@@ -8,6 +9,7 @@ const App = () => {
       <Routes>
         <Route path="/*" element={<MainRoutes />} />
         <Route path="/dashboard/*" element={<DashboardRoutes />} />
+        {/* <Route path="/demo" element={<UserCards />}></Route> */}
       </Routes>
     </BrowserRouter>
   );

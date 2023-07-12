@@ -95,7 +95,7 @@ const tenderModel = new mongoose.Schema(
                 type: String,
                 required: true
             },
-            pin :{
+            pin: {
                 type: String,
                 required: true
             },
@@ -132,7 +132,7 @@ const tenderModel = new mongoose.Schema(
         },
         userCategory: {
             type: String,
-            enum: ["subcontractor", "contractor", "admin", "hr", "employee"],
+            enum: ["subcontractor", "contractor", "government", "gem", "private"],
             required: true
         },
         product: {
@@ -140,7 +140,7 @@ const tenderModel = new mongoose.Schema(
             required: true
         },
         docurl: {
-            type:String
+            type: String
         },
         active: {
             type: Boolean,

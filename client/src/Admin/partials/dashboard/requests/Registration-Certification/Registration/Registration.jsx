@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRight, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import * as XLSX from "xlsx";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 
 const RegistrationList = () => {
     const [forms, setForms] = useState([]);
@@ -67,6 +70,56 @@ const RegistrationList = () => {
         }
     };
 
+
+    const downloadAsExcel = () => {
+        const selectedData = forms
+            .slice((currentPage - 1) * formsPerPage, currentPage * formsPerPage)
+            .map((form) => ({
+                "Company Name": form.company,
+                "Company Profile": form.cprofile,
+                Category: form.category,
+                "Licence Name": form.liscence,
+                "Received At": formatReceivedAt(form.createdAt),
+            }));
+
+        const worksheet = XLSX.utils.json_to_sheet(selectedData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Forms");
+        const excelBuffer = XLSX.write(workbook, {
+            bookType: "xlsx",
+            type: "array",
+        });
+
+        const data = new Blob([excelBuffer], {
+            type:
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
+        const filename = "forms.xlsx";
+        saveAs(data, filename);
+    };
+
+    const downloadAsPDF = () => {
+        const doc = new jsPDF();
+        const tableData = forms
+            .slice((currentPage - 1) * formsPerPage, currentPage * formsPerPage)
+            .map((form) => [
+                form.company,
+                form.cprofile,
+                form.category,
+                form.liscence,
+                formatReceivedAt(form.createdAt),
+            ]);
+
+        doc.autoTable({
+            head: [
+                ["Company Name", "Company Profile", "Category", "Licence Name", "Received At"],
+            ],
+            body: tableData,
+        });
+
+        doc.save("forms.pdf");
+    };
+
     const [sidebarOpen, setSidebarOpen] = useState(false);
     return (
         <div className="flex h-screen overflow-hidden">
@@ -80,7 +133,21 @@ const RegistrationList = () => {
 
                     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
                         <h1 className="text-xl font-bold mb-4">Registration Requests</h1>
-
+{/* Download buttons */}
+                <div className="flex justify-end mb-4">
+                  <button
+                    className="bg-green-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 mr-2"
+                    onClick={downloadAsExcel}
+                  >
+                    Download Excel
+                  </button>
+                  <button
+                    className="bg-red-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+                    onClick={downloadAsPDF}
+                  >
+                    Download PDF
+                  </button>
+                </div>
                         {/* Table */}
                         <div className="overflow-hidden rounded-lg border shadow-2xl">
                             <table className="min-w-full divide-y py-3 divide-gray-200 table-fixed">

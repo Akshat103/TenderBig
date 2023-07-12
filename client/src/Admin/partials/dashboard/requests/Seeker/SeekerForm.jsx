@@ -9,6 +9,9 @@ import {
     faEdit,
     faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import * as XLSX from "xlsx";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 
 const SeekerForm = () => {
     const [forms, setForms] = useState([]);
@@ -71,6 +74,141 @@ const SeekerForm = () => {
         }
     };
 
+
+    const downloadAsExcel = () => {
+        const selectedData = forms.slice(
+          (currentPage - 1) * formsPerPage,
+          currentPage * formsPerPage
+        );
+    
+        const formattedData = selectedData.map((form) => ({
+          Name: form.name,
+          "Father's Name": form.fathername,
+          "Mobile:": form.mobile,
+          "Email:": form.email ,
+          "10th Mark:": form.tenMark ,
+          "12th Mark:": form.twelveMark ,
+          
+
+          "Job Post": form.jobpost,
+          "Job Experience": form.jobexp,
+          "Company:": form.company,
+          "Address:": form.address ,
+          
+          City: form.city,
+          " State:": form.state ,
+          "Country:": form.country ,
+          "Zip": form.zip,
+          "Past Salary":form.pastSalary,
+          "Expected Salary": form.expectedSalary,
+          Resume:form.resumeUrl,
+          Photo:form.photoUrl,
+          Aadhar:form.aadharUrl,
+          "Received At": formatReceivedAt(form.createdAt),
+        }));
+    
+        const worksheet = XLSX.utils.json_to_sheet(formattedData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Forms");
+        const excelBuffer = XLSX.write(workbook, {
+          bookType: "xlsx",
+          type: "array",
+        });
+    
+        const data = new Blob([excelBuffer], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
+        saveAs(data, "forms.xlsx");
+      };
+    
+      const downloadAsPDF = () => {
+        const doc = new jsPDF();
+      
+        const tableData = forms
+          .slice(
+            (currentPage - 1) * formsPerPage,
+            currentPage * formsPerPage
+          )
+          .map((form) => ({
+            Name: form.name,
+            "Father's Name": form.fathername,
+            Mobile: form.mobile,
+            Email: form.email,
+            "10th Mark": form.tenMark,
+            "12th Mark": form.twelveMark,
+            "Job Post": form.jobpost,
+            "Job Experience": form.jobexp,
+            Company: form.company,
+            Address: form.address,
+            City: form.city,
+            State: form.state,
+            Country: form.country,
+            Zip: form.zip,
+            "Past Salary": form.pastSalary,
+            "Expected Salary": form.expectedSalary,
+            Resume: form.resumeUrl,
+            Photo: form.photoUrl,
+            Aadhar: form.aadharUrl,
+            "Received At": formatReceivedAt(form.createdAt),
+          }));
+      
+        const tableConfig = {
+          headStyles: { fillColor: [63, 81, 181] },
+          bodyStyles: { valign: 'middle' },
+          columnStyles: {
+            0: { cellWidth: 25 },
+            1: { cellWidth: 40 },
+            2: { cellWidth: 30 },
+            3: { cellWidth: 30 },
+            4: { cellWidth: 20 },
+            5: { cellWidth: 20 },
+            6: { cellWidth: 40 },
+            7: { cellWidth: 40 },
+            8: { cellWidth: 40 },
+            9: { cellWidth: 40 },
+            10: { cellWidth: 20 },
+            11: { cellWidth: 20 },
+            12: { cellWidth: 20 },
+            13: { cellWidth: 20 },
+            14: { cellWidth: 25 },
+            15: { cellWidth: 30 },
+            16: { cellWidth: 20 },
+            17: { cellWidth: 20 },
+            18: { cellWidth: 20 },
+          },
+          head: [
+            [
+              "Name",
+              "Father's Name",
+              "Mobile",
+              "Email",
+              "10th Mark",
+              "12th Mark",
+              "Job Post",
+              "Job Experience",
+              "Company",
+              "Address",
+              "City",
+              "State",
+              "Country",
+              "Zip",
+              "Past Salary",
+              "Expected Salary",
+              "Resume",
+              "Photo",
+              "Aadhar",
+              "Received At",
+            ],
+          ],
+          body: tableData.map((row) => Object.values(row)),
+        };
+      
+        doc.autoTable(tableConfig);
+        doc.save("forms.pdf");
+      };
+      
+
+
     const [sidebarOpen, setSidebarOpen] = useState(false);
     return (
         <div className="flex h-screen overflow-hidden">
@@ -84,7 +222,21 @@ const SeekerForm = () => {
 
                     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
                         <h1 className="text-xl font-bold mb-4">Seeker Requests</h1>
-
+{/* Download buttons */}
+                <div className="flex justify-end mb-4">
+                  <button
+                    className="bg-green-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 mr-2"
+                    onClick={downloadAsExcel}
+                  >
+                    Download Excel
+                  </button>
+                  <button
+                    className="bg-red-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+                    onClick={downloadAsPDF}
+                  >
+                    Download PDF
+                  </button>
+                </div>
                         {/* Table */}
                         <div className="overflow-hidden rounded-lg border shadow-2xl">
                             <table className="min-w-full divide-y py-3 divide-gray-200 table-fixed">

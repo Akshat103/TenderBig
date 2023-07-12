@@ -3,8 +3,14 @@ import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { faArrowRight, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faArrowRight,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+import * as XLSX from "xlsx";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 
 const TenderOffline = () => {
   const [forms, setForms] = useState([]);
@@ -22,14 +28,14 @@ const TenderOffline = () => {
 
   function deleteFormById(id) {
     fetch(`http://localhost:5000/apiTender/services/tender/offline/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
+        console.log(data);
         setForms(forms.filter((form) => form._id !== id));
       })
       .catch((error) => console.log(error));
@@ -44,10 +50,6 @@ const TenderOffline = () => {
     });
     return formattedDate;
   };
-
-  // const viewDetails = (id) => {
-  //   navigate(`/dashboard/seekerrequests/${id}`);
-  // };
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -66,6 +68,59 @@ const TenderOffline = () => {
     }
   };
 
+  const downloadAsExcel = () => {
+    const selectedData = forms
+      .slice((currentPage - 1) * formsPerPage, currentPage * formsPerPage)
+      .map((form) => ({
+        Name: form.name,
+        Company: form.company,
+        Email: form.email,
+        "Phone Number": form.mobile,
+        "Aadhar Number": form.aadhar,
+        Role: form.role,
+        "Received At": formatReceivedAt(form.createdAt),
+      }));
+
+    const worksheet = XLSX.utils.json_to_sheet(selectedData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Forms");
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+
+    const data = new Blob([excelBuffer], {
+      type:
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    const filename = "forms.xlsx";
+    saveAs(data, filename);
+  };
+
+  const downloadAsPDF = () => {
+    const doc = new jsPDF();
+    const tableData = forms
+      .slice((currentPage - 1) * formsPerPage, currentPage * formsPerPage)
+      .map((form) => [
+        form.name,
+        form.company,
+        form.email,
+        form.mobile,
+        form.aadhar,
+        form.role,
+        formatReceivedAt(form.createdAt),
+      ]);
+
+    doc.autoTable({
+      head: [
+        ["Name", "Company", "Email", "Phone Number", "Aadhar Number", "Role", "Received At"],
+      ],
+      body: tableData,
+    });
+
+    doc.save("forms.pdf");
+  };
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <div className="flex h-screen overflow-hidden">
@@ -78,8 +133,25 @@ const TenderOffline = () => {
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            <h1 className="text-xl font-bold mb-4">Requests for Career & Man Power</h1>
+            <h1 className="text-xl font-bold mb-4">
+              Requests for Career & Man Power
+            </h1>
 
+            {/* Download buttons */}
+            <div className="flex justify-end mb-4">
+              <button
+                className="bg-green-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 mr-2"
+                onClick={downloadAsExcel}
+              >
+                Download Excel
+              </button>
+              <button
+                className="bg-red-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+                onClick={downloadAsPDF}
+              >
+                Download PDF
+              </button>
+            </div>
             {/* Table */}
             <div className="overflow-hidden rounded-lg border shadow-2xl">
               <table className="min-w-full divide-y py-3 divide-gray-200 table-fixed">

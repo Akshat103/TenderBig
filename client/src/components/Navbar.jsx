@@ -82,7 +82,8 @@ const Navbar = () => {
                   </Link>
                   <div className="relative">
                     <button
-                      onClick={toggleDropdown}
+                    onClick={() => setDropdownOpen(true)}
+                      onMouseEnter={() => setDropdownOpen(true)}
                       className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
                     >
                       Services
@@ -90,8 +91,9 @@ const Navbar = () => {
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
                         fill="currentColor"
-                        className={`ml-1 h-4 w-4 inline-block transform ${dropdownOpen ? "rotate-180" : ""
-                          }`}
+                        className={`ml-1 h-4 w-4 inline-block transform ${
+                          dropdownOpen ? "rotate-180" : ""
+                        }`}
                       >
                         <path
                           fillRule="evenodd"
@@ -101,7 +103,12 @@ const Navbar = () => {
                       </svg>
                     </button>
                     {dropdownOpen && (
-                      <div className="absolute right-0 mt-2  bg-white border border-gray-200 rounded-md shadow-lg w-[290px] z-10">
+                      <div
+                        className="absolute right-0 mt-2  bg-white border border-gray-200 rounded-md shadow-lg w-[290px] z-10"
+                        onMouseEnter={() => setDropdownOpen(true)}
+                        onMouseLeave={() => setDropdownOpen(false)}
+
+                      >
                         <Link
                           to="/careerandmanpower"
                           className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
@@ -247,19 +254,16 @@ const Navbar = () => {
                         Logout
                       </button>
 
-                      {
-                        (auth.userRole == "admin") ? (
-                          <button
-                            onClick={dashboard}
-                            className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
-                          >
-                            Dashboard
-                          </button>
-                        ) : (
-                          <>
-                          </>
-                        )
-                      }
+                      {auth.userRole == "admin" ? (
+                        <button
+                          onClick={dashboard}
+                          className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
+                        >
+                          Dashboard
+                        </button>
+                      ) : (
+                        <></>
+                      )}
                     </>
                   ) : (
                     <Link
@@ -269,7 +273,6 @@ const Navbar = () => {
                       Login
                     </Link>
                   )}
-
                 </div>
               </div>
 
@@ -339,8 +342,9 @@ const Navbar = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
-                    className={`ml-1 h-4 w-4 inline-block transform ${dropdownOpen ? "rotate-180" : ""
-                      }`}
+                    className={`ml-1 h-4 w-4 inline-block transform ${
+                      dropdownOpen ? "rotate-180" : ""
+                    }`}
                   >
                     <path
                       fillRule="evenodd"

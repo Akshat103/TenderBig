@@ -5,8 +5,8 @@ import Step2 from './Steps/WorkExperience';
 import Step3 from './Steps/DirectorDetails';
 import Step4 from './Steps/CompanyInfo';
 import Step5 from './Steps/AuctionMaterial';
-import axios from "axios";
-import uploadFileToS3 from "../../../pages/file-uploading/FileUpload";
+import axios from 'axios';
+import uploadFileToS3 from '../../../pages/file-uploading/FileUpload';
 import payment from '../../../components/payment';
 
 const uploadMultipleFilesToS3 = async (files) => {
@@ -19,20 +19,22 @@ const uploadMultipleFilesToS3 = async (files) => {
   return results;
 };
 
-
 const AuctionMaterialForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [auctionMaterials, setAuctionMaterials] = useState([]);
+  const [formErrors, setFormErrors] = useState({});
+  const [isFormIncomplete, setIsFormIncomplete] = useState(false); // New state to track incomplete form
 
   useEffect(() => {
     fetchAuctionMaterial();
   }, []);
 
-
   const fetchAuctionMaterial = async () => {
-    const response = await axios.get("http://localhost:5000/apiTender/options/alloptions?array=AuctionMaterials");
+    const response = await axios.get(
+      'http://localhost:5000/apiTender/options/alloptions?array=AuctionMaterials'
+    );
     setAuctionMaterials(response.data[0].AuctionMaterials);
-  }
+  };
 
   const totalSteps = 5;
   const gaps = totalSteps - 1;
@@ -86,10 +88,17 @@ const AuctionMaterialForm = () => {
       ...prevFormData,
       [name]: value,
     }));
+    // Clear form errors when a field value changes
+    setFormErrors((prevFormErrors) => ({
+      ...prevFormErrors,
+      [name]: '',
+    }));
   };
 
   const handleNext = () => {
-    setCurrentStep((prevStep) => prevStep + 1);
+    if (validateCurrentStep()) {
+      setCurrentStep((prevStep) => prevStep + 1);
+    }
   };
 
   const handlePrevious = () => {
@@ -136,18 +145,137 @@ const AuctionMaterialForm = () => {
       otherDescription: '',
     });
     setCurrentStep(0);
-  }
-  const getAmount=async()=>{
-    const {data:{price}} = await axios.get("http://localhost:5000/apiTender/formprice/Auction%20Material/price");
-    return price;
-}
+    setFormErrors({});
+    setIsFormIncomplete(false);
+  };
 
-const handleSubmit = async (e) => {
+  const validateCurrentStep = () => {
+    let errors = {};
+
+    // Validate Tender Details
+    if (currentStep === 0) {
+      if (!formData.tenderNumber) {
+        errors.tenderNumber = 'Tender number is required.';
+      }
+      if (!formData.tenderLink) {
+        errors.tenderLink = 'Tender link is required.';
+      }
+      if (!formData.companyName) {
+        errors.companyName = 'Company name is required.';
+      }
+      if (!formData.cinReg) {
+        errors.cinReg = 'CIN registration number is required.';
+      }
+      if (!formData.gst) {
+        errors.gst = 'GST number is required.';
+      }
+      if (!formData.pan) {
+        errors.pan = 'PAN number is required.';
+      }
+    }
+
+    // Validate Work Experience
+    if (currentStep === 1) {
+      if (formData.workExperience.length === 0) {
+        errors.workExperience = 'Please upload work experience files.';
+      }
+    }
+
+    // Validate Director Details
+    if (currentStep === 2) {
+      const directorsErrors = [];
+      formData.directors.forEach((director, index) => {
+        const directorErrors = {};
+        if (!director.directorName) {
+          directorErrors.directorName = 'Director name is required.';
+        }
+        if (!director.directorAadhar) {
+          directorErrors.directorAadhar = 'Aadhar number is required.';
+        }
+        if (!director.directorPan) {
+          directorErrors.directorPan = 'PAN number is required.';
+        }
+        if (!director.directorDob) {
+          directorErrors.directorDob = 'Date of birth is required.';
+        }
+        if (!director.directorFatherName) {
+          directorErrors.directorFatherName = 'Father name is required.';
+        }
+        directorsErrors[index] = directorErrors;
+      });
+
+      if (directorsErrors.length > 0) {
+        errors.directors = directorsErrors;
+      }
+    }
+
+    // Validate Company Information
+    if (currentStep === 3) {
+      if (!formData.address) {
+        errors.address = 'Address is required.';
+      }
+      if (!formData.country) {
+        errors.country = 'Country is required.';
+      }
+      if (!formData.state) {
+        errors.state = 'State is required.';
+      }
+      if (!formData.city) {
+        errors.city = 'City is required.';
+      }
+      if (!formData.zipCode) {
+        errors.zipCode = 'Zip code is required.';
+      }
+      if (!formData.website) {
+        errors.website = 'Website is required.';
+      }
+      if (!formData.projectMailId) {
+        errors.projectMailId = 'Project mail ID is required.';
+      }
+      if (!formData.contactPersonName) {
+        errors.contactPersonName = 'Contact person name is required.';
+      }
+      if (!formData.contactPersonNumber) {
+        errors.contactPersonNumber = 'Contact person number is required.';
+      }
+    }
+
+    // Validate Auction Material
+    if (currentStep === 4) {
+      if (formData.auctionMaterial.length === 0) {
+        errors.auctionMaterial = 'Please select auction materials.';
+      }
+    }
+
+    setFormErrors(errors);
+
+    // Check if any errors exist
+    const hasErrors = Object.keys(errors).length > 0;
+    setIsFormIncomplete(hasErrors); // Set form incomplete if there are errors
+
+    return !hasErrors;
+  };
+
+  const getAmount = async () => {
+    const {
+      data: { price },
+    } = await axios.get(
+      'http://localhost:5000/apiTender/formprice/Auction%20Material/price'
+    );
+    return price;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateCurrentStep()) {
+      return; // Don't proceed if the form is not valid
+    }
+
     const price = await getAmount();
-    const receipt = "Auction Material";
-    payment(price,receipt)
-      .then(async success => {
+    const receipt = 'Auction Material';
+    payment(price, receipt)
+      .then(async (success) => {
         console.log('Payment success:', success);
         var requestBody = formData;
 
@@ -163,11 +291,15 @@ const handleSubmit = async (e) => {
         requestBody.workExperience.workOrderSamples = workOrderSamplesUrls;
         requestBody.workExperience.workProfiles = workProfilesUrls;
         const token = localStorage.getItem('token');
-        const response = await axios.post('http://localhost:5000/apiTender/services/aumt/auction-material', requestBody, {
-          headers: {
-            'auth': token
+        const response = await axios.post(
+          'http://localhost:5000/apiTender/services/aumt/auction-material',
+          requestBody,
+          {
+            headers: {
+              auth: token,
+            },
           }
-        });
+        );
         if (response.data.success) {
           alert('Submitted');
           resetForm();
@@ -175,30 +307,20 @@ const handleSubmit = async (e) => {
           alert('Something went wrong. Try again.');
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Payment error:', error);
         // Handle the error if the payment fails
       });
-
   };
 
   return (
     <>
-        {/* <div className="flex items-center justify-center">
-    <div className="grid max-w-[1244px] grid-cols-12 gap-16 mt-5">
-    <div className="col-span-4 px-2 mt-6 mb-6"> */}
-      {/* {sideNavigationButtons.map(button => (
-        <NavLink to={button.link} >
-      <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold  border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">{button.name}</div>
-        </NavLink>
-      ))} */}
-    {/* </div> */}
       <div className="flex max-w-[1244px] px-4 py-8 mx-auto mt-6 mb-6 border-2 border-gray-900 rounded-md">
-      <img
-              src="https://img.freepik.com/free-vector/flat-design-illustration-customer-support_23-2148887720.jpg?w=740&t=st=1687066253~exp=1687066853~hmac=42f23f007ad72bd2ca440a69684ce6508082c1182b3c54179addffc4163960af"
-              className="w-4/5 md:w-1/2"
-              alt="Contact illustration"
-            />
+        <img
+          src="https://img.freepik.com/free-vector/flat-design-illustration-customer-support_23-2148887720.jpg?w=740&t=st=1687066253~exp=1687066853~hmac=42f23f007ad72bd2ca440a69684ce6508082c1182b3c54179addffc4163960af"
+          className="w-4/5 md:w-1/2"
+          alt="Contact illustration"
+        />
         <div className="m-10">
           <ProgressBar
             percent={progress}
@@ -217,6 +339,7 @@ const handleSubmit = async (e) => {
             {currentStep === 0 && (
               <Step1
                 formData={formData}
+                formErrors={formErrors}
                 handleChange={handleChange}
                 handleNext={handleNext}
               />
@@ -225,6 +348,7 @@ const handleSubmit = async (e) => {
             {currentStep === 1 && (
               <Step2
                 formData={formData}
+                formErrors={formErrors}
                 handleChange={handleChange}
                 handleNext={handleNext}
                 handlePrevious={handlePrevious}
@@ -235,6 +359,7 @@ const handleSubmit = async (e) => {
             {currentStep === 2 && (
               <Step3
                 formData={formData}
+                formErrors={formErrors}
                 handleChange={handleChange}
                 handleNext={handleNext}
                 handlePrevious={handlePrevious}
@@ -245,6 +370,7 @@ const handleSubmit = async (e) => {
             {currentStep === 3 && (
               <Step4
                 formData={formData}
+                formErrors={formErrors}
                 handleChange={handleChange}
                 handleNext={handleNext}
                 handlePrevious={handlePrevious}
@@ -254,6 +380,7 @@ const handleSubmit = async (e) => {
             {currentStep === 4 && (
               <Step5
                 formData={formData}
+                formErrors={formErrors}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
                 handlePrevious={handlePrevious}
@@ -261,6 +388,9 @@ const handleSubmit = async (e) => {
               />
             )}
 
+            {isFormIncomplete && (
+              <p className="text-red-500">Please fill in all the required fields.</p>
+            )}
           </form>
         </div>
       </div>
@@ -269,4 +399,3 @@ const handleSubmit = async (e) => {
 };
 
 export default AuctionMaterialForm;
-

@@ -26,14 +26,7 @@ function AdminTenderResultList() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/apiTender/userdetails/users/admin",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              auth: localStorage.getItem("token"),
-            },
-          }
+          "http://localhost:5000/apiTender/tenderdetails/alltenderResults"
         );
         setUserData(response.data);
       } catch (error) {
@@ -52,15 +45,15 @@ function AdminTenderResultList() {
     setSearchTerm(e.target.value);
   };
 
-  const filteredData = userData.filter((user) => {
-    const nameMatch = user.name
+  const filteredData = userData.filter((tender) => {
+    const tenderIdMatch = tender.TenderId
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
-    const emailMatch = user.email
+    const summaryMatch = tender.summary
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
     // Check if any of the conditions is true
-    return nameMatch || emailMatch;
+    return tenderIdMatch || summaryMatch;
   });
 
   // Pagination
@@ -87,12 +80,24 @@ function AdminTenderResultList() {
 
   const downloadAsExcel = () => {
     const selectedData = currentUsers.map((user) => ({
-      
+      "Tender Id": user.TenderId,
+      "User Id": user.userId,
+      Summary: user.summary,
+      Country: user.country,
+      State: user.state,
+      BRR: user.BRR,
+      Authority: user.Authority,
+      Deadline: user.deadline,
+      "Tendor No": user.TendorNo,
+      Description: user.description,
+      "User Category": user.userCategory,
+      "Tender Value": user.tenderValue,
+      "Contract Value": user.contractValue,
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(selectedData);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Tender Results");
     const excelBuffer = XLSX.write(workbook, {
       bookType: "xlsx",
       type: "array",
@@ -101,18 +106,42 @@ function AdminTenderResultList() {
     const data = new Blob([excelBuffer], {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
-    saveAs(data, "users.xlsx");
+    saveAs(data, "tender-results.xlsx");
   };
 
   const downloadAsPDF = () => {
     const doc = new jsPDF();
 
     const headers = [
-      
+      "Tender Id",
+      "User Id",
+      "Summary",
+      "Country",
+      "State",
+      "BRR",
+      "Authority",
+      "Deadline",
+      "Tendor No",
+      "Description",
+      "User Category",
+      "Tender Value",
+      "Contract Value",
     ];
 
     const selectedData = currentUsers.map((user) => [
-      
+      user.TenderId,
+      user.userId,
+      user.summary,
+      user.country,
+      user.state,
+      user.BRR,
+      user.Authority,
+      user.deadline,
+      user.TendorNo,
+      user.description,
+      user.userCategory,
+      user.tenderValue,
+      user.contractValue,
     ]);
 
     const data = {
@@ -120,38 +149,33 @@ function AdminTenderResultList() {
       rows: selectedData,
     };
 
-    const tableConfig = {
-      
-    };
+    const tableConfig = {};
 
     doc.autoTable(data.headers, data.rows, tableConfig);
 
-    doc.save("users.pdf");
+    doc.save("tender-results.pdf");
   };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
-    <div className="flex h-screen overflow-hidden ">
+    <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
-
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
         <main>
-          {/*  Site header 
-      import Header from '../partials/Header';
-      */}
+          {/* Site header */}
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             {/* Dashboard actions */}
 
             {/* Cards */}
             <div className="grid grid-cols-15 gap-6">
-              {/*---------> Table (Top Channels) */}
+              {/* Table */}
               <section className="container mx-auto p-6 font-mono overflow-x-auto">
                 <h1 className="text-xl font-bold mb-4">Tender Results</h1>
-                <div className="flex mb-4  justify-between">
+                <div className="flex mb-4 justify-between">
                   {/* Search bar */}
                   <input
                     type="text"
@@ -163,9 +187,7 @@ function AdminTenderResultList() {
 
                   <button
                     className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
-                    onClick={() => {
-                      AddTenderResult();
-                    }}
+                    onClick={AddTenderResult}
                   >
                     Add New Tender Result
                   </button>
@@ -173,13 +195,13 @@ function AdminTenderResultList() {
                 {/* Download buttons */}
                 <div className="flex justify-end mb-4">
                   <button
-                    className="bg-green-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 mr-2"
+                    className="bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 mr-2"
                     onClick={downloadAsExcel}
                   >
                     Download Excel
                   </button>
                   <button
-                    className="bg-red-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+                    className="bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
                     onClick={downloadAsPDF}
                   >
                     Download PDF
@@ -190,42 +212,73 @@ function AdminTenderResultList() {
                     <table className="w-full">
                       <thead>
                         <tr className="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-                          <th className="px-4 py-3">User</th>
-                          <th className="px-4 py-3">Email</th>
-                          <th className="px-4 py-3">Phone</th>
+                          <th className="px-4 py-3">Tender Id</th>
+                          <th className="px-4 py-3">User Id</th>
+                          <th className="px-4 py-3">Summary</th>
                           <th className="px-4 py-3">Country</th>
-                          <th className="px-4 py-3">City</th>
+                          <th className="px-4 py-3">State</th>
+                          <th className="px-4 py-3">BRR</th>
+                          <th className="px-4 py-3">Authority</th>
+                          <th className="px-4 py-3">Deadline</th>
+                          <th className="px-4 py-3">Tendor No</th>
+                          <th className="px-4 py-3">Description</th>
+                          <th className="px-4 py-3">User Category</th>
+                          <th className="px-4 py-3">Tender Value</th>
+                          <th className="px-4 py-3">Contract Value</th>
                         </tr>
                       </thead>
                       <tbody className="bg-white">
-                        {currentUsers.map((user) => (
-                          <tr className="text-gray-700" key={user._id}>
+                        {currentUsers.map((tender) => (
+                          <tr className="text-gray-700" key={tender._id}>
                             <td className="px-4 py-3 border">
                               <div className="flex items-center text-sm">
                                 <div
                                   onClick={() => {
-                                    showDetails(user.userId);
+                                    showDetails(tender.userId);
                                   }}
+                                  className="font-semibold text-black cursor-pointer"
                                 >
-                                  <p className="font-semibold text-black cursor-pointer">
-                                    {user.name}
-                                  </p>
+                                  {tender.TenderId}
                                 </div>
                               </div>
                             </td>
                             <td className="px-4 py-3 text-ms font-semibold border">
-                              {user.email}
+                              {tender.userId}
                             </td>
                             <td className="px-4 py-3 text-xs border">
                               <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">
-                                {user.phoneNumber}
+                                {tender.summary}
                               </span>
                             </td>
                             <td className="px-4 py-3 text-sm border">
-                              {user.country}
+                              {tender.country}
                             </td>
                             <td className="px-4 py-3 text-sm border">
-                              {user.city}
+                              {tender.state}
+                            </td>
+                            <td className="px-4 py-3 text-sm border">
+                              {tender.BRR}
+                            </td>
+                            <td className="px-4 py-3 text-sm border">
+                              {tender.Authority}
+                            </td>
+                            <td className="px-4 py-3 text-sm border">
+                              {tender.deadline}
+                            </td>
+                            <td className="px-4 py-3 text-sm border">
+                              {tender.TendorNo}
+                            </td>
+                            <td className="px-4 py-3 text-sm border">
+                              {tender.description}
+                            </td>
+                            <td className="px-4 py-3 text-sm border">
+                              {tender.userCategory}
+                            </td>
+                            <td className="px-4 py-3 text-sm border">
+                              {tender.tenderValue}
+                            </td>
+                            <td className="px-4 py-3 text-sm border">
+                              {tender.contractValue}
                             </td>
                           </tr>
                         ))}
@@ -240,11 +293,6 @@ function AdminTenderResultList() {
                         disabled={currentPage === 1}
                       >
                         <FontAwesomeIcon icon={faArrowLeft} />
-                        <path
-                          fillRule="evenodd"
-                          d="M5.293 6.707a1 1 0 010-1.414L2.414 2.343A1 1 0 113.828.93L7.586 4.686a1 1 0 010 1.414L3.828 9.07a1 1 0 11-1.414-1.414L5.293 6.707z"
-                          clipRule="evenodd"
-                        ></path>
                       </button>
                       <span className="px-2 text-sm">{currentPage}</span>
                       <button
@@ -256,11 +304,6 @@ function AdminTenderResultList() {
                         }
                       >
                         <FontAwesomeIcon icon={faArrowRight} />
-                        <path
-                          fillRule="evenodd"
-                          d="M14.707 13.293a1 1 0 010 1.414l-3.758 3.758a1 1 0 11-1.414-1.414L12.586 14H7a1 1 0 110-2h5.586l-3.293-3.293a1 1 0 111.414-1.414l3.758 3.758z"
-                          clipRule="evenodd"
-                        ></path>
                       </button>
                     </div>
                   </div>

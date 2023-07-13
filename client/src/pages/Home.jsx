@@ -36,8 +36,8 @@ const HomePage = () => {
   return (
     <>
       <div className="px-3 md:p-4 ">
-        <div className="flex flex-col justify-center max-w-6xl mx-auto md:flex-row ">
-          <div className="hidden w-full mt-8 md:w-1/4 sm:grid ">
+        <div className="flex flex-col justify-center max-w-[78rem] mx-auto md:flex-row ">
+          <div className="hidden w-full mt-2 md:w-1/4 sm:grid ">
             <ul className="">
               <h1 className="text-2xl font-bold text-gray-700 ">
                 Our Services

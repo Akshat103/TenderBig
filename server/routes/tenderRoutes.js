@@ -36,16 +36,18 @@ router.delete("/tender/:tenderId", verifyToken, tenderController.deleteTender);
 //Statistics
 router.get("/statistics", verifyToken, isNotUser, tenderController.statistics);
 
+// getting all tenderResults
+router.get("/alltenderResults", tenderController.getTenderResults)
+
+router.get("/tenderResults/:TenderResultId", tenderController.getTenderResultsByTenderId);
+
+
 //tender by User category
 router.get("/:userCategory", tenderController.tenderByUser);
 
 // tender results giving admin
 router.post("/add-tenderResults", verifyToken, isNotUser, tenderController.postAddTenderResults);
 
-// getting all tenderResults
-router.get("/alltenderResults", tenderController.getTenderResults)
-
-router.get("/tenderResults/:TenderResultId", verifyToken, tenderController.getTenderResultsByTenderId);
 
 //update tender Results form 
 router.put("/tenderResults/:TenderResultId", tenderController.updateResultsFormById);

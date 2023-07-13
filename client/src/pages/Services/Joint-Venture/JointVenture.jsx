@@ -8,6 +8,8 @@ import Step4 from './Steps/Partnership';
 import axios from "axios";
 import uploadFileToS3 from "../../../pages/file-uploading/FileUpload";
 import payment from '../../../components/payment';
+import { NavLink } from 'react-router-dom';
+import { sideNavigationButtons } from '../../../components/Forms';
 
 const JointVenture = () => {
     const [currentStep, setCurrentStep] = useState(0);
@@ -209,7 +211,18 @@ const JointVenture = () => {
 
     return (
         <>
-            <div className="max-w-3xl mx-auto mt-6 px-4 py-8 mb-6 border-2 border-gray-900 rounded-md">
+            <div className="flex items-center justify-center">
+    <div className="grid max-w-[1244px] grid-cols-12 gap-16 mt-5">
+      
+    
+    <div className="col-span-4 px-2 mt-6 mb-6">
+      {sideNavigationButtons.map(button => (
+        <NavLink to={button.link} >
+      <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold  border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">{button.name}</div>
+        </NavLink>
+      ))}
+    </div>
+            <div className="col-span-8 px-8 py-8 mx-auto mt-6 mb-6 rounded-lg shadow-lg border-[2px] border-black/20">
                 <div className="m-10">
                     <ProgressBar
                         percent={progress}
@@ -223,8 +236,8 @@ const JointVenture = () => {
                             </Step>
                         ))}
                     </ProgressBar>
-                    <h2 className="text-2xl font-bold mb-4 mt-4 text-center ">Joint Venture</h2>
-                    <p className="text-red-700 font-thin font-serif text-sm">
+                    <h2 className="mt-4 mb-4 text-2xl font-bold text-center ">Joint Venture</h2>
+                    <p className="font-serif text-sm font-thin text-red-700">
                         Fields marked with an asterisk (*) are mandatory.
                     </p>
                     <form onSubmit={handleSubmit}>
@@ -267,6 +280,8 @@ const JointVenture = () => {
 
                     </form>
                 </div>
+            </div>
+            </div>
             </div>
         </>
     );

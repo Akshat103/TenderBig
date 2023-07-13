@@ -14,92 +14,92 @@ const Step4 = ({ formData, handleChange, handleSubmit, handlePrevious }) => {
   return (
     <div className="mt-4">
       <div className="p-2 rounded-lg">
-        <h2 className="text-xl font-bold mb-4 ">Partnership Details</h2>
+        <h2 className="mb-4 text-xl font-bold ">Partnership Details</h2>
         <div className="grid grid-cols-2 gap-4">
-          <label className="block mb-2 font-semibold relative">
+          <label className="relative block mb-2 font-semibold">
             Company Profile
-            <span className="text-red-700 relative top-0 right-0">*</span>
+            <span className="relative top-0 right-0 text-red-700">*</span>
             <input
               required
               type="text"
               name="companyProfile"
               value={formData.companyProfile}
               onChange={handleChange}
-              className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+              className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
               placeholder="Enter Profile"
             />
           </label>
-          <label className="block mb-2 font-semibold relative">
+          <label className="relative block mb-2 font-semibold">
             Partnership Project Tender
-            <span className="text-red-700 relative top-0 right-0">*</span>
+            <span className="relative top-0 right-0 text-red-700">*</span>
             <input
               required
               type="text"
               name="partnershipProjectTender"
               value={formData.partnershipProjectTender}
               onChange={handleChange}
-              className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+              className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
               placeholder="Enter Name"
             />
           </label>
-          <label className="block mb-2 font-semibold relative">
+          <label className="relative block mb-2 font-semibold">
             Volume
-            <span className="text-red-700 relative top-0 right-0">*</span>
+            <span className="relative top-0 right-0 text-red-700">*</span>
             <input
               required
               type="number"
               name="volume"
               value={formData.volume}
               onChange={handleChange}
-              className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+              className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
               placeholder="Enter Volume"
             />
           </label>
 
-          <label className="block mb-2 font-semibold relative">
+          <label className="relative block mb-2 font-semibold">
             Partnership Ratio
-            <span className="text-red-700 relative top-0 right-0">*</span>
+            <span className="relative top-0 right-0 text-red-700">*</span>
             <input
               required
               type="text"
               name="partnershipRatio"
               value={formData.partnershipRatio}
               onChange={handleChange}
-              className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+              className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
               placeholder="Enter Partnership Ratio"
             />
           </label>
 
-          <label className="block mb-2 font-semibold relative">
+          <label className="relative block mb-2 font-semibold">
             Start Date
-            <span className="text-red-700 relative top-0 right-0">*</span>
+            <span className="relative top-0 right-0 text-red-700">*</span>
             <input
               required
               type="date"
               name="startDate"
               value={formData.startDate}
               onChange={handleChange}
-              className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+              className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
             />
           </label>
 
-          <label className="block mb-2 font-semibold relative">
+          <label className="relative block mb-2 font-semibold">
             End Date
-            <span className="text-red-700 relative top-0 right-0">*</span>
+            <span className="relative top-0 right-0 text-red-700">*</span>
             <input
               required
               type="date"
               name="endDate"
               value={formData.endDate}
               onChange={handleChange}
-              className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+              className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
             />
           </label>
 
           <div>
             <label className="block mb-2 font-semibold">
               Requirement
-              <span className="text-red-700 relative top-0 right-0">*</span>
+              <span className="relative top-0 right-0 text-red-700">*</span>
             </label>
             <label className="inline-flex items-center">
               <input
@@ -128,7 +128,7 @@ const Step4 = ({ formData, handleChange, handleSubmit, handlePrevious }) => {
                 name="requirement.finance"
                 value={formData.requirement.finance}
                 onChange={handleChange}
-                className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                 placeholder="Enter Finance Requirement"
               />
             )}
@@ -139,22 +139,22 @@ const Step4 = ({ formData, handleChange, handleSubmit, handlePrevious }) => {
                 name="requirement.manpower"
                 value={formData.requirement.manpower}
                 onChange={handleChange}
-                className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                 placeholder="Enter Manpower Requirement & Worker Experience"
               />
             )}
           </div>
 
 
-          <label className="block mb-2 font-semibold relative">
+          <label className="relative block mb-2 font-semibold">
             Other Description
-            <span className="text-red-700 relative top-0 right-0">*</span>
+            <span className="relative top-0 right-0 text-red-700">*</span>
             <textarea
               required
               name="otherDescription"
               value={formData.otherDescription}
               onChange={handleChange}
-              className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none h-20 resize-none"
+              className="w-full h-20 px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm resize-none focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
               placeholder="Other Requirements"
             />
           </label>
@@ -163,22 +163,22 @@ const Step4 = ({ formData, handleChange, handleSubmit, handlePrevious }) => {
 
       </div>
 
-      <div className="center flex flex-col items-center">
+      <div className="flex flex-col items-center center">
         <div className="flex justify-between w-full">
           <div className="w-1/4">
             <button
               type="button"
               onClick={handlePrevious}
-              className="bg-red-700 hover:bg-red-800 text-white px-4 py-2 mt-8 rounded align-center"
+              className="px-4 py-2 mt-8 text-white bg-black rounded align-center"
             >
-              <FontAwesomeIcon icon={faArrowLeft} />
+              Previous
             </button>
           </div>
           <div className="w-3/4">
             <button
               type="submit"
               onClick={handleSubmit}
-              className="bg-red-700 mx-6 text-white px-4 py-2 mt-8 rounded-lg font-semibold hover:bg-red-800 w-2/4"
+              className="w-2/4 px-4 py-2 mx-6 mt-8 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
             >
               Submit
             </button>

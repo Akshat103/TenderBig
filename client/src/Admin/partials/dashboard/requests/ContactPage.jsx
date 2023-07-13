@@ -188,16 +188,16 @@ const ContactFormList = () => {
       {/* Sidebar */}
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+      <div className="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
         <main>
           {/* Site header */}
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            <h1 className="text-xl font-bold mb-4">Contact Requests</h1>
+          <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
+            <h1 className="mb-4 text-xl font-bold">Contact Requests</h1>
 
             {/* Filters */}
-            <div className="flex items-center space-x-4 mb-4">
+            <div className="flex items-center mb-4 space-x-4">
               <div>
                 <label htmlFor="service" className="text-lg font-medium">
                   Select Service:
@@ -205,7 +205,7 @@ const ContactFormList = () => {
                 <select
                   id="service"
                   name="service"
-                  className="block w-full  py-2 px-3 border shadow-xl border-gray-300 bg-white rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                  className="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-xl focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                   value={selectedService}
                   onChange={(e) => handleServiceChange(e.target.value)}
                 >
@@ -233,55 +233,55 @@ const ContactFormList = () => {
             {/* Download buttons */}
             <div className="flex justify-end mb-4">
               <button
-                className="bg-green-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 mr-2"
+                className="px-4 py-2 mr-2 font-bold text-white bg-green-700 rounded focus:outline-none focus:ring-2"
                 onClick={downloadAsExcel}
               >
                 Download Excel
               </button>
-              <button
-                className="bg-red-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+              {/* <button
+                ssName="bg-red-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
                 onClick={downloadAsPDF}
               >
                 Download PDF
-              </button>
+              </button> */}
             </div>
 
             {/* Table */}
-            <div className="overflow-hidden rounded-lg border shadow-2xl">
-              <table className="min-w-full divide-y py-3 divide-gray-200 table-fixed">
+            <div className="overflow-hidden border rounded-lg shadow-2xl">
+              <table className="min-w-full py-3 divide-y divide-gray-200 table-fixed">
                 <thead className="bg-gray-200">
                   <tr>
-                    <th className="py-4 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider border-b w-1/6"
+                    <th className="w-1/6 px-6 py-4 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md"
                       onClick={() => handleSortOptionChange("name")}
                     >
                       Name
                     </th>
                     <th
-                      className="py-3 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider border-b w-1/6"
+                      className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md"
                       onClick={() => handleSortOptionChange("company")}
                     >
                       Company
                     </th>
                     <th
-                      className="py-3 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider border-b w-1/6"
+                      className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md"
                       onClick={() => handleSortOptionChange("email")}
                     >
                       Email
                     </th>
                     <th
-                      className="py-3 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider border-b w-1/6"
+                      className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md"
                       onClick={() => handleSortOptionChange("mobile")}
                     >
                       Mobile
                     </th>
                     <th
-                      className="py-3 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider border-b w-1/6"
+                      className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md"
                       onClick={() => handleSortOptionChange("receivedAt")}
                     >
                       Received At
                     </th>
                     <th
-                      className="py-3 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider border-b w-1/6"
+                      className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md"
                       onClick={() => handleSortOptionChange("selectedService")}
                     >
                       Services
@@ -297,26 +297,26 @@ const ContactFormList = () => {
                     .map((form) => (
                       <tr key={form._id}>
                         <td
-                          className="py-2 px-4 font-medium whitespace-nowrap border-b w-1/6"
+                          className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap"
                           onClick={() => viewDetails(form._id)}
                         >
                           {form.name}
                         </td>
-                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/6">
+                        <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
                           {form.company}
                         </td>
-                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/6">
+                        <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
                           {form.email}
                         </td>
-                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/6">
+                        <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
                           {form.mobile}
                         </td>
-                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/6">
+                        <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
                           {formatReceivedAt(form.createdAt)}
                         </td>
-                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/6">
+                        <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
                           {form.selectedService}
-                        </td><td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/12">
+                        </td><td className="w-1/12 px-4 py-2 font-medium border-b whitespace-nowrap">
                           {/* <button
                             className="text-blue-500 hover:text-blue-700"
                             onClick={() => handleEdit(form._id)}
@@ -324,7 +324,7 @@ const ContactFormList = () => {
                             <FontAwesomeIcon icon={faEdit} />
                           </button> */}
                         </td>
-                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/12">
+                        <td className="w-1/12 px-4 py-2 font-medium border-b whitespace-nowrap">
                           <button
                             className="text-red-500 hover:text-red-700"
                             onClick={() => handleDelete(form._id)}

@@ -29,61 +29,61 @@ const Navbar = () => {
   return (
     <div>
       <nav className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-4">
           <div className="flex items-center justify-between h-16">
             <div className="flex-shrink-0">
               <Link to="/" className="flex items-center">
                 <img className="w-[120px]" src={logo} alt="logo" />
               </Link>
             </div>
-            <div className="flex-1 flex items-center justify-end sm:items-stretch">
+            <div className="flex items-center justify-end flex-1 sm:items-stretch">
               <div className="hidden sm:block sm:ml-6">
                 <div className="flex space-x-4">
                   <Link
                     to="/"
-                    className="text-gray-600 hover:text-red-700 px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md"
+                    className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
                   >
                     Home
                   </Link>
 
                   <Link
                     to="/tenders"
-                    className="text-gray-600 hover:text-red-700 px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md"
+                    className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
                   >
                     Tenders
                   </Link>
 
                   <Link
                     to="/projects"
-                    className="text-gray-600 hover:text-red-700 px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md"
+                    className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
                   >
                     Projects
                   </Link>
 
                   <Link
                     to="/gems"
-                    className="text-gray-600 hover:text-red-700 px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md"
+                    className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
                   >
                     Gems
                   </Link>
 
                   <Link
                     to="/forms"
-                    className="text-gray-600 hover:text-red-700 px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md"
+                    className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
                   >
                     Apply for Tenders
                   </Link>
 
                   <Link
                     to="/contact"
-                    className="text-gray-600 hover:text-red-700 px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md"
+                    className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
                   >
                     Contact
                   </Link>
                   <div className="relative">
                     <button
                       onClick={toggleDropdown}
-                      className="text-gray-600 hover:text-red-700 px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md"
+                      className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
                     >
                       Services
                       <svg
@@ -104,7 +104,7 @@ const Navbar = () => {
                       <div className="absolute right-0 mt-2  bg-white border border-gray-200 rounded-md shadow-lg w-[290px] z-10">
                         <Link
                           to="/careerandmanpower"
-                          className="block px-4 py-2 hover:text-white hover:bg-red-700 text-lg text-gray-800"
+                          className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                         >
                           <svg
                             xmlns="https://www.svgrepo.com/show/498932/settings.svg"
@@ -123,7 +123,7 @@ const Navbar = () => {
 
                         <Link
                           to="/regandcert"
-                          className="block px-4 py-2 hover:text-white hover:bg-red-700 text-lg text-gray-800"
+                          className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                         >
                           <svg
                             xmlns="https://www.svgrepo.com/show/498932/settings.svg"
@@ -142,7 +142,7 @@ const Navbar = () => {
 
                         <Link
                           to="/contact"
-                          className="block px-4 py-2 hover:text-white hover:bg-red-700 text-lg text-gray-800"
+                          className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                         >
                           <svg
                             xmlns="https://www.svgrepo.com/show/498932/settings.svg"
@@ -161,7 +161,7 @@ const Navbar = () => {
 
                         <Link
                           to="/auctionmaterial"
-                          className="block px-4 py-2 hover:text-white hover:bg-red-700 text-lg text-gray-800"
+                          className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                           onClick={() => setSelectedService("License")}
                         >
                           <svg
@@ -181,7 +181,7 @@ const Navbar = () => {
 
                         <Link
                           to="/jointventure"
-                          className="block px-4 py-2 hover:text-white hover:bg-red-700 text-lg text-gray-800"
+                          className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                         >
                           <svg
                             xmlns="https://www.svgrepo.com/show/498932/settings.svg"
@@ -200,7 +200,7 @@ const Navbar = () => {
 
                         <Link
                           to="/tenderfilling"
-                          className="block px-4 py-2 hover:text-white hover:bg-red-700 text-lg text-gray-800"
+                          className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                         >
                           <svg
                             xmlns="https://www.svgrepo.com/show/498932/settings.svg"
@@ -218,7 +218,7 @@ const Navbar = () => {
                         </Link>
                         <Link
                           to="/gemregistration"
-                          className="block px-4 py-2 hover:text-white hover:bg-red-700 text-lg text-gray-800"
+                          className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                         >
                           <svg
                             xmlns="https://www.svgrepo.com/show/498932/settings.svg"
@@ -242,7 +242,7 @@ const Navbar = () => {
                     <>
                       <button
                         onClick={logout}
-                        className="bg-red-700 text-white px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md"
+                        className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-red-700 rounded-md"
                       >
                         Logout
                       </button>
@@ -251,7 +251,7 @@ const Navbar = () => {
                         (auth.userRole == "admin") ? (
                           <button
                             onClick={dashboard}
-                            className="bg-[#182235] text-white px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md"
+                            className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
                           >
                             Dashboard
                           </button>
@@ -264,7 +264,7 @@ const Navbar = () => {
                   ) : (
                     <Link
                       to="/login"
-                      className="bg-red-700 text-white px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md"
+                      className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-red-700 rounded-md"
                     >
                       Login
                     </Link>
@@ -274,7 +274,7 @@ const Navbar = () => {
               </div>
 
               {/* Mobile View */}
-              <div className="sm:hidden ml-6">
+              <div className="ml-6 sm:hidden">
                 <button
                   type="button"
                   className="text-gray-600 hover:text-red-700 focus:outline-none"
@@ -301,7 +301,7 @@ const Navbar = () => {
       {menuOpen && (
         <div className="flex justify-end ">
           <div className="mt-12 sm:hidden overflow bg-red-700 max-w-[250px] p-2 text-white fixed ">
-            <div className="space-y-2 mt-2">
+            <div className="mt-2 space-y-2">
               <div>
                 <Link
                   to="/"
@@ -332,7 +332,7 @@ const Navbar = () => {
               <div className="relative">
                 <button
                   onClick={toggleDropdown}
-                  className=" bg-red-700 px-3 py-2 text-lg font-medium transition-colors duration-300 rounded-md"
+                  className="px-3 py-2 text-lg font-medium transition-colors duration-300 bg-red-700 rounded-md "
                 >
                   Services
                   <svg
@@ -353,7 +353,7 @@ const Navbar = () => {
                   <div className="absolute right-0 mt-2  bg-white border border-gray-200 rounded-md shadow-lg w-[290px]">
                     <Link
                       to="/careerandmanpower"
-                      className="block px-4 py-2 text-white bg-red-700 text-lg "
+                      className="block px-4 py-2 text-lg text-white bg-red-700 "
                     >
                       <svg
                         xmlns="https://www.svgrepo.com/show/498932/settings.svg"
@@ -372,7 +372,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                       to="/regandcert"
-                      className="block px-4 py-2 hover:text-white hover:bg-red-700 text-lg text-gray-800"
+                      className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                     >
                       <svg
                         xmlns="https://www.svgrepo.com/show/498932/settings.svg"
@@ -391,7 +391,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                       to="/contact"
-                      className="block px-4 py-2 hover:text-white hover:bg-red-700 text-lg text-gray-800"
+                      className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                     >
                       <svg
                         xmlns="https://www.svgrepo.com/show/498932/settings.svg"
@@ -410,7 +410,7 @@ const Navbar = () => {
 
                     <Link
                       to="/auctionmaterial"
-                      className="block px-4 py-2 hover:text-white hover:bg-red-700 text-lg text-gray-800"
+                      className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                       onClick={() => setSelectedService("License")}
                     >
                       <svg
@@ -430,7 +430,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                       to="/jointventure"
-                      className="block px-4 py-2 hover:text-white hover:bg-red-700 text-lg text-gray-800"
+                      className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                     >
                       <svg
                         xmlns="https://www.svgrepo.com/show/498932/settings.svg"
@@ -449,7 +449,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                       to="/tenderfilling"
-                      className="block px-4 py-2 hover:text-white hover:bg-red-700 text-lg text-gray-800"
+                      className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                     >
                       <svg
                         xmlns="https://www.svgrepo.com/show/498932/settings.svg"
@@ -468,7 +468,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                       to="/gemregistration"
-                      className="block px-4 py-2 hover:text-white hover:bg-red-700 text-lg text-gray-800"
+                      className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                     >
                       <svg
                         xmlns="https://www.svgrepo.com/show/498932/settings.svg"

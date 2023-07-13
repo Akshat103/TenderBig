@@ -196,52 +196,52 @@ const GemRegistration = () => {
       {/* Sidebar */}
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-auto">
+      <div className="relative flex flex-col flex-1 overflow-x-auto overflow-y-auto">
         <main>
           {/* Site header */}
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            <h1 className="text-xl font-bold mb-4">
+          <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
+            <h1 className="mb-4 text-xl font-bold">
               Gem Registration Requests
             </h1>
             {/* Download buttons */}
             <div className="flex justify-end mb-4">
               <button
-                className="bg-green-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 mr-2"
+                className="px-4 py-2 mr-2 font-bold text-white bg-green-700 rounded focus:outline-none focus:ring-2"
                 onClick={downloadAsExcel}
               >
                 Download Excel
               </button>
-              <button
-                className="bg-red-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+              {/* <button
+                className="px-4 py-2 font-bold text-white bg-red-700 rounded focus:outline-none focus:ring-2"
                 onClick={downloadAsPDF}
               >
                 Download PDF
-              </button>
+              </button> */}
             </div>
             {/* Table */}
-            <div className="overflow-hidden rounded-lg border shadow-2xl">
-              <table className="min-w-full divide-y py-3 divide-gray-200 table-fixed">
+            <div className="overflow-hidden border rounded-lg shadow-2xl">
+              <table className="min-w-full py-3 divide-y divide-gray-200 table-fixed">
                 <thead className="bg-gray-200">
                   <tr>
-                    <th className="py-4 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider border-b w-1/6">
+                    <th className="w-1/6 px-6 py-4 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
                       Company Name
                     </th>
-                    <th className="py-3 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider border-b w-1/6">
+                    <th className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
                       Contact Person Name
                     </th>
-                    <th className="py-3 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider border-b w-1/6">
+                    <th className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
                       Email
                     </th>
-                    <th className="py-3 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider border-b w-1/6">
+                    <th className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
                       Contact Number
                     </th>
-                    <th className="py-3 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider border-b w-1/6">
+                    <th className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
                       Country
                     </th>
 
-                    <th className="py-3 px-6 text-left text-md text-gray-900 font-bold uppercase tracking-wider cursor-pointer border-b w-1/6">
+                    <th className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b cursor-pointer text-md">
                       Received At
                     </th>
                   </tr>
@@ -255,27 +255,27 @@ const GemRegistration = () => {
                     .map((form) => (
                       <tr key={form._id}>
                         <td
-                          className="py-2 px-4 cursor-pointer font-medium whitespace-nowrap border-b w-1/6"
+                          className="w-1/6 px-4 py-2 font-medium border-b cursor-pointer whitespace-nowrap"
                           onClick={() => viewDetails(form._id)}
                         >
                           {form.companyName}
                         </td>
-                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/6">
+                        <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
                           {form.name}
                         </td>
-                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/6">
+                        <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
                           {form.email}
                         </td>
-                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/6">
+                        <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
                           {form.contact}
                         </td>
-                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/6">
+                        <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
                           {form.country}
                         </td>
-                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/6">
+                        <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
                           {formatReceivedAt(form.createdAt)}
                         </td>
-                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/10">
+                        <td className="px-4 py-2 font-medium border-b whitespace-nowrap w-1/10">
                           <button
                             className="text-blue-500 hover:text-blue-700"
                             onClick={() => viewDetails(form._id)}
@@ -283,7 +283,7 @@ const GemRegistration = () => {
                             <FontAwesomeIcon icon={faEdit} />
                           </button>
                         </td>
-                        <td className="py-2 px-4 whitespace-nowrap font-medium border-b w-1/10">
+                        <td className="px-4 py-2 font-medium border-b whitespace-nowrap w-1/10">
                           <button
                             className="text-red-500 hover:text-red-700"
                             onClick={() => deleteDetails(form._id)}

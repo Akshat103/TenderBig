@@ -23,22 +23,40 @@ const HomePage = () => {
     navigate("/advance-search")
   };
 
-
+  const navigationButtons = [
+    {name: 'Career & ManPower', link: '/careerandmanpower'},
+    {name: 'Registration/Certification', link: '/regandcert'},
+    {name: 'License', link: '/contact'},
+    {name: 'Auction Material', link: '/auctionmaterial'},
+    {name: 'Joint Venture', link: '/jointventure'},
+    {name: 'Tender Filing', link: '/tenderfilling'},
+    {name: 'Gem Registration', link: '/gemregistration'}
+  ]
+  
   return (
     <>
       <div className="px-3 md:p-4 ">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-center  ">
-          <div className="w-full md:w-1/4 hidden sm:grid mt-10 ">
-            <ul className=" ">
-              <h1 className="text-2xl font-bold  text-gray-700 ">
+        <div className="flex flex-col justify-center max-w-6xl mx-auto md:flex-row ">
+          <div className="hidden w-full mt-8 md:w-1/4 sm:grid ">
+            <ul className="">
+              <h1 className="text-2xl font-bold text-gray-700 ">
                 Our Services
               </h1>
+              
+              <div className="col-span-4 px-2 mt-6 mb-6">
+                {navigationButtons.map(button => (
+                  <NavLink to={button.link} >
+                <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold  border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">{button.name}</div>
+                  </NavLink>
+                ))}
+              </div>
+              
 
-              <li className=" pb-2 border-white border-2 hover:border-red-700  mt-6">
-                <hr className="border-gray-400 pb-3 " />
+              {/* <li className="pb-2 mt-6 border-2 border-white hover:border-red-700">
+                <hr className="pb-3 border-gray-400 " />
                 <NavLink
                   to="/careerandmanpower"
-                  className="text-gray-600  flex items-center justify-between"
+                  className="flex items-center justify-between text-gray-600"
                 >
                   <span className="px-1">Career & ManPower</span>
                   <img
@@ -49,10 +67,10 @@ const HomePage = () => {
                 </NavLink>
               </li>
               <hr className="border-gray-400" />
-              <li className="p-1 py-2 border-white border-2 hover:border-red-700  hover:bg-blu">
+              <li className="p-1 py-2 border-2 border-white hover:border-red-700 hover:bg-blu">
                 <NavLink
                   to="/regandcert"
-                  className="text-gray-600  flex items-center justify-between"
+                  className="flex items-center justify-between text-gray-600"
                 >
                   <span>Registration/Certification</span>
                   <img
@@ -63,10 +81,10 @@ const HomePage = () => {
                 </NavLink>
               </li>
               <hr className="border-gray-400" />
-              <li className="p-1 py-2 border-white border-2 hover:border-red-700 ">
+              <li className="p-1 py-2 border-2 border-white hover:border-red-700 ">
                 <NavLink
                   to="/contact"
-                  className="text-gray-600  flex items-center justify-between"
+                  className="flex items-center justify-between text-gray-600"
                 >
                   <span>License</span>
                   <img
@@ -77,10 +95,10 @@ const HomePage = () => {
                 </NavLink>
               </li>
               <hr className="border-gray-400" />
-              <li className="p-1 py-2 border-white border-2 hover:border-red-700 ">
+              <li className="p-1 py-2 border-2 border-white hover:border-red-700 ">
                 <NavLink
                   to="/auctionmaterial"
-                  className="text-gray-600  flex items-center justify-between"
+                  className="flex items-center justify-between text-gray-600"
                 >
                   <span>Auction Material</span>
                   <img
@@ -91,10 +109,10 @@ const HomePage = () => {
                 </NavLink>
               </li>
               <hr className="border-gray-400" />
-              <li className="p-1 py-2 border-white border-2 hover:border-red-700 ">
+              <li className="p-1 py-2 border-2 border-white hover:border-red-700 ">
                 <NavLink
                   to="/jointventure"
-                  className="text-gray-600  flex items-center justify-between"
+                  className="flex items-center justify-between text-gray-600"
                 >
                   <span>Joint Venture</span>
                   <img
@@ -105,10 +123,10 @@ const HomePage = () => {
                 </NavLink>
               </li>
               <hr className="border-gray-400" />
-              <li className="p-1 py-2 border-white border-2 hover:border-red-700 ">
+              <li className="p-1 py-2 border-2 border-white hover:border-red-700 ">
                 <NavLink
                   to="/tenderfilling"
-                  className="text-gray-600 flex items-center justify-between"
+                  className="flex items-center justify-between text-gray-600"
                 >
                   <span>Tender Filling</span>
                   <img
@@ -119,10 +137,10 @@ const HomePage = () => {
                 </NavLink>
               </li>
               <hr className="border-gray-400" />
-              <li className="p-1 py-2 border-white border-2 hover:border-red-700 ">
+              <li className="p-1 py-2 border-2 border-white hover:border-red-700 ">
                 <NavLink
                   to="/gemregistration"
-                  className="text-gray-600 flex items-center justify-between"
+                  className="flex items-center justify-between text-gray-600"
                 >
                   <span>Gem Registration</span>
                   <img
@@ -133,12 +151,12 @@ const HomePage = () => {
                 </NavLink>
               </li>
               <hr className="border-gray-400" />
-              <hr className="border-gray-100" />
+              <hr className="border-gray-100" /> */}
             </ul>
           </div>
-          <div className="w-full md:w-3/4 px-4">
+          <div className="w-full px-4 md:w-3/4">
             <div className="py-3 md:py-12 sm:px-6 lg:px-8 ">
-              <h1 className=" text-2xl md:text-4xl font-extrabold md:leading-normal">
+              <h1 className="text-2xl font-extrabold md:text-4xl md:leading-normal">
                 {" "}
                 <span className="border-b-4 border-red-700">
                   Best eTender
@@ -148,14 +166,14 @@ const HomePage = () => {
               <h1 className="mt-2">
                 Tenders Search Engine for e Tender Procurement Notices
               </h1>
-              <div className="flex flex-col md:flex-row items-center justify-center  ">
-                <div className="flex items-center rounded-lg bg-white w-full max-w-ls py-4 ">
+              <div className="flex flex-col items-center justify-center md:flex-row ">
+                <div className="flex items-center w-full py-4 bg-white rounded-lg max-w-ls ">
                   <input
                     type="text"
                     placeholder="Enter your keywords separated by commas"
                     value={searchKeywords}
                     onChange={(e) => setSearchKeywords(e.target.value)}
-                    className="w-full md:w-2/3 lg:w-full py-2 px-4 border-2 border-red-700 rounded-l focus:outline-none focus:border-red-700 bg-transparent text-gray-800 placeholder-gray-400"
+                    className="w-full px-4 py-2 text-gray-800 placeholder-gray-400 bg-transparent border-2 border-red-700 rounded-l md:w-2/3 lg:w-full focus:outline-none focus:border-red-700"
                   />
                   <button
                     className="ml-0 md:mt-0 bg-red-700 hover:text-black text-white py-2 md:py-[8px] px-2 md:px-[50px] shadow-lg transition-colors border-[2px] border-red-700"
@@ -174,28 +192,28 @@ const HomePage = () => {
                 </NavLink>
               </div>
               <div className="flex flex-wrap justify-center ">
-                <div className="py-1 md:p-3 px-2 w-1/2 sm:w-1/2 md:w-1/2 lg:w-1/2">
+                <div className="w-1/2 px-2 py-1 md:p-3 sm:w-1/2 md:w-1/2 lg:w-1/2">
                   <div className="bg-white rounded-lg py-1 md:py-4 border-[2px] px-4 text-center shadow-lg">
-                    <p className="text-xl md:text-4xl font-bold">45,000+</p>
+                    <p className="text-xl font-bold md:text-4xl">45,000+</p>
                     <p className="text-gray-700">New Tenders Per Day</p>
                   </div>
                 </div>
-                <div className="py-1 md:p-3 px-2 w-1/2 sm:w-1/2 md:w-1/2 lg:w-1/2">
+                <div className="w-1/2 px-2 py-1 md:p-3 sm:w-1/2 md:w-1/2 lg:w-1/2">
                   <div className="bg-white rounded-lg py-1 md:py-4 border-[2px] px-4 text-center shadow-lg">
-                    <p className="text-xl md:text-4xl font-bold">25+</p>
+                    <p className="text-xl font-bold md:text-4xl">25+</p>
                     <p className="text-gray-700">Years Of Experience</p>
                   </div>
                 </div>
 
-                <div className="py-1 md:p-3 px-2 w-1/2 sm:w-1/2 md:w-1/2 lg:w-1/2">
+                <div className="w-1/2 px-2 py-1 md:p-3 sm:w-1/2 md:w-1/2 lg:w-1/2">
                   <div className="bg-white rounded-lg py-4 md:py-4 border-[2px] px-4 text-center shadow-lg">
-                    <p className="text-xl md:text-4xl font-bold">240</p>
+                    <p className="text-xl font-bold md:text-4xl">240</p>
                     <p className="text-gray-700">Countries</p>
                   </div>
                 </div>
-                <div className="py-1 md:p-3 px-2 w-1/2 sm:w-1/2 md:w-1/2 lg:w-1/2">
+                <div className="w-1/2 px-2 py-1 md:p-3 sm:w-1/2 md:w-1/2 lg:w-1/2">
                   <div className="bg-white rounded-lg py-1 md:py-4 border-[2px] px-4 text-center shadow-lg">
-                    <p className="text-xl md:text-4xl font-bold">10,000+</p>
+                    <p className="text-xl font-bold md:text-4xl">10,000+</p>
                     <p className="text-gray-700">Registered Clients</p>
                   </div>
                 </div>
@@ -203,12 +221,12 @@ const HomePage = () => {
 
               <div className="flex justify-center mt-5 md:mt-8">
                 <Link to="/gemregistration">
-                  <button className="bg-red-700  text-white py-3 px-8 rounded-lg shadow-lg transition-colors">
+                  <button className="px-8 py-3 text-white transition-colors bg-red-700 rounded-lg shadow-lg">
                     Gem Registration
                   </button>
                 </Link>
                 <Link to="/tenders">
-                  <button className="ml-4 bg-red-700  text-white py-3 px-8 rounded-lg shadow-lg transition-colors">
+                  <button className="px-8 py-3 ml-4 text-white transition-colors bg-red-700 rounded-lg shadow-lg">
                     Tenders Database
                   </button>
                 </Link>

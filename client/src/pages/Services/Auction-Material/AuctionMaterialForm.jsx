@@ -184,7 +184,21 @@ const handleSubmit = async (e) => {
 
   return (
     <>
-      <div className="max-w-3xl mx-auto mt-6 px-4 py-8 mb-6 border-2 border-gray-900 rounded-md">
+        {/* <div className="flex items-center justify-center">
+    <div className="grid max-w-[1244px] grid-cols-12 gap-16 mt-5">
+    <div className="col-span-4 px-2 mt-6 mb-6"> */}
+      {/* {sideNavigationButtons.map(button => (
+        <NavLink to={button.link} >
+      <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold  border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">{button.name}</div>
+        </NavLink>
+      ))} */}
+    {/* </div> */}
+      <div className="flex max-w-[1244px] px-4 py-8 mx-auto mt-6 mb-6 border-2 border-gray-900 rounded-md">
+      <img
+              src="https://img.freepik.com/free-vector/flat-design-illustration-customer-support_23-2148887720.jpg?w=740&t=st=1687066253~exp=1687066853~hmac=42f23f007ad72bd2ca440a69684ce6508082c1182b3c54179addffc4163960af"
+              className="w-4/5 md:w-1/2"
+              alt="Contact illustration"
+            />
         <div className="m-10">
           <ProgressBar
             percent={progress}

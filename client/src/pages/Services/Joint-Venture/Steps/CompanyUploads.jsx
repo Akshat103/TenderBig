@@ -34,7 +34,7 @@ const Step2 = ({ formData, handleChange, handleNext, handlePrevious }) => {
           <div>
             <label htmlFor='gstUpload' className="block mb-2 font-semibold">
               GST
-              <span className="text-red-700 relative top-0 right-0">*</span>
+              <span className="relative top-0 right-0 text-red-700">*</span>
             </label>
             <input
               required
@@ -43,14 +43,14 @@ const Step2 = ({ formData, handleChange, handleNext, handlePrevious }) => {
               accept='.pdf'
               name="gstUpload"
               onChange={handleFileChange}
-              className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-red-900 focus:ring-red-900 dark:bg-red-100 dark:border-red-700 dark:text-black file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-red-700 dark:file:text-white"
+              className="block w-full text-sm border border-gray-200 rounded-md shadow-sm focus:z-10 focus:border-red-900 focus:ring-red-900 dark:bg-red-100 dark:border-red-700 dark:text-black file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-red-700 dark:file:text-white"
             />
           </div>
 
           <div>
             <label htmlFor="panUpload" className="block mb-2 font-semibold">
               PAN Card
-              <span className="text-red-700 relative top-0 right-0">*</span>
+              <span className="relative top-0 right-0 text-red-700">*</span>
             </label>
             <input
               required
@@ -59,14 +59,14 @@ const Step2 = ({ formData, handleChange, handleNext, handlePrevious }) => {
               name="panUpload"
               accept='.pdf'
               onChange={handleFileChange}
-              className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-red-900 focus:ring-red-900 dark:bg-red-100 dark:border-red-700 dark:text-black file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-red-700 dark:file:text-white"
+              className="block w-full text-sm border border-gray-200 rounded-md shadow-sm focus:z-10 focus:border-red-900 focus:ring-red-900 dark:bg-red-100 dark:border-red-700 dark:text-black file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-red-700 dark:file:text-white"
             />
           </div>
 
           <div>
             <label htmlFor="cinUpload" className="block mb-2 font-semibold">
               CIN
-              <span className="text-red-700 relative top-0 right-0">*</span>
+              <span className="relative top-0 right-0 text-red-700">*</span>
             </label>
             <input
               required
@@ -75,7 +75,7 @@ const Step2 = ({ formData, handleChange, handleNext, handlePrevious }) => {
               name="cinUpload"
               accept='.pdf'
               onChange={handleFileChange}
-              className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-red-900 focus:ring-red-900 dark:bg-red-100 dark:border-red-700 dark:text-black file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-red-700 dark:file:text-white"
+              className="block w-full text-sm border border-gray-200 rounded-md shadow-sm focus:z-10 focus:border-red-900 focus:ring-red-900 dark:bg-red-100 dark:border-red-700 dark:text-black file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-red-700 dark:file:text-white"
             />
           </div>
 
@@ -83,24 +83,24 @@ const Step2 = ({ formData, handleChange, handleNext, handlePrevious }) => {
 
       </div>
 
-      <div className="center flex flex-col items-center">
+      <div className="flex flex-col items-center center">
         <div className="flex justify-between w-full">
           <div className="w-1/4">
             <button
               type="button"
               onClick={handlePrevious}
-              className="bg-red-700 hover:bg-red-800 text-white px-4 py-2 mt-8 rounded align-center"
+              className="px-4 py-2 mt-8 text-white bg-black rounded align-center"
             >
-              <FontAwesomeIcon icon={faArrowLeft} />
+              Previous
             </button>
           </div>
-          <div className="w-1/4 flex justify-end">
+          <div className="flex justify-end w-1/4">
             <button
               type="button"
               onClick={handleNextClick}
-              className="bg-red-700 hover:bg-red-800 text-white px-4 py-2 mt-8 rounded align-center"
+              className="px-4 py-2 mt-8 text-white bg-black rounded align-center"
             >
-              <FontAwesomeIcon icon={faArrowRight} />
+              Next
             </button>
           </div>
         </div>

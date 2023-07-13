@@ -5,6 +5,7 @@ import axios from "axios";
 const TenderByCategory = () => {
   const { referenceNo } = useParams();
   const [tenderDetails, setTenderDetails] = useState(null);
+  console.log(tenderDetails)
 
   useEffect(() => {
     const fetchTenderDetails = async () => {
@@ -46,12 +47,12 @@ const TenderByCategory = () => {
 
   return (
     <>
-      <div className="container mx-auto px-4 py-8 max-w-7xl ">
-        <h1 className="text-3xl font-bold mb-8">Tender Details</h1>
+      <div className="container px-4 py-8 mx-auto max-w-7xl ">
+        <h1 className="mb-8 text-3xl font-bold">Tender Details</h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8 ">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-1 lg:grid-cols-1 ">
           <div className="bg-white rounded-lg shadow-md p-6 border-gray-400 border-[1px]">
-            <h2 className="text-2xl font-bold mb-4 text-red-700">
+            <h2 className="mb-4 text-2xl font-bold text-red-700">
               Procurement Summary
             </h2>
             <p className="mb-2">
@@ -70,7 +71,7 @@ const TenderByCategory = () => {
 
           <div className="grid grid-cols-2 gap-8">
             <div className="bg-white rounded-lg shadow-md p-6 border-gray-400 border-[1px]">
-              <h2 className="text-2xl font-bold mb-4 text-red-700">
+              <h2 className="mb-4 text-2xl font-bold text-red-700">
                 Other Information
               </h2>
               <p className="mb-2">
@@ -104,7 +105,7 @@ const TenderByCategory = () => {
             </div>
 
             <div className="bg-white rounded-lg shadow-md p-6 border-gray-400 border-[1px]">
-              <h2 className="text-2xl font-bold mb-4 text-red-700">
+              <h2 className="mb-4 text-2xl font-bold text-red-700">
                 Purchaser's Detail
               </h2>
               <p className="mb-2">
@@ -147,7 +148,7 @@ const TenderByCategory = () => {
           </div>
 
           <div className="bg-white rounded-lg shadow-md p-6 border-gray-400 border-[1px]">
-            <h2 className="text-2xl font-bold mb-4 text-red-700">
+            <h2 className="mb-4 text-2xl font-bold text-red-700">
               Tender Details
             </h2>
             <p className="mb-2">

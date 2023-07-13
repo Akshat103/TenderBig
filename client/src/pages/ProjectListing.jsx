@@ -12,42 +12,45 @@ const ProjectCard = ({ project }) => {
   };
 
   return (
-    <div className="bg-white shadow-lg rounded-lg p-6 mb-4 border-[2px]">
-      <h2 className="text-xl font-bold mb-2">{project.companyname}</h2>
-      <p className="text-gray-600 mb-2">
-        <strong>PNR:</strong> {project.pnr}
-      </p>
-      <p className="text-gray-600 mb-2">
-        <strong>Detail:</strong> {project.detail}
-      </p>
-      {showDetails && (
-        <>
-          <p className="text-gray-600 mb-2">
+    <div className="bg-white shadow-lg rounded p-6 mb-4 border-[2px] border-black/20">
+      <h2 className="mb-3 text-xl font-bold capitalize">{project.companyname}</h2>
+      <div className="grid grid-cols-3">
+
+        <p className="text-gray-600">
+          <strong>PNR:</strong> {project.pnr}
+        </p>
+        <p className="text-gray-600">
+          <strong>Detail:</strong> {project.detail}
+        </p>
+      {/* {showDetails && ( */}
+        {/* <div className="grid grid-cols-3"> */}
+          <p className="mb-2 text-gray-600">
             <strong>Value:</strong> {project.value}
           </p>
-          <p className="text-gray-600 mb-2">
-            <strong>Status:</strong> {project.status}
-          </p>
-          <p className="text-gray-600 mb-2">
-            <strong>Country:</strong> {project.country}
-          </p>
-          <p className="text-gray-600 mb-2">
-            <strong>State:</strong> {project.state}
-          </p>
-          <p className="text-gray-600 mb-2">
+          <p className="mb-2 text-gray-600">
             <strong>City:</strong> {project.city}
           </p>
-          <p className="text-gray-600 mb-2">
+          <p className="mb-2 text-gray-600">
+            <strong>State:</strong> {project.state}
+          </p>
+          <p className="mb-2 text-gray-600">
+            <strong>Country:</strong> {project.country}
+          </p>
+          <p className="mb-2 text-gray-600">
+            <strong>Status:</strong> {project.status}
+          </p>
+          <p className="mb-2 text-gray-600">
             <strong>Sector:</strong> {project.sector}
           </p>
-        </>
-      )}
-      <button
-        className="bg-red-700 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+      </div>
+        {/* </div> */}
+      {/* )} */}
+      {/* <button
+        className="px-4 py-2 font-bold text-white transition-colors bg-red-700 rounded hover:bg-red-700"
         onClick={handleViewDetails}
       >
         {showDetails ? "Hide Details" : "View Details"}
-      </button>
+      </button> */}
     </div>
   );
 };
@@ -60,18 +63,23 @@ const ProjectList = () => {
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const projectsPerPage = 5;
+  const projectsPerPage = 3;
 
   useEffect(() => {
     axios
       .get("http://localhost:5000/apiTender/projects/getall")
       .then((response) => {
+        console.log(response, 'response')
         setProjects(response.data);
         setFilteredProjects(response.data);
         const uniqueCountries = [
-          ...new Set(response.data.map((project) => project.country)),
+          ...new Set(response.data.map((project) => {
+            console.log(project.country.length, project.country.length > 0, project.country.length > 0 ? project.country : null)
+            return project.country.length > 0 ? project.country : null
+          })),
         ];
-        setCountries(uniqueCountries);
+        const newCountryArr = uniqueCountries.filter(countryObj => countryObj !== null)
+        setCountries(newCountryArr);
       })
       .catch((error) => {
         console.error(error);
@@ -153,10 +161,10 @@ const ProjectList = () => {
   };
 
   return (
-    <div className="mx-auto p-4 max-w-7xl">
-      <div className="flex flex-col-reverse md:flex-row gap-4">
+    <div className="p-4 mx-auto max-w-7xl">
+        <h1 className="my-4 text-2xl font-bold">Project List</h1>
+      <div className="flex flex-col-reverse gap-4 md:flex-row">
         <div className="md:w-2/3">
-          <h1 className="text-2xl font-bold mb-4">Project List</h1>
           {currentProjects.length > 0 ? (
             <div className="grid gap-4">
               {currentProjects.map((project) => (
@@ -171,18 +179,10 @@ const ProjectList = () => {
               {getPageNumbers().map((pageNumber) => (
                 <button
                   key={pageNumber}
-<<<<<<< HEAD
-                  className={`${
-                    pageNumber === currentPage
-                      ? "bg-red-700 text-white"
-                      : "bg-gray-200 textgray-700"
-                  } font-bold py-2 px-4 rounded mr-2`}
-=======
                   className={`${pageNumber === currentPage
                     ? "bg-red-700 text-white"
                     : "bg-gray-200 textgray-700"
                     } font-bold py-2 px-4 rounded mr-2`}
->>>>>>> 61bc71124f08361316895d3c7b05892df9cd59b5
                   onClick={() => goToPage(pageNumber)}
                 >
                   {pageNumber}
@@ -190,16 +190,16 @@ const ProjectList = () => {
               ))}
             </div>
           </div>
-          <div className="flex justify-center mt-4 justify-between">
+          <div className="flex justify-center justify-between mt-4">
             <button
-              className="bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+              className="px-4 py-2 font-bold text-white transition-colors bg-red-700 rounded"
               onClick={previousPage}
               disabled={currentPage === 1}
             >
               Previous Page
             </button>
             <button
-              className="bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+              className="px-4 py-2 font-bold text-white transition-colors bg-red-700 rounded"
               onClick={nextPage}
               disabled={currentPage === pageNumbers}
             >
@@ -208,12 +208,12 @@ const ProjectList = () => {
           </div>
         </div>
         <div className="md:w-1/3">
-          <div className="border border-gray-300 p-4 rounded">
-            <h2 className="text-lg font-bold mb-2">Filters</h2>
+          <div className="p-4 border border-gray-300 rounded border-[2px] border-black/20 shadow-lg">
+            <h2 className="mb-2 text-lg font-bold">Filters</h2>
             <div className="mb-4">
               <label
                 htmlFor="country"
-                className="block text-sm font-medium text-gray-700"
+                className="block mb-2 text-sm font-medium text-gray-700"
               >
                 Country
               </label>
@@ -222,7 +222,7 @@ const ProjectList = () => {
                 name="country"
                 value={selectedCountry}
                 onChange={handleCountryChange}
-                className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
+                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
               >
                 <option value="">All Countries</option>
                 {countries.map((country) => (
@@ -232,11 +232,11 @@ const ProjectList = () => {
                 ))}
               </select>
             </div>
-            {selectedCountry && (
+            {/* {selectedCountry && ( */}
               <div className="mb-4">
                 <label
                   htmlFor="state"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block mb-2 text-sm font-medium text-gray-700"
                 >
                   State
                 </label>
@@ -245,7 +245,7 @@ const ProjectList = () => {
                   name="state"
                   value={selectedState}
                   onChange={handleStateChange}
-                  className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
+                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
                 >
                   <option value="">All States</option>
                   {Array.from(
@@ -263,12 +263,12 @@ const ProjectList = () => {
                   ))}
                 </select>
               </div>
-            )}
-            {selectedState && (
+            {/* )} */}
+            {/* {selectedState && ( */}
               <div className="mb-4">
                 <label
                   htmlFor="city"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block mb-2 text-sm font-medium text-gray-700"
                 >
                   City
                 </label>
@@ -277,7 +277,7 @@ const ProjectList = () => {
                   name="city"
                   value={selectedCity}
                   onChange={handleCityChange}
-                  className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
+                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
                 >
                   <option value="">All Cities</option>
                   {Array.from(
@@ -297,7 +297,7 @@ const ProjectList = () => {
                   ))}
                 </select>
               </div>
-            )}
+            {/* )} */}
           </div>
         </div>
       </div>

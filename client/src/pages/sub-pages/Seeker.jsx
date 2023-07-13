@@ -6,31 +6,33 @@ import { ProgressBar, Step } from 'react-step-progress-bar';
 import { Country, State, City } from 'country-state-city';
 import payment from "../../components/payment"
 import axios from "axios";
+import { sideNavigationButtons } from "../../components/Forms";
+import { NavLink } from "react-router-dom";
 
 const Secondpage = ({ formData, handleChange, previousPage }) => {
     return (
         <>
-            <h2 className="text-2xl font-bold mb-4 text-center">Seeker Space</h2>
-            <p className="text-red-700 font-thin font-serif text-sm">
+            <h2 className="mb-4 text-2xl font-bold text-center">Seeker Space</h2>
+            <p className="font-serif text-sm font-thin text-red-700">
                 Fields marked with an asterisk (*) are mandatory.
             </p>
-            <div className=" grid grid-cols-2 gap-4 ">
+            <div className="grid grid-cols-2 gap-4 ">
                 <label className="block mb-2 font-semibold">
                     Email
-                    <span className="text-red-700 relative top-0 right-0">*</span>
+                    <span className="relative top-0 right-0 text-red-700">*</span>
                     <input
                         required
                         type="email"
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                         placeholder="Enter Email"
                     />
                 </label>
                 <label className="block mb-2 font-semibold">
                     ZIP Code
-                    <span className="text-red-700 relative top-0 right-0">*</span>
+                    <span className="relative top-0 right-0 text-red-700">*</span>
                     <input
                         required
                         type="number"
@@ -43,7 +45,7 @@ const Secondpage = ({ formData, handleChange, previousPage }) => {
                 </label>
                 <label className="block mb-2 font-semibold">
                     Past Salary
-                    <span className="text-red-700 relative top-0 right-0">*</span>
+                    <span className="relative top-0 right-0 text-red-700">*</span>
                     <input
                         required
                         type="number"
@@ -56,7 +58,7 @@ const Secondpage = ({ formData, handleChange, previousPage }) => {
                 </label>
                 <label className="block mb-2 font-semibold">
                     Expected Salary
-                    <span className="text-red-700 relative top-0 right-0">*</span>
+                    <span className="relative top-0 right-0 text-red-700">*</span>
                     <input
                         required
                         type="number"
@@ -75,20 +77,20 @@ const Secondpage = ({ formData, handleChange, previousPage }) => {
                         name="hobbies"
                         value={formData.hobbies}
                         onChange={handleChange}
-                        className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                         placeholder="Enter Hobbies"
                     />
                 </label>
                 <label className="block mb-2 font-semibold">
                     PAN Number
-                    <span className="text-red-700 relative top-0 right-0">*</span>
+                    <span className="relative top-0 right-0 text-red-700">*</span>
                     <input
                         required
                         type="number"
                         name="pan"
                         value={formData.pan}
                         onChange={handleChange}
-                        className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                         placeholder="Enter PAN"
                     />
                 </label>
@@ -99,7 +101,7 @@ const Secondpage = ({ formData, handleChange, previousPage }) => {
                 <div>
                     <label htmlFor="file-input" className="block mb-2 font-semibold">
                         Upload Resume
-                        <span className="text-red-700 relative top-0 right-0">*</span>
+                        <span className="relative top-0 right-0 text-red-700">*</span>
                     </label>
                     <input
                         type="file"
@@ -107,14 +109,14 @@ const Secondpage = ({ formData, handleChange, previousPage }) => {
                         accept=".pdf"
                         required
                         id="resume"
-                        className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-red-900 focus:ring-red-900 dark:bg-red-100 dark:border-red-700 dark:text-black file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-red-700 dark:file:text-white"
+                        className="block w-full text-sm border border-gray-200 rounded-md shadow-sm focus:z-10 focus:border-red-900 focus:ring-red-900 dark:bg-red-100 dark:border-red-700 dark:text-black file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-red-700 dark:file:text-white"
                     />
                 </div>
 
                 <div>
                     <label htmlFor="file-input" className="block mb-2 font-semibold">
                         Upload Profile Photo
-                        <span className="text-red-700 relative top-0 right-0">*</span>
+                        <span className="relative top-0 right-0 text-red-700">*</span>
                     </label>
                     <input
                         type="file"
@@ -122,14 +124,14 @@ const Secondpage = ({ formData, handleChange, previousPage }) => {
                         accept=".jpg,.jpeg,.png"
                         required
                         id="profilePhoto"
-                        className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-red-900 focus:ring-red-900 dark:bg-red-100 dark:border-red-700 dark:text-black file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-red-700 dark:file:text-white"
+                        className="block w-full text-sm border border-gray-200 rounded-md shadow-sm focus:z-10 focus:border-red-900 focus:ring-red-900 dark:bg-red-100 dark:border-red-700 dark:text-black file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-red-700 dark:file:text-white"
                     />
                 </div>
 
                 <div>
                     <label htmlFor="file-input" className="block mb-2 font-semibold">
                         Upload Aadhar
-                        <span className="text-red-700 relative top-0 right-0">*</span>
+                        <span className="relative top-0 right-0 text-red-700">*</span>
                     </label>
                     <input
                         type="text"
@@ -138,14 +140,14 @@ const Secondpage = ({ formData, handleChange, previousPage }) => {
                         pattern="\d{16}"
                         title="Aadhar number must be 16 digits"
                         id="aadhar"
-                        className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-red-900 focus:ring-red-900 dark:bg-red-100 dark:border-red-700 dark:text-black file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-red-700 dark:file:text-white"
+                        className="block w-full text-sm border border-gray-200 rounded-md shadow-sm focus:z-10 focus:border-red-900 focus:ring-red-900 dark:bg-red-100 dark:border-red-700 dark:text-black file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-red-700 dark:file:text-white"
                     />
                 </div>
 
 
             </div>
 
-            <div className="center flex flex-col items-center">
+            <div className="flex flex-col items-center center">
 
                 <div className="flex justify-between w-full">
 
@@ -153,7 +155,7 @@ const Secondpage = ({ formData, handleChange, previousPage }) => {
                         <button
                             type="button"
                             onClick={previousPage}
-                            className="bg-red-700 hover:bg-red-800 text-white px-4 py-2 mt-8 rounded align-center"
+                            className="px-4 py-2 mt-8 text-white bg-red-700 rounded hover:bg-red-800 align-center"
                         >
                             <FontAwesomeIcon icon={faArrowLeft} />
                         </button>
@@ -162,7 +164,7 @@ const Secondpage = ({ formData, handleChange, previousPage }) => {
                     <div className="w-3/4">
                         <button
                             type="submit"
-                            className="bg-red-700 mx-6 text-white px-4 py-2 mt-8 rounded-lg font-semibold hover:bg-red-800 w-2/4"
+                            className="w-2/4 px-4 py-2 mx-6 mt-8 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
                         >
                             Submit
                         </button>
@@ -347,8 +349,16 @@ const Seeker = () => {
     ];
 
     return (
-        <>
-            <div className="max-w-3xl mx-auto mt-6 px-4 py-8 mb-6 border-2 border-gray-900 rounded-md">
+        <div className="flex items-center justify-center">
+            <div className="grid max-w-[1244px] grid-cols-12 gap-16 mt-5">
+                <div className="col-span-4 px-2 mt-6 mb-6">
+                {sideNavigationButtons.map(button => (
+                    <NavLink to={button.link} >
+                        <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold  border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">{button.name}</div>
+                            </NavLink>
+                        ))}
+                </div>
+            <div className="col-span-8 px-8 py-8 mx-auto mt-6 mb-6 rounded-lg shadow-lg border-[2px] border-black/20">
                 <ProgressBar
                     percent={progress}
                     filledBackground="linear-gradient(to right, #E97451, #D22B2B)"
@@ -365,40 +375,40 @@ const Seeker = () => {
                 {currentPage === 0 && (
                     <form onSubmit={handleSubmit} encType="multipart/form-data" className="mt-1" >
                         {/* Global Section */}
-                        <h2 className="text-2xl font-bold mb-4 text-center ">Seeker Space</h2>
-                        <p className="text-red-700 font-thin font-serif text-sm">
+                        <h2 className="mb-4 text-2xl font-bold text-center ">Seeker Space</h2>
+                        <p className="font-serif text-sm font-thin text-red-700">
                             Fields marked with an asterisk (*) are mandatory.
                         </p>
                         <div className="p-2 rounded-lg">
-                            <label className="block mb-2 font-semibold relative">
+                            <label className="relative block mb-2 font-semibold">
                                 Name
-                                <span className="text-red-700 relative top-0 right-0">*</span>
+                                <span className="relative top-0 right-0 text-red-700">*</span>
                                 <input
                                     required
                                     type="text"
                                     name="name"
                                     value={formData.name}
                                     onChange={handleChange}
-                                    className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                                     placeholder="Enter Your Name"
                                 />
                             </label>
-                            <label className="block mb-2 font-semibold relative">
+                            <label className="relative block mb-2 font-semibold">
                                 Father Name
-                                <span className="text-red-700 relative top-0 right-0">*</span>
+                                <span className="relative top-0 right-0 text-red-700">*</span>
                                 <input
                                     required
                                     type="text"
                                     name="fathername"
                                     value={formData.fathername}
                                     onChange={handleChange}
-                                    className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                                     placeholder="Enter Name"
                                 />
                             </label>
-                            <label className="block mb-2 font-semibold relative">
+                            <label className="relative block mb-2 font-semibold">
                                 Aadhar Number
-                                <span className="text-red-700 relative top-0 right-0">*</span>
+                                <span className="relative top-0 right-0 text-red-700">*</span>
                                 <input
                                     required
                                     type="number"
@@ -412,11 +422,11 @@ const Seeker = () => {
                                 />
                             </label>
 
-                            <div className=" grid grid-cols-2 gap-4 ">
+                            <div className="grid grid-cols-2 gap-4 ">
                                 <div className="relative">
                                     <label className="block mb-2 font-semibold">
                                         10th Score
-                                        <span className="text-red-700 relative top-0 right-0">*</span>
+                                        <span className="relative top-0 right-0 text-red-700">*</span>
                                     </label>
                                     <div className="flex">
                                         <select
@@ -424,7 +434,7 @@ const Seeker = () => {
                                             name="tenMarkType"
                                             value={formData.tenMarkType}
                                             onChange={handleChange}
-                                            className="border rounded-sm px-3 py-2 mt-1 w-24 text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                            className="w-24 px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                                         >
                                             <option value="fixed">Fixed</option>
                                             <option value="percentage">Percentage</option>
@@ -450,7 +460,7 @@ const Seeker = () => {
                                 <div className="relative">
                                     <label className="block mb-2 font-semibold">
                                         12th Score
-                                        <span className="text-red-700 relative top-0 right-0">*</span>
+                                        <span className="relative top-0 right-0 text-red-700">*</span>
                                     </label>
                                     <div className="flex">
                                         <select
@@ -458,7 +468,7 @@ const Seeker = () => {
                                             name="twelveMarkType"
                                             value={formData.twelveMarkType}
                                             onChange={handleChange}
-                                            className="border rounded-sm px-3 py-2 mt-1 w-24 text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                            className="w-24 px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                                         >
                                             <option value="fixed">Fixed</option>
                                             <option value="percentage">Percentage</option>
@@ -483,65 +493,65 @@ const Seeker = () => {
 
                                 <label className="block mb-2 font-semibold">
                                     Jop Post
-                                    <span className="text-red-700 relative top-0 right-0">*</span>
+                                    <span className="relative top-0 right-0 text-red-700">*</span>
                                     <input
                                         required
                                         type="text"
                                         name="jobpost"
                                         value={formData.jobpost}
                                         onChange={handleChange}
-                                        className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                                         placeholder="Enter Post"
                                     />
                                 </label>
                                 <label className="block mb-2 font-semibold">
                                     Jop Experience
-                                    <span className="text-red-700 relative top-0 right-0">*</span>
+                                    <span className="relative top-0 right-0 text-red-700">*</span>
                                     <input
                                         required
                                         type="number"
                                         name="jobexp"
                                         value={formData.jobexp}
                                         onChange={handleChange}
-                                        className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                                         placeholder="Enter Experience"
                                     />
                                 </label>
                                 <label className="block mb-2 font-semibold">
                                     Company
-                                    <span className="text-red-700 relative top-0 right-0">*</span>
+                                    <span className="relative top-0 right-0 text-red-700">*</span>
                                     <input
                                         required
                                         type="text"
                                         name="company"
                                         value={formData.company}
                                         onChange={handleChange}
-                                        className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                                         placeholder="Enter Company"
                                     />
                                 </label>
                                 <label className="block mb-2 font-semibold">
                                     Address
-                                    <span className="text-red-700 relative top-0 right-0">*</span>
+                                    <span className="relative top-0 right-0 text-red-700">*</span>
                                     <input
                                         required
                                         type="text"
                                         name="address"
                                         value={formData.address}
                                         onChange={handleChange}
-                                        className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                                         placeholder="Enter Address"
                                     />
                                 </label>
                                 <label className="block mb-2 font-semibold">
                                     Country
-                                    <span className="text-red-700 relative top-0 right-0">*</span>
+                                    <span className="relative top-0 right-0 text-red-700">*</span>
                                     <select
                                         required
                                         name="country"
                                         value={formData.country}
                                         onChange={handleChange}
-                                        className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                                     >
                                         <option value="">Select a country</option>
                                         {countryNames.map((country) => (
@@ -553,13 +563,13 @@ const Seeker = () => {
                                 </label>
                                 <label className="block mb-2 font-semibold">
                                     State
-                                    <span className="text-red-700 relative top-0 right-0">*</span>
+                                    <span className="relative top-0 right-0 text-red-700">*</span>
                                     <select
                                         required
                                         name="state"
                                         value={formData.state}
                                         onChange={handleChange}
-                                        className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                                     >
                                         <option value="">Select a state</option>
                                         {stateNames.map((state) => (
@@ -571,14 +581,14 @@ const Seeker = () => {
                                 </label>
                                 <label className="block mb-2 font-semibold">
                                     City
-                                    <span className="text-red-700 relative top-0 right-0">*</span>
+                                    <span className="relative top-0 right-0 text-red-700">*</span>
                                     <input
                                         required
                                         type="text"
                                         name="city"
                                         value={formData.city}
                                         onChange={handleChange}
-                                        className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                                         placeholder="Enter a city"
                                         autoComplete="off"
                                         list="cityNamesList"
@@ -591,14 +601,14 @@ const Seeker = () => {
                                 </label>
                                 <label className="block mb-2 font-semibold">
                                     Mobile Number
-                                    <span className="text-red-700 relative top-0 right-0">*</span>
+                                    <span className="relative top-0 right-0 text-red-700">*</span>
                                     <input
                                         required
                                         type="number"
                                         name="mobile"
                                         value={formData.mobile}
                                         onChange={handleChange}
-                                        className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                                         placeholder="Enter Mobile Number"
                                     />
                                 </label>
@@ -611,7 +621,7 @@ const Seeker = () => {
                         <button
                             type="button"
                             onClick={nextPage}
-                            className="bg-red-700 text-white px-4 py-2 mt-8 rounded hover:bg-red-800"
+                            className="px-4 py-2 mt-8 text-white bg-black rounded hover:bg-red-800"
                             disabled={!isFormValid} // Disable the button if the form is not valid
                         >
                             Next
@@ -632,7 +642,9 @@ const Seeker = () => {
                     </form>
                 )}
             </div>
-        </>
+            </div>
+            </div>
+        
     );
 };
 

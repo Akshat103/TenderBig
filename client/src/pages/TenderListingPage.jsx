@@ -16,19 +16,19 @@ const TenderCard = ({ title, deadline, location, referenceNo, tenderId}) => {
   };
 
   return (
-    <div className="bg-white shadow-lg rounded-lg p-6 mb-4 border-[2px]">
+    <div className="bg-white shadow-lg rounded p-6 mb-4 border-[2px] border-black/20">
       <div className="flex justify-between">
-        <h2 className="text-xl font-bold mb-2">{title}</h2>
-        <span className="bg-green-500 text-white font-bold py-1 px-2 rounded mr-2 mb-2 h-8 ml-3">
+        <h2 className="mb-2 text-xl font-bold">{title}</h2>
+        <span className="h-8 px-2 py-1 mb-2 ml-3 mr-2 font-bold text-white bg-green-500 rounded">
           Live
         </span>
       </div>
-      <p className="text-gray-600 mb-4">Deadline: {deadline}</p>
-      <p className="text-gray-600 mb-4">{location}</p>
-      <p className="text-gray-600 mb-4">TOT Reference No.: {referenceNo}</p>
+      <p className="mb-4 text-gray-600">Deadline: {deadline}</p>
+      <p className="mb-4 text-gray-600">{location}</p>
+      <p className="mb-4 text-gray-600">TOT Reference No.: {referenceNo}</p>
 
       <button
-        className="bg-red-700 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+        className="px-4 py-2 font-bold text-white transition-colors duration-300 bg-black rounded hover:bg-white hover:text-black hover:border hover:border-black linear "
         onClick={() => handleViewDetails(tenderId)}
       >
         View Details
@@ -209,12 +209,12 @@ const TenderListingPage = () => {
 
   return (
     <>
-      <div className="mx-auto p-4 max-w-7xl">
-        <div className="flex flex-col-reverse md:grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-          <div className="sm:col-span-2 md:col-span-2">
-            <h1 className="text-2xl font-bold mb-4">
+      <div className="p-4 mx-auto max-w-7xl">
+            <h1 className="my-4 text-2xl font-bold">
               Online Tenders, Tenders Website, Bids & Tenders
             </h1>
+        <div className="flex flex-col-reverse gap-4 md:grid sm:grid-cols-2 md:grid-cols-3">
+          <div className="sm:col-span-2 md:col-span-2">
             {currentItems.length > 0 ? (
               <div>
                 {currentItems.map((tender, index) => (
@@ -227,9 +227,9 @@ const TenderListingPage = () => {
                     tenderId={tender.tenderId}
                   />
                 ))}
-                <div className="flex justify-between mt-4">
+                <div className="flex justify-between mt-10">
                   <button
-                    className="bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+                    className="px-4 py-2 font-bold text-white transition-colors bg-red-700 rounded"
                     onClick={() => goToPage(currentPage - 1)}
                     disabled={currentPage === 1}
                   >
@@ -252,7 +252,7 @@ const TenderListingPage = () => {
                   </div>
 
                   <button
-                    className="bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+                    className="px-4 py-2 font-bold text-white transition-colors bg-red-700 rounded"
                     onClick={() => goToPage(currentPage + 1)}
                     disabled={currentItems.length < itemsPerPage}
                   >
@@ -266,12 +266,12 @@ const TenderListingPage = () => {
           </div>
 
           <div className="">
-            <div className="border border-gray-300 p-4 rounded">
-              <h2 className="text-lg font-bold mb-2">Filter Tenders</h2>
+            <div className="p-4 border border-gray-300 rounded shadow-lg border-[2px] border-black/20">
+              <h2 className="mb-2 text-lg font-bold">Filter Tenders</h2>
               <div className="mb-4">
                 <label
                   htmlFor="region"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-gray-700 mb-0.5"
                 >
                   Region
                 </label>
@@ -280,7 +280,7 @@ const TenderListingPage = () => {
                   name="region"
                   value={selectedRegion}
                   onChange={handleRegionChange}
-                  className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
+                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
                 >
                   <option value="">All Regions</option>
                   {Object.keys(regionData).map((region) => (
@@ -294,7 +294,7 @@ const TenderListingPage = () => {
               <div className="mb-4">
                 <label
                   htmlFor="country"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-gray-700 mb-0.5"
                 >
                   Country
                 </label>
@@ -303,7 +303,7 @@ const TenderListingPage = () => {
                   name="country"
                   value={selectedCountry}
                   onChange={handleCountryChange}
-                  className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
+                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
                 >
                   <option value="">All Countries</option>
                   {countries.map((country) => (
@@ -317,7 +317,7 @@ const TenderListingPage = () => {
               <div className="mb-4">
                 <label
                   htmlFor="fundingAgency"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-gray-700 mb-0.5"
                 >
                   Funding Agency
                 </label>
@@ -326,7 +326,7 @@ const TenderListingPage = () => {
                   name="fundingAgency"
                   value={selectedFundingAgency}
                   onChange={handleFundingAgencyChange}
-                  className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
+                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
                 >
                   <option value="">All Funding Agencies</option>
                   <option value="Abu Dhabi Fund for Development (ADFD)">
@@ -363,7 +363,7 @@ const TenderListingPage = () => {
               <div className="mb-4">
                 <label
                   htmlFor="product"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-gray-700 mb-0.5"
                 >
                   Tenders By Geo-Political Region
                 </label>
@@ -372,7 +372,7 @@ const TenderListingPage = () => {
                   name="product"
                   value={selectedGeoPolitical}
                   onChange={handleGeoPoliticalChange}
-                  className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
+                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
                 >
                   <option value="">All Geo-Political Region</option>
                   {Object.keys(geopoliticalData).map((key) => (
@@ -386,7 +386,7 @@ const TenderListingPage = () => {
               <div className="mb-4">
                 <label
                   htmlFor="product"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-gray-700 mb-0.5"
                 >
                   Tenders By Sector
                 </label>
@@ -395,7 +395,7 @@ const TenderListingPage = () => {
                   name="product"
                   value={selectedProduct}
                   onChange={handleProductChange}
-                  className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
+                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
                 >
                   <option value="">All Products</option>
                   <option value="Rehabilitation">Rehabilitation Tenders</option>
@@ -431,7 +431,7 @@ const TenderListingPage = () => {
               <div className="mb-4">
                 <label
                   htmlFor="product"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-gray-700 mb-0.5"
                 >
                   Tenders By
                 </label>
@@ -440,7 +440,7 @@ const TenderListingPage = () => {
                   name="tenderby"
                   value={selectedUserCategory}
                   onChange={handleUserCategoryChange}
-                  className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
+                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
                 >
                   <option value="">All </option>
                   <option value="contractor">Contractor </option>

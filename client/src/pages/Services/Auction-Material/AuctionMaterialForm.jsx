@@ -315,10 +315,10 @@ const AuctionMaterialForm = () => {
 
   return (
     <>
-      <div className="flex max-w-[1244px] px-4 py-8 mx-auto mt-6 mb-6 border-2 border-gray-900 rounded-md">
+      <div className="flex flex-col md:flex-row max-w-[1244px] px-4 py-8 mx-auto mt-6 mb-6 border-2 border-gray-900 rounded-md">
         <img
           src="https://img.freepik.com/free-vector/flat-design-illustration-customer-support_23-2148887720.jpg?w=740&t=st=1687066253~exp=1687066853~hmac=42f23f007ad72bd2ca440a69684ce6508082c1182b3c54179addffc4163960af"
-          className="w-4/5 md:w-1/2"
+          className=" md:w-1/2"
           alt="Contact illustration"
         />
         <div className="m-10">

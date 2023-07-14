@@ -11,6 +11,7 @@ const Navbar = () => {
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+    setDropdownOpen(false);
   };
 
   const toggleDropdown = () => {
@@ -82,8 +83,10 @@ const Navbar = () => {
                   </Link>
                   <div className="relative">
                     <button
-                    onClick={() => setDropdownOpen(true)}
+                      onClick={() => setDropdownOpen(true)}
                       onMouseEnter={() => setDropdownOpen(true)}
+                      // onMouseLeave={() => setDropdownOpen(false)}
+
                       className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
                     >
                       Services
@@ -105,9 +108,8 @@ const Navbar = () => {
                     {dropdownOpen && (
                       <div
                         className="absolute right-0 mt-2  bg-white border border-gray-200 rounded-md shadow-lg w-[290px] z-10"
-                        onMouseEnter={() => setDropdownOpen(true)}
+                        // onMouseEnter={() => setDropdownOpen(true)}
                         onMouseLeave={() => setDropdownOpen(false)}
-
                       >
                         <Link
                           to="/careerandmanpower"
@@ -303,7 +305,10 @@ const Navbar = () => {
       </nav>
       {menuOpen && (
         <div className="flex justify-end ">
-          <div className="mt-12 sm:hidden overflow bg-red-700 max-w-[250px] p-2 text-white fixed ">
+          <div
+            className=" sm:hidden overflow bg-red-700 max-w-[250px] p-2 text-gray-50 fixed  "
+            onMouseLeave={toggleMenu}
+          >
             <div className="mt-2 space-y-2">
               <div>
                 <Link
@@ -314,7 +319,6 @@ const Navbar = () => {
                   Home
                 </Link>
               </div>
-
               <div>
                 <Link
                   to="/tenders"
@@ -326,15 +330,41 @@ const Navbar = () => {
               </div>
               <div>
                 <Link
+                  to="/projects"
+                  className="hover:bg-red-700 text-lg font-medium transition-colors duration-300 px-3 py-2 rounded-md w-[90px]"
+                >
+                  Projects
+                </Link>
+              </div>
+              <div>
+                <Link
+                  to="/gems"
+                  className="hover:bg-red-700 text-lg font-medium transition-colors duration-300 px-3 py-2 rounded-md w-[90px]"
+                >
+                  Gems
+                </Link>
+              </div>
+              <div>
+                <Link
                   to="/forms"
                   className="hover:bg-red-700 text-lg font-medium transition-colors duration-300 px-3 py-2 rounded-md w-[90px]"
                 >
-                  Apply For Tender
+                  Apply for Tenders
                 </Link>
               </div>
+              <div>
+                <Link
+                  to="/contact"
+                  className="hover:bg-red-700 text-lg font-medium transition-colors duration-300 px-3 py-2 rounded-md w-[90px]"
+                >
+                  Contact
+                </Link>
+              </div>
+
               <div className="relative">
                 <button
                   onClick={toggleDropdown}
+                  onMouseLeave={toggleDropdown}
                   className="px-3 py-2 text-lg font-medium transition-colors duration-300 bg-red-700 rounded-md "
                 >
                   Services
@@ -354,9 +384,14 @@ const Navbar = () => {
                   </svg>
                 </button>
                 {dropdownOpen && (
-                  <div className="absolute right-0 mt-2  bg-white border border-gray-200 rounded-md shadow-lg w-[290px]">
+                  <div
+                    className="absolute right-0 mt-2  bg-white border border-gray-200 rounded-md shadow-lg w-[290px]"
+                    onMouseEnter={() => setDropdownOpen(true)}
+                    onMouseLeave={() => setDropdownOpen(false)}
+                  >
                     <Link
                       to="/careerandmanpower"
+                      onClick={toggleMenu}
                       className="block px-4 py-2 text-lg text-white bg-red-700 "
                     >
                       <svg
@@ -375,6 +410,7 @@ const Navbar = () => {
                       Career & Man Power
                     </Link>
                     <Link
+                      onClick={toggleMenu}
                       to="/regandcert"
                       className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                     >
@@ -395,6 +431,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                       to="/contact"
+                      onClick={toggleMenu}
                       className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                     >
                       <svg
@@ -415,7 +452,8 @@ const Navbar = () => {
                     <Link
                       to="/auctionmaterial"
                       className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
-                      onClick={() => setSelectedService("License")}
+                      /*onClick={() => setSelectedService("License")}*/
+                      onClick={toggleMenu}
                     >
                       <svg
                         xmlns="https://www.svgrepo.com/show/498932/settings.svg"
@@ -433,6 +471,7 @@ const Navbar = () => {
                       Auction Material
                     </Link>
                     <Link
+                      onClick={toggleMenu}
                       to="/jointventure"
                       className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                     >
@@ -452,6 +491,7 @@ const Navbar = () => {
                       Joint Venture
                     </Link>
                     <Link
+                      onClick={toggleMenu}
                       to="/tenderfilling"
                       className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                     >
@@ -471,6 +511,7 @@ const Navbar = () => {
                       Tender Filling
                     </Link>
                     <Link
+                      onClick={toggleMenu}
                       to="/gemregistration"
                       className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                     >
@@ -492,24 +533,38 @@ const Navbar = () => {
                   </div>
                 )}
               </div>
-              <div>
-                <Link
-                  to="/about"
-                  className="hover:bg-red-700 text-lg font-medium transition-colors duration-300 px-3 py-2 rounded-md w-[90px]"
-                  onClick={toggleMenu}
-                >
-                  About
-                </Link>
-              </div>
 
               <div>
-                <Link
-                  to="/login"
-                  className="hover:bg-red-700 text-lg font-medium transition-colors duration-300 px-3 py-2 rounded-md w-[90px]  bg-red-700"
-                  onClick={toggleMenu}
-                >
-                  Login
-                </Link>
+                {auth ? (
+                  <>
+                    <div className="flex flex-col">
+                      <button
+                        onClick={logout}
+                        className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md mb-2"
+                      >
+                        Logout
+                      </button>
+
+                      {auth.userRole == "admin" ? (
+                        <button
+                          onClick={dashboard}
+                          className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
+                        >
+                          Dashboard
+                        </button>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <Link
+                    to="/login"
+                    className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-red-700 rounded-md"
+                  >
+                    Login
+                  </Link>
+                )}
               </div>
             </div>
           </div>

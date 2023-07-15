@@ -102,6 +102,18 @@ const Footer = () => {
                   </span>
                   +91-3453574072
                 </li>
+                <li className="mb-2">
+                  <span className="inline-block w-4 mr-2">
+                    <img
+                      src="https://www.svgrepo.com/show/430111/address-pin-location.svg"
+                      alt="Adress"
+                      width={20}
+                      height={20}
+                    />
+                  </span>
+                  S-30, 2nd floor Dwarika tower central spine, vidhyadhar nagar,
+                  jaipur, 302039
+                </li>
               </ul>
             </div>
             <div>

@@ -579,10 +579,9 @@ const Employer = () => {
                         >
                             <RiMapPin2Line className="mb-2 text-3xl text-red-700" />
                             <span className="font-semibold">Address</span>
-                            <p className="mt-2">
-                                S-3, Vinayak Jaipur, fwefsdfrgh, loream dndnvnuidnvuwzxm,njd n
-                                sjvbvsbdj vvjhbwejk as, 300000
-                            </p>
+                            <p className=" text">
+                S-30, 2nd floor Dwarika tower central spine, vidhyadhar nagar, jaipur, 302039
+                </p>
                         </motion.div>
                         <motion.div
                             className="flex flex-col items-center justify-center p-8 text-center bg-white border-2 rounded-lg shadow-lg"

@@ -137,7 +137,7 @@ const TenderStatistics = () => {
 
                 <div className="bg-white rounded-lg shadow-md p-4">
                   <div className="flex items-center justify-center">
-                    <div className="container">
+                    <div className="container md:w-[500px] md:h-[500px] w-[250px]">
                       {renderChart()}
                     </div>
                   </div>

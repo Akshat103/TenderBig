@@ -111,7 +111,7 @@ const UserStatistics = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
                 <div className="flex items-center justify-center rounded h-68 bg-white mb-4">
-                  <div className="container" style={{ width: "500px", height: "500px" }}>{renderChart()}</div>
+                  <div className="container md:w-[500px] md:h-[500px] w-[250px]" >{renderChart()}</div>
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

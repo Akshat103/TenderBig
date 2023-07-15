@@ -299,6 +299,7 @@ const Navbar = () => {
                   </svg>
                 </button>
               </div>
+              
             </div>
           </div>
         </div>
@@ -306,7 +307,7 @@ const Navbar = () => {
       {menuOpen && (
         <div className="flex justify-end ">
           <div
-            className=" sm:hidden overflow bg-red-700 max-w-[250px] p-2 text-gray-50 fixed  "
+            className="fixed w-full p-2 bg-red-700 sm:hidden overflow text-gray-50 "
             onMouseLeave={toggleMenu}
           >
             <div className="mt-2 space-y-2">
@@ -540,7 +541,7 @@ const Navbar = () => {
                     <div className="flex flex-col">
                       <button
                         onClick={logout}
-                        className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md mb-2"
+                        className="px-3 py-2 mb-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
                       >
                         Logout
                       </button>

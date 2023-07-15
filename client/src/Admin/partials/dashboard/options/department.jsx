@@ -62,16 +62,16 @@ const Department = () => {
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <h1 className="text-xl font-bold mb-4">Department</h1>
             {/* Add department form */}
-            <div className="flex">
+            <div className="flex flex-col md:flex-row mb-4 md:items-center md:justify-between">
               <input
                 type="text"
                 placeholder="Enter new department"
-                className="mr-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1"
+                className="mr-2 mb-3 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1"
                 value={newDepartment}
                 onChange={(e) => setNewDepartment(e.target.value)}
               />
               <button
-                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                className="px-4 py-2 bg-blue-500 mb-3 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
                 onClick={addDepartment}
               >
                 Add Department

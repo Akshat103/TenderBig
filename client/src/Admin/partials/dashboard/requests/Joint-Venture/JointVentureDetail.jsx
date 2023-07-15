@@ -89,7 +89,7 @@ const JointVentureDetail = () => {
 
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <div className="flex justify-center flex-shrink">
-              <div className="bg-white rounded-lg  p-20 shadow-2xl w-3/4">
+            <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-20 w-full lg:w-3/4">
                 <ProgressBar
                   percent={progress}
                   filledBackground="linear-gradient(to right, #fefb72, #f0bb31)"
@@ -128,12 +128,12 @@ const JointVentureDetail = () => {
                 {/* </div> */}
                 <div className="grid grid-cols-2 mb-4 mt-4 gap-11">
                   <div>
-                    <label className="block mb-2 text-xl font-medium">
+                    <label className="block mt-6 md:mt-0 mb-2 text-xl font-medium">
                       City:
                     </label>
                     <input
                       type="text"
-                      className="border text-lg  border-gray-300 rounded-md p-2  py-4 w-full bg-gray-200"
+                      className="border mt-2 md:mt-0 text-lg  border-gray-300 rounded-md p-2  py-4 w-full bg-gray-200"
                       value={data.city}
                       readOnly={!isEditing}
                       onChange={(e) =>
@@ -278,12 +278,12 @@ const JointVentureDetail = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-11">
                   <div>
-                    <label className="block mb-2 text-xl font-medium">
+                    <label className="block mb-2 mt-3 md:mt-0 text-xl font-medium">
                       Company Name
                     </label>
                     <input
                       type="text"
-                      className="border text-lg border-gray-300 py-4 bg-gray-200 rounded-md p-2 w-full"
+                      className="border mt-6 md:mt-0 text-lg border-gray-300 py-4 bg-gray-200 rounded-md p-2 w-full"
                       value={data.companyName}
                       readOnly={!isEditing}
                       onChange={(e) =>
@@ -311,12 +311,12 @@ const JointVentureDetail = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-11">
                   <div>
-                    <label className="block mb-2 text-xl font-medium">
+                    <label className="block mb-2 mt-5 md:mt-0 text-xl font-medium">
                       Partnership Ratio:
                     </label>
                     <input
                       type="text"
-                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      className="border mt-3 md:mt-0 text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
                       value={data.partnershipRatio}
                       readOnly={!isEditing}
                       onChange={(e) =>

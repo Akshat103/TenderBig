@@ -90,7 +90,7 @@ const GemRegistrationDetail = () => {
 
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <div className="flex justify-center flex-shrink">
-              <div className="bg-white rounded-lg  p-20 shadow-2xl w-3/4">
+            <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-20 w-full lg:w-3/4">
                 <ProgressBar
                   percent={progress}
                   filledBackground="linear-gradient(to right, #fefb72, #f0bb31)"
@@ -127,8 +127,8 @@ const GemRegistrationDetail = () => {
                 </div>
 
                 {/* </div> */}
-                <div className="grid grid-cols-2 mb-4 mt-4 gap-11">
-                  <div>
+                <div className="grid  grid-cols-2 mb-4 mt-4 gap-11">
+                  <div className="mt-7 md:mt-0">
                     <label className="block mb-2 text-xl font-medium">
                       Email
                     </label>
@@ -189,7 +189,7 @@ const GemRegistrationDetail = () => {
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-11">
-                  <div>
+                  <div className="mt-7 md:mt-0">
                     <label className="block mb-2 text-xl font-medium">
                       PAN Number
                     </label>
@@ -219,7 +219,7 @@ const GemRegistrationDetail = () => {
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-11">
-                  <div>
+                  <div className="mt-7 md:mt-0">
                     <label className="block mb-2 text-xl font-medium">
                       GST Number
                     </label>
@@ -263,7 +263,7 @@ const GemRegistrationDetail = () => {
                       }
                     />
                   </div>
-                  <div>
+                  <div className="mt-12 md:mt-0">
                     <label className="block mb-2 text-xl font-medium">
                       Country
                     </label>

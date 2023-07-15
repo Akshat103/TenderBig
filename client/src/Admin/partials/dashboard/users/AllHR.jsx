@@ -170,11 +170,11 @@ function AllHR() {
               {/*---------> Table (Top Channels) */}
               <section className="container mx-auto p-6 font-mono overflow-x-auto">
                 <h1 className="text-xl font-bold mb-4">All HR</h1>
-                <div className="flex mb-4 justify-between">
+                <div className="flex flex-col md:flex-row mb-4 md:items-center md:justify-between">
                   {/* Search bar */}
                   <input
                     type="text"
-                    className="w-64 px-4 py-2 mr-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded shadow focus:outline-none"
+                    className="w-full md:w-64 px-4 py-2 mb-2 md:mb-0 mr-0 md:mr-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded shadow focus:outline-none"
                     placeholder="Search by name or email"
                     value={searchTerm}
                     onChange={handleSearchChange}

@@ -95,7 +95,7 @@ const downloadAsPDF = () => {
             <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
             <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
               <div className="flex justify-center">
-                <div className="bg-white rounded-lg shadow-lg p-6">
+                <div className="bg-white rounded-lg shadow-2xl p-6">
                   <h2 className="text-xl font-bold mb-4">
                     Auction Material Detail
                   </h2>
@@ -124,7 +124,7 @@ const downloadAsPDF = () => {
 
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <div className="flex justify-center flex-shrink">
-              <div className="bg-white rounded-lg  p-20 shadow-2xl w-3/4">
+            <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-20 w-full lg:w-3/4">
                 <ProgressBar
                   percent={progress}
                   filledBackground="linear-gradient(to right, #fefb72, #f0bb31)"
@@ -209,7 +209,7 @@ const downloadAsPDF = () => {
                     />
                   </div>
                   <div>
-                    <label className="block mb-2 text-xl font-medium">
+                    <label className="block mb-2 mt-7 md:mt-0 text-xl font-medium">
                       Experience
                     </label>
                     <input
@@ -223,9 +223,9 @@ const downloadAsPDF = () => {
                     />
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-11">
+                <div className="grid grid-cols-2  gap-11">
                   <div>
-                    <label className="block mb-2 text-xl font-medium">
+                    <label className="block mb-2 mt-7 md:mt-0 text-xl font-medium">
                       {" "}
                       Salary
                     </label>
@@ -256,7 +256,7 @@ const downloadAsPDF = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-11">
                   <div>
-                    <label className="block mb-2 text-xl font-medium">
+                    <label className="block mb-2 mt-7 md:mt-0 text-xl font-medium">
                       Company Profile
                     </label>
                     <input
@@ -306,7 +306,7 @@ const downloadAsPDF = () => {
                     />
                   </div>
                   <div>
-                    <label className="block mb-2 text-xl font-medium">
+                    <label className="block mb-2 mt-7 md:mt-0 text-xl font-medium">
                       {" "}
                       PAN Number
                     </label>
@@ -338,38 +338,31 @@ const downloadAsPDF = () => {
                   </div>
                   <div>
                     <label className="block mb-2 text-xl font-medium">
-                      Address Line 1
+                      State
                     </label>
                     <input
                       type="text"
                       className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
-                      value={formData.addressline1}
+                      value={formData.state}
                       readOnly={!isEditing}
                       onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          addressline1: e.target.value,
-                        })
+                        setFormData({ ...formData, state: e.target.value })
                       }
                     />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-11">
-                  <div>
+                <div>
                     <label className="block mb-2 text-xl font-medium">
-                      {" "}
-                      Address Line 2
+                      Country
                     </label>
                     <input
                       type="text"
                       className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
-                      value={formData.addressline2}
+                      value={formData.country}
                       readOnly={!isEditing}
                       onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          addressline2: e.target.value,
-                        })
+                        setFormData({ ...formData, country: e.target.value })
                       }
                     />
                   </div>
@@ -403,36 +396,10 @@ const downloadAsPDF = () => {
                       }
                     />
                   </div>
-                  <div>
-                    <label className="block mb-2 text-xl font-medium">
-                      State
-                    </label>
-                    <input
-                      type="text"
-                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
-                      value={formData.state}
-                      readOnly={!isEditing}
-                      onChange={(e) =>
-                        setFormData({ ...formData, state: e.target.value })
-                      }
-                    />
-                  </div>
+                  
                 </div>
                 <div className="grid grid-cols-2 gap-11">
-                  <div>
-                    <label className="block mb-2 text-xl font-medium">
-                      Country
-                    </label>
-                    <input
-                      type="text"
-                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
-                      value={formData.country}
-                      readOnly={!isEditing}
-                      onChange={(e) =>
-                        setFormData({ ...formData, country: e.target.value })
-                      }
-                    />
-                  </div>
+                  
                   {/* <div> */}
                   {/* <label className="block mb-2 text-xl font-medium">Manpower Requirement:</label>
                     <input

@@ -150,48 +150,61 @@ class User {
         try {
             const auctionMaterialFormCount = await AuctionMaterialForm.countDocuments({ userId: userId });
             const auctionMaterialFormLatest = await AuctionMaterialForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            delete auctionMaterialFormLatest?._id
             allForms.push({ formName: 'Auction Material', number: auctionMaterialFormCount, latestForm: auctionMaterialFormLatest });
-    
+
             const companyFormCount = await CompanyForm.countDocuments({ userId: userId });
             const companyFormLatest = await CompanyForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            delete companyFormLatest?._id
             allForms.push({ formName: 'Company', number: companyFormCount, latestForm: companyFormLatest });
-    
+
             const employerFormCount = await EmployerForm.countDocuments({ userId: userId });
             const employerFormLatest = await EmployerForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            delete employerFormLatest?._id;
             allForms.push({ formName: 'employer', number: employerFormCount, latestForm: employerFormLatest });
-    
+
             const seekerFormCount = await SeekerForm.countDocuments({ userId: userId });
             const seekerFormLatest = await SeekerForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            delete seekerFormLatest?._id;
             allForms.push({ formName: 'seeker', number: seekerFormCount, latestForm: seekerFormLatest });
-    
+
             const iCertificationFormCount = await IndividualForm.countDocuments({ userId: userId });
             const iCertificationFormLatest = await IndividualForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            delete iCertificationFormLatest?._id;
             allForms.push({ formName: 'Individual Certification', number: iCertificationFormCount, latestForm: iCertificationFormLatest });
-    
+
             const companyCertificationFormCount = await CompanyForm.countDocuments({ userId: userId });
             const companyCertificationFormLatest = await CompanyForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            delete companyCertificationFormLatest?._id;
+            console.log(companyCertificationFormLatest);
             allForms.push({ formName: 'Company Certification', number: companyCertificationFormCount, latestForm: companyCertificationFormLatest });
-    
+
             const registrationFormCount = await RegistrationForm.countDocuments({ userId: userId });
             const registrationFormLatest = await RegistrationForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            delete registrationFormLatest?._id;
+
             allForms.push({ formName: 'registration', number: registrationFormCount, latestForm: registrationFormLatest });
-    
+
             const jointVentureFormCount = await jointventureForm.countDocuments({ userId: userId });
             const jointVentureFormLatest = await jointventureForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            delete jointVentureFormLatest?._id;
             allForms.push({ formName: 'joint venture', number: jointVentureFormCount, latestForm: jointVentureFormLatest });
-    
+
             const tenderOfflineFormCount = await TenderOfflineForm.countDocuments({ userId: userId });
             const tenderOfflineFormLatest = await TenderOfflineForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            delete tenderOfflineFormLatest?._id;
             allForms.push({ formName: 'Tender Offline', number: tenderOfflineFormCount, latestForm: tenderOfflineFormLatest });
-    
+
             const tenderOnlineFormCount = await TenderOnlineModel.countDocuments({ userId: userId });
             const tenderOnlineFormLatest = await TenderOnlineModel.findOne({ userId: userId }).sort({ createdAt: -1 });
+            delete tenderOnlineFormLatest?._id;
             allForms.push({ formName: 'Tender Online', number: tenderOnlineFormCount, latestForm: tenderOnlineFormLatest });
-    
+
             const gemRegistrationFormCount = await gemregistrationForm.countDocuments({ userId: userId });
             const gemRegistrationFormLatest = await gemregistrationForm.findOne({ userId: userId }).sort({ createdAt: -1 });
+            delete gemRegistrationFormLatest?._id;
             allForms.push({ formName: 'Gem Registration', number: gemRegistrationFormCount, latestForm: gemRegistrationFormLatest });
-    
+
             console.log(allForms);
             res.json(allForms);
         } catch (error) {
@@ -199,10 +212,10 @@ class User {
             res.status(500).json({ error: 'Server Error' });
         }
     }
-    
-    
-    
-    
+
+
+
+
 }
 
 const usersController = new User();

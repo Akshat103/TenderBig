@@ -17,7 +17,7 @@ import DashboardTenderDetail from "../Admin/partials/dashboard/tenders/Dashboard
 //Users
 import AddAdmin from "../Admin/partials/dashboard/users/AddAdmin";
 import AddEmployee from "../Admin/partials/dashboard/users/AddEmployee";
-import AddHR from "../Admin/partials/dashboard/users/Addhr";
+import AddHR from "../Admin/partials/dashboard/users/AddHR";
 import AddUser from "../Admin/partials/dashboard/users/AddUser";
 
 import AllAdmin from "../Admin/partials/dashboard/users/AllAdmin";

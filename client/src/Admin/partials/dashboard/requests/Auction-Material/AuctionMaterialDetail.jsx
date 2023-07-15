@@ -67,7 +67,7 @@ const AuctionMaterialDetail = () => {
             <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
             <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
               <div className="flex justify-center">
-                <div className="bg-white rounded-lg shadow-lg p-6">
+                <div className="bg-white rounded-lg shadow-2xl p-6">
                   <h2 className="text-xl font-bold mb-4">
                     Auction Material Detail
                   </h2>
@@ -95,8 +95,8 @@ const AuctionMaterialDetail = () => {
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            <div className="flex justify-center flex-shrink">
-              <div className="bg-white rounded-lg  p-20 shadow-2xl w-3/4">
+            <div className="flex justify-center">
+              <div className="bg-white rounded-lg shadow-2xl p-20 w-full lg:w-3/4">
                 <ProgressBar
                   percent={progress}
                   filledBackground="linear-gradient(to right, #fefb72, #f0bb31)"
@@ -105,9 +105,7 @@ const AuctionMaterialDetail = () => {
                     <Step key={index}>
                       {({ accomplished }) => (
                         <div
-                          className={`step ${
-                            accomplished ? "completed" : null
-                          }`}
+                          className={`step ${accomplished ? "completed" : null}`}
                         />
                       )}
                     </Step>
@@ -116,31 +114,28 @@ const AuctionMaterialDetail = () => {
                 <h2 className="text-3xl font-bold mb-4 mt-6 text-center">
                   Auction Material Detail
                 </h2>
-                {/* <div className="grid grid-cols-2 gap-11  "> */}
-                <div className="w-full">
-                  <label className="block mb-2 text-xl font-medium ">
-                    Tender Number
-                  </label>
-                  <input
-                    type="text"
-                    className="border text-lg border-gray-300 py-4 bg-gray-200 rounded-md px-9 p-2 me-12 w-full"
-                    value={formData.tenderNumber}
-                    readOnly={!isEditing}
-                    onChange={(e) =>
-                      setFormData({ ...formData, tenderNumber: e.target.value })
-                    }
-                  />
-                </div>
-
-                {/* </div> */}
-                <div className="grid grid-cols-2 mb-4 mt-4 gap-11">
+                <div className="grid  md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block mb-2 text-xl font-medium">
+                      Tender Number
+                    </label>
+                    <input
+                      type="text"
+                      className="border text-lg border-gray-300 py-4 bg-gray-200 rounded-md px-9 p-2 w-full"
+                      value={formData.tenderNumber}
+                      readOnly={!isEditing}
+                      onChange={(e) =>
+                        setFormData({ ...formData, tenderNumber: e.target.value })
+                      }
+                    />
+                  </div>
                   <div>
                     <label className="block mb-2 text-xl font-medium">
                       Tender Link
                     </label>
                     <input
                       type="text"
-                      className="border text-lg  border-gray-300 rounded-md p-2  py-4 w-full bg-gray-200"
+                      className="border text-lg  border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
                       value={formData.tenderLink}
                       readOnly={!isEditing}
                       onChange={(e) =>
@@ -165,15 +160,13 @@ const AuctionMaterialDetail = () => {
                       }
                     />
                   </div>
-                </div>
-                <div className="grid grid-cols-2 gap-11">
                   <div>
                     <label className="block mb-2 text-xl font-medium">
                       CIN Registration
                     </label>
                     <input
                       type="text"
-                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full  bg-gray-200"
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
                       value={formData.cinReg}
                       readOnly={!isEditing}
                       onChange={(e) =>
@@ -196,8 +189,6 @@ const AuctionMaterialDetail = () => {
                       }
                     />
                   </div>
-                </div>
-                <div className="grid grid-cols-2 gap-11">
                   <div>
                     <label className="block mb-2 text-xl font-medium">
                       PAN
@@ -213,8 +204,8 @@ const AuctionMaterialDetail = () => {
                     />
                   </div>
                 </div>
-                <div className="flext justify-between">
-                  <div className="">
+                <div className="flex justify-between mt-8">
+                  <div>
                     {isEditing ? (
                       <button
                         className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
@@ -231,7 +222,7 @@ const AuctionMaterialDetail = () => {
                       </button>
                     )}
                   </div>
-                  <div className="">
+                  <div>
                     <button
                       className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
                       onClick={() => updateDetails(formData._id)}

@@ -93,7 +93,7 @@ const CompanyDetails = () => {
 
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <div className="flex justify-center flex-shrink">
-              <div className="bg-white rounded-lg  p-20 shadow-2xl w-3/4">
+            <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-20 w-full lg:w-3/4">
                 <ProgressBar
                   percent={progress}
                   filledBackground="linear-gradient(to right, #fefb72, #f0bb31)"
@@ -169,7 +169,7 @@ const CompanyDetails = () => {
                 <div className="grid grid-cols-2 gap-11">
                   <div>
                     <label className="block mb-2 text-xl font-medium">
-                      Contract Person Name:
+                      Contract Person:
                     </label>
                     <input
                       type="text"
@@ -190,7 +190,7 @@ const CompanyDetails = () => {
                     </label>
                     <input
                       type="text"
-                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      className="border text-lg mt-6 md:mt-0 border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
                       value={formData.email}
                       readOnly={!isEditing}
                       onChange={(e) =>
@@ -267,12 +267,12 @@ const CompanyDetails = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-11">
                   <div>
-                    <label className="block mb-2 text-xl font-medium">
+                    <label className="block mb-2 mt-2 md:mt-0 text-xl font-medium">
                       Website:
                     </label>
                     <input
                       type="text"
-                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      className="border text-lg mt-6 md-mt-0 border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
                       value={formData.website}
                       readOnly={!isEditing}
                       onChange={(e) =>
@@ -316,7 +316,7 @@ const CompanyDetails = () => {
                     </label>
                     <input
                       type="text"
-                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      className="border mt-6 md:mt-0 text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
                       value={formData.panUrl}
                       readOnly={!isEditing}
                     />

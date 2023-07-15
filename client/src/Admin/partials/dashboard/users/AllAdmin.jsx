@@ -4,9 +4,7 @@ import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
@@ -53,12 +51,8 @@ function AllAdmin() {
   };
 
   const filteredData = userData.filter((user) => {
-    const nameMatch = user.name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const emailMatch = user.email
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
+    const nameMatch = user.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const emailMatch = user.email.toLowerCase().includes(searchTerm.toLowerCase());
     // Check if any of the conditions is true
     return nameMatch || emailMatch;
   });
@@ -113,15 +107,7 @@ function AllAdmin() {
   const downloadAsPDF = () => {
     const doc = new jsPDF();
 
-    const headers = [
-      "User",
-      "Role",
-      "Email",
-      "Phone",
-      "Country",
-      "City",
-      "Subscription",
-    ];
+    const headers = ["User", "Role", "Email", "Phone", "Country", "City", "Subscription"];
 
     const selectedData = currentUsers.map((user) => [
       user.name,
@@ -153,41 +139,33 @@ function AllAdmin() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
-    <div className="flex h-screen overflow-hidden ">
+    <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
-
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
         <main>
-          {/*  Site header 
-      import Header from '../partials/Header';
-      */}
+          {/* Site header */}
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             {/* Dashboard actions */}
-
             {/* Cards */}
             <div className="grid grid-cols-15 gap-6">
-              {/*---------> Table (Top Channels) */}
+              {/* Table (Top Channels) */}
               <section className="container mx-auto p-6 font-mono overflow-x-auto">
                 <h1 className="text-xl font-bold mb-4">All Admin</h1>
-                <div className="flex mb-4  justify-between">
+                <div className="flex flex-col md:flex-row mb-4 md:items-center md:justify-between">
                   {/* Search bar */}
                   <input
                     type="text"
-                    className="w-64 px-4 py-2 mr-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded shadow focus:outline-none"
+                    className="w-full md:w-64 px-4 py-2 mb-2 md:mb-0 mr-0 md:mr-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded shadow focus:outline-none"
                     placeholder="Search by name or email"
                     value={searchTerm}
                     onChange={handleSearchChange}
                   />
-
                   <button
                     className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
-                    onClick={() => {
-                      AddAdmin();
-                    }}
+                    onClick={AddAdmin}
                   >
                     Add New Admin
                   </button>
@@ -195,13 +173,13 @@ function AllAdmin() {
                 {/* Download buttons */}
                 <div className="flex justify-end mb-4">
                   <button
-                    className="bg-green-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 mr-2"
+                    className="bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 mr-2"
                     onClick={downloadAsExcel}
                   >
                     Download Excel
                   </button>
                   <button
-                    className="bg-red-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+                    className="bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
                     onClick={downloadAsPDF}
                   >
                     Download PDF
@@ -262,11 +240,6 @@ function AllAdmin() {
                         disabled={currentPage === 1}
                       >
                         <FontAwesomeIcon icon={faArrowLeft} />
-                        <path
-                          fillRule="evenodd"
-                          d="M5.293 6.707a1 1 0 010-1.414L2.414 2.343A1 1 0 113.828.93L7.586 4.686a1 1 0 010 1.414L3.828 9.07a1 1 0 11-1.414-1.414L5.293 6.707z"
-                          clipRule="evenodd"
-                        ></path>
                       </button>
                       <span className="px-2 text-sm">{currentPage}</span>
                       <button
@@ -278,11 +251,6 @@ function AllAdmin() {
                         }
                       >
                         <FontAwesomeIcon icon={faArrowRight} />
-                        <path
-                          fillRule="evenodd"
-                          d="M14.707 13.293a1 1 0 010 1.414l-3.758 3.758a1 1 0 11-1.414-1.414L12.586 14H7a1 1 0 110-2h5.586l-3.293-3.293a1 1 0 111.414-1.414l3.758 3.758z"
-                          clipRule="evenodd"
-                        ></path>
                       </button>
                     </div>
                   </div>

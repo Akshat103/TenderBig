@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setKeywords } from "../Redux/store";
 import Home2 from "./Home2";
@@ -10,162 +10,69 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 
 const HomePage = () => {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchKeywords, setSearchKeywords] = useState("");
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const handleSearch = () => {
     const keywordsArray = searchKeywords.split(" ").map((keyword) => keyword.trim());
     dispatch(setKeywords(keywordsArray));
     // Clear the search input
     setSearchKeywords("");
-    navigate("/advance-search")
+    navigate("/advance-search");
   };
 
   const navigationButtons = [
-    {name: 'Career & ManPower', link: '/careerandmanpower'},
-    {name: 'Registration/Certification', link: '/regandcert'},
-    {name: 'License', link: '/contact'},
-    {name: 'Auction Material', link: '/auctionmaterial'},
-    {name: 'Joint Venture', link: '/jointventure'},
-    {name: 'Tender Filing', link: '/tenderfilling'},
-    {name: 'Gem Registration', link: '/gemregistration'}
-  ]
-  
+    { name: "Career & ManPower", link: "/careerandmanpower" },
+    { name: "Registration/Certification", link: "/regandcert" },
+    { name: "License", link: "/contact" },
+    { name: "Auction Material", link: "/auctionmaterial" },
+    { name: "Joint Venture", link: "/jointventure" },
+    { name: "Tender Filing", link: "/tenderfilling" },
+    { name: "Gem Registration", link: "/gemregistration" },
+  ];
+
+  const checkScreenSize = () => {
+    setIsSmallScreen(window.innerWidth > 480); // Adjust the breakpoint as needed
+  };
+
+  useEffect(() => {
+    checkScreenSize(); // Call the function to set the initial screen size
+
+    window.addEventListener("resize", checkScreenSize); // Add event listener
+
+    return () => {
+      window.removeEventListener("resize", checkScreenSize); // Clean up the event listener
+    };
+  }, []);
+
   return (
     <>
       <div className="px-3 md:p-4 ">
         <div className="flex flex-col justify-center max-w-[78rem] mx-auto md:flex-row ">
-          <div className="hidden w-full mt-2 md:w-1/4 sm:grid ">
-            <ul className="">
-              <h1 className="text-2xl font-bold text-gray-700 ">
-                Our Services
-              </h1>
-              
-              <div className="col-span-4 px-2 mt-6 mb-6">
-                {navigationButtons.map(button => (
-                  <NavLink to={button.link} >
-                <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold  border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">{button.name}</div>
-                  </NavLink>
-                ))}
-              </div>
-              
-
-              {/* <li className="pb-2 mt-6 border-2 border-white hover:border-red-700">
-                <hr className="pb-3 border-gray-400 " />
-                <NavLink
-                  to="/careerandmanpower"
-                  className="flex items-center justify-between text-gray-600"
-                >
-                  <span className="px-1">Career & ManPower</span>
-                  <img
-                    src="https://www.reshot.com/preview-assets/icons/ZP2WDL9B8N/arrow-right-ZP2WDL9B8N.svg"
-                    className="w-5 h-5"
-                    alt="Right Arrow"
-                  />
-                </NavLink>
-              </li>
-              <hr className="border-gray-400" />
-              <li className="p-1 py-2 border-2 border-white hover:border-red-700 hover:bg-blu">
-                <NavLink
-                  to="/regandcert"
-                  className="flex items-center justify-between text-gray-600"
-                >
-                  <span>Registration/Certification</span>
-                  <img
-                    src="https://www.reshot.com/preview-assets/icons/ZP2WDL9B8N/arrow-right-ZP2WDL9B8N.svg"
-                    className="w-5 h-5"
-                    alt="Right Arrow"
-                  />
-                </NavLink>
-              </li>
-              <hr className="border-gray-400" />
-              <li className="p-1 py-2 border-2 border-white hover:border-red-700 ">
-                <NavLink
-                  to="/contact"
-                  className="flex items-center justify-between text-gray-600"
-                >
-                  <span>License</span>
-                  <img
-                    src="https://www.reshot.com/preview-assets/icons/ZP2WDL9B8N/arrow-right-ZP2WDL9B8N.svg"
-                    className="w-5 h-5"
-                    alt="Right Arrow"
-                  />
-                </NavLink>
-              </li>
-              <hr className="border-gray-400" />
-              <li className="p-1 py-2 border-2 border-white hover:border-red-700 ">
-                <NavLink
-                  to="/auctionmaterial"
-                  className="flex items-center justify-between text-gray-600"
-                >
-                  <span>Auction Material</span>
-                  <img
-                    src="https://www.reshot.com/preview-assets/icons/ZP2WDL9B8N/arrow-right-ZP2WDL9B8N.svg"
-                    className="w-5 h-5"
-                    alt="Right Arrow"
-                  />
-                </NavLink>
-              </li>
-              <hr className="border-gray-400" />
-              <li className="p-1 py-2 border-2 border-white hover:border-red-700 ">
-                <NavLink
-                  to="/jointventure"
-                  className="flex items-center justify-between text-gray-600"
-                >
-                  <span>Joint Venture</span>
-                  <img
-                    src="https://www.reshot.com/preview-assets/icons/ZP2WDL9B8N/arrow-right-ZP2WDL9B8N.svg"
-                    className="w-5 h-5"
-                    alt="Right Arrow"
-                  />
-                </NavLink>
-              </li>
-              <hr className="border-gray-400" />
-              <li className="p-1 py-2 border-2 border-white hover:border-red-700 ">
-                <NavLink
-                  to="/tenderfilling"
-                  className="flex items-center justify-between text-gray-600"
-                >
-                  <span>Tender Filling</span>
-                  <img
-                    src="https://www.reshot.com/preview-assets/icons/ZP2WDL9B8N/arrow-right-ZP2WDL9B8N.svg"
-                    className="w-5 h-5"
-                    alt="Right Arrow"
-                  />
-                </NavLink>
-              </li>
-              <hr className="border-gray-400" />
-              <li className="p-1 py-2 border-2 border-white hover:border-red-700 ">
-                <NavLink
-                  to="/gemregistration"
-                  className="flex items-center justify-between text-gray-600"
-                >
-                  <span>Gem Registration</span>
-                  <img
-                    src="https://www.reshot.com/preview-assets/icons/ZP2WDL9B8N/arrow-right-ZP2WDL9B8N.svg"
-                    className="w-5 h-5"
-                    alt="Right Arrow"
-                  />
-                </NavLink>
-              </li>
-              <hr className="border-gray-400" />
-              <hr className="border-gray-100" /> */}
-            </ul>
-          </div>
+          {isSmallScreen ? (
+            <div className="w-full mt-2 md:w-1/4 sm:grid">
+              <ul className="">
+                <h1 className="text-2xl font-bold text-gray-700 ">Our Services</h1>
+                <div className="col-span-4 px-2 mt-6 mb-6">
+                  {navigationButtons.map((button) => (
+                    <NavLink to={button.link}>
+                      <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold  border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">
+                        {button.name}
+                      </div>
+                    </NavLink>
+                  ))}
+                </div>
+              </ul>
+            </div>
+          ) : null}
           <div className="w-full px-4 md:w-3/4">
             <div className="py-3 md:py-12 sm:px-6 lg:px-8 ">
               <h1 className="text-2xl font-extrabold md:text-4xl md:leading-normal">
-                {" "}
-                <span className="border-b-4 border-red-700">
-                  Best eTender
-                </span>{" "}
-                Procurement Portal for RFP, Bids and etendering Opps{" "}
+                <span className="border-b-4 border-red-700">Best eTender</span> Procurement Portal for RFP, Bids and etendering Opps
               </h1>
-              <h1 className="mt-2">
-                Tenders Search Engine for e Tender Procurement Notices
-              </h1>
+              <h1 className="mt-2">Tenders Search Engine for e Tender Procurement Notices</h1>
               <div className="flex flex-col items-center justify-center md:flex-row ">
                 <div className="flex items-center w-full py-4 bg-white rounded-lg max-w-ls ">
                   <input
@@ -181,7 +88,6 @@ const HomePage = () => {
                   >
                     Search
                   </button>
-
                 </div>
               </div>
               <div className="flex justify-end">

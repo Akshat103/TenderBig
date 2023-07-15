@@ -1,11 +1,123 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import payment from '../../../../../src/components/payment';
+import axios from 'axios';
 
-const UserCards = ({ title, description, buttonLink1, buttonLink2 }) => {
+
+
+const UserCards = ({ title, description, buttonLink1, buttonLink2, formData }) => {
     const navigate = useNavigate();
+    const [titleName, setTitleName] = useState(title);
+    const [count, setCount] = useState(description);
+    const [formData1, setFormData1] = useState(formData);
+    const [formName, setFormName] = useState("");
+    // console.log(count);
 
-    const handleAutoClick = () => {
-        navigate(buttonLink1);
+    const getAmount = async (Formprice) => {
+        console.log(Formprice)
+        const { data: { price } } = await axios.get(`http://localhost:5000/apiTender/formprice/${Formprice}/price`);
+        return price;
+    }
+
+    const StoreAtDB = (requestBody, formName1) => {
+
+        console.log(formName1);
+        console.log(requestBody);
+        const token = localStorage.getItem('token');
+        axios
+            .post(`http://localhost:5000/apiTender/services/${formName1}`, requestBody, {
+                headers: {
+                    'auth': token
+                }
+            })
+            .then((response) => {
+                console.log(" data updated:", response.data);
+                alert("We will contact you soon!!!");
+
+            })
+            .catch((error) => {
+                console.error("Error sending form data:", error);
+                // alert("Oops something went wrong!!!");
+            });
+    }
+
+    const handleAutoClick = async () => {
+        console.log(description)
+        console.log(count);
+        if (Number(description) === 0) {
+            alert('you does not have any form');
+            return navigate(buttonLink2);
+        }
+        console.log('this is auto click button')
+        let price;
+        //  console.log(titleName);
+        if (titleName === "Registrations") {
+            let value = "Registration";
+            price = await getAmount(value)
+            setFormName("register/registration");
+        }
+        else if (titleName === "Career & Manpower") {
+            let value = "Seeker";
+            price = await getAmount(value)
+            setFormName("seeker/submit-form");
+
+        }
+        else if (titleName === "Company Certifications") {
+            let value = "Company%20Certification";
+            price = await getAmount(value)
+            setFormName("ccert/certification");
+
+        }
+        else if (titleName === "Individual Certifications") {
+            let value = "Individual%20Certification";
+            price = await getAmount(value)
+            setFormName("icert/certification");
+
+        }
+        else if (titleName === "Joint Venture") {
+            let value = "Joint%20Venture";
+            price = await getAmount(value)
+            setFormName("jv/submitjv");
+        }
+        else if (titleName === "Tender Offline") {
+            let value = "Joint%20Venture";  // this value also wrong not getting value
+            price = await getAmount(value);
+            setFormName("tender/offline");
+        }
+
+        else if (titleName === "Auction Materials") {
+            let value = "Auction%20Material";
+            price = await getAmount(value)
+            setFormName("aumt/auction-material");
+        }
+        else if (titleName === "Gem Registration") {
+            let value = "Gem%20Registration";
+            price = await getAmount(value)
+            setFormName("gem/submit");
+
+        }
+        else if (titleName === "Tender Online") {
+            let value = "Joint%20Venture";  // i am not getting any api to take price
+            price = await getAmount(value);
+            setFormName("tender/online");
+
+        }
+        //  const price = await getAmount(Formprice);
+        const receipt = titleName;
+        //  console.log(price);
+        payment(price, receipt)
+            .then(async success => {
+                console.log('Payment success:', success);
+                console.log(receipt, price);
+                alert("payment successful ")
+                console.log(formData, formName);
+                StoreAtDB(formData, formName);
+            })
+            .catch(error => {
+                console.error('Payment error:', error);
+                // Handle the error if the payment fails
+            });
+        // navigate(buttonLink1);
     };
 
     const handleNewClick = () => {

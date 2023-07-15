@@ -91,7 +91,7 @@ const TenderOnlineDetail = () => {
 
                     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
                         <div className="flex justify-center flex-shrink">
-                            <div className="bg-white rounded-lg  p-20 shadow-2xl w-3/4">
+                        <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-20 w-full lg:w-3/4">
                                 <ProgressBar
                                     percent={progress}
                                     filledBackground="linear-gradient(to right, #fefb72, #f0bb31)"
@@ -189,12 +189,12 @@ const TenderOnlineDetail = () => {
                                 </div>
                                 <div className="grid grid-cols-2 gap-11">
                                     <div>
-                                        <label className="block mb-2 text-xl font-medium">
+                                        <label className="block mb-2 mt-11 md:mt-0 text-xl font-medium">
                                             Mobile:
                                         </label>
                                         <input
                                             type="text"
-                                            className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                                            className="border mt-4 md:mt-0 text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
                                             value={data.mobile}
                                             readOnly={!isEditing}
                                             onChange={(e) =>
@@ -338,7 +338,7 @@ const TenderOnlineDetail = () => {
                                         />
                                     </div>
                                     <div>
-                                        <label className="block mb-2 text-xl font-medium">
+                                        <label className="block mb-2 mt-7 md:mt-0 text-xl font-medium">
                                             Country:
                                         </label>
                                         <input
@@ -352,7 +352,7 @@ const TenderOnlineDetail = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className="grid grid-cols-2 gap-11">
+                                <div className="grid grid-cols-2  gap-11">
                                     <div>
                                         <label className="block mb-2 text-xl font-medium">
                                             Branch Number:
@@ -368,7 +368,7 @@ const TenderOnlineDetail = () => {
                                         />
                                     </div>
                                     <div>
-                                        <label className="block mb-2 text-xl font-medium">
+                                        <label className="block mb-2 mt-7 md:mt-0 text-xl font-medium">
                                             ITR One:
                                         </label>
                                         <input
@@ -414,7 +414,7 @@ const TenderOnlineDetail = () => {
                                 </div>
                                 <div className="grid grid-cols-2 gap-11">
                                     <div>
-                                        <label className="block mb-2 text-xl font-medium">
+                                        <label className="block mb-2 mt-7 md:mt-0 text-xl font-medium">
                                             Turnover:
                                         </label>
                                         <input
@@ -494,7 +494,7 @@ const TenderOnlineDetail = () => {
                                         />
                                     </div>
                                     <div>
-                                        <label className="block mb-2 text-xl font-medium">
+                                        <label className="block mt-7 md:mt-0 mb-2 text-xl font-medium">
                                             Date of Birth:
                                         </label>
                                         <input
@@ -510,7 +510,7 @@ const TenderOnlineDetail = () => {
                                 </div>
                                 <div className="grid grid-cols-2 gap-11">
                                     <div>
-                                        <label className="block mb-2 text-xl font-medium">
+                                        <label className="block  mb-2 text-xl font-medium">
                                             Primary Email:
                                         </label>
                                         <input
@@ -540,7 +540,7 @@ const TenderOnlineDetail = () => {
                                 </div>
                                 <div className="grid grid-cols-2 gap-11">
                                     <div>
-                                        <label className="block mb-2 text-xl font-medium">
+                                        <label className="block mb-2 mt-7 md:mt-0 text-xl font-medium">
                                             Primary PAN:
                                         </label>
                                         <input
@@ -614,7 +614,7 @@ const TenderOnlineDetail = () => {
                                         />
                                     </div>
                                     <div>
-                                        <label className="block mb-2 text-xl font-medium">
+                                        <label className="block mb-2 mt-7 md:mt-0 text-xl font-medium">
                                             Email:
                                         </label>
                                         <input

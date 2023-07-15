@@ -94,7 +94,7 @@ const RegistrationDetails = () => {
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <div className="flex justify-center flex-shrink">
-              <div className="bg-white rounded-lg  p-20 shadow-2xl w-3/4">
+            <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-20 w-full lg:w-3/4">
                 <ProgressBar
                   percent={progress}
                   filledBackground="linear-gradient(to right, #fefb72, #f0bb31)"
@@ -126,7 +126,7 @@ const RegistrationDetails = () => {
                     </label>
                     <input
                       type="text"
-                      className="border text-lg  border-gray-300 rounded-md p-2  py-4 w-full bg-gray-200"
+                      className="border text-lg mt-7 md:mt-0  border-gray-300 rounded-md p-2  py-4 w-full bg-gray-200"
                       value={formData.mobile}
                       readOnly={!isEditing}
                       onChange={(e) =>
@@ -230,7 +230,7 @@ const RegistrationDetails = () => {
                     </label>
                     <input
                       type="text"
-                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      className="border mt-6 md:mt-0 text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
                       value={formData.otherDetails}
                       readOnly={!isEditing}
                       onChange={(e) =>
@@ -266,7 +266,7 @@ const RegistrationDetails = () => {
                     </label>
                     <input
                       type="text"
-                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      className="border mt-6 md:mt-0 text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
                       value={formData.liscence}
                       readOnly={!isEditing}
                       onChange={(e) =>
@@ -296,7 +296,7 @@ const RegistrationDetails = () => {
                     </label>
                     <input
                       type="text"
-                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      className="border mt-6 md:mt-0 text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
                       value={formData.category}
                       readOnly={!isEditing}
                       onChange={(e) =>
@@ -326,7 +326,7 @@ const RegistrationDetails = () => {
                     </label>
                     <input
                       type="text"
-                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      className="border mt-6 md:mt-0 text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
                       value={formData.GST}
                       readOnly={!isEditing}
                       onChange={(e) =>
@@ -408,7 +408,7 @@ const RegistrationDetails = () => {
                     </label>
                     <input
                       type="text"
-                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      className="border mt-8 md:mt-0 text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
                       value={formData.companystate}
                       readOnly={!isEditing}
                       onChange={(e) =>

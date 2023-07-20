@@ -20,7 +20,7 @@ const RegistrationCertification = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:5000/apiTender/Registration%20%2F%20Certificate",
+        "http://localhost:5000/apitender/Registration%20%2F%20Certificate",
         {
           headers: {
             auth: token,

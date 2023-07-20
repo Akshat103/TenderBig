@@ -18,7 +18,7 @@ const OnlineBidding = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:5000/apiTender/Online%20Bidding",
+        "http://localhost:5000/apitender/Online%20Bidding",
         {
           headers: {
             auth: token,

@@ -23,7 +23,7 @@ function CompanyForm({ onSubmit, licenses }) {
     const [others, setOthers] = useState("");
 
     const getAmount=async()=>{
-        const {data:{price}} = await axios.get("http://localhost:5000/apiTender/formprice/Company%20Certification/price");
+        const {data:{price}} = await axios.get("http://localhost:5000/apitender/formprice/Company%20Certification/price");
         return price;
     }
 
@@ -73,7 +73,7 @@ function CompanyForm({ onSubmit, licenses }) {
 
     return (
         <form onSubmit={handleSubmit} encType="multipart/form-data">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 md:gap-2">
                 <div className=" p-2 rounded-lg">
                     <label className="block font-semibold">
                         Company Name
@@ -314,7 +314,7 @@ function IndividualForm({ onSubmit, licenses }) {
         cityNames = Array.from(new Set(Object.values(cityData).map((city) => city.name)));
     }
     const getAmount=async()=>{
-        const {data:{price}} = await axios.get("http://localhost:5000/apiTender/formprice/Individual%20Certification/price");
+        const {data:{price}} = await axios.get("http://localhost:5000/apitender/formprice/Individual%20Certification/price");
         return price;
     }
 
@@ -369,7 +369,7 @@ function IndividualForm({ onSubmit, licenses }) {
 
     return (
         <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 md:gap-4">
             <div className=" p-2 rounded-lg">
                 <label className="block font-semibold">
                     Name
@@ -462,7 +462,7 @@ function IndividualForm({ onSubmit, licenses }) {
                     </select>
                 </label>
 
-                <div className="flex">
+                <div className="md:flex">
                     <label className="block mb-2 font-semibold basis-1/2">
                         State
                         <span className="text-red-700 relative top-0 right-0">*</span>
@@ -482,7 +482,7 @@ function IndividualForm({ onSubmit, licenses }) {
                         </select>
                     </label>
 
-                    <label className="block mb-2 font-semibold basis-1/2 mx-1">
+                    <label className="block mb-2 float-right font-semibold basis-1/2 mx-1">
                         City
                         <span className="text-red-700 relative top-0 right-0">*</span>
                         <select
@@ -625,7 +625,7 @@ function IndividualForm({ onSubmit, licenses }) {
             </div>
 
             <div>
-                <label htmlFor="file-input" className="block mb-2 font-semibold">
+                <label htmlFor="file-input" className="block mb-2 mt-6 md:mt-0 font-semibold">
                     Upload PAN
                     <span className="text-red-700 relative top-0 right-0">*</span>
                 </label>
@@ -671,7 +671,7 @@ const Certification = () => {
 
 
     const fetchLicenses = async () => {
-        const response = await axios.get("http://localhost:5000/apiTender/options/alloptions?array=licenses");
+        const response = await axios.get("http://localhost:5000/apitender/options/alloptions?array=licenses");
         setLicenses(response.data[0].licenses);
     }
 
@@ -699,7 +699,7 @@ const Certification = () => {
 
         const token = localStorage.getItem('token');
         axios
-            .post("http://localhost:5000/apiTender/services/ccert/certification", data, {
+            .post("http://localhost:5000/apitender/services/ccert/certification", data, {
                 headers: {
                     'auth': token
                 }
@@ -720,7 +720,7 @@ const Certification = () => {
         const token = localStorage.getItem('token');
         console.log(data)
         axios
-            .post("http://localhost:5000/apiTender/services/icert/certification", data, {
+            .post("http://localhost:5000/apitender/services/icert/certification", data, {
                 headers: {
                     'auth': token
                 }

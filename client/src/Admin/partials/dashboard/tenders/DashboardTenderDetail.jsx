@@ -17,7 +17,7 @@ function DashboardTenderDetail() {
     const fetchTenderDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/apiTender/tenderdetails/tender/${tenderId}`,
+          `http://localhost:5000/apitender/tenderdetails/tender/${tenderId}`,
           {
             method: 'GET',
             headers: {
@@ -40,7 +40,7 @@ function DashboardTenderDetail() {
     try {
       // Make API call to approve the tender
       await axios.post(
-        `http://localhost:5000/apiTender/tenderdetails/tender/${tenderId}/switchApprovedStatus`,
+        `http://localhost:5000/apitender/tenderdetails/tender/${tenderId}/switchApprovedStatus`,
         {},
         {
           headers: {
@@ -61,7 +61,7 @@ function DashboardTenderDetail() {
     try {
       // Make API call to reject the tender
       await axios.post(
-        `http://localhost:5000/apiTender/tenderdetails/tender/${tenderId}/switchActiveStatus`,
+        `http://localhost:5000/apitender/tenderdetails/tender/${tenderId}/switchActiveStatus`,
         {},
         {
           headers: {
@@ -81,7 +81,7 @@ function DashboardTenderDetail() {
     try {
       // Make API call to delete the tender
       await axios.delete(
-        `http://localhost:5000/apiTender/tenderdetails/tender/${tenderId}`,
+        `http://localhost:5000/apitender/tenderdetails/tender/${tenderId}`,
         {
           headers: {
             'Content-Type': 'application/json',

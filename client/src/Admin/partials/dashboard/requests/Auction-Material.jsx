@@ -18,7 +18,7 @@ const AuctionMaterial = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:5000/apiTender/Auction%20Material",
+        "http://localhost:5000/apitender/Auction%20Material",
         {
           headers: {
             auth: token,

@@ -24,7 +24,7 @@ const ContactFormList = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:5000/apiTender/get-allcontactforms",
+        "http://localhost:5000/apitender/get-allcontactforms",
         {
           headers: {
             auth: token,

@@ -21,14 +21,14 @@ const GemRegistration = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    fetch("http://localhost:5000/apiTender/services/gem/getall")
+    fetch("http://localhost:5000/apitender/services/gem/getall")
       .then((response) => response.json())
       .then((data) => setForms(data))
       .catch((error) => console.log(error));
   }, []);
 
   function deleteDetails(id) {
-    fetch(`http://localhost:5000/apiTender/services/gem/${id}`, {
+    fetch(`http://localhost:5000/apitender/services/gem/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

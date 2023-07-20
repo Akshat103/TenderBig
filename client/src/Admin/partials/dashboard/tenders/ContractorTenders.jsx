@@ -24,7 +24,7 @@ const Contractor = () => {
   useEffect(() => {
     const fetchTenderData = async () => {
       try {
-        const Url = "http://localhost:5000/apiTender/tenderdetails/contractor";
+        const Url = "http://localhost:5000/apitender/tenderdetails/contractor";
 
         const token = localStorage.getItem("token");
 

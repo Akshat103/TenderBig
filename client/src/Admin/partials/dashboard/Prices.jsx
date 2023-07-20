@@ -13,7 +13,7 @@ const FormPriceManagement = () => {
 
     const fetchFormPrices = () => {
         axios
-            .get('http://localhost:5000/apiTender/formprice/getall')
+            .get('http://localhost:5000/apitender/formprice/getall')
             .then(response => {
                 const data = response.data;
                 setFormPrices(data);
@@ -32,7 +32,7 @@ const FormPriceManagement = () => {
         }
 
         axios
-            .put(`http://localhost:5000/apiTender/formprice/${formName}/price`, { price: updatedPrice })
+            .put(`http://localhost:5000/apitender/formprice/${formName}/price`, { price: updatedPrice })
             .then(response => {
                 const data = response.data;
                 if (data.error) {

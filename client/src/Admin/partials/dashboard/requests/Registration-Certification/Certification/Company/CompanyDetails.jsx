@@ -13,7 +13,7 @@ const CompanyDetails = () => {
   const { id } = useParams();
   useEffect(() => {
     // Fetch data from the API
-    fetch(`http://localhost:5000/apiTender/services/ccert/certification/${id}`)
+    fetch(`http://localhost:5000/apitender/services/ccert/certification/${id}`)
       .then((response) => response.json())
       .then((data) => setFormData(data))
       .catch((error) => console.log(error));
@@ -32,7 +32,7 @@ const CompanyDetails = () => {
 
   function updateDetails() {
     fetch(
-      `http://localhost:5000/apiTender/services/ccert/certification/${id}`,
+      `http://localhost:5000/apitender/services/ccert/certification/${id}`,
       {
         method: "PUT",
         headers: {

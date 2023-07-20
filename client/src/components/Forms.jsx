@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import { ProgressBar, Step } from "react-step-progress-bar";
 
 const OtherInformationAndPurchaserDetail = ({
   formData,
@@ -390,7 +391,7 @@ const TenderForm = () => {
   const fetchSectors = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/apiTender/options/alloptions?array=sectors"
+        "http://localhost:5000/apitender/options/alloptions?array=sectors"
       );
       console.log(response.data[0].sectors);
       setSectors(response.data[0].sectors);
@@ -402,7 +403,7 @@ const TenderForm = () => {
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/apiTender/options/alloptions?array=products"
+        "http://localhost:5000/apitender/options/alloptions?array=products"
       );
       console.log(response.data[0].products);
       setProducts(response.data[0].products);
@@ -419,7 +420,7 @@ const TenderForm = () => {
 
     const requestBody = JSON.stringify(formData);
 
-    fetch("http://localhost:5000/apiTender/tenderdetails/add-tender", {
+    fetch("http://localhost:5000/apitender/tenderdetails/add-tender", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -469,23 +470,51 @@ const TenderForm = () => {
     setCurrentPage(1);
   };
 
+  const totalSteps = 2;
+  const gaps = totalSteps - 1;
+  const progress = Math.round((currentPage / gaps) * 100);
+  const stepNames = ["0", "1"];
+
   return (
     <div className="flex items-center justify-center">
-      <div className="grid max-w-[1244px] grid-cols-12 gap-16 mt-5">
+      <div className={`max-w-[1244px] ${!isSmallScreen ? "w-full" : "grid grid-cols-12 gap-16"} mt-5`}>
+
         <div className="col-span-4 px-2 mt-6 mb-6">
-        <div
-            className={isMobile ? "hidden" : "block"}
-          >
-            {sideNavigationButtons.map((button) => (
-              <NavLink to={button.link} key={button.name}>
-                <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">
-                  {button.name}
+          {isSmallScreen ? (
+            <div className="w-full mt-2 ">
+              <ul className="">
+                <h1 className="text-2xl font-bold text-gray-700 ">
+                  Our Services
+                </h1>
+                <div className="col-span-4 px-2 mt-6 mb-6">
+                  {sideNavigationButtons.map((button) => (
+                    <NavLink to={button.link}>
+                    <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">{button.name}</div>
+                    </NavLink>
+                  ))}
                 </div>
-              </NavLink>
-            ))}
-          </div>
+              </ul>
+            </div>
+          ) : null}
         </div>
-        <div className="col-span-8 px-8 py-8 mx-auto mt-6 mb-6 rounded-lg shadow-lg border-[2px] border-black/20">
+
+        <div className={!isSmallScreen ? "w-96 px-8 py-8 mx-auto" : "col-span-8 px-8 py-8 mx-auto"}>
+
+        <ProgressBar
+            percent={progress}
+            filledBackground="linear-gradient(to right, #E97451, #D22B2B)"
+          >
+            {stepNames.map((_, index) => (
+              <Step key={index}>
+                {({ accomplished }) => (
+                  <div
+                    className={`step ${accomplished ? "completed" : null}`}
+                  />
+                )}
+              </Step>
+            ))}
+          </ProgressBar>
+
           {currentPage === 1 && (
             <form onSubmit={handleSubmit}>
               {/* Global Section */}

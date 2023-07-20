@@ -18,7 +18,7 @@ const Licenserequests = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:5000/apiTender/License",
+        "http://localhost:5000/apitender/License",
         {
           headers: {
             auth: token,

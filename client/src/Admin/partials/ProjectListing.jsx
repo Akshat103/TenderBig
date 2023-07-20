@@ -24,7 +24,7 @@ const ProjectListing = () => {
   useEffect(() => {
     const fetchTenderData = async () => {
       try {
-        const Url = "http://localhost:5000/apiTender/projects/getall";
+        const Url = "http://localhost:5000/apitender/projects/getall";
 
         const token = localStorage.getItem("token");
 

@@ -60,7 +60,7 @@ const ContactUsPage = () => {
     };
     const token = localStorage.getItem('token');
     axios
-      .post("http://localhost:5000/apiTender/post-contactform", formData, {
+      .post("http://localhost:5000/apitender/post-contactform", formData, {
         headers: {
           'auth': token
         }

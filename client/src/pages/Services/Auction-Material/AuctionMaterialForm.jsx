@@ -31,7 +31,7 @@ const AuctionMaterialForm = () => {
 
   const fetchAuctionMaterial = async () => {
     const response = await axios.get(
-      'http://localhost:5000/apiTender/options/alloptions?array=AuctionMaterials'
+      'http://localhost:5000/apitender/options/alloptions?array=AuctionMaterials'
     );
     setAuctionMaterials(response.data[0].AuctionMaterials);
   };
@@ -260,7 +260,7 @@ const AuctionMaterialForm = () => {
     const {
       data: { price },
     } = await axios.get(
-      'http://localhost:5000/apiTender/formprice/Auction%20Material/price'
+      'http://localhost:5000/apitender/formprice/Auction%20Material/price'
     );
     return price;
   };
@@ -292,7 +292,7 @@ const AuctionMaterialForm = () => {
         requestBody.workExperience.workProfiles = workProfilesUrls;
         const token = localStorage.getItem('token');
         const response = await axios.post(
-          'http://localhost:5000/apiTender/services/aumt/auction-material',
+          'http://localhost:5000/apitender/services/aumt/auction-material',
           requestBody,
           {
             headers: {

@@ -25,7 +25,7 @@ function AllProjects() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/apiTender/projects/getall",
+          "http://localhost:5000/apitender/projects/getall",
           {
             headers: {
               "Content-Type": "application/json",

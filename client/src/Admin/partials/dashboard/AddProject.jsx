@@ -63,7 +63,7 @@ const AddProject = () => {
 
         const requestBody = JSON.stringify(formData);
 
-        fetch("http://localhost:5000/apiTender/projects/submit", {
+        fetch("http://localhost:5000/apitender/projects/submit", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

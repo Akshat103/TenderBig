@@ -15,7 +15,7 @@ const UserCards = ({ title, description, buttonLink1, buttonLink2, formData }) =
 
     const getAmount = async (Formprice) => {
         console.log(Formprice)
-        const { data: { price } } = await axios.get(`http://localhost:5000/apiTender/formprice/${Formprice}/price`);
+        const { data: { price } } = await axios.get(`http://localhost:5000/apitender/formprice/${Formprice}/price`);
         return price;
     }
 
@@ -25,7 +25,7 @@ const UserCards = ({ title, description, buttonLink1, buttonLink2, formData }) =
         console.log(requestBody);
         const token = localStorage.getItem('token');
         axios
-            .post(`http://localhost:5000/apiTender/services/${formName1}`, requestBody, {
+            .post(`http://localhost:5000/apitender/services/${formName1}`, requestBody, {
                 headers: {
                     'auth': token
                 }

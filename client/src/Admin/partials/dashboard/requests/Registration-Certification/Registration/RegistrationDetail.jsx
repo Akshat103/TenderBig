@@ -15,7 +15,7 @@ const RegistrationDetails = () => {
   useEffect(() => {
     // Fetch data from the API
     fetch(
-      `http://localhost:5000/apiTender/services/register/registration/${id}`
+      `http://localhost:5000/apitender/services/register/registration/${id}`
     )
       .then((response) => response.json())
       .then((data) => setFormData(data))
@@ -35,7 +35,7 @@ const RegistrationDetails = () => {
 
   function updateDetails() {
     fetch(
-      `http://localhost:5000/apiTender/services/register/registration/${id}`,
+      `http://localhost:5000/apitender/services/register/registration/${id}`,
       {
         method: "PUT",
         headers: {

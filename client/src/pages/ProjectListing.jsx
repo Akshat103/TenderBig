@@ -4,6 +4,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+import ProjectImg from '../Admin/images/project-hero.jpg'
+
 const ProjectCard = ({ project }) => {
   const [showDetails, setShowDetails] = useState(false);
 
@@ -67,7 +69,7 @@ const ProjectList = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/apiTender/projects/getall")
+      .get("http://localhost:5000/apitender/projects/getall")
       .then((response) => {
         console.log(response, 'response')
         setProjects(response.data);
@@ -162,9 +164,139 @@ const ProjectList = () => {
 
   return (
     <div className="p-4 mx-auto max-w-7xl">
-        <h1 className="my-4 text-2xl font-bold">Project List</h1>
-      <div className="flex flex-col-reverse gap-4 md:flex-row">
-        <div className="md:w-2/3">
+              <h1 className="my-4 text-3xl font-bold text-center">
+                About Projects
+              </h1>
+       
+        <img src={ProjectImg} alt="project_img" className="h-auto md:h-[600px] w-full my-5" />
+            
+            <div className="my-10">
+              <div className="flex flex-col text-xl leading-8 text-center gap-y-3">
+                <p>
+                Project tenders are specific procurement opportunities related to project-based contracts. 
+                These tenders are issued by organizations or entities looking to outsource a project's
+                execution to external contractors or suppliers. Project tenders are typically more comprehensive 
+                than regular procurement tenders, as they involve the entire scope of a project, including design, 
+                construction, implementation, and delivery.
+                </p>
+
+                <p>
+
+                Project tenders outline the requirements, specifications, and deliverables of the project, along with 
+                any technical or quality standards that need to be met. They may include details about the project's
+                 objectives, timelines, budget, and evaluation criteria. Interested contractors or suppliers are invited
+                  to submit their bids, proposals, or tenders, providing their approach, pricing, resources, and
+                   qualifications to successfully complete the project.
+                </p>
+              </div>
+            </div>
+            <h1 className="my-4 text-3xl font-bold text-center">Project List</h1>
+            
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        
+        <div className="col-span-1">
+          <div className="">
+            <h2 className="mb-2 text-lg font-bold">Filters</h2>
+            
+            <div className="mb-4 border-[2px] border-black/20 shadow-xl">
+              <label
+                htmlFor="country"
+                className="block text-xl font-bold mb-0.5 px-4 py-3 text-white bg-black"
+                >
+                Country
+              </label>
+              <select
+                id="country"
+                name="country"
+                size={5}
+                value={selectedCountry}
+                onChange={handleCountryChange}
+                className="w-full px-4 py-2 bg-white"
+              >
+                <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All Countries</option>
+                {countries.map((country) => (
+                  <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white"  key={country} value={country}>
+                    {country}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+            {/* {selectedCountry && ( */}
+              <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
+                <label
+                  htmlFor="state"
+                  className="block text-xl font-bold  mb-0.5 px-4 py-3 text-white bg-black"
+                >
+                  State
+                </label>
+                <select
+                  id="state"
+                  name="state"
+                  size={5}
+                  value={selectedState}
+                  onChange={handleStateChange}
+                  className="w-full px-4 py-2 bg-white"
+                >
+                  <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All States</option>
+                  {Array.from(
+                    new Set(
+                      projects
+                        .filter(
+                          (project) => project.country === selectedCountry
+                        )
+                        .map((project) => project.state)
+                    )
+                  ).map((state) => (
+                    <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white"  key={state} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              
+            {/* )} */}
+            {/* {selectedState && ( */}
+              <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
+                <label
+                  htmlFor="city"
+                  className="block text-xl font-bold mb-0.5 px-4 py-3 text-white bg-black"
+                >
+                  City
+                </label>
+                <select
+                  id="city"
+                  name="city"
+                  size={5}
+                  value={selectedCity}
+                  onChange={handleCityChange}
+                  className="w-full px-4 py-2 bg-white"
+                >
+                  <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All Cities</option>
+                  {Array.from(
+                    new Set(
+                      projects
+                        .filter(
+                          (project) =>
+                            project.country === selectedCountry &&
+                            project.state === selectedState
+                        )
+                        .map((project) => project.city)
+                    )
+                  ).map((city) => (
+                    <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white"  key={city} value={city}>
+                      {city}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            {/* )} */}
+          </div>
+        </div>
+
+        
+
+        <div className="col-span-2">
           {currentProjects.length > 0 ? (
             <div className="grid gap-4">
               {currentProjects.map((project) => (
@@ -190,7 +322,7 @@ const ProjectList = () => {
               ))}
             </div>
           </div>
-          <div className="flex justify-center justify-between mt-4">
+          <div className="flex  justify-between mt-4">
             <button
               className="px-4 py-2 font-bold text-white transition-colors bg-red-700 rounded"
               onClick={previousPage}
@@ -205,99 +337,6 @@ const ProjectList = () => {
             >
               Next Page
             </button>
-          </div>
-        </div>
-        <div className="md:w-1/3">
-          <div className="p-4 border border-gray-300 rounded border-[2px] border-black/20 shadow-lg">
-            <h2 className="mb-2 text-lg font-bold">Filters</h2>
-            <div className="mb-4">
-              <label
-                htmlFor="country"
-                className="block mb-2 text-sm font-medium text-gray-700"
-              >
-                Country
-              </label>
-              <select
-                id="country"
-                name="country"
-                value={selectedCountry}
-                onChange={handleCountryChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
-              >
-                <option value="">All Countries</option>
-                {countries.map((country) => (
-                  <option key={country} value={country}>
-                    {country}
-                  </option>
-                ))}
-              </select>
-            </div>
-            {/* {selectedCountry && ( */}
-              <div className="mb-4">
-                <label
-                  htmlFor="state"
-                  className="block mb-2 text-sm font-medium text-gray-700"
-                >
-                  State
-                </label>
-                <select
-                  id="state"
-                  name="state"
-                  value={selectedState}
-                  onChange={handleStateChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
-                >
-                  <option value="">All States</option>
-                  {Array.from(
-                    new Set(
-                      projects
-                        .filter(
-                          (project) => project.country === selectedCountry
-                        )
-                        .map((project) => project.state)
-                    )
-                  ).map((state) => (
-                    <option key={state} value={state}>
-                      {state}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            {/* )} */}
-            {/* {selectedState && ( */}
-              <div className="mb-4">
-                <label
-                  htmlFor="city"
-                  className="block mb-2 text-sm font-medium text-gray-700"
-                >
-                  City
-                </label>
-                <select
-                  id="city"
-                  name="city"
-                  value={selectedCity}
-                  onChange={handleCityChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
-                >
-                  <option value="">All Cities</option>
-                  {Array.from(
-                    new Set(
-                      projects
-                        .filter(
-                          (project) =>
-                            project.country === selectedCountry &&
-                            project.state === selectedState
-                        )
-                        .map((project) => project.city)
-                    )
-                  ).map((city) => (
-                    <option key={city} value={city}>
-                      {city}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            {/* )} */}
           </div>
         </div>
       </div>

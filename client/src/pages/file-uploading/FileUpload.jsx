@@ -1,7 +1,7 @@
 async function uploadFileToS3(file) {
     try {
         // Step 1: Get the signed URL for file upload
-        const { signedUrl } = await fetch('http://localhost:5000/apiTender/s3/uploadurl')
+        const { signedUrl } = await fetch('http://localhost:5000/apitender/s3/uploadurl')
             .then((response) => response.json());
 
        // Step 2: Upload the file to S3 using the signed URL

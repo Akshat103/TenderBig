@@ -18,7 +18,7 @@ const TenderResult = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:3000/apiTender/Tender%20Result",
+        "http://localhost:3000http://localhost:5000/apitender/Tender%20Result",
         {
           headers: {
             auth: token,

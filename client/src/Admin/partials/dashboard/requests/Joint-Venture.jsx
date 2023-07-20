@@ -18,7 +18,7 @@ const JointVenture = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:5000/apiTender/Joint%20Venture",
+        "http://localhost:5000/apitender/Joint%20Venture",
         {
           headers: {
             auth: token,

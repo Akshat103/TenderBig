@@ -25,6 +25,7 @@ import AuctionMaterialForm from '../pages/Services/Auction-Material/AuctionMater
 import JointVenture from '../pages/Services/Joint-Venture/JointVenture';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Gems from '../pages/Gems';
 
 const MainRoutes = () => {
   return (
@@ -33,7 +34,8 @@ const MainRoutes = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<Projects />} />
-        <Route path='/gems' element={<GemListing />} />
+        <Route path='/gems' element={<Gems />} />
+        <Route path='/gemslist' element={<GemListing />} />
         <Route path='/tenderfilling' element={<TenderFilling />}></Route>
         <Route path='/tenderfillingonline' element={<TenderFillingOnline />}></Route>
         <Route path='/tenderfillingoffline' element={<TenderFillingOffline />}></Route>

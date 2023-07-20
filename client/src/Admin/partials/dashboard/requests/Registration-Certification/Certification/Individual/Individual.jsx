@@ -21,7 +21,7 @@ const IndividualList = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    fetch("http://localhost:5000/apiTender/services/icert/certification")
+    fetch("http://localhost:5000/apitender/services/icert/certification")
       .then((response) => response.json())
       .then((data) => setForms(data))
       .catch((error) => console.log(error));
@@ -29,7 +29,7 @@ const IndividualList = () => {
 
   function deleteFormDetails(id) {
     fetch(
-      `http://localhost:5000/apiTender/services/icert/certification/${id}`,
+      `http://localhost:5000/apitender/services/icert/certification/${id}`,
       {
         method: "DELETE",
         headers: {

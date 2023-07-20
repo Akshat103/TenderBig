@@ -17,7 +17,7 @@ const Sector = () => {
 
   const fetchSectors = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/apiTender/options/alloptions?array=sectors");
+      const response = await axios.get("http://localhost:5000/apitender/options/alloptions?array=sectors");
       console.log(response.data[0].sectors);
       setSectors(response.data[0].sectors);
     } catch (error) {
@@ -32,7 +32,7 @@ const Sector = () => {
     }
   
     try {
-      const response = await axios.post("http://localhost:5000/apiTender/options/sectors", { sectors: [newSector] });
+      const response = await axios.post("http://localhost:5000/apitender/options/sectors", { sectors: [newSector] });
       setSectors(response.data.sectors);
       setNewSector("");
     } catch (error) {
@@ -42,7 +42,7 @@ const Sector = () => {
   
   const deleteSector = async (sector) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/apiTender/options/sectors/${sector}`);
+      const response = await axios.delete(`http://localhost:5000/apitender/options/sectors/${sector}`);
       setSectors(response.data.sectors);
     } catch (error) {
       console.error(error);

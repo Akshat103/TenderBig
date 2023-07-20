@@ -17,7 +17,7 @@ const Product = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/apiTender/options/alloptions?array=products");
+      const response = await axios.get("http://localhost:5000/apitender/options/alloptions?array=products");
       console.log(response.data[0].products);
       setProducts(response.data[0].products);
     } catch (error) {
@@ -32,7 +32,7 @@ const Product = () => {
     }
   
     try {
-      const response = await axios.post("http://localhost:5000/apiTender/options/products", { products: [newProduct] });
+      const response = await axios.post("http://localhost:5000/apitender/options/products", { products: [newProduct] });
       setProducts(response.data.products);
       setNewProduct("");
     } catch (error) {
@@ -42,7 +42,7 @@ const Product = () => {
 
   const deleteProduct = async (product) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/apiTender/options/products/${product}`);
+      const response = await axios.delete(`http://localhost:5000/apitender/options/products/${product}`);
       setProducts(response.data.products);
     } catch (error) {
       console.error(error);

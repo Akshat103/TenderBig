@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/logo.png";
+// import logo from "../assets/logo.png";
+import logo from "../Admin/images/tender-logo.png";
+import PhoneImg from '../Admin/images/phone.png'
+import LandlineImg from '../Admin/images/landline.png'
+import WAImg from '../Admin/images/whatsapp.png'
+
 
 const Navbar = () => {
   const auth = JSON.parse(localStorage.getItem("user"));
@@ -34,12 +39,81 @@ const Navbar = () => {
 
   return (
     <div>
-      <nav className="bg-white shadow">
+      {/* contact bar */}
+      <div className="h-[80px] flex items-center justify-between gap-8  text-black xl:px-80 lg:px-20 px-10 font-bold">
+        <div className="flex items-center gap-8">
+          
+          <div className="flex items-center gap-2">
+            <img src={PhoneImg} alt="phone_img" className="w-8 h-8" />
+            <div className="whitespace-nowrap">+91 1413953880</div>
+          </div>
+          <div className="flex items-center gap-2">
+            <img src={LandlineImg} alt="phone_img" className="w-8 h-8" />
+            <div className="whitespace-nowrap">+91 9352810000</div>
+          </div>
+          <div className="flex items-center gap-2">
+            <img src={WAImg} alt="phone_img" className="w-8 h-8" />
+            <div>8875515555</div>
+          </div>
+          {/* <div className="px-4 py-2 text-white bg-black rounded">
+            Contact
+          </div> */}
+          
+        </div>
+
+      <div>
+          {auth ? (
+                  <>
+                    <div className="flex flex-row gap-8">
+                      <button
+                        onClick={logout}
+                        className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
+                      >
+                        Logout
+                      </button>
+
+                      {auth.userRole == "admin" ? (
+                        <button
+                          onClick={dashboard}
+                          className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
+                        >
+                          Dashboard
+                        </button>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <Link
+                    to="/login"
+                    className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
+                    >
+                    Login
+                  </Link>
+                )}
+      </div>
+          
+       {/* <div className="flex items-center gap-8">
+        <button
+          onClick={logout}
+          className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
+        >
+          Logout
+        </button><button
+          onClick={logout}
+          className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
+        >
+          Dashboard
+        </button>
+       </div> */}
+      </div>
+      <nav className="bg-red-700 shadow ">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-4">
           <div className="flex items-center justify-between h-16">
             <div className="flex-shrink-0">
               <Link to="/" className="flex items-center">
-                <img className="w-[120px]" src={logo} alt="logo" />
+                <img className="w-[90px] h-auto mt-2" src={logo} alt="logo" />
               </Link>
             </div>
             <div className="flex items-center justify-end flex-1 sm:items-stretch">
@@ -47,52 +121,47 @@ const Navbar = () => {
                 <div className="flex space-x-4">
                   <Link
                     to="/"
-                    className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
+                    className="px-3 py-2 text-lg font-bold text-white transition-colors duration-300 rounded-md hover:text-white"
                   >
                     Home
                   </Link>
 
                   <Link
                     to="/tenders"
-                    className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
+                    className="px-3 py-2 text-lg font-bold text-white transition-colors duration-300 rounded-md hover:text-white"
                   >
                     Tenders
                   </Link>
 
                   <Link
                     to="/projects"
-                    className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
+                    className="px-3 py-2 text-lg font-bold text-white transition-colors duration-300 rounded-md hover:text-white"
                   >
                     Projects
                   </Link>
 
                   <Link
                     to="/gems"
-                    className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
+                    className="px-3 py-2 text-lg font-bold text-white transition-colors duration-300 rounded-md hover:text-white"
                   >
                     Gems
                   </Link>
 
                   <Link
                     to="/forms"
-                    className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
+                    className="px-3 py-2 text-lg font-bold text-white transition-colors duration-300 rounded-md hover:text-white"
                   >
                     Apply for Tenders
                   </Link>
 
-                  <Link
-                    to="/contact"
-                    className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
-                  >
-                    Contact
-                  </Link>
+                 
                   <div className="relative">
                     <button
                       onClick={() => setDropdownOpen(true)}
                       onMouseEnter={() => setDropdownOpen(true)}
                       // onMouseLeave={() => setDropdownOpen(false)}
 
-                      className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
+                      className="px-3 py-2 text-lg font-bold text-white transition-colors duration-300 rounded-md hover:text-white"
                     >
                       Services
                       <svg
@@ -251,8 +320,14 @@ const Navbar = () => {
                       </div>
                     )}
                   </div>
+                  <Link
+                    to="/contact"
+                    className="px-3 py-2 text-lg font-bold text-white transition-colors duration-300 rounded-md hover:text-white"
+                  >
+                    Contact
+                  </Link>
 
-                  {auth ? (
+                  {/* {auth ? (
                     <>
                       <button
                         onClick={logout}
@@ -264,7 +339,7 @@ const Navbar = () => {
                       {auth.userRole == "admin" ? (
                         <button
                           onClick={dashboard}
-                          className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
+                          className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-red-700 rounded-md"
                         >
                           Dashboard
                         </button>
@@ -279,7 +354,7 @@ const Navbar = () => {
                     >
                       Login
                     </Link>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>
@@ -330,46 +405,52 @@ const Navbar = () => {
         {menuOpen && (
           <div className="flex justify-end">
             <div
-              className="fixed w-full p-2 bg-red-700 sm:hidden overflow text-gray-50"
+              className="w-full p-2 bg-red-700 sm:hidden overflow text-gray-50"
               onMouseLeave={toggleMenu}
             >
               <div className="px-2 pt-2 pb-3 space-y-1">
                 <Link
                   to="/"
+                  onClick={toggleMenu}
                   className="block px-3 py-1 text-lg font-medium text-white transition-colors duration-300 rounded-md hover:text-red-100"
                 >
                   Home
                 </Link>
                 <Link
                   to="/tenders"
+                  onClick={toggleMenu}
                   className="block px-3 py-1 text-lg font-medium text-white transition-colors duration-300 rounded-md hover:text-red-100"
                 >
                   Tenders
                 </Link>
                 <Link
                   to="/projects"
+                  onClick={toggleMenu}
                   className="block px-3 py-1 text-lg font-medium text-white transition-colors duration-300 rounded-md hover:text-red-100"
                 >
                   Projects
                 </Link>
                 <Link
                   to="/gems"
+                  onClick={toggleMenu}
                   className="block px-3 py-1 text-lg font-medium text-white transition-colors duration-300 rounded-md hover:text-red-100"
                 >
                   Gems
                 </Link>
                 <Link
                   to="/forms"
+                  onClick={toggleMenu}
                   className="block px-3 py-1 text-lg font-medium text-white transition-colors duration-300 rounded-md hover:text-red-100"
                 >
                   Apply for Tenders
                 </Link>
-                <Link
+                {/* <Link
                   to="/contact"
+                  onClick={toggleMenu}
                   className="block px-3 py-1 text-lg font-medium text-white transition-colors duration-300 rounded-md hover:text-red-100"
                 >
                   Contact
-                </Link>
+                </Link> */}
                 <div className="relative">
                     <button
                       onClick={() => setDropdownOpen(true)}
@@ -402,6 +483,7 @@ const Navbar = () => {
                       >
                         <Link
                           to="/careerandmanpower"
+                          onClick={toggleMenu}
                           className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                         >
                           <svg
@@ -421,6 +503,7 @@ const Navbar = () => {
 
                         <Link
                           to="/regandcert"
+                          onClick={toggleMenu}
                           className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                         >
                           <svg
@@ -440,6 +523,7 @@ const Navbar = () => {
 
                         <Link
                           to="/contact"
+                          onClick={toggleMenu}
                           className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                         >
                           <svg
@@ -460,8 +544,7 @@ const Navbar = () => {
                         <Link
                           to="/auctionmaterial"
                           className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
-                          onClick={() => setSelectedService("License")}
-                        >
+                          onClick={toggleMenu}                        >
                           <svg
                             xmlns="https://www.svgrepo.com/show/498932/settings.svg"
                             viewBox="0 0 20 20"
@@ -479,6 +562,7 @@ const Navbar = () => {
 
                         <Link
                           to="/jointventure"
+                          onClick={toggleMenu}
                           className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                         >
                           <svg
@@ -498,6 +582,7 @@ const Navbar = () => {
 
                         <Link
                           to="/tenderfilling"
+                          onClick={toggleMenu}
                           className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                         >
                           <svg
@@ -516,6 +601,7 @@ const Navbar = () => {
                         </Link>
                         <Link
                           to="/gemregistration"
+                          onClick={toggleMenu}
                           className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                         >
                           <svg
@@ -563,8 +649,8 @@ const Navbar = () => {
                 ) : (
                   <Link
                     to="/login"
-                    className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-red-700 rounded-md"
-                  >
+                    className="px-3 py-2 mx-4 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
+                    >
                     Login
                   </Link>
                 )}

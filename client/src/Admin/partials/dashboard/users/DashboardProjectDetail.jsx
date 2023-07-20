@@ -16,7 +16,7 @@
 //     const fetchUserDetails = async () => {
 //       try {
 //         const response = await axios.get(
-//           `http://localhost:5000/apiTender/userdetails/single-user/${userId}`,
+//           `http://localhost:5000/apitender/userdetails/single-user/${userId}`,
 //           {
 //             method: 'GET',
 //             headers: {
@@ -39,7 +39,7 @@
 //     try {
 //       // Make API call to delete the user
 //       await axios.delete(
-//         `http://localhost:5000/apiTender/userdetails/delete/${userId}`,
+//         `http://localhost:5000/apitender/userdetails/delete/${userId}`,
 //         {
 //           headers: {
 //             'Content-Type': 'application/json',
@@ -63,7 +63,7 @@
 //     try {
 //       // Make API call to update the user role
 //       await axios.put(
-//         'http://localhost:5000/apiTender/userdetails/updaterole',
+//         'http://localhost:5000/apitender/userdetails/updaterole',
 //         {
 //           userId: userId,
 //           userRole: selectedRole,
@@ -209,7 +209,7 @@ function ProjectDetails() {
     event.preventDefault();
     axios
       .put(
-        `http://localhost:5000/apiTender/projects/${projectId}`,
+        `http://localhost:5000/apitender/projects/${projectId}`,
         editedProject
       )
       .then((response) => {
@@ -231,7 +231,7 @@ function ProjectDetails() {
 
   const handleDelete = () => {
     axios
-      .delete(`http://localhost:5000/apiTender/projects/${projectId}`)
+      .delete(`http://localhost:5000/apitender/projects/${projectId}`)
       .then(() => {
         setIsDeleting(false);
       })
@@ -243,7 +243,7 @@ function ProjectDetails() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/apiTender/projects/${projectId}`)
+      .get(`http://localhost:5000/apitender/projects/${projectId}`)
       .then((response) => {
         setProject(response.data);
         setEditedProject({

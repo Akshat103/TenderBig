@@ -24,7 +24,7 @@ function AllHR() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/apiTender/userdetails/users/hr",
+          "http://localhost:5000/apitender/userdetails/users/hr",
           {
             method: "GET",
             headers: {

@@ -17,7 +17,7 @@ const Category = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/apiTender/options/alloptions?array=categories");
+      const response = await axios.get("http://localhost:5000/apitender/options/alloptions?array=categories");
       console.log(response.data[0].categories);
       setCategories(response.data[0].categories);
     } catch (error) {
@@ -32,7 +32,7 @@ const Category = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/apiTender/options/categories", { categories: [newCategory] });
+      const response = await axios.post("http://localhost:5000/apitender/options/categories", { categories: [newCategory] });
       setCategories(response.data.categories);
       setNewCategory("");
     } catch (error) {
@@ -43,7 +43,7 @@ const Category = () => {
 
   const deleteCategory = async (category) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/apiTender/options/categories/${category}`);
+      const response = await axios.delete(`http://localhost:5000/apitender/options/categories/${category}`);
       setCategories(response.data.categories);
     } catch (error) {
       console.error(error);

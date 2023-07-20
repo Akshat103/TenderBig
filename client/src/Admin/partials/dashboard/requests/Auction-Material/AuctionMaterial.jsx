@@ -16,7 +16,7 @@ const AuctionMaterial = () => {
 
     useEffect(() => {
         // Fetch data from the API
-        fetch("http://localhost:5000/apiTender/services/aumt/auction-material")
+        fetch("http://localhost:5000/apitender/services/aumt/auction-material")
             .then((response) => response.json())
             .then((data) => setForms(data.data))
             .catch((error) => console.log(error));
@@ -24,7 +24,7 @@ const AuctionMaterial = () => {
 
 
     function handleDelete(id) {
-        fetch(`http://localhost:5000/apiTender/services/aumt/auction-material/${id}`, {
+        fetch(`http://localhost:5000/apitender/services/aumt/auction-material/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

@@ -20,7 +20,7 @@ const TenderStatistics = () => {
         };
 
         const response = await axios.get(
-          "http://localhost:5000/apiTender/tenderdetails/statistics",
+          "http://localhost:5000/apitender/tenderdetails/statistics",
           config
         );
         setStatistics(response.data);

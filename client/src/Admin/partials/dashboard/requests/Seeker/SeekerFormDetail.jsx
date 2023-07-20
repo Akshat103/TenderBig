@@ -13,7 +13,7 @@ const SeekerFormDetail = () => {
   const { id } = useParams();
   useEffect(() => {
     // Fetch data from the API
-    fetch(`http://localhost:5000/apiTender/services/seeker/forms/${id}`)
+    fetch(`http://localhost:5000/apitender/services/seeker/forms/${id}`)
       .then((response) => response.json())
       .then((data) => setFormData(data))
       .catch((error) => console.log(error));
@@ -31,7 +31,7 @@ const SeekerFormDetail = () => {
   };
 
   function updateDetails() {
-    fetch(`http://localhost:5000/apiTender/services/seeker/forms/${id}`, {
+    fetch(`http://localhost:5000/apitender/services/seeker/forms/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

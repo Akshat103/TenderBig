@@ -21,7 +21,7 @@ const JointVenture = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    fetch("http://localhost:5000/apiTender/services/jv/getjv")
+    fetch("http://localhost:5000/apitender/services/jv/getjv")
       .then((response) => response.json())
       .then((data) => setForms(data))
       .catch((error) => console.log(error));
@@ -38,7 +38,7 @@ const JointVenture = () => {
   };
 
   function handleDeleteClick(id) {
-    fetch(`http://localhost:5000/apiTender/services/jv/${id}`, {
+    fetch(`http://localhost:5000/apitender/services/jv/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

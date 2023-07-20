@@ -23,6 +23,7 @@ import GemListing from '../pages/GemListing';
 import Projects from '../pages/ProjectListing';
 import AuctionMaterialForm from '../pages/Services/Auction-Material/AuctionMaterialForm'
 import JointVenture from '../pages/Services/Joint-Venture/JointVenture';
+import TenderResults from '../pages/TenderResults';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -56,6 +57,7 @@ const MainRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/tenderResults" element={<TenderResults />} />
       </Routes>
       <Footer />
     </>

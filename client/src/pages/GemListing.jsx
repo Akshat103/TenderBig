@@ -120,7 +120,7 @@ const GemListing = () => {
           "tenderId",
         ];
 
-        let searchUrl = `${baseUrl}?`;
+        let searchUrl = `${baseUrl}`;
 
         if (region) {
           searchUrl += `&region=${region}`;

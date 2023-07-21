@@ -15,16 +15,16 @@ const HomePage = () => {
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
   const [selectedService, setSelectedService] = useState("");
-  const [isOpen, setIsOpen] = useState(true);
   const hasDialogShownBefore = localStorage.getItem("dialogShown");
+  const [isOpen, setIsOpen] = useState(true);
 
-  // useEffect(() => {
-  //   setIsOpen(!isOpen)
-  // }, [])
+  useEffect(() => {
+    console.log("isOpen",isOpen);
+  }, [])
 
-  setTimeout(() => {
-    setIsOpen(true);
-  }, 50000);
+  // setTimeout(() => {
+  //   setIsOpen(true);
+  // }, 50000);
 
   const handleOpen = () => setIsOpen(!isOpen);
   const dispatch = useDispatch();

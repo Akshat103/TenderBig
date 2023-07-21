@@ -1,5 +1,6 @@
 // GemListing.jsx
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { regionData, geopoliticalData } from "../constants/countriesData.js";
 import { useNavigate } from "react-router-dom";
@@ -8,12 +9,37 @@ import { fundingAgencies, tenderBysectorProducts } from "./TenderListingPage.jsx
 
 const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
   const navigate = useNavigate();
-
+  // const { referenceNo } = useParams();
   const handleViewDetails = (tenderId) => {
     navigate(`/tender/${tenderId}`, {
       state: { tenderId },
     });
   };
+
+  // useEffect(() => {
+  //   const fetchTenderDetails = async () => {
+  //     try {
+  //       const baseUrl = `http://localhost:5000/apitender/gem/${id}`;
+  //       const token = localStorage.getItem("token");
+
+  //       const headers = {
+  //         auth: token,
+  //       };
+
+  //       const response = await axios.get(`${baseUrl}/${referenceNo}`, { headers });
+  //       const tenderDetails = response.data.Product[0];
+  //       setTenderDetails(tenderDetails);
+  //     } catch (error) {
+  //       console.error("Error fetching tender details:", error);
+  //     }
+  //   };
+
+  //   if (referenceNo) {
+  //     fetchTenderDetails();
+  //   }
+  // }, [referenceNo]);
+
+  
 
   return (
     <div className="bg-white shadow-lg rounded p-6 mb-4 border-[2px] border-black/20">
@@ -119,6 +145,7 @@ const GemListing = () => {
           auth: token,
         };
 
+        
         const response = await axios.post(searchUrl, { details: detailsArray }, { headers });
         console.log(response, "gems");
         if (response.status === 401) {
@@ -326,7 +353,7 @@ const GemListing = () => {
               </div>
             </div>
           </div>
-          <div className="col-span-1 space-y-4">
+          <div className="mt-8 sm:col-span-2 md:col-span-2">
             {currentItems.length > 0 ? (
               currentItems.map((tender) => (
                 <TenderCard

@@ -22,7 +22,6 @@ const HomePage = () => {
   //   setIsOpen(!isOpen)
   // }, [])
 
-
   setTimeout(() => {
     setIsOpen(true);
   }, 50000);
@@ -45,9 +44,10 @@ const HomePage = () => {
 
   const handleClose = (e) => {
     // if (!e.target.closest(".dialog") ) {
-      setIsOpen(false);
+    setIsOpen(false);
     // }
-  };``
+  };
+  ``;
 
   const navigationButtons = [
     { name: "Career & ManPower", link: "/careerandmanpower" },
@@ -116,7 +116,6 @@ const HomePage = () => {
     setSelectedService(e.target.value);
   };
 
-
   return (
     <>
       <div className="relative px-3 md:p-4">
@@ -129,11 +128,11 @@ const HomePage = () => {
                 </h1>
                 <div className="col-span-4 px-2 mt-6 mb-6">
                   {navigationButtons.map((button) => (
-                  <NavLink to={button.link}>
-                    <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold  border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">
-                      {button.name}
-                    </div>
-                  </NavLink>
+                    <NavLink to={button.link}>
+                      <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold  border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">
+                        {button.name}
+                      </div>
+                    </NavLink>
                   ))}
                 </div>
               </ul>
@@ -217,41 +216,44 @@ const HomePage = () => {
         </div>
         <hr />
 
-        <Dialog
-          open={isOpen}
-          onClose={handleClose}
-          className="relative z-50"
-        >
+        <Dialog open={isOpen} onClose={handleClose} className="relative z-50">
           {/* The backdrop, rendered as a fixed sibling to the panel container */}
-          <div className="fixed inset-0 bg-black/30" aria-hidden="true" onClick={handleClose}/>
+          <div
+            className="fixed inset-0 bg-black/30"
+            aria-hidden="true"
+            onClick={handleClose}
+          />
 
           {/* Full-screen container to center the panel */}
           <div className="fixed inset-0 flex items-center justify-center p-4">
             {/* The actual dialog panel  */}
-            <Dialog.Panel className="grid  p-8 bg-white rounded gap-x-8">
-              {/* <div className="">
-                <ul className="">
-                  <h1 className="mb-5 text-3xl font-bold text-black ">
-                    Our Services
-                  </h1>
-                  <div className="px-2 mt-6 mb-6">
-                    {navigationButtons.map((button) => (
-                      <NavLink to={button.link}>
-                        <div className="w-full lg:px-8  py-3 mb-4 text-[18px] text-center  text-white font-bold  border-black border-[1px] bg-red-700 focus:none  hover:text-white linear duration-300 shadow-md rounded cursor-pointer">
-                          {button.name}
-                        </div>
-                      </NavLink>
-                    ))}
-                  </div>
-                </ul>
-              </div> */}
+            <Dialog.Panel className="grid md:grid-cols-2 p-8 bg-white rounded gap-x-8">
+            {isSmallScreen ? (
+            <div class="md:col-span-1 invisible md:visible">
+            <ul class="">
+              <h1 class="mb-5 text-3xl font-bold text-black">
+                Our Services
+              </h1>
+                <div className="col-span-4 px-2 mt-6 mb-6">
+                  {navigationButtons.map((button) => (
+                    <NavLink to={button.link}>
+                      <div class="md:w-full lg:px-8 py-3 mb-4 text-18 md:text-center text-white font-bold border-black border-1px bg-red-700 focus:none hover:text-white linear duration-300 shadow-md rounded cursor-pointer">
+                        {button.name}
+                      </div>
+                    </NavLink>
+                  ))}
+                </div>
+              </ul>
+            </div>
+          ) : null}
 
-              <div className="">
+              <div className="md:w-full">
                 <div className="mb-5 text-3xl text-center font-bold text-black">
                   Enter Details
                 </div>
 
-                <form onSubmit={handleFormSubmit}>
+                <form onSubmit={handleFormSubmit} className="w-full">
+                  {/* Rest of the form elements */}
                   <div className="mb-4">
                     <label className="block mb-2 font-semibold">
                       Name
@@ -261,7 +263,7 @@ const HomePage = () => {
                       <input
                         required
                         type="text"
-                        id = "name"
+                        id="name"
                         name="name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
@@ -282,7 +284,6 @@ const HomePage = () => {
                         value={email}
                         placeholder="Enter Email"
                         onChange={(e) => setEmail(e.target.value)}
-
                       />
                     </label>
                   </div>
@@ -298,7 +299,6 @@ const HomePage = () => {
                         value={company}
                         placeholder="Enter Company Name"
                         onChange={(e) => setCompany(e.target.value)}
-                        
                       />
                     </label>
                   </div>
@@ -314,7 +314,6 @@ const HomePage = () => {
                         value={mobile}
                         placeholder="Enter Number"
                         onChange={(e) => setMobile(e.target.value)}
-                        
                       />
                     </label>
                   </div>
@@ -329,7 +328,6 @@ const HomePage = () => {
                       className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                       value={selectedService || selectedServiceFromNavbar}
                       onChange={handleServiceChange}
-                      
                     >
                       <option value="">Select Service</option>
                       <option value="Career&ManPower">

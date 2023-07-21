@@ -143,7 +143,7 @@ const TenderListingPage = () => {
         const product = encodeURIComponent(selectedProduct);
         const userCategory =  encodeURIComponent(selectedUserCategory);
 
-        const baseUrl = "http://localhost:5000http://localhost:5000/apitender/tenderdetails/search";
+        const baseUrl = "http://localhost:5000/apitender/tenderdetails/search";
 
         const detailsArray = [
           "summary",

@@ -51,7 +51,7 @@ const Navbar = () => {
             <img src={LandlineImg} alt="phone_img" className="w-8 h-8" />
             <div className="whitespace-nowrap">+91 9352810000</div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="md:flex items-center hidden gap-2">
             <img src={WAImg} alt="phone_img" className="w-8 h-8" />
             <div>8875515555</div>
           </div>
@@ -64,7 +64,7 @@ const Navbar = () => {
       <div>
           {auth ? (
                   <>
-                    <div className="flex flex-row gap-8">
+                    <div className="md:flex hidden flex-row gap-8">
                       <button
                         onClick={logout}
                         className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
@@ -113,7 +113,7 @@ const Navbar = () => {
           <div className="flex items-center justify-between h-16">
             <div className="flex-shrink-0">
               <Link to="/" className="flex items-center">
-                <img className="w-[90px] h-auto mt-2" src={logo} alt="logo" />
+                <img className="w-[60px] h-auto " src={logo} alt="logo" />
               </Link>
             </div>
             <div className="flex items-center justify-end flex-1 sm:items-stretch">

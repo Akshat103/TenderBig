@@ -14,7 +14,7 @@ const ProjectCard = ({ project }) => {
   };
 
   return (
-    <div className="bg-white shadow-lg rounded p-6 mb-4 border-[2px] border-black/20">
+    <div className="bg-white mt-9 shadow-lg rounded p-6 mb-4 border-[2px] border-black/20">
       <h2 className="mb-3 text-xl font-bold capitalize">{project.companyname}</h2>
       <div className="grid grid-cols-3">
 

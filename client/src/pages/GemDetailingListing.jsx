@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import Sidebar from '../../Sidebar';
-import Header from '../../Header';
 
-function DashboardTenderDetail() {
+function GemDetailingListing() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [tenderDetails, setTenderDetails] = useState({});
   const [active, setActive] = useState("");
@@ -101,12 +99,12 @@ function DashboardTenderDetail() {
   return (
     <div className="flex flex-col lg:flex-row min-h-screen overflow-hidden">
       {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      {/* <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> */}
 
       {/* Content area */}
       <div className="flex-1 overflow-y-auto">
         {/* Site header */}
-        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        {/* <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> */}
 
         <div className="px-4 py-8 max-w-9xl mx-auto">
           {/* Dashboard actions */}
@@ -236,32 +234,11 @@ function DashboardTenderDetail() {
             </div>
           </div>
 
-          <div className="flex justify-center mt-8">
-            <button
-              className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded mr-2"
-              onClick={handleApprove}
-            >
-              {tenderDetails.approvedStatus ? 'Reject' : 'Approve'}
-            </button>
-
-            <button
-              className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded mr-2"
-              onClick={handleReject}
-            >
-              {tenderDetails.active ? 'Ignore' : 'Inspected'}
-            </button>
-
-            <button
-              className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded"
-              onClick={handleDelete}
-            >
-              Delete
-            </button>
-          </div>
+          
         </div>
       </div>
     </div>
   );
 }
 
-export default DashboardTenderDetail;
+export default GemDetailingListing;

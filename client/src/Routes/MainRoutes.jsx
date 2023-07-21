@@ -26,6 +26,8 @@ import JointVenture from '../pages/Services/Joint-Venture/JointVenture';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Gems from '../pages/Gems';
+import GemRegistration from '../pages/GemRegistration';
+import GemDetailingListing from '../pages/GemDetailingListing';
 
 const MainRoutes = () => {
   return (
@@ -53,6 +55,7 @@ const MainRoutes = () => {
         <Route path="/category" element={<TenderByCategaries />} />
         <Route path="/tenders" element={<TenderListingPage />} />
         <Route path="/tender/:referenceNo" element={<Tender />} />
+        <Route path="/gem/:referenceNos" element={<GemDetailingListing />} />
         <Route path="/contact" element={<ContactUsPage />} />
         <Route path="/forms" element={<TenderForm />} />
         <Route path="/login" element={<Login />} />

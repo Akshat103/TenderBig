@@ -16,7 +16,7 @@ function UserDetails() {
     const fetchUserDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/apitender/userdetails/single-user/${userId}`,
+          `http://localhost:5000/apiTender/userdetails/single-user/${userId}`,
           {
             method: 'GET',
             headers: {
@@ -39,7 +39,7 @@ function UserDetails() {
     try {
       // Make API call to delete the user
       await axios.delete(
-        `http://localhost:5000/apitender/userdetails/delete/${userId}`,
+        `http://localhost:5000/apiTender/userdetails/delete/${userId}`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ function UserDetails() {
     try {
       // Make API call to update the user role
       await axios.put(
-        'http://localhost:5000/apitender/userdetails/updaterole',
+        'http://localhost:5000/apiTender/userdetails/updaterole',
         {
           userId: userId,
           userRole: selectedRole,

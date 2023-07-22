@@ -11,34 +11,12 @@ const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
   const navigate = useNavigate();
   // const { referenceNo } = useParams();
   const handleViewDetails = (tenderId) => {
-    navigate(`/tender/${tenderId}`, {
+    navigate(`/user/${tenderId}`, {
       state: { tenderId },
     });
   };
 
-  // useEffect(() => {
-  //   const fetchTenderDetails = async () => {
-  //     try {
-  //       const baseUrl = `http://localhost:5000/apitender/gem/${id}`;
-  //       const token = localStorage.getItem("token");
-
-  //       const headers = {
-  //         auth: token,
-  //       };
-
-  //       const response = await axios.get(`${baseUrl}/${referenceNo}`, { headers });
-  //       const tenderDetails = response.data.Product[0];
-  //       setTenderDetails(tenderDetails);
-  //     } catch (error) {
-  //       console.error("Error fetching tender details:", error);
-  //     }
-  //   };
-
-  //   if (referenceNo) {
-  //     fetchTenderDetails();
-  //   }
-  // }, [referenceNo]);
-
+  console.log(tenderId);
   
 
   return (
@@ -50,8 +28,9 @@ const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
         </span>
       </div>
       <p className="mb-4 text-gray-600">Deadline: {deadline}</p>
-      <p className="mb-4 text-gray-600">{location}</p>
-      <p className="mb-4 text-gray-600">Sector: {referenceNo} {tenderId}</p>
+      <p className="mb-4 text-gray-600">location: {location}</p>
+      <p className="mb-4 text-gray-600">Sector: {referenceNo}</p>
+      <p className="mb-4 text-gray-600">tenderId: {tenderId}</p>
 
       <button
         className="px-4 py-2 font-bold text-white transition-colors duration-300 bg-black rounded hover:bg-white hover:text-black hover:border hover:border-black linear"
@@ -63,7 +42,7 @@ const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
   );
 };
 
-const GemListing = () => {
+const TenderResults = () => {
   const [countries, setCountries] = useState([]);
 
   const [selectedRegion, setSelectedRegion] = useState("");
@@ -104,31 +83,12 @@ const GemListing = () => {
   useEffect(() => {
     const fetchTenderData = async () => {
       try {
-        const url = "http://localhost:5000/apitender/tenderdetails/gem";
-        const token = localStorage.getItem("token");
-
-        const headers = {
-          "Content-Type": "application/json",
-          auth: token,
-        };
-
-        const response = await axios.get(url, { headers });
-
-        if (response.status === 401) {
-          console.error("Unauthorized. Sign in first.");
-          // Handle error or show error message as needed
-          return;
-        }
-
-        // Update the tenderData state with the fetched data
+        const response = await axios.get(
+          "http://localhost:5000/apitender/tenderdetails/alltenderResults"
+        );
         setTenderData(response.data);
       } catch (error) {
-        if (error.response && error.response.status === 401) {
-          console.error("Unauthorized. Sign in first.");
-          // Handle error or show error message as needed
-        } else {
-          console.error("Error fetching tender data:", error);
-        }
+        console.error(error);
       }
     };
 
@@ -261,7 +221,7 @@ const GemListing = () => {
     <>
       <div className="p-4 mx-auto max-w-7xl">
         <h1 className="my-4 text-3xl font-bold text-center">
-          About Gems
+          Tender Results
         </h1>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -394,11 +354,11 @@ const GemListing = () => {
             <TenderCard
               key={tender.tenderId}
               title={tender.summary}
-              deadline={formatDate(tender.procurementSummary.deadline)}
-              location={tender.procurementSummary.country}
-              referenceNo={tender.sector}
+              deadline={tender.deadline}
+              location={tender.country}
+              referenceNo={tender.state}
               tenderId={tender.tenderId}
-
+o
                 />
               ))
             ) : (
@@ -442,4 +402,4 @@ const GemListing = () => {
   );
 };
 
-export default GemListing;
+export default TenderResults;

@@ -20,11 +20,12 @@ const HomePage = () => {
 
   useEffect(() => {
     console.log("isOpen",isOpen);
+    console.log("handleClose", handleClose);
   }, [])
 
-  // setTimeout(() => {
-  //   setIsOpen(true);
-  // }, 50000);
+  setTimeout(() => {
+    setIsOpen(true);
+  }, 50000);
 
   const handleOpen = () => setIsOpen(!isOpen);
   const dispatch = useDispatch();

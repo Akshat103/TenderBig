@@ -326,6 +326,12 @@ const Navbar = () => {
                   >
                     Contact
                   </Link>
+                  <Link
+                    to="/tenderresults"
+                    className="px-3 py-2 text-lg font-bold text-white transition-colors duration-300 rounded-md hover:text-white"
+                  >
+                    Tender results
+                  </Link>
 
                   {/* {auth ? (
                     <>

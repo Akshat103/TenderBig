@@ -28,6 +28,8 @@ import Footer from '../components/Footer';
 import Gems from '../pages/Gems';
 import GemRegistration from '../pages/GemRegistration';
 import GemDetailingListing from '../pages/GemDetailingListing';
+import TenderResults from '../pages/TenderResults';
+import UserDetails from '../Admin/partials/dashboard/users/DashboardUserDetail';
 
 const MainRoutes = () => {
   return (
@@ -40,7 +42,7 @@ const MainRoutes = () => {
         <Route path='/gemslist' element={<GemListing />} />
         <Route path='/tenderfilling' element={<TenderFilling />}></Route>
         <Route path='/tenderfillingonline' element={<TenderFillingOnline />}></Route>
-        <Route path='/tenderfillingoffline' element={<TenderFillingOffline />}></Route>
+        <Route path='/tenderfilliDngoffline' element={<TenderFillingOffline />}></Route>
         <Route path='/regandcert' element={<RegAndCert />}></Route>
         <Route path='/registration' element={<Registration />}></Route>
         <Route path='/auctionmaterial' element={<AuctionMaterialForm />}></Route>
@@ -57,6 +59,8 @@ const MainRoutes = () => {
         <Route path="/tender/:referenceNo" element={<Tender />} />
         <Route path="/gem/:referenceNos" element={<GemDetailingListing />} />
         <Route path="/contact" element={<ContactUsPage />} />
+        <Route path="/tenderresults" element={<TenderResults />} />
+        <Route path="/userDetails" element={<UserDetails />} />☻
         <Route path="/forms" element={<TenderForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

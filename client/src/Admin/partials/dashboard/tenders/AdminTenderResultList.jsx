@@ -26,7 +26,7 @@ function AdminTenderResultList() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/apitender/tenderdetails/alltenderResults"
+          "http://localhost:5000/apiTender/tenderdetails/alltenderResults"
         );
         setUserData(response.data);
       } catch (error) {
@@ -175,7 +175,7 @@ function AdminTenderResultList() {
               {/* Table */}
               <section className="container mx-auto p-6 font-mono overflow-x-auto">
                 <h1 className="text-xl font-bold mb-4">Tender Results</h1>
-                <div className="flex flex-col md:flex-row mb-4 md:items-center md:justify-between">
+                <div className="flex mb-4 justify-between">
                   {/* Search bar */}
                   <input
                     type="text"
@@ -186,7 +186,7 @@ function AdminTenderResultList() {
                   />
 
                   <button
-                    className="bg-[#182235] hover:bg-[#111a2b] text-white mt-4 md:mt-0 font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+                    className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
                     onClick={AddTenderResult}
                   >
                     Add New Tender Result

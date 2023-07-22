@@ -37,7 +37,7 @@ const Login = () => {
                 // Navigate to the desired page
                 const user = data.user.data
                 if (user.userRole == "admin" || user.userRole == "hr" || user.userRole == "employee")
-                    navigate("/dashboard/users");
+                    navigate("/dashboard/admin");
                 else if (user.userRole == "user")
                     navigate('/dashboard/userDashboard')
                 else navigate("/");

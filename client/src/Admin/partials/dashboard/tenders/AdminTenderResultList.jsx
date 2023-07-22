@@ -37,8 +37,14 @@ function AdminTenderResultList() {
     fetchData();
   }, []);
 
-  const showDetails = (userId) => {
-    navigate(`/dashboard/user/${userId}`);
+  const formatReceivedAt = (dateString) => {
+    const date = new Date(dateString);
+    const formattedDate = date.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+    return formattedDate;
   };
 
   const handleSearchChange = (e) => {
@@ -233,10 +239,7 @@ function AdminTenderResultList() {
                             <td className="px-4 py-3 border">
                               <div className="flex items-center text-sm">
                                 <div
-                                  onClick={() => {
-                                    showDetails(tender.userId);
-                                  }}
-                                  className="font-semibold text-black cursor-pointer"
+                                  className="font-semibold text-black"
                                 >
                                   {tender.TenderId}
                                 </div>
@@ -263,7 +266,7 @@ function AdminTenderResultList() {
                               {tender.Authority}
                             </td>
                             <td className="px-4 py-3 text-sm border">
-                              {tender.deadline}
+                              {formatReceivedAt(tender.deadline)}
                             </td>
                             <td className="px-4 py-3 text-sm border">
                               {tender.TendorNo}

@@ -25,7 +25,7 @@ const Navbar = () => {
   };
 
   const dashboard = () => {
-    navigate("/dashboard/users");
+    navigate("/dashboard/admin");
   };
 
   const toggleMobileDropdown = () => {

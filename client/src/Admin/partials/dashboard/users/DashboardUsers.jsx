@@ -187,6 +187,7 @@ function DashboardUsers() {
                 <h1 className="text-xl font-bold mb-4">All User</h1>
                 <div className="flex flex-col md:flex-row mb-4 md:items-center md:justify-between">
                   {/* Search bar */}
+                  <div>
                   <input
                     type="text"
                     className="w-full md:w-64 px-4 py-2 mb-2 md:mb-0 mr-0 md:mr-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded shadow focus:outline-none"
@@ -218,6 +219,7 @@ function DashboardUsers() {
                       <option value="inactive">Not Subscribed</option>
                     </select>
                   )}
+                  </div>
                   <button
                     className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
                     onClick={AddUser}

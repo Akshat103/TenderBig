@@ -24,7 +24,7 @@ const Private = () => {
     useEffect(() => {
         const fetchTenderData = async () => {
             try {
-                const Url = "http://localhost:5000/apiTender/tenderdetails/private";
+                const Url = "http://localhost:5000/apitender/tenderdetails/private";
 
                 const token = localStorage.getItem("token");
 

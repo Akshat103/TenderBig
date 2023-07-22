@@ -24,7 +24,7 @@ function AllAdmin() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/apiTender/userdetails/users/admin",
+          "http://localhost:5000/apitender/userdetails/users/admin",
           {
             method: "GET",
             headers: {

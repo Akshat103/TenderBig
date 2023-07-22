@@ -12,7 +12,7 @@ const UserDetails = () => {
     let id = userDataObject?.userId;
     console.log(id);
     if (id) {
-      fetch(`http://localhost:5000/apiTender/userdetails/DetailsbyId/${id}`)
+      fetch(`http://localhost:5000/apitender/userdetails/DetailsbyId/${id}`)
         .then((response) => response.json())
         .then((data) => {
           setUserData(data);

@@ -8,7 +8,7 @@
 //     const navigate = useNavigate();
 //     useEffect(() => {
 //         // Fetch data from the API
-//         fetch("http://localhost:5000/apiTender/services/ccert/certification")
+//         fetch("http://localhost:5000/apitender/services/ccert/certification")
 //             .then((response) => response.json())
 //             .then((data) => setForms(data))
 //             .catch((error) => console.log(error));
@@ -30,14 +30,14 @@
 
 //   useEffect(() => {
 //     // Fetch data from the API
-//     fetch("http://localhost:5000/apiTender/services/ccert/certification")
+//     fetch("http://localhost:5000/apitender/services/ccert/certification")
 //       .then((response) => response.json())
 //       .then((data) => setForms(data))
 //       .catch((error) => console.log(error));
 //   }, []);
 
 //   function deleteCompanyDetails() {
-//     fetch(`http://localhost:5000/apiTender/services/ccert/certification/${id}`, {
+//     fetch(`http://localhost:5000/apitender/services/ccert/certification/${id}`, {
 //       method: 'DELETE',
 //     })
 //       .then((response) => response.json())
@@ -296,7 +296,7 @@ const CompanyList = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    fetch("http://localhost:5000/apiTender/services/ccert/certification")
+    fetch("http://localhost:5000/apitender/services/ccert/certification")
       .then((response) => response.json())
       .then((data) => setForms(data))
       .catch((error) => console.log(error));
@@ -304,7 +304,7 @@ const CompanyList = () => {
 
   function deleteCompanyDetails(id) {
     fetch(
-      `http://localhost:5000/apiTender/services/ccert/certification/${id}`,
+      `http://localhost:5000/apitender/services/ccert/certification/${id}`,
       {
         method: "DELETE",
         headers: {

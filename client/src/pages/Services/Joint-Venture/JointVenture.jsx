@@ -174,7 +174,7 @@ const JointVenture = () => {
     const {
       data: { price },
     } = await axios.get(
-      "http://localhost:5000/apiTender/formprice/Joint%20Venture/price"
+      "http://localhost:5000/apitender/formprice/Joint%20Venture/price"
     );
     return price;
   };
@@ -204,7 +204,7 @@ const JointVenture = () => {
         requestBody.directors = updatedDirectors;
         const token = localStorage.getItem("token");
         const response = await axios.post(
-          "http://localhost:5000/apiTender/services/jv/submitjv",
+          "http://localhost:5000/apitender/services/jv/submitjv",
           requestBody,
           {
             headers: {

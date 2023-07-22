@@ -328,7 +328,7 @@ const Forms = () => {
 
     const requestBody = JSON.stringify(formData);
 
-    fetch("http://localhost:5000/apiTender/tenderdetails/add-tender", {
+    fetch("http://localhost:5000/apitender/tenderdetails/add-tender", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -369,7 +369,7 @@ const Forms = () => {
 
   const fetchSectors = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/apiTender/options/alloptions?array=sectors");
+      const response = await axios.get("http://localhost:5000/apitender/options/alloptions?array=sectors");
       console.log(response.data[0].sectors)
       setSectors(response.data[0].sectors);
     } catch (error) {
@@ -379,7 +379,7 @@ const Forms = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/apiTender/options/alloptions?array=products");
+      const response = await axios.get("http://localhost:5000/apitender/options/alloptions?array=products");
       console.log(response.data[0].products)
       setProducts(response.data[0].products);
     } catch (error) {

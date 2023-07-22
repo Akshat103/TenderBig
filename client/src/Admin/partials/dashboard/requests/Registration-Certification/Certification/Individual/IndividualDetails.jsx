@@ -13,7 +13,7 @@ const IndividualDetails = () => {
     const { id } = useParams();
     useEffect(() => {
         // Fetch data from the API
-        fetch(`http://localhost:5000/apiTender/services/icert/certification/${id}`)
+        fetch(`http://localhost:5000/apitender/services/icert/certification/${id}`)
             .then((response) => response.json())
             .then((data) => {
                 setFormData(data)
@@ -33,7 +33,7 @@ const IndividualDetails = () => {
     };
 
     function updateDetails() {
-        fetch(`http://localhost:5000/apiTender/services/icert/certification/${id}`, {
+        fetch(`http://localhost:5000/apitender/services/icert/certification/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

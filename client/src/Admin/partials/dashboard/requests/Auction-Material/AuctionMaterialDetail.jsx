@@ -14,7 +14,7 @@ const AuctionMaterialDetail = () => {
   useEffect(() => {
     // Fetch data from the API
     fetch(
-      `http://localhost:5000/apiTender/services/aumt/auction-material/${id}`
+      `http://localhost:5000/apitender/services/aumt/auction-material/${id}`
     )
       .then((response) => response.json())
       .then((data) => setFormData(data.data))
@@ -35,7 +35,7 @@ const AuctionMaterialDetail = () => {
 
   function updateDetails() {
     fetch(
-      `http://localhost:5000/apiTender/services/aumt/auction-material/${id}`,
+      `http://localhost:5000/apitender/services/aumt/auction-material/${id}`,
       {
         method: "PUT",
         headers: {

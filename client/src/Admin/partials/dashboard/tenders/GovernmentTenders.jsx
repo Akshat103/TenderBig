@@ -24,7 +24,7 @@ const Government = () => {
     useEffect(() => {
         const fetchTenderData = async () => {
             try {
-                const Url = "http://localhost:5000/apiTender/tenderdetails/government";
+                const Url = "http://localhost:5000/apitender/tenderdetails/government";
 
                 const token = localStorage.getItem("token");
 

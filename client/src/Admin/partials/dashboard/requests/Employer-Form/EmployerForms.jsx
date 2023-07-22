@@ -22,14 +22,14 @@ const EmployerForms = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    fetch("http://localhost:5000/apiTender/services/employer/forms")
+    fetch("http://localhost:5000/apitender/services/employer/forms")
       .then((response) => response.json())
       .then((data) => setForms(data))
       .catch((error) => console.log(error));
   }, []);
 
   function deleteEmployerDetail(id) {
-    fetch(`http://localhost:5000/apiTender/services/employer/forms/${id}`, {
+    fetch(`http://localhost:5000/apitender/services/employer/forms/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

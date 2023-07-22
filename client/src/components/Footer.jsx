@@ -103,16 +103,18 @@ const Footer = () => {
                   +91-3453574072
                 </li>
                 <li className="mb-2">
-                  <span className="inline-block w-4 mr-2">
+                  <div className=" flex mr-2">
                     <img
                       src="https://www.svgrepo.com/show/430111/address-pin-location.svg"
                       alt="Adress"
                       width={20}
                       height={20}
+                      className=""
                     />
-                  </span>
-                  S-30, 2nd floor Dwarika tower central spine, vidhyadhar nagar,
-                  jaipur, 302039
+                    <p className="ml-1">S-30, 2nd floor Dwarika tower</p>
+                    </div>
+                    <p className="ml-6">central spine, vidhyadhar nagar, jaipur, 302039</p>
+                  
                 </li>
               </ul>
             </div>

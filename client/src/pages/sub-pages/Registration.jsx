@@ -79,7 +79,7 @@ const Registration = () => {
     const {
       data: { price },
     } = await axios.get(
-      "http://localhost:5000/apiTender/formprice/Registration/price"
+      "http://localhost:5000/apitender/formprice/Registration/price"
     );
     return price;
   };
@@ -87,7 +87,7 @@ const Registration = () => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/apiTender/options/alloptions?array=categories"
+        "http://localhost:5000/apitender/options/alloptions?array=categories"
       );
       setCategories(response.data[0].categories);
     } catch (error) {
@@ -149,7 +149,7 @@ const Registration = () => {
     const token = localStorage.getItem("token");
     axios
       .post(
-        "http://localhost:5000/apiTender/services/register/registration",
+        "http://localhost:5000/apitender/services/register/registration",
         requestBody,
         {
           headers: {
@@ -195,18 +195,50 @@ const Registration = () => {
     );
   }
 
+
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  const checkScreenSize = () => {
+    setIsSmallScreen(window.innerWidth > 480); // Adjust the breakpoint as needed
+  };
+
+  useEffect(() => {
+    checkScreenSize(); // Call the function to set the initial screen size
+
+    window.addEventListener("resize", checkScreenSize); // Add event listener
+
+    return () => {
+      window.removeEventListener("resize", checkScreenSize); // Clean up the event listener
+    };
+  }, []);
+
   return (
     <>
       <div className="container py-8 mx-auto max-w-[1244px]">
-        <div className="grid grid-cols-12 gap-16">
-          <div className="col-span-4 px-2">
-            {sideNavigationButtons.map((button) => (
-              <NavLink to={button.link}>
-                <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold  border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">
-                  {button.name}
-                </div>
-              </NavLink>
-            ))}
+      <div
+          className={`max-w-[1244px] ${
+            !isSmallScreen ? "w-full" : "grid grid-cols-12 gap-16"
+          } mt-5`}
+        >
+          <div className="col-span-4 px-2 mt-6 mb-6">
+            {isSmallScreen ? (
+              <div className="w-full mt-2 ">
+                <ul className="">
+                  <h1 className="text-2xl font-bold text-gray-700 ">
+                    Our Services
+                  </h1>
+                  <div className="col-span-4 px-2 mt-6 mb-6">
+                    {sideNavigationButtons.map((button) => (
+                      <NavLink to={button.link}>
+                        <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">
+                          {button.name}
+                        </div>
+                      </NavLink>
+                    ))}
+                  </div>
+                </ul>
+              </div>
+            ) : null}
           </div>
           <form
             onSubmit={handleFormSubmit}
@@ -231,7 +263,7 @@ const Registration = () => {
             </div>
 
             <div className="flex">
-              <div className="mx-1 mb-4 basis-1/2">
+              <div className="mx-1 mb-4 mt-6 md:mt-0 basis-1/2">
                 <label htmlFor="mobile" className="flex items-center">
                   <AiOutlinePhone className="mr-2" />
                   WhatsApp no.
@@ -245,7 +277,7 @@ const Registration = () => {
                   onChange={(e) => setWMobile(e.target.value)}
                 />
               </div>
-              <div className="mx-1 mb-4 basis-1/2">
+              <div className="mx-1 mb-2 basis-1/2">
                 <label htmlFor="email" className="flex items-center">
                   <AiOutlineMail className="mr-2" />
                   Secondary Number
@@ -336,7 +368,7 @@ const Registration = () => {
               </div>
             </div>
 
-            <div className="flex">
+            <div className="md:flex">
               <div className="mx-1 mb-4 basis-1/2">
                 <label htmlFor="CIN" className="flex items-center">
                   <RiBuilding2Line className="mr-2" />

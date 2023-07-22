@@ -17,14 +17,14 @@ const RegistrationList = () => {
 
     useEffect(() => {
         // Fetch data from the API
-        fetch("http://localhost:5000/apiTender/services/register/registration")
+        fetch("http://localhost:5000/apitender/services/register/registration")
             .then((response) => response.json())
             .then((data) => setForms(data))
             .catch((error) => console.log(error));
     }, []);
 
     function deleteDetails(id) {
-        fetch(`http://localhost:5000/apiTender/services/register/registration/${id}`, {
+        fetch(`http://localhost:5000/apitender/services/register/registration/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

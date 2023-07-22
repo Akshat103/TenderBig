@@ -292,7 +292,7 @@ const Seeker = () => {
     const {
       data: { price },
     } = await axios.get(
-      "http://localhost:5000/apiTender/formprice/Seeker/price"
+      "http://localhost:5000/apitender/formprice/Seeker/price"
     );
     return price;
   };
@@ -327,7 +327,7 @@ const Seeker = () => {
   const StoreAtDB = (requestBody) => {
     const token = localStorage.getItem("token");
 
-    fetch("http://localhost:5000/apiTender/services/seeker/submit-form", {
+    fetch("http://localhost:5000/apitender/services/seeker/submit-form", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -382,7 +382,8 @@ const Seeker = () => {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="grid max-w-[1244px] grid-cols-12 gap-16 mt-5">
+      <div className={`max-w-[1244px] ${!isSmallScreen ? "w-full" : "grid grid-cols-12 gap-16"} mt-5`}>
+
         <div className="col-span-4 px-2 mt-6 mb-6">
           {isSmallScreen ? (
             <div className="w-full mt-2 ">
@@ -393,7 +394,7 @@ const Seeker = () => {
                 <div className="col-span-4 px-2 mt-6 mb-6">
                   {sideNavigationButtons.map((button) => (
                     <NavLink to={button.link}>
-                      <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold  border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">{button.name}</div>
+                    <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">{button.name}</div>
                     </NavLink>
                   ))}
                 </div>
@@ -401,7 +402,8 @@ const Seeker = () => {
             </div>
           ) : null}
         </div>
-        <div className="col-span-8 px-8 py-8 mx-auto mt-6 mb-6 rounded-lg shadow-lg border-[2px] border-black/20">
+        <div className={!isSmallScreen ? "w-96 px-8 py-8 mx-auto" : "col-span-8 px-8 py-8 mx-auto"}>
+
           <ProgressBar
             percent={progress}
             filledBackground="linear-gradient(to right, #E97451, #D22B2B)"
@@ -481,7 +483,7 @@ const Seeker = () => {
                         *
                       </span>
                     </label>
-                    <div className="flex">
+                    <div className="md:flex">
                       <select
                         required
                         name="tenMarkType"
@@ -498,7 +500,7 @@ const Seeker = () => {
                         name="tenMark"
                         value={formData.tenMark}
                         onChange={handleChange}
-                        className="border rounded-sm px-3 py-2 mt-1 flex-grow text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                        className={`border ${!isSmallScreen? "w-36" : "flex-grow"} rounded-sm px-3 py-2 mt-1 flex-grow text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
                         placeholder={
                           formData.tenMarkType === "fixed"
                             ? "Enter Fixed Score"
@@ -517,7 +519,7 @@ const Seeker = () => {
                         *
                       </span>
                     </label>
-                    <div className="flex">
+                    <div className="md:flex">
                       <select
                         required
                         name="twelveMarkType"
@@ -534,7 +536,7 @@ const Seeker = () => {
                         name="twelveMark"
                         value={formData.twelveMark}
                         onChange={handleChange}
-                        className="border rounded-sm px-3 py-2 mt-1 flex-grow text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                        className={`border ${!isSmallScreen? "w-36" : "flex-grow"} rounded-sm px-3 py-2 mt-1 flex-grow text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
                         placeholder={
                           formData.tenMarkType === "fixed"
                             ? "Enter Fixed Score"

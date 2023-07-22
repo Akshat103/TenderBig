@@ -24,7 +24,7 @@ const Gem = () => {
     useEffect(() => {
         const fetchTenderData = async () => {
             try {
-                const Url = "http://localhost:5000/apiTender/tenderdetails/gem";
+                const Url = "http://localhost:5000/apitender/tenderdetails/gem";
 
                 const token = localStorage.getItem("token");
 

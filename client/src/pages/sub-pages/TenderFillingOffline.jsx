@@ -65,7 +65,7 @@ const TenderFillingOffline = () => {
     };
     const token = localStorage.getItem('token');
     axios
-      .post("http://localhost:5000/apiTender/services/tender/offline", formData, {
+      .post("http://localhost:5000/apitender/services/tender/offline", formData, {
         headers: {
           'auth': token
         }

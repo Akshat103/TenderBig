@@ -13,7 +13,7 @@ const TenderOnlineDetail = () => {
     const [isEditing, setIsEditing] = useState(false);
     useEffect(() => {
         // Fetch data from the API
-        fetch(`http://localhost:5000/apiTender/services/tender/online/${id}`)
+        fetch(`http://localhost:5000/apitender/services/tender/online/${id}`)
             .then((response) => response.json())
             .then((data) => setFormData(data))
             .catch((error) => console.log(error));
@@ -32,7 +32,7 @@ const TenderOnlineDetail = () => {
     };
 
     function updateDetails() {
-        fetch(`http://localhost:5000/apiTender/services/tender/online/${id}`, {
+        fetch(`http://localhost:5000/apitender/services/tender/online/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

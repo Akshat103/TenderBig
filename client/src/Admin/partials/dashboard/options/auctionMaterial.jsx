@@ -17,7 +17,7 @@ const Material = () => {
 
   const fetchAuctionMaterial = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/apiTender/options/alloptions?array=AuctionMaterials");
+      const response = await axios.get("http://localhost:5000/apitender/options/alloptions?array=AuctionMaterials");
       console.log(response.data[0].AuctionMaterials);
       setAuctionMaterial(response.data[0].AuctionMaterials);
     } catch (error) {
@@ -31,7 +31,7 @@ const Material = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/apiTender/options/auctionmaterials", { auctionMaterials: [newAuctionMaterial] });
+      const response = await axios.post("http://localhost:5000/apitender/options/auctionmaterials", { auctionMaterials: [newAuctionMaterial] });
       setAuctionMaterial(response.data.AuctionMaterials);
       setNewAuctionMaterial("");
     } catch (error) {
@@ -42,7 +42,7 @@ const Material = () => {
 
   const deleteAuctionMaterials = async (auctionmaterial) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/apiTender/options/auctionmaterials/${auctionmaterial}`);
+      const response = await axios.delete(`http://localhost:5000/apitender/options/auctionmaterials/${auctionmaterial}`);
       setAuctionMaterial(response.data.AuctionMaterials);
     } catch (error) {
       console.error(error);

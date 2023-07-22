@@ -23,7 +23,7 @@ function AllEmployee() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/apiTender/userdetails/users/employee",
+          "http://localhost:5000/apitender/userdetails/users/employee",
           {
             method: "GET",
             headers: {

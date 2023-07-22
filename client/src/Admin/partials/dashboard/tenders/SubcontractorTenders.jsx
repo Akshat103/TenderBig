@@ -24,7 +24,7 @@ const Subcontractor = () => {
   useEffect(() => {
     const fetchTenderData = async () => {
       try {
-        const Url = "http://localhost:5000/apiTender/tenderdetails/subcontractor";
+        const Url = "http://localhost:5000/apitender/tenderdetails/subcontractor";
 
         const token = localStorage.getItem("token");
 

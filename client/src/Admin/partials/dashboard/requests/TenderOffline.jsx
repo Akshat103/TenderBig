@@ -20,14 +20,14 @@ const TenderOffline = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    fetch("http://localhost:5000/apiTender/services/tender/offline/getall")
+    fetch("http://localhost:5000/apitender/services/tender/offline/getall")
       .then((response) => response.json())
       .then((data) => setForms(data))
       .catch((error) => console.log(error));
   }, []);
 
   function deleteFormById(id) {
-    fetch(`http://localhost:5000/apiTender/services/tender/offline/${id}`, {
+    fetch(`http://localhost:5000/apitender/services/tender/offline/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

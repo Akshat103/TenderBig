@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import payment from "../components/payment";
 import { Country, State, City } from 'country-state-city';
 import axios from "axios";
@@ -116,18 +116,49 @@ const handleSubmit = async (e) => {
       });
   };
 
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  const checkScreenSize = () => {
+    setIsSmallScreen(window.innerWidth > 480); // Adjust the breakpoint as needed
+  };
+
+  useEffect(() => {
+    checkScreenSize(); // Call the function to set the initial screen size
+
+    window.addEventListener("resize", checkScreenSize); // Add event listener
+
+    return () => {
+      window.removeEventListener("resize", checkScreenSize); // Clean up the event listener
+    };
+  }, []);
+
   return (
-    <div className="flex items-center justify-center">
-    <div className="grid max-w-[1244px] grid-cols-12 gap-16 mt-5">
-      
-    
-    <div className="col-span-4 px-2 mt-6 mb-6">
-      {sideNavigationButtons.map(button => (
-        <NavLink to={button.link} >
-      <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold  border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">{button.name}</div>
-        </NavLink>
-      ))}
-    </div>
+    <div className="container py-8 mx-auto max-w-[1244px]">
+      <div
+          className={`max-w-[1244px] ${
+            !isSmallScreen ? "w-full" : "grid grid-cols-12 gap-16"
+          } mt-5`}
+        >
+          <div className="col-span-4 px-2 mt-6 mb-6">
+            {isSmallScreen ? (
+              <div className="w-full mt-2 ">
+                <ul className="">
+                  <h1 className="text-2xl font-bold text-gray-700 ">
+                    Our Services
+                  </h1>
+                  <div className="col-span-4 px-2 mt-6 mb-6">
+                    {sideNavigationButtons.map((button) => (
+                      <NavLink to={button.link}>
+                        <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">
+                          {button.name}
+                        </div>
+                      </NavLink>
+                    ))}
+                  </div>
+                </ul>
+              </div>
+            ) : null}
+          </div>
       <div className="col-span-8 px-8 py-8 mx-auto mt-6 mb-6 rounded-lg shadow-lg border-[2px] border-black/20">
         <form onSubmit={handleSubmit}>
           {/* Global Section */}
@@ -377,4 +408,4 @@ const handleSubmit = async (e) => {
   );
 };
 
-export default GemRegistration;
+export default GemRegistration; 

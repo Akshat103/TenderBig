@@ -5,7 +5,7 @@ import axios from "axios";
 import { regionData, geopoliticalData } from "../constants/countriesData.js";
 import { useNavigate } from "react-router-dom";
 import GemsImg from '../Admin/images/gems-hero.jpg'
-import { fundingAgencies, tenderBysectorProducts } from "./TenderListingPage.jsx";
+import { tenderBysectorProducts } from "./TenderListingPage.jsx";
 
 const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
   const navigate = useNavigate();

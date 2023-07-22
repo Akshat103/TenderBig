@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 const AllTendersSection = () => {
   const [startIndex, setStartIndex] = useState(0);
   const tendersPerPage = 8;
+  const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleNextClick = () => {
     setStartIndex((prevIndex) => prevIndex + tendersPerPage);
@@ -67,6 +69,97 @@ const AllTendersSection = () => {
     fetchTenderData();
   }, []);
 
+  if (tenderData === undefined) {
+    return (
+      <div className="flex h-screen overflow-hidden">
+        {/* Sidebar */}
+        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+  
+        {/* Content area */}
+        <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+          <main>
+            {/*  Site header */}
+            <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+            <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+              {/* Dashboard actions */}
+  
+              {/* Cards */}
+              <div className="grid grid-cols-15 gap-6">
+                {/* Table */}
+                <section className="container mx-auto p-6 font-mono overflow-x-auto">
+                  <h1 className="text-xl font-bold mb-4">All Tenders</h1>
+                  <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg overflow-x-auto">
+                    <div className="w-full overflow-x-auto">
+                      <div className="table-container overflow-x-auto">
+                        <table className="w-full">
+                          <thead>
+                            <tr className="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                              <th className="px-4 py-3">Summary</th>
+                              <th className="px-4 py-3">Sector</th>
+                              <th className="px-4 py-3">Deadline</th>
+                              <th
+                                className="px-4 py-3 cursor-pointer"
+                                onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
+                              >
+                                Publish Date
+                                {sortOrder === "asc" ? (
+                                  <span>&#x25B2;</span>
+                                ) : (
+                                  <span>&#x25BC;</span>
+                                )}
+                              </th>
+                              <th className="px-4 py-3">User Category</th>
+                              <th className="px-4 py-3">Approved</th>
+                            </tr>
+                            <tr>
+                              <th className="px-4 py-3">
+                                <input
+                                  type="text"
+                                  placeholder="Search by summary"
+                                  value={searchTerm}
+                                  onChange={(e) => setSearchTerm(e.target.value)}
+                                  className="px-2 py-1 w-full border border-gray-300 rounded-md"
+                                />
+                              </th>
+                              <th>
+                                <select
+                                  value={userCategoryFilter}
+                                  onChange={(e) => setUserCategoryFilter(e.target.value)}
+                                  className="px-2 py-1 w-full border border-gray-300 rounded-md"
+                                >
+                                  <option value="">All User Categories</option>
+                                  <option value="subcontractor">Subcontractor</option>
+                                  <option value="contractor">Contractor</option>
+                                  <option value="admin">Admin</option>
+                                  <option value="hr">HR</option>
+                                  <option value="employee">Employee</option>
+                                </select>
+                              </th>
+                              <th>
+                                <select
+                                  value={approvedFilter}
+                                  onChange={(e) => setApprovedFilter(e.target.value)}
+                                  className="px-2 py-1 w-full border border-gray-300 rounded-md"
+                                >
+                                  <option value="">All Approved</option>
+                                  <option value="Yes">Yes</option>
+                                  <option value="No">No</option>
+                                </select>
+                              </th>
+                            </tr>
+                          </thead>
+                      </table>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    );
+  }
   const filteredTenderData = tenderData.filter((tender) => {
     if (
       (userCategoryFilter === "" || tender.userCategory === userCategoryFilter) &&
@@ -102,13 +195,12 @@ const AllTendersSection = () => {
     });
   };
 
-  const navigate = useNavigate();
-
   const viewTenderDetails = (tenderId) => {
     navigate(`/dashboard/tender/${tenderId}`);
   };
 
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+ 
+ 
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}

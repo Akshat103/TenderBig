@@ -6,7 +6,6 @@ import PhoneImg from '../Admin/images/phone.png'
 import LandlineImg from '../Admin/images/landline.png'
 import WAImg from '../Admin/images/whatsapp.png'
 
-
 const Navbar = () => {
   const auth = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
@@ -72,7 +71,8 @@ const Navbar = () => {
                         Logout
                       </button>
 
-                      {auth.userRole == "admin" ? (
+                      {(auth.userRole == "admin" || auth.userRole == "hr" || auth.userRole == "employee" ||
+                        auth.userRole == "franchise" ) ? (
                         <button
                           onClick={dashboard}
                           className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"

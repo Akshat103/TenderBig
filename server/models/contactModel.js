@@ -33,6 +33,6 @@ const contactFormSchema = new mongoose.Schema({
 },
     { timestamps: true });
 
-const ContactForm = mongoose.model("ContactForm", contactFormSchema);
+const ContactForm = mongoose.model("Contact-Form", contactFormSchema);
 
 module.exports = ContactForm;

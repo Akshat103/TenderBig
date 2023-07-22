@@ -1,21 +1,44 @@
 const mongoose = require('mongoose');
+const { sentenceCase } = require('../../../config/functions');
 
 // Define the schema for the director details
 const directorSchema = new mongoose.Schema({
-  directorName: String,
-  directorAadhar: String,
-  directorPan: String,
-  directorDob: String,
-  directorFatherName: String,
+  directorName: {
+    type: String,
+    set: sentenceCase
+  },
+  directorAadhar: {
+    type: Number,
+  },
+  directorPan: {
+    type: String,
+    set: (value) => value.toUpperCase()
+  },
+  directorDob: {
+    type: Date,
+  },
+  directorFatherName: {
+    type: String,
+    set: sentenceCase
+  },
 });
 
 // Define the schema for the form data
 const auctionmaterialsModelSchema = new mongoose.Schema({
   userId: String,
-  tenderNumber: String,
+  tenderNumber: {
+    type: String,
+    set: (value) => value.toUpperCase()
+  },
   tenderLink: String,
-  companyName: String,
-  cinReg: String,
+  companyName: {
+    type: String,
+    set: sentenceCase
+  },
+  cinReg: {
+    type: String,
+    set: (value) => value.toUpperCase()
+  },
   gst: String,
   pan: String,
   workExperience: [
@@ -41,6 +64,6 @@ const auctionmaterialsModelSchema = new mongoose.Schema({
   { timestamps: true });
 
 // Create the FormData model
-const AuctionMaterialForm = mongoose.model('Auction-Material', auctionmaterialsModelSchema);
+const AuctionMaterialForm = mongoose.model('auction-material-form', auctionmaterialsModelSchema);
 
 module.exports = AuctionMaterialForm;

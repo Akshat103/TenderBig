@@ -53,6 +53,6 @@ const gemregistrationSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-const gemregistrationForm = mongoose.model("Gem-Registration", gemregistrationSchema);
+const gemregistrationForm = mongoose.model("Gem-Registration-Form", gemregistrationSchema);
 
 module.exports = gemregistrationForm;

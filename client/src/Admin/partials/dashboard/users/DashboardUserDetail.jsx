@@ -149,6 +149,7 @@ function UserDetails() {
                     <option value="hr">HR</option>
                     <option value="admin">Admin</option>
                     <option value="employee">Employee</option>
+                    <option value="franchise">Franchise</option>
                     <option value="user">User</option>
                   </select>
                   <div className="mt-4 flex justify-between">

@@ -75,8 +75,10 @@ import DashboardProjectDetail from "../Admin/partials/dashboard/users/DashboardP
 import AdminTenderResultList from "../Admin/partials/dashboard/tenders/AdminTenderResultList";
 // import Government from '../Admin/partials/dashboard/tenders/GovernmentTenders';
 // import UserDetails from '../Admin/partials/dashboard/users/DashboardUserDetail';
-
-
+import ImageUpload from "../Admin/partials/dashboard/ImageUpload";
+import AddFranchise from "../Admin/partials/dashboard/users/AddFranchise";
+import AllFranchise from "../Admin/partials/dashboard/users/AllFranchise";
+import RegularUsers from "../Admin/partials/dashboard/users/RegularUsers";
 
 const DashboardRoutes = () => {
   return (
@@ -96,11 +98,25 @@ const DashboardRoutes = () => {
           path="/user/:userId"
           element={<PrivateRoute element={DashboardUserDetail} />}
         />
-        <Route path="/alladmin" element={<PrivateRoute element={AllAdmin} />} />
-        <Route path="/allhr" element={<PrivateRoute element={AllHR} />} />
+        <Route 
+          path="/alladmin"
+          element={<PrivateRoute element={AllAdmin} />}
+        />
+        <Route
+          path="/allhr"
+          element={<PrivateRoute element={AllHR}
+        />} />
         <Route
           path="/allemployee"
           element={<PrivateRoute element={AllEmployee} />}
+        />
+        <Route
+          path="/allfranchise"
+          element={<PrivateRoute element={AllFranchise} />}
+        />
+        <Route
+          path="/allusers"
+          element={<PrivateRoute element={RegularUsers} />}
         />
 
         {/* Add User */}
@@ -110,7 +126,9 @@ const DashboardRoutes = () => {
           path="/addemployee"
           element={<PrivateRoute element={AddEmployee} />}
         />
+        <Route path="/addfranchise" element={<PrivateRoute element={AddFranchise} />} />
         <Route path="/adduser" element={<PrivateRoute element={AddUser} />} />
+
 
         {/* Tenders */}
         <Route
@@ -314,8 +332,12 @@ const DashboardRoutes = () => {
           path="/allprojects/:projectId"
           element={<PrivateRoute element={DashboardProjectDetail} />}
         />
+        <Route
+          path="/images"
+          element={<PrivateRoute element={ImageUpload} />}
+        />
 
-        <Route path="/test" element={<Prices />} />
+        <Route path="/test" element={<ImageUpload />} />
         <Route path="*" element={"NOT Allowed"} />
       </Routes>
     </div>

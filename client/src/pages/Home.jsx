@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import SimpleSlider from "../components/Carousel";
 
 const HomePage = () => {
   const [name, setName] = useState("");
@@ -360,13 +361,10 @@ const HomePage = () => {
         </Dialog>
       </div>
 
-      {/* <div className="absolute ">
-        Dailog
-      </div> */}
-
       <Home2 />
       <Home3 />
       <Home4 />
+      <SimpleSlider/>
     </>
   );
 };

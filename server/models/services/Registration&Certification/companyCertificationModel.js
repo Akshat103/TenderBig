@@ -59,6 +59,6 @@ const companyCertificationModelSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-const CompanyForm = mongoose.model("Company-Certification", companyCertificationModelSchema);
+const CompanyForm = mongoose.model("Company-Certification-Form", companyCertificationModelSchema);
 
 module.exports = CompanyForm;

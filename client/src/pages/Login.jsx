@@ -31,12 +31,16 @@ const Login = () => {
         })
             .then((response) => response.json())
             .then((data) => {
+                if(data.error){
+                    alert(data.error);
+                    return
+                }
                 // Store response in local storage
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("user", JSON.stringify(data.user.data));
                 // Navigate to the desired page
                 const user = data.user.data
-                if (user.userRole == "admin" || user.userRole == "hr" || user.userRole == "employee")
+                if (user.userRole == "admin" || user.userRole == "hr" || user.userRole == "employee" || user.userRole == "franchise")
                     navigate("/dashboard/admin");
                 else if (user.userRole == "user")
                     navigate('/dashboard/userDashboard')

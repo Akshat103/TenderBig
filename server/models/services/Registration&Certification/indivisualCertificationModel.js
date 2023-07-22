@@ -31,6 +31,6 @@ const individualCertificationModelSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-const IndividualForm = mongoose.model("Individual-Certification", individualCertificationModelSchema);
+const IndividualForm = mongoose.model("Individual-Certification-Form", individualCertificationModelSchema);
 
 module.exports = IndividualForm;

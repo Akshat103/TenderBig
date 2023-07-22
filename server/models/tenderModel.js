@@ -154,4 +154,4 @@ const tenderModel = new mongoose.Schema(
     { timestamps: true }
 );
 
-module.exports = mongoose.model("tender", tenderModel);
+module.exports = mongoose.model("Apply-Tender", tenderModel);

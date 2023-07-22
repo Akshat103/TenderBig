@@ -35,6 +35,6 @@ const registrationModelSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-const RegistrationForm = mongoose.model("Registration", registrationModelSchema);
+const RegistrationForm = mongoose.model("Registration-Form", registrationModelSchema);
 
 module.exports = RegistrationForm;

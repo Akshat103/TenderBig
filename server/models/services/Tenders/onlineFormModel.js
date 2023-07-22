@@ -50,6 +50,6 @@ const TenderOnline = new mongoose.Schema({
 },
     { timestamps: true });
 
-const TenderOnlineModel = mongoose.model('TenderOnline', TenderOnline);
+const TenderOnlineModel = mongoose.model('TenderOnline-Form', TenderOnline);
 
 module.exports = TenderOnlineModel;

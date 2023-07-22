@@ -1,4 +1,4 @@
-import React, { useState,  useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 import SidebarLinkGroup from './SidebarLinkGroup';
@@ -26,6 +26,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
     localStorage.clear();
     navigate("/");
   };
+  const handleImages = () => {
+    navigate('/dashboard/images')
+  }
 
   const trigger = useRef(null);
   const sidebar = useRef(null);
@@ -290,45 +293,68 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                             </li>
                           }
 
+                          {(userData.userRole == "admin" || userData.userRole == "hr" || userData.userRole == "employee") &&
+                            <li className="mb-1 last:mb-0">
+                              <NavLink
+                                end
+                                to="/dashboard/allemployee"
+                                className={({ isActive }) =>
+                                  'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
+                                }
+                              >
+                                <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
+                                  Employee
+                                </span>
+                              </NavLink>
+                            </li>
+                          }
+
+                          {(userData.userRole == "admin" || userData.userRole == "hr" || userData.userRole == "employee" || userData.userRole == "franchise") &&
+                            <li className="mb-1 last:mb-0">
+                              <NavLink
+                                end
+                                to="/dashboard/allfranchise"
+                                className={({ isActive }) =>
+                                  'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
+                                }
+                              >
+                                <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
+                                  Franchise
+                                </span>
+                              </NavLink>
+                            </li>
+                          }
+
+                          {userData.userRole === "admin" && (
+                            <li className="mb-1 last:mb-0">
+                              <NavLink
+                                end
+                                to="/dashboard/users"
+                                className={({ isActive }) =>
+                                  'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
+                                }
+                              >
+                                <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
+                                  All Users
+                                </span>
+                              </NavLink>
+                            </li>
+                          )}
+
                           <li className="mb-1 last:mb-0">
                             <NavLink
                               end
-                              to="/dashboard/allemployee"
+                              to="/dashboard/allusers"
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
                               }
                             >
                               <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                Employee
+                                Regular Users
                               </span>
                             </NavLink>
                           </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              end
-                              to="/dashboard/franchise"
-                              className={({ isActive }) =>
-                                'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
-                              }
-                            >
-                              <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                Franchise
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              end
-                              to="/dashboard/users"
-                              className={({ isActive }) =>
-                                'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
-                              }
-                            >
-                              <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                Users
-                              </span>
-                            </NavLink>
-                          </li>
+
                         </ul>
                       </div>
                     </React.Fragment>
@@ -1025,6 +1051,60 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           </li>
                         </ul>
                       </div>
+                    </React.Fragment>
+                  );
+                }}
+              </SidebarLinkGroup>
+
+              <SidebarLinkGroup activecondition={pathname.includes('tasks')}>
+                {(handleClick, open) => {
+                  return (
+                    <React.Fragment>
+                      <a
+                        href="#0"
+                        className={`block text-slate-200 truncate transition duration-150 ${pathname.includes('tasks') ? 'hover:text-slate-200' : 'hover:text-white'
+                          }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          sidebarExpanded ? handleClick() : setSidebarExpanded(true);
+                        }}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <svg className="w-6 h-6 shrink-0" viewBox="0 0 24 24">
+                              <path
+                                className={`fill-current ${pathname.includes('tasks') ? 'text-indigo-500' : 'text-slate-600'}`}
+                                d="M8 1v2H3v19h18V3h-5V1h7v23H1V1z"
+                              />
+                              <path
+                                className={`fill-current ${pathname.includes('tasks') ? 'text-indigo-500' : 'text-slate-600'}`}
+                                d="M1 1h22v23H1z"
+                              />
+                              <path
+                                className={`fill-current ${pathname.includes('tasks') ? 'text-indigo-300' : 'text-slate-400'}`}
+                                d="M15 10.586L16.414 12 11 17.414 7.586 14 9 12.586l2 2zM5 0h14v4H5z"
+                              />
+                            </svg>
+                            <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
+
+                              <NavLink
+                                end
+                                to="/dashboard/images"
+                                className={({ isActive }) =>
+                                  'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-white hover:text-slate-200')
+                                }
+                              >
+                                <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
+                                  Site Images
+                                </span>
+                              </NavLink>
+
+                            </span>
+                          </div>
+
+                        </div>
+                      </a>
+
                     </React.Fragment>
                   );
                 }}

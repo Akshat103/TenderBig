@@ -30,6 +30,6 @@ const optionsModelSchema = new Schema({
 },
   { timestamps: true });
 
-const optionsModel = mongoose.model('options', optionsModelSchema);
+const optionsModel = mongoose.model('Options', optionsModelSchema);
 
 module.exports = optionsModel;

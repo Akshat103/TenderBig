@@ -83,6 +83,6 @@ const employerModelSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-const EmployerForm = mongoose.model("Employer", employerModelSchema);
+const EmployerForm = mongoose.model("Employer-Form", employerModelSchema);
 
 module.exports = EmployerForm;

@@ -81,4 +81,4 @@ const tenderResultSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("TenderResult", tenderResultSchema);
+module.exports = mongoose.model("Tender-Result", tenderResultSchema);

@@ -51,7 +51,7 @@ exports.isNotUser = (req, res, next) => {
     const decoded = jwt.verify(token, JWT_SECRET);
 
     const role = decoded.data.userRole;
-    if (role == "admin" || role == "hr" || role == "employee") {
+    if (role == "admin" || role == "hr" || role == "employee" || role == "franchise") {
       next();
     } else {
       return res.status(403).json({ error: "Access denied." });

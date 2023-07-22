@@ -51,6 +51,6 @@ const jointventureSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-const jointventureForm = mongoose.model('Joint-Venture', jointventureSchema);
+const jointventureForm = mongoose.model('Joint-Venture-Form', jointventureSchema);
 
 module.exports = jointventureForm;

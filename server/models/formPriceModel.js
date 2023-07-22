@@ -11,6 +11,6 @@ const formPrice = new mongoose.Schema({
   },
 });
 
-const Price = mongoose.model('FormPrice', formPrice);
+const Price = mongoose.model('Form-Prices', formPrice);
 
 module.exports = Price;

@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema(
         },
         userRole: {
             type: String,
-            enum: ["admin", "employee", "hr", "user"],
+            enum: ["admin", "employee", "hr", "user", "franchise"],
             default: "user"
         },
         phoneNumber: {
@@ -61,13 +61,11 @@ const userSchema = new mongoose.Schema(
         toJSON: {
             transform(doc, ret) {
                 delete ret.password;
-                delete ret.createdAt;
-                delete ret.updatedAt;
             },
         },
     },
     { timestamps: true }
 );
 
-const userModel = mongoose.model("users", userSchema);
+const userModel = mongoose.model("Users", userSchema);
 module.exports = userModel;

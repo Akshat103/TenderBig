@@ -32,6 +32,6 @@ const offlineTenderModelSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-const TenderOfflineForm = mongoose.model("Tender-Offline", offlineTenderModelSchema);
+const TenderOfflineForm = mongoose.model("Tender-Offline-Form", offlineTenderModelSchema);
 
 module.exports = TenderOfflineForm;

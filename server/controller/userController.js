@@ -33,25 +33,21 @@ class User {
 
     async getAllUser(req, res) {
         try {
-            const { count, subscription } = req.body;
-            let query = {};
-
-            if (subscription) {
-                query['subscription.status'] = subscription;
-            }
-
-            if (count === true) {
-                const userCount = await userModel.countDocuments(query);
-                return res.json({ count: userCount });
-            } else {
-                const users = await userModel.find(query);
-                res.json(users);
-            }
+          const { userRole } = req.body;
+          let query = {};
+      
+          if (userRole) {
+            query['userRole'] = userRole;
+          }
+      
+          const users = await userModel.find(query);
+          res.json(users);
         } catch (error) {
-            console.error('Error retrieving users:', error);
-            res.status(500).json({ error: 'An error occurred while retrieving users' });
+          console.error('Error retrieving users:', error);
+          res.status(500).json({ error: 'An error occurred while retrieving users' });
         }
-    }
+      }
+      
 
     async updateUserRole(req, res) {
         try {
@@ -212,9 +208,6 @@ class User {
             res.status(500).json({ error: 'Server Error' });
         }
     }
-
-
-
 
 }
 

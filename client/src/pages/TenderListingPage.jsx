@@ -67,29 +67,6 @@ export const tenderBysectorProducts = [
   {value: "Tourism", name: 'Tourism Tenders'},
   {value: "Training", name: 'Training Tenders'}]
 
-  export const fundingAgencies = [
-    // {value:"", name:'All Funding Agencies'},
-    {value:"Abu Dhabi Fund for Development (ADFD)"
-      ,name:"Abu Dhabi Fund for Development (ADFD) "},
-    {value:"Agence Francaise De Development (AFD)",
-      name:"Agence Francaise De Development (AFD) "
-  },
-    {value:"Asian Development Bank (ADB)",
-      name:"Asian Development Bank (ADB) "},
-    {value:"Caribbean Development Bank (CDB)",
-     name:" Caribbean Development Bank (CDB) "},
-    {value:"European Commission",
-     name: "European Commission "},
-    {value:"Inter-American Development Bank",
-      name:"Inter-American Development Bank "},
-    {value:"Islamic Development Bank (ISDB)",
-     name:" Islamic Development Bank (ISDB) "},
-    {value:"World Bank (WB)",name:"World Bank (WB) "},
-    {value:"World Health Organization (WHO)",
-      name: "World Health Organization (WHO) "
-    }
-  ]
-
 const TenderListingPage = () => {
   const [countries, setCountries] = useState([]);
 
@@ -260,12 +237,7 @@ const TenderListingPage = () => {
     return date.toLocaleDateString(undefined, options);
   };
 
- 
-
- 
-
   const userTenderCategory = [
-    // {value:"", name: 'All'}, 
     {value:"contractor", name: 'Contractor'}, 
     {value:"subcontractor", name: 'Sub Contractor '}, 
     {value:"government", name: 'Government'}, 
@@ -309,15 +281,6 @@ const TenderListingPage = () => {
                 >
                   Region
                 </label>
-                {/* <div className="flex flex-col items-start mt-4 gap-x-4 gap-y-1 h-[150px] overflow-y-scroll px-4 mb-4">
-                  {Object.keys(regionData).map((region) => (
-                  <div className="flex items-center gap-3 text-lg" key={region}>
-
-                  <input type="checkbox" onChange={handleRegionChange} value={region} name={region} />
-                  <label>{region}</label>
-                  </div>
-                  ))}
-                </div> */}
                 <select
                   id="region"
                   name="region"
@@ -370,102 +333,7 @@ const TenderListingPage = () => {
                 </select>
               </div>
 
-              <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
-              <label
-                  htmlFor="fundingAgency"
-                  className="block text-xl font-bold text-gray-700 mb-0.5 px-4 py-3 text-white bg-black"
-                >
-                  Funding Agency
-                </label>
-                {/* <div className="flex flex-col items-start mt-4 gap-x-4 gap-y-1 h-[150px] overflow-y-scroll px-4 mb-4">
-                  {fundingAgencies.map((agency) => (
-                    <div className="flex items-center gap-3 text-lg" key={agency.name}>
-
-                    <input type="checkbox" onChange={handleFundingAgencyChange} value={agency.value}  name={agency.name} />
-                    <label>{agency.name}</label>
-                    </div>
-                  ))}
-                </div> */}
-                <select
-                  id="fundingAgency"
-                  name="fundingAgency"
-                  size={5}
-                  value={selectedFundingAgency}
-                  onChange={handleFundingAgencyChange}
-                  className="w-full px-4 py-2 bg-white"
-                >
-                  <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All Funding Agencies</option>
-                  {fundingAgencies.map((agency) => (
-                    <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white" key={agency.name} value={agency.value}>
-                      {agency.name}
-                    </option>
-                  ))}
-                  {/* <option value="Abu Dhabi Fund for Development (ADFD)">
-                    Abu Dhabi Fund for Development (ADFD) Tenders
-                  </option>
-                  <option value="Agence Francaise De Development (AFD)">
-                    Agence Francaise De Development (AFD) Tenders
-                  </option>
-                  <option value="Asian Development Bank (ADB)">
-                    Asian Development Bank (ADB) Tenders
-                  </option>
-                  <option value="Caribbean Development Bank (CDB)">
-                    Caribbean Development Bank (CDB) Tenders
-                  </option>
-                  <option value="European Commission">
-                    European Commission Tenders
-                  </option>
-                  <option value="Inter-American Development Bank">
-                    Inter-American Development Bank Tenders
-                  </option>
-                  <option value="Islamic Development Bank (ISDB)">
-                    Islamic Development Bank (ISDB) Tenders
-                  </option>
-                  <option value="World Bank (WB)">World Bank (WB) Tenders</option>
-                  <option value="World Health Organization (WHO)">
-                    {" "}
-                    World Health Organization (WHO) Tenders
-                  </option> */}
-
-                </select>
-                
-              </div>
-
-              <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
-              <label
-                  htmlFor="product"
-                  className="block text-xl font-bold text-gray-700 mb-0.5 px-4 py-3 text-white bg-black"
-                >
-                  Tenders By Geo-Political Region
-                </label>
-                {/* <div className="flex flex-col items-start mt-4 gap-x-4 gap-y-1 h-[150px] overflow-y-scroll px-4 mb-4">
-                  {Object.keys(geopoliticalData).map((geopoliticalDataObj) => (
-                    <div className="flex items-center gap-3 text-lg" key={geopoliticalDataObj}>
-
-                    <input type="checkbox" onChange={handleGeoPoliticalChange} value={geopoliticalDataObj}  name={geopoliticalDataObj} />
-                    <label>{geopoliticalDataObj} Tenders</label>
-                    </div>
-                  ))}
-                </div> */}
-                <select
-                  id="product"
-                  name="product"
-                  size={5}
-                  value={selectedGeoPolitical}
-                  onChange={handleGeoPoliticalChange}
-                  className="w-full px-4 py-2 bg-white"
-                >
-                  <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All Geo-Political Region</option>
-                  {Object.keys(geopoliticalData).map((key) => (
-                    <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white" key={key} value={key}>
-                      {key} Tenders
-                    </option>
-                  ))}
-                </select>
-
-              </div>
-
-              
+             
               <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
                 <label
                   htmlFor="region"

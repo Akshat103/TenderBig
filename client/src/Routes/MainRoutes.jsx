@@ -29,7 +29,7 @@ import Footer from '../components/Footer';
 import Gems from '../pages/Gems';
 import GemRegistration from '../pages/GemRegistration';
 import GemDetailingListing from '../pages/GemDetailingListing';
-import TenderResults from '../pages/TenderResults';
+// import TenderResults from '../pages/TenderResults';
 import UserDetails from '../Admin/partials/dashboard/users/DashboardUserDetail';
 
 const MainRoutes = () => {

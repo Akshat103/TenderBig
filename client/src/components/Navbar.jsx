@@ -154,7 +154,7 @@ const Navbar = () => {
                     Apply for Tenders
                   </Link>
 
-                  <Link
+                  {/* <Link
                     to="/contact"
                     className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
                   >
@@ -165,7 +165,7 @@ const Navbar = () => {
                     className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
                   >
                     Tender Results
-                  </Link>
+                  </Link> */}
                   <div className="relative">
                     <button
                       onClick={() => setDropdownOpen(true)}

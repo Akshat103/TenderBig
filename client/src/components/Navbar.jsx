@@ -86,6 +86,12 @@ const Navbar = () => {
                   >
                     Contact
                   </Link>
+                  <Link
+                    to="/tenderResults"
+                    className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
+                  >
+                    Tender Results
+                  </Link>
                   <div className="relative">
                     <button
                       onClick={() => setDropdownOpen(true)}

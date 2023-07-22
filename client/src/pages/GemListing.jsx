@@ -5,7 +5,8 @@ import axios from "axios";
 import { regionData, geopoliticalData } from "../constants/countriesData.js";
 import { useNavigate } from "react-router-dom";
 import GemsImg from '../Admin/images/gems-hero.jpg'
-import { tenderBysectorProducts } from "./TenderListingPage.jsx";
+import {  tenderBysectorProducts } from "./TenderListingPage.jsx";
+import InputSlider from "react-input-slider";
 
 const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
   const navigate = useNavigate();
@@ -68,10 +69,9 @@ const GemListing = () => {
 
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedFundingAgency, setSelectedFundingAgency] = useState("");
-  const [selectedGeoPolitical, setSelectedGeoPolitical] = useState("");
   const [selectedProduct, setSelectedProduct] = useState("");
   const [tenderData, setTenderData] = useState([]);
+  const [minValue, setMinValue] = useState(0);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -84,17 +84,12 @@ const GemListing = () => {
     const filteredCountries = regionData[selectedRegion] || [];
     setCountries(filteredCountries);
   };
+  const handleMinValueChange = (slider) => {
+    setMinValue(slider.x);
+  };
 
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
-  };
-
-  const handleFundingAgencyChange = (e) => {
-    setSelectedFundingAgency(e.target.value);
-  };
-
-  const handleGeoPoliticalChange = (e) => {
-    setSelectedGeoPolitical(e.target.value);
   };
 
   const handleProductChange = (e) => {
@@ -141,11 +136,9 @@ const GemListing = () => {
       try {
         const region = encodeURIComponent(selectedRegion);
         const country = encodeURIComponent(selectedCountry);
-        const financier = encodeURIComponent(selectedFundingAgency);
-        const geopolitical = encodeURIComponent(selectedGeoPolitical);
         const product = encodeURIComponent(selectedProduct);
-
-        const baseUrl = "http://localhost:5000/apitender/tenderdetails/search";
+        const value = encodeURIComponent(minValue);
+        const baseUrl = "http://localhost:5000/apitender/tenderdetails/search?userCategory=gem";
 
         const detailsArray = [
           "summary",
@@ -163,14 +156,11 @@ const GemListing = () => {
         if (country) {
           searchUrl += `&country=${country}`;
         }
-        if (financier) {
-          searchUrl += `&financier=${financier}`;
-        }
-        if (geopolitical) {
-          searchUrl += `&geopolitical=${geopolitical}`;
-        }
         if (product) {
           searchUrl += `&product=${product}`;
+        }
+        if (value) {
+          searchUrl += `&value=${value}`;
         }
 
         const token = localStorage.getItem("token");
@@ -203,10 +193,9 @@ const GemListing = () => {
     fetchData();
   }, [
     selectedCountry,
-    selectedFundingAgency,
-    selectedGeoPolitical,
     selectedProduct,
     selectedRegion,
+    minValue
   ]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -318,53 +307,6 @@ const GemListing = () => {
 
               <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
                 <label
-                  htmlFor="fundingAgency"
-                  className="block text-xl font-bold  mb-0.5 px-4 py-3 text-white bg-black"
-                >
-                  Funding Agency
-                </label>
-                <select
-                  id="fundingAgency"
-                  name="fundingAgency"
-                  size={5}
-                  value={selectedFundingAgency}
-                  onChange={handleFundingAgencyChange}
-                  className="w-full px-4 py-2 bg-white"
-                >
-                  <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All Funding Agencies</option>
-                  {fundingAgencies.map((agency) => (
-                    <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white" key={agency.name} value={agency.value}>
-                      {agency.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
-                <label
-                  htmlFor="product"
-                  className="block text-xl font-bold  mb-0.5 px-4 py-3 text-white bg-black"
-                >
-                  Tenders By Geo-Political Region
-                </label>
-                <select
-                  id="product"
-                  name="product"
-                  size={5}
-                  value={selectedGeoPolitical}
-                  onChange={handleGeoPoliticalChange}
-                  className="w-full px-4 py-2 bg-white"
-                >
-                  <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All Geo-Political Region</option>
-                  {Object.keys(geopoliticalData).map((key) => (
-                    <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white" key={key} value={key}>
-                      {key} Tenders
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
-                <label
                   htmlFor="product"
                   className="block text-xl font-bold  mb-0.5 px-4 py-3 text-white bg-black"
                 >
@@ -386,6 +328,28 @@ const GemListing = () => {
                   ))}
                 </select>
               </div>
+
+              <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
+                <label
+                  htmlFor="slider"
+                  className="block text-xl font-bold text-gray-700 mb-0.5 px-4 py-3 text-white bg-black"
+                >
+                  Minimum Tender Amount
+                </label>
+
+                <div className="p-4">
+                  <InputSlider
+                    axis="x"
+                    x={minValue}
+                    xmax={100000000}
+                    onChange={handleMinValueChange}
+                  />
+                  <div className="flex justify-between">
+                    <span>Min: ${minValue}</span>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
           <div className="mt-8 sm:col-span-2 md:col-span-2">

@@ -13,25 +13,26 @@ function DashboardTenderDetail() {
   const token = localStorage.getItem('token')
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchTenderDetails = async () => {
-      try {
-        const response = await axios.get(
-          `/apiTender/tenderdetails/tender/${tenderId}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              auth: token,
-            },
-          }
-        );
-        setTenderDetails(response.data.Product[0]);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const fetchTenderDetails = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/apiTender/tenderdetails/tender/${tenderId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            auth: token,
+          },
+        }
+      );
+      setTenderDetails(response.data.Product[0]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
+
+  useEffect(() => {
     fetchTenderDetails();
   }, [tenderId]);
 
@@ -40,7 +41,7 @@ function DashboardTenderDetail() {
     try {
       // Make API call to approve the tender
       await axios.post(
-        `/apiTender/tenderdetails/tender/${tenderId}/switchApprovedStatus`,
+        `http://localhost:5000/apiTender/tenderdetails/tender/${tenderId}/switchApprovedStatus`,
         {},
         {
           headers: {
@@ -50,7 +51,7 @@ function DashboardTenderDetail() {
         }
       );
       setApprove(!approve);
-      window.location.reload();
+      fetchTenderDetails();
     } catch (error) {
       console.error(error);
     }
@@ -61,7 +62,7 @@ function DashboardTenderDetail() {
     try {
       // Make API call to reject the tender
       await axios.post(
-        `/apiTender/tenderdetails/tender/${tenderId}/switchActiveStatus`,
+        `http://localhost:5000/apiTender/tenderdetails/tender/${tenderId}/switchActiveStatus`,
         {},
         {
           headers: {
@@ -71,7 +72,7 @@ function DashboardTenderDetail() {
         }
       );
       setActive(!active);
-      window.location.reload();
+      fetchTenderDetails();
     } catch (error) {
       console.error(error);
     }
@@ -81,7 +82,7 @@ function DashboardTenderDetail() {
     try {
       // Make API call to delete the tender
       await axios.delete(
-        `/apiTender/tenderdetails/tender/${tenderId}`,
+        `http://localhost:5000/apiTender/tenderdetails/tender/${tenderId}`,
         {
           headers: {
             'Content-Type': 'application/json',

@@ -433,7 +433,6 @@ const TenderForm = () => {
         console.log("Success:", data);
         alert("Submitted");
         clearInputs();
-        window.location.href = "/forms";
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -489,7 +488,7 @@ const TenderForm = () => {
                 <div className="col-span-4 px-2 mt-6 mb-6">
                   {sideNavigationButtons.map((button) => (
                     <NavLink to={button.link}>
-                    <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">{button.name}</div>
+                      <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">{button.name}</div>
                     </NavLink>
                   ))}
                 </div>
@@ -500,7 +499,7 @@ const TenderForm = () => {
 
         <div className={!isSmallScreen ? "w-96 px-8 py-8 mx-auto" : "col-span-8 px-8 py-8 mx-auto"}>
 
-        <ProgressBar
+          <ProgressBar
             percent={progress}
             filledBackground="linear-gradient(to right, #E97451, #D22B2B)"
           >
@@ -575,22 +574,23 @@ const TenderForm = () => {
                   </label>
 
                   <label className="block mb-2 font-semibold">
-                    User Category
-                    <span className="relative top-0 right-0 text-red-700">
-                      *
-                    </span>
-                    <select
-                      required
+                    Category
+                    <span className="text-red-700 relative top-0 right-0">*</span>
+                    <select required
                       name="userCategory"
                       value={formData.userCategory}
                       onChange={handleChange}
-                      className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                      className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                     >
-                      <option value="">Select User Category</option>
+                      <option value="">Select Category</option>
                       <option value="contractor">Contractor</option>
                       <option value="subcontractor">Sub Contractor</option>
+                      <option value="government">Government</option>
+                      <option value="private">Private</option>
+                      <option value="gem">Gem</option>
                     </select>
                   </label>
+
                   <label className="block mb-2 font-semibold">
                     Product
                     <span className="relative top-0 right-0 text-red-700">

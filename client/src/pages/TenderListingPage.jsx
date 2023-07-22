@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {regionData, geopoliticalData} from "../constants/countriesData.js";
+import { regionData, geopoliticalData } from "../constants/countriesData.js";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar.jsx";
-import Footer from "../components/Footer.jsx";
 import TenderImg from '../Admin/images/tender-hero.jpg'
+import InputSlider from "react-input-slider";
 
-const TenderCard = ({ title, deadline, location, referenceNo, tenderId}) => {
+const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
   const navigate = useNavigate();
 
   const handleViewDetails = (tenderId) => {
@@ -40,46 +39,50 @@ const TenderCard = ({ title, deadline, location, referenceNo, tenderId}) => {
 
 export const tenderBysectorProducts = [
   // {value: "", name: 'All Products'},
-  {value: "Rehabilitation", name: 'Rehabilitation Tenders'},
-  {value: "Medical Equipment", name: 'Medical Equipment Tenders'},
-  {value: "Bank", name: 'Bank Tenders'},
-  {value: "Cleaning", name: 'Cleaning Tenders'},
-  {value: "Construction", name: 'Construction Tenders'},
-  {value: "Defence", name: 'Defence Tenders'},
-  {value: "Electrical", name: 'Electrical Tenders'},
-  {value: "Security", name: 'Security Tenders'},
-  {value: "Transport", name: 'Transport Tenders'},
-  {value: "Airport", name: 'Airport Tenders'},
-  {value: "CCTV", name: 'CCTV Tenders'},
-  {value: "Education", name: 'Education Tenders'},
-  {value: "Energy", name: 'Energy Tenders'},
-  {value: "Healthcare", name: 'Healthcare Tenders'},
-  {value: "HR", name: 'HR Tenders'},
-  {value: "Insurance", name: 'Insurance Tenders'},
-  {value: "IT", name: 'IT Tenders'},
-  {value: "Medical", name: 'Medical Tenders'},
-  {value: "Mining", name: 'Mining Tenders'},
-  {value: "Oil And Gas", name: 'Oil And Gas Tender'},
-  {value: "Printing", name: 'Printing Tenders'},
-  {value: "Solar", name: 'Solar Tenders'},
-  {value: "Sports", name: 'Sports Tenders'},
-  {value: "Telecom", name: 'Telecom Tenders'},
-  {value: "Tourism", name: 'Tourism Tenders'},
-  {value: "Training", name: 'Training Tenders'}]
+  { value: "Rehabilitation", name: 'Rehabilitation Tenders' },
+  { value: "Medical Equipment", name: 'Medical Equipment Tenders' },
+  { value: "Bank", name: 'Bank Tenders' },
+  { value: "Cleaning", name: 'Cleaning Tenders' },
+  { value: "Construction", name: 'Construction Tenders' },
+  { value: "Defence", name: 'Defence Tenders' },
+  { value: "Electrical", name: 'Electrical Tenders' },
+  { value: "Security", name: 'Security Tenders' },
+  { value: "Transport", name: 'Transport Tenders' },
+  { value: "Airport", name: 'Airport Tenders' },
+  { value: "CCTV", name: 'CCTV Tenders' },
+  { value: "Education", name: 'Education Tenders' },
+  { value: "Energy", name: 'Energy Tenders' },
+  { value: "Healthcare", name: 'Healthcare Tenders' },
+  { value: "HR", name: 'HR Tenders' },
+  { value: "Insurance", name: 'Insurance Tenders' },
+  { value: "IT", name: 'IT Tenders' },
+  { value: "Medical", name: 'Medical Tenders' },
+  { value: "Mining", name: 'Mining Tenders' },
+  { value: "Oil And Gas", name: 'Oil And Gas Tender' },
+  { value: "Printing", name: 'Printing Tenders' },
+  { value: "Solar", name: 'Solar Tenders' },
+  { value: "Sports", name: 'Sports Tenders' },
+  { value: "Telecom", name: 'Telecom Tenders' },
+  { value: "Tourism", name: 'Tourism Tenders' },
+  { value: "Training", name: 'Training Tenders' }]
 
 const TenderListingPage = () => {
   const [countries, setCountries] = useState([]);
 
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedFundingAgency, setSelectedFundingAgency] = useState("");
-  const [selectedGeoPolitical, setSelectedGeoPolitical] = useState("");
   const [selectedProduct, setSelectedProduct] = useState("");
   const [selectedUserCategory, setUserCategory] = useState("");
   const [tenderData, setTenderData] = useState([]);
 
+  const [minValue, setMinValue] = useState(0);
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+
+  const handleMinValueChange = (slider) => {
+    setMinValue(slider.x);
+  };
 
   const handleRegionChange = (e) => {
     const selectedRegion = e.target.value;
@@ -92,14 +95,6 @@ const TenderListingPage = () => {
 
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
-  };
-
-  const handleFundingAgencyChange = (e) => {
-    setSelectedFundingAgency(e.target.value);
-  };
-
-  const handleGeoPoliticalChange = (e) => {
-    setSelectedGeoPolitical(e.target.value);
   };
 
   const handleProductChange = (e) => {
@@ -115,10 +110,9 @@ const TenderListingPage = () => {
       try {
         const region = encodeURIComponent(selectedRegion);
         const country = encodeURIComponent(selectedCountry);
-        const financier = encodeURIComponent(selectedFundingAgency);
-        const geopolitical = encodeURIComponent(selectedGeoPolitical);
         const product = encodeURIComponent(selectedProduct);
-        const userCategory =  encodeURIComponent(selectedUserCategory);
+        const userCategory = encodeURIComponent(selectedUserCategory);
+        const value = encodeURIComponent(minValue);
 
         const baseUrl = "http://localhost:5000/apitender/tenderdetails/search";
 
@@ -138,17 +132,14 @@ const TenderListingPage = () => {
         if (country) {
           searchUrl += `&country=${country}`;
         }
-        if (financier) {
-          searchUrl += `&financier=${financier}`;
-        }
-        if (geopolitical) {
-          searchUrl += `&geopolitical=${geopolitical}`;
-        }
         if (product) {
           searchUrl += `&product=${product}`;
         }
-        if(userCategory){
+        if (userCategory) {
           searchUrl += `&userCategory=${userCategory}`;
+        }
+        if (value) {
+          searchUrl += `&value=${value}`;
         }
 
         const token = localStorage.getItem("token");
@@ -163,7 +154,7 @@ const TenderListingPage = () => {
         if (response.status === 401) {
           // Unauthorized - display error message
           console.error("Unauthorized. Sign in first.");
-          
+
           return;
         }
 
@@ -171,7 +162,7 @@ const TenderListingPage = () => {
       } catch (error) {
         if (error.response && error.response.status === 401) {
           console.error("Unauthorized. Sign in first.");
-          
+
         } else {
           console.error("Error fetching tender data:", error);
         }
@@ -182,11 +173,10 @@ const TenderListingPage = () => {
   }, [
     selectedRegion,
     selectedCountry,
-    selectedFundingAgency,
-    selectedGeoPolitical,
     selectedProduct,
     selectedRegion,
-    selectedUserCategory
+    selectedUserCategory,
+    minValue
   ]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -238,39 +228,39 @@ const TenderListingPage = () => {
   };
 
   const userTenderCategory = [
-    {value:"contractor", name: 'Contractor'}, 
-    {value:"subcontractor", name: 'Sub Contractor '}, 
-    {value:"government", name: 'Government'}, 
-    {value:"private", name: 'Private'}, 
+    { value: "contractor", name: 'Contractor' },
+    { value: "subcontractor", name: 'Sub Contractor ' },
+    { value: "government", name: 'Government' },
+    { value: "private", name: 'Private' },
   ]
 
   return (
     <>
       <div className="p-4 mx-auto max-w-7xl">
-      
-     
-      <h1 className="my-4 text-3xl font-bold text-center">
-            About Tenders
-          </h1>
+
+
+        <h1 className="my-4 text-3xl font-bold text-center">
+          About Tenders
+        </h1>
         <img src={TenderImg} alt="tender_img" className="h-auto md:h-[600px] w-full my-5" />
-            
+
         <div className="my-10">
-          
+
           <div className="text-xl leading-8 text-center">
-            The procurement of goods and services often involves a competitive bid process. This method requires 
-            participants to submit sealed envelopes containing comprehensive information regarding the price and 
-            terms of their respective offers. Following the submission, the recipient carefully evaluates the 
+            The procurement of goods and services often involves a competitive bid process. This method requires
+            participants to submit sealed envelopes containing comprehensive information regarding the price and
+            terms of their respective offers. Following the submission, the recipient carefully evaluates the
             proposals and ultimately chooses the bidder who has presented the most favorable terms or the lowest price.
           </div>
         </div>
-        
+
         <h1 className="my-4 text-3xl font-bold text-center">
           Online Tenders, Tenders Website, Bids & Tenders
         </h1>
         <div className="flex flex-col-reverse gap-10 md:grid sm:grid-cols-2 md:grid-cols-3">
-    
 
-        <div className="">
+
+          <div className="">
             <div className="">
               <h2 className="mb-2 text-lg font-bold">Filter Tenders</h2>
 
@@ -305,17 +295,6 @@ const TenderListingPage = () => {
                 >
                   Country
                 </label>
-                {/* <div className="flex flex-col items-start mt-4 gap-x-4 gap-y-1 h-[150px] overflow-y-scroll px-4 mb-4">
-                  {countries.length > 0 ? countries.map((country) => (
-                    <div className="flex items-center gap-3 text-lg" key={country}>
-
-                    <input type="checkbox" onChange={handleCountryChange} value={country}  name={country} />
-                    <label>{country}</label>
-                    </div>
-                    )) : (
-                      <div>Select region first</div>
-                    )}
-                </div> */}
                 <select
                   id="country"
                   name="country"
@@ -333,7 +312,7 @@ const TenderListingPage = () => {
                 </select>
               </div>
 
-             
+
               <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
                 <label
                   htmlFor="region"
@@ -365,7 +344,7 @@ const TenderListingPage = () => {
                       {tenderBySectorProductObj.name}
                     </option>
                   ))}
-                  
+
                   {/* <option value="Rehabilitation">Rehabilitation Tenders</option>
                   <option value="Medical Equipment">
                     Medical Equipment Tenders
@@ -397,7 +376,7 @@ const TenderListingPage = () => {
                 </select>
               </div>
 
-              
+
               <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
                 <label
                   htmlFor="product"
@@ -405,16 +384,7 @@ const TenderListingPage = () => {
                 >
                   Tenders By
                 </label>
-                {/* <div className="flex flex-col items-start mt-4 gap-x-4 gap-y-1 h-[150px] overflow-y-scroll px-4 mb-4">
-                  {userTenderCategory.map((userTenderCategoryObj) => (
-                    <div className="flex items-center gap-3 text-lg" key={userTenderCategoryObj.name}>
 
-                    <input type="checkbox" onChange={handleUserCategoryChange} value={userTenderCategoryObj.value}  name={userTenderCategoryObj.name} />
-                    <label>{userTenderCategoryObj.name}</label>
-                    </div>
-                  ))}
-                </div> */}
-                
                 <select
                   id="tenderby"
                   name="tenderby"
@@ -429,19 +399,34 @@ const TenderListingPage = () => {
                       {userTenderCategoryObj.name}
                     </option>
                   ))}
-                  {/* <option value="contractor">Contractor </option>
-                  <option value="subcontractor">Sub Contractor </option>
-                  <option value="government">Government </option>
-                  <option value="private">Private </option> */}
-
                 </select>
               </div>
-              
-              <div className="mb-4">
 
+              <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
+                <label
+                  htmlFor="slider"
+                  className="block text-xl font-bold text-gray-700 mb-0.5 px-4 py-3 text-white bg-black"
+                >
+                  Minimum Tender Amount
+                </label>
+
+                <div className="p-4">
+                  <InputSlider
+                    axis="x"
+                    x={minValue}
+                    xmax={100000000}
+                    onChange={handleMinValueChange}
+                  />
+                  <div className="flex justify-between">
+                    <span>Min: ${minValue}</span>
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
+
+
 
 
           <div className="mt-8 sm:col-span-2 md:col-span-2">
@@ -495,11 +480,11 @@ const TenderListingPage = () => {
             )}
           </div>
 
-          
 
 
 
-          
+
+
         </div>
       </div>
     </>

@@ -70,7 +70,7 @@ const tenderModel = new mongoose.Schema(
                 required: true
             },
             tenderValue: {
-                type: String,
+                type: Number,
                 required: true
             }
         },

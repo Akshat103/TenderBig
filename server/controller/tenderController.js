@@ -219,7 +219,7 @@ class Tender {
                 Authority,
                 userCategory,
                 TendorNo,
-                TenderId:tenderId,
+                TenderId: tenderId,
                 contractValue,
                 tenderValue,
             });
@@ -244,13 +244,13 @@ class Tender {
 
     async getTenderResults(req, res) {
         try {
-          const documents = await tenderResultModel.find();
-          res.json(documents);
+            const documents = await tenderResultModel.find();
+            res.json(documents);
         } catch (error) {
-          console.error(error);
-          res.status(500).json({ error: 'Failed to retrieve documents.' });
+            console.error(error);
+            res.status(500).json({ error: 'Failed to retrieve documents.' });
         }
-      }
+    }
 
     async getTenderResultsByTenderId(req, res) {
         const tenderId = req.params.TenderResultId;
@@ -440,9 +440,9 @@ class Tender {
                 'procurementSummary.deadline': { $gte: currentDate }
             };
 
-            const { region, geopolitical, country, sector, financier, state, city, product, userCategory } = req.query;
+            const { region, geopolitical, country, sector, financier, state, city, product, userCategory, value } = req.query;
             const { details } = req.body;
-            console.log(req.body);
+
             if (region && regionData.hasOwnProperty(region)) {
                 const countriesInRegion = regionData[region];
                 query['procurementSummary.country'] = { $in: countriesInRegion };
@@ -472,7 +472,10 @@ class Tender {
             if (userCategory) {
                 query['userCategory'] = userCategory;
             }
-            console.log(details);
+            if (value) {
+                query['otherInformation.tenderValue'] = { $gt: value };
+            }
+
             let projection;
             if (details) {
                 projection = details.reduce((acc, field) => {

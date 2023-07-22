@@ -31,7 +31,10 @@ export default function SimpleSlider() {
   };
 
   return (
-    <div className="p-20">
+    <div  className=" mx-auto p-4 max-w-7xl ">
+      <h2 className="ml-10 text-2xl font-bold mb-4 text-gray-700">
+          Gallery
+        </h2>
       <Slider {...settings}>
         {imageUrls.map((imageUrl, index) => (
           <div key={index}>

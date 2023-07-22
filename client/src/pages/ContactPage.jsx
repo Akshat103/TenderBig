@@ -83,7 +83,7 @@ const ContactUsPage = () => {
 
           <div className="w-full md:w-1/2">
           <img
-              src={`${import.meta.env.BASE_URL}illustartion/contact.jpg`}
+              src={`${import.meta.env.BASE_URL}illustartion/contact.svg`}
               alt="Illustration"
             />
           </div>

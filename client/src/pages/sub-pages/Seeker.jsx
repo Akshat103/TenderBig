@@ -86,7 +86,7 @@ const Secondpage = ({ formData, handleChange, previousPage }) => {
           <span className="relative top-0 right-0 text-red-700">*</span>
           <input
             required
-            type="number"
+            type="text"
             name="pan"
             value={formData.pan}
             onChange={handleChange}
@@ -133,10 +133,10 @@ const Secondpage = ({ formData, handleChange, previousPage }) => {
             <span className="relative top-0 right-0 text-red-700">*</span>
           </label>
           <input
-            type="text"
+            type="file"
             name="aadhar"
             required
-            pattern="\d{16}"
+            accept=".pdf"
             title="Aadhar number must be 16 digits"
             id="aadhar"
             className="block w-full text-sm border border-gray-200 rounded-md shadow-sm focus:z-10 focus:border-red-900 focus:ring-red-900 dark:bg-red-100 dark:border-red-700 dark:text-black file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-red-700 dark:file:text-white"

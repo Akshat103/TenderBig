@@ -145,10 +145,6 @@ const TenderByCategory = () => {
             Tender Details
           </h2>
           <p>
-            <span className="font-bold">Country:</span>{" "}
-            {tenderDetails.tenderDetail.country}
-          </p>
-          <p>
             <span className="font-bold">Description:</span>{" "}
             {tenderDetails.tenderDetail.description}
           </p>

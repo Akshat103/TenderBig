@@ -35,12 +35,22 @@ const userSchema = new mongoose.Schema(
         },
         subscription: {
             id: String,
-            status: String,
-            plan: {
+            status: {
                 type: String,
-                enum: ["OneState", "FiveStates", "AllIndia", "Global"],
-                stateNames: [String] 
-            }
+                default: "inactive",
+            },
+            type: {
+                type: String,
+                default: "none",
+            },
+            state: {
+                type: String,
+                default: "none",
+            },
+            date: {
+                type: Date,
+                default: null,
+            },
         },
         country: {
             type: String,
@@ -67,5 +77,6 @@ const userSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-const userModel = mongoose.model("Users", userSchema);
-module.exports = userModel;
+ 
+  const userModel = mongoose.model("Users", userSchema);
+  module.exports = userModel;

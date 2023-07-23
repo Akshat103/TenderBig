@@ -33,21 +33,21 @@ class User {
 
     async getAllUser(req, res) {
         try {
-          const { userRole } = req.body;
-          let query = {};
-      
-          if (userRole) {
-            query['userRole'] = userRole;
-          }
-      
-          const users = await userModel.find(query);
-          res.json(users);
+            const { userRole } = req.body;
+            let query = {};
+
+            if (userRole) {
+                query['userRole'] = userRole;
+            }
+
+            const users = await userModel.find(query);
+            res.json(users);
         } catch (error) {
-          console.error('Error retrieving users:', error);
-          res.status(500).json({ error: 'An error occurred while retrieving users' });
+            console.error('Error retrieving users:', error);
+            res.status(500).json({ error: 'An error occurred while retrieving users' });
         }
-      }
-      
+    }
+
 
     async updateUserRole(req, res) {
         try {
@@ -206,6 +206,46 @@ class User {
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Server Error' });
+        }
+    }
+
+    async updateSubscriptionStatus(req, res) {
+        try {
+            const { userId } = req.params;
+            const { planType, state } = req.body;
+
+            // Find the user by userId
+            const user = await userModel.findById(userId);
+
+            if (!user) {
+                return res.status(404).json({
+                    status: 'error',
+                    message: 'User not found.',
+                });
+            }
+
+            // Update the subscription status and plan type
+            user.subscription.status = "active";
+            user.subscription.type = planType;
+            if (state) {
+                user.subscription.state = state;
+            }
+            else{
+                user.subscription.state = "none";
+            }
+
+            await user.save();
+
+            res.status(200).json({
+                status: 'success',
+                message: 'Subscription activated successfully.',
+            });
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                status: 'error',
+                message: 'Internal server error',
+            });
         }
     }
 

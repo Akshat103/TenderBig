@@ -4,7 +4,7 @@ const paymentsController = require("../controller/paymentController");
 const {verifyToken , isNotUser} = require("../middleware/auth")
 
 //Buy Subscription
-router.post("/subscribe",verifyToken, paymentsController.buySubscription);
+router.post("/subscribe", paymentsController.buySubscription);
 
 //Verify payment and save rerence in DB
 router.post("/paymentverification", paymentsController.verify);

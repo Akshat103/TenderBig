@@ -36,18 +36,11 @@ router.delete("/tender/:tenderId", verifyToken, tenderController.deleteTender);
 //Statistics
 router.get("/statistics", verifyToken, isNotUser, tenderController.statistics);
 
-// getting all tenderResults
-router.get("/alltenderResults", tenderController.getTenderResults)
-
-router.get("/tenderResults/:TenderResultId", tenderController.getTenderResultsByTenderId);
-
-
 //tender by User category
 router.get("/:userCategory", tenderController.tenderByUser);
 
 // tender results giving admin
 router.post("/add-tenderResults", verifyToken, isNotUser, tenderController.postAddTenderResults);
-
 
 //update tender Results form 
 router.put("/tenderResults/:TenderResultId", tenderController.updateResultsFormById);
@@ -55,5 +48,9 @@ router.put("/tenderResults/:TenderResultId", tenderController.updateResultsFormB
 // tender Results form
 router.delete("/tenderResults/:TenderResultId", tenderController.deleteResultsFormById);
 
+// getting all tenderResults
+router.get("/alltenderResults", tenderController.getTenderResults)
+
+router.get("/tenderResults/:TenderResultId", tenderController.getTenderResultsByTenderId);
 
 module.exports = router;

@@ -229,6 +229,7 @@ const JointVenture = () => {
       })
       .catch((error) => {
         console.error("Payment error:", error);
+        alert("Payment Failed")
         // Handle the error if the payment fails
       });
   };

@@ -61,3 +61,36 @@ exports.isNotUser = (req, res, next) => {
     return res.status(403).json({ error: "Invalid token." });
   }
 };
+
+exports.checkSubscription = async (req, res, next) => {
+  const token = req.header("auth");
+
+  if (!token) {
+    return res.status(401).json({
+      status: "error",
+      message: "Authentication token not provided.",
+    });
+  }
+
+  try {
+    const decodedToken = jwt.verify(token, JWT_SECRET);
+    const userId = decodedToken._id;
+
+    const user = await userModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        status: "error",
+        message: "User not found.",
+      });
+    }
+
+    req.userSubscription = user.subscription;
+
+    next();
+  } catch (err) {
+    return res.status(401).json({
+      status: "error",
+      message: "Invalid token.",
+    });
+  }
+};

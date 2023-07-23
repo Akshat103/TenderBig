@@ -6,10 +6,14 @@ const paymentModel = require("../models/paymentModel");
 
 module.exports.buySubscription = async (req, res) => {
 
+    const plan = req.body.plan;
+
     const id = req.body.id;
-    const KEY = process.env.RAZORPAY_API_KEY;
-    const SECRET = process.env.RAZORPAY_API_SECRET;
-    const PLAN = process.env.PLAN_ID;
+    const KEY = process.env.RAZORPAY_KEY_ID;
+    const SECRET = process.env.RAZORPAY_SECRET_ID;
+    const OneStatePlan = process.env.ONE_STATE_PLAN;
+    const AllIndiaPlan = process.env.ALL_INDIA_PLAN;
+    const GlobalPlan = process.env.GLOBAL_PLAN;
 
     const user = await userModel.findById(id);
     if (user.userRole === "admin")
@@ -17,9 +21,15 @@ module.exports.buySubscription = async (req, res) => {
             success: false,
         })
 
+    let PLAN;
+    if (plan == "OneStatePlan") PLAN = OneStatePlan;
+    else if (plan == "AllIndiaPlan") PLAN = AllIndiaPlan;
+    else if (plan == "GlobalPlan") PLAN = GlobalPlan;
+    else return false
+
     var instance = new Razorpay({ key_id: KEY, key_secret: SECRET })
     let subscription;
-    const timestamp = Math.floor(Date.now() / 1000);
+
     try {
         subscription = await instance.subscriptions.create({
             plan_id: PLAN,
@@ -40,7 +50,7 @@ module.exports.buySubscription = async (req, res) => {
         },
         { new: true }
     );
-    console.log(subscription);
+
     return res.status(201).json({
         success: true,
         subscription
@@ -54,7 +64,7 @@ module.exports.verify = async (req, res, next) => {
 
     const subscription_id = user.subscription.id;
 
-    const generated_signature = crypto.createHmac('sha256', process.env.RAZORPAY_API_SECRET)
+    const generated_signature = crypto.createHmac('sha256', process.env.RAZORPAY_SECRET_ID)
         .update(razorpay_payment_id + "|" + subscription_id, "utf-8")
         .digest('hex');
 
@@ -96,10 +106,10 @@ const razorpay = new Razorpay({
 
 module.exports.createOrder = async (req, res) => {
     try {
-        const {amount,receipt} = req.body;
+        const { amount, receipt } = req.body;
         console.log(amount);
         const options = {
-            amount: Number(amount*100),
+            amount: Number(amount * 100),
             currency: 'INR',
             receipt: receipt,
             payment_capture: 1,
@@ -129,11 +139,11 @@ module.exports.verifyOrder = async (req, res) => {
         .digest('hex');
 
     const isAuthentic = generated_signature === razorpay_signature;
-console.log(generated_signature, razorpay_signature)
+    console.log(generated_signature, razorpay_signature)
     if (isAuthentic) return res.status(201).json({
-        success:true
+        success: true
     })
     else return res.status(400).json({
-        success:false
+        success: false
     })
 }

@@ -31,6 +31,7 @@ import GemRegistration from '../pages/GemRegistration';
 import GemDetailingListing from '../pages/GemDetailingListing';
 // import TenderResults from '../pages/TenderResults';
 import UserDetails from '../Admin/partials/dashboard/users/DashboardUserDetail';
+import SubscribePage from '../pages/Subscription/Subscribe';
 
 const MainRoutes = () => {
   return (
@@ -67,6 +68,7 @@ const MainRoutes = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/tenderResults" element={<TenderResults />} />
+        <Route path="/subscribe" element={<SubscribePage />} />
       </Routes>
       <Footer />
     </>

@@ -27,4 +27,6 @@ router.get("/statistics", verifyToken, isNotUser, usersController.statistics);
 // getting all forms by id
 router.get("/DetailsbyId/:id", usersController.DetailsById);
 
+router.put('/update-status/:userId', usersController.updateSubscriptionStatus);
+
 module.exports = router;

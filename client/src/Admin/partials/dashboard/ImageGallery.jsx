@@ -43,7 +43,7 @@ const ImageGallery = () => {
           <div key={index} className="relative">
             <img
               className="w-full h-80 object-cover rounded-lg"
-              src={imageUrl.substring(0, imageUrl.lastIndexOf('/') + 1)}
+              src={imageUrl.substring(0, imageUrl.lastIndexOf('/dashboard') + 1)}
               alt={`Image ${index + 1}`}
             />
             <button

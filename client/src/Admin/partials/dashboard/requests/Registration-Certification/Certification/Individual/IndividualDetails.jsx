@@ -6,6 +6,7 @@ import { ProgressBar, Step } from 'react-step-progress-bar';
 import 'react-step-progress-bar/styles.css';
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const IndividualDetails = () => {
     const [formData, setFormData] = useState(null);
@@ -13,7 +14,7 @@ const IndividualDetails = () => {
     const { id } = useParams();
     useEffect(() => {
         // Fetch data from the API
-        fetch(`http://localhost:5000/apitender/services/icert/certification/${id}`)
+        fetch(`${BASE_URL}/services/icert/certification/${id}`)
             .then((response) => response.json())
             .then((data) => {
                 setFormData(data)
@@ -33,7 +34,7 @@ const IndividualDetails = () => {
     };
 
     function updateDetails() {
-        fetch(`http://localhost:5000/apitender/services/icert/certification/${id}`, {
+        fetch(`${BASE_URL}/services/icert/certification/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

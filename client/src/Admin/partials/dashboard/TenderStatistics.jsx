@@ -5,6 +5,7 @@ import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faClipboardCheck, faUserShield, faEye, faThumbsUp, faHammer, faTools } from '@fortawesome/free-solid-svg-icons';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const TenderStatistics = () => {
   const [statistics, setStatistics] = useState(null);
@@ -20,7 +21,7 @@ const TenderStatistics = () => {
         };
 
         const response = await axios.get(
-          "http://localhost:5000/apitender/tenderdetails/statistics",
+          `${BASE_URL}/tenderdetails/statistics`,
           config
         );
         setStatistics(response.data);

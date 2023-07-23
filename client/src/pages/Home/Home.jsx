@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setKeywords } from "../Redux/store";
+import { setKeywords } from "../../Redux/store";
 import Home2 from "./Home2";
 import Home3 from "./Home3";
 import Home4 from "./Home4";
@@ -8,7 +8,8 @@ import { Link } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import SimpleSlider from "../components/Carousel";
+import SimpleSlider from "../../components/Carousel";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const HomePage = () => {
   const [name, setName] = useState("");
@@ -96,7 +97,7 @@ const HomePage = () => {
     };
     const token = localStorage.getItem("token");
     axios
-      .post("http://localhost:5000/apitender/post-contactform", formData, {
+      .post(`${BASE_URL}/post-contactform`, formData, {
         headers: {
           auth: token,
         },

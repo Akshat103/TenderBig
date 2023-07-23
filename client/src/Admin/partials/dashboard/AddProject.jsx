@@ -2,6 +2,7 @@ import { useState } from "react";
 import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
 import { Country, State, City } from 'country-state-city';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const AddProject = () => {
 
@@ -63,7 +64,7 @@ const AddProject = () => {
 
         const requestBody = JSON.stringify(formData);
 
-        fetch("http://localhost:5000/apitender/projects/submit", {
+        fetch(`${BASE_URL}/projects/submit`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

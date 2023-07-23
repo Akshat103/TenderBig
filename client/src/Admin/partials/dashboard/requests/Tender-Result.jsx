@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const TenderResult = () => {
   const [contactForms, setContactForms] = useState([]);
@@ -18,7 +19,7 @@ const TenderResult = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:3000http://localhost:5000/apitender/Tender%20Result",
+        `${BASE_URL}/Tender%20Result`,
         {
           headers: {
             auth: token,

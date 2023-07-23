@@ -8,6 +8,7 @@ import Step5 from './Steps/AuctionMaterial';
 import axios from 'axios';
 import uploadFileToS3 from '../../../pages/file-uploading/FileUpload';
 import payment from '../../../components/payment';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const uploadMultipleFilesToS3 = async (files) => {
   const uploadPromises = files.map(async (file) => {
@@ -31,7 +32,7 @@ const AuctionMaterialForm = () => {
 
   const fetchAuctionMaterial = async () => {
     const response = await axios.get(
-      'http://localhost:5000/apitender/options/alloptions?array=AuctionMaterials'
+      `${BASE_URL}/options/alloptions?array=AuctionMaterials`
     );
     setAuctionMaterials(response.data[0].AuctionMaterials);
   };
@@ -260,7 +261,7 @@ const AuctionMaterialForm = () => {
     const {
       data: { price },
     } = await axios.get(
-      'http://localhost:5000/apitender/formprice/Auction%20Material/price'
+      `${BASE_URL}/formprice/Auction%20Material/price`
     );
     return price;
   };
@@ -293,7 +294,7 @@ const AuctionMaterialForm = () => {
 
         const token = localStorage.getItem('token');
         const response = await axios.post(
-          'http://localhost:5000/apitender/services/aumt/auction-material',
+          `${BASE_URL}/services/aumt/auction-material`,
           requestBody,
           {
             headers: {

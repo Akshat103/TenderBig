@@ -1,7 +1,10 @@
+
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
 async function uploadFileToS3(file, fileType) {
     try {
         // Step 1: Get the signed URL for file upload
-        const { signedUrl } = await fetch('http://localhost:5000/apitender/s3/uploadurl', {
+        const { signedUrl } = await fetch(`${BASE_URL}/s3/uploadurl`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

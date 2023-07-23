@@ -10,6 +10,7 @@ import uploadFileToS3 from "../../../pages/file-uploading/FileUpload";
 import payment from "../../../components/payment";
 import { NavLink } from "react-router-dom";
 import { sideNavigationButtons } from "../../../components/Forms";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const JointVenture = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -181,7 +182,7 @@ const JointVenture = () => {
     const {
       data: { price },
     } = await axios.get(
-      "http://localhost:5000/apitender/formprice/Joint%20Venture/price"
+      `${BASE_URL}/formprice/Joint%20Venture/price`
     );
     return price;
   };
@@ -211,7 +212,7 @@ const JointVenture = () => {
         requestBody.directors = updatedDirectors;
         const token = localStorage.getItem("token");
         const response = await axios.post(
-          "http://localhost:5000/apitender/services/jv/submitjv",
+          `${BASE_URL}services/jv/submitjv`,
           requestBody,
           {
             headers: {

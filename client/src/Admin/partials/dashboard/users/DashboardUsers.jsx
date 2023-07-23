@@ -9,6 +9,7 @@ import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 function DashboardUsers() {
   const [userData, setUserData] = useState([]);
@@ -23,7 +24,7 @@ function DashboardUsers() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/apitender/userdetails/allusers",
+          `${BASE_URL}userdetails/allusers`,
           {
             method: "GET",
             headers: {

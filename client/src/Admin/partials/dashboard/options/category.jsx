@@ -4,6 +4,7 @@ import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Category = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -17,7 +18,7 @@ const Category = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/apitender/options/alloptions?array=categories");
+      const response = await axios.get(`${BASE_URL}/options/alloptions?array=categories`);
       console.log(response.data[0].categories);
       setCategories(response.data[0].categories);
     } catch (error) {
@@ -32,7 +33,7 @@ const Category = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/apitender/options/categories", { categories: [newCategory] });
+      const response = await axios.post(`${BASE_URL}/options/categories`, { categories: [newCategory] });
       setCategories(response.data.categories);
       setNewCategory("");
     } catch (error) {
@@ -43,7 +44,7 @@ const Category = () => {
 
   const deleteCategory = async (category) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/apitender/options/categories/${category}`);
+      const response = await axios.delete(`${BASE_URL}/options/categories/${category}`);
       setCategories(response.data.categories);
     } catch (error) {
       console.error(error);

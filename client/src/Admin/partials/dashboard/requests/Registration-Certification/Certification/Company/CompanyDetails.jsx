@@ -6,6 +6,7 @@ import { ProgressBar, Step } from "react-step-progress-bar";
 import "react-step-progress-bar/styles.css";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const CompanyDetails = () => {
   const [formData, setFormData] = useState(null);
@@ -13,7 +14,7 @@ const CompanyDetails = () => {
   const { id } = useParams();
   useEffect(() => {
     // Fetch data from the API
-    fetch(`http://localhost:5000/apitender/services/ccert/certification/${id}`)
+    fetch(`${BASE_URL}/services/ccert/certification/${id}`)
       .then((response) => response.json())
       .then((data) => setFormData(data))
       .catch((error) => console.log(error));
@@ -32,7 +33,7 @@ const CompanyDetails = () => {
 
   function updateDetails() {
     fetch(
-      `http://localhost:5000/apitender/services/ccert/certification/${id}`,
+      `${BASE_URL}/services/ccert/certification/${id}`,
       {
         method: "PUT",
         headers: {

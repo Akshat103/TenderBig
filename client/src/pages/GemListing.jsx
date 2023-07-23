@@ -4,9 +4,9 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { regionData, geopoliticalData } from "../constants/countriesData.js";
 import { useNavigate } from "react-router-dom";
-import GemsImg from '../Admin/images/gems-hero.jpg'
 import {  tenderBysectorProducts } from "./TenderListingPage.jsx";
 import InputSlider from "react-input-slider";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
   // useEffect(() => {
   //   const fetchTenderDetails = async () => {
   //     try {
-  //       const baseUrl = `http://localhost:5000/apitender/gem/${id}`;
+  //       const baseUrl = `${BASE_URL}/gem/${id}`;
   //       const token = localStorage.getItem("token");
 
   //       const headers = {
@@ -99,7 +99,7 @@ const GemListing = () => {
   useEffect(() => {
     const fetchTenderData = async () => {
       try {
-        const url = "http://localhost:5000/apitender/tenderdetails/gem";
+        const url = `${BASE_URL}/tenderdetails/gem`;
         const token = localStorage.getItem("token");
 
         const headers = {
@@ -138,7 +138,7 @@ const GemListing = () => {
         const country = encodeURIComponent(selectedCountry);
         const product = encodeURIComponent(selectedProduct);
         const value = encodeURIComponent(minValue);
-        const baseUrl = "http://localhost:5000/apitender/tenderdetails/search?userCategory=gem";
+        const baseUrl = `${BASE_URL}/tenderdetails/search?userCategory=gem`;
 
         const detailsArray = [
           "summary",

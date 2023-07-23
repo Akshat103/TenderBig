@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const FormPriceManagement = () => {
     const [formPrices, setFormPrices] = useState([]);
@@ -13,7 +14,7 @@ const FormPriceManagement = () => {
 
     const fetchFormPrices = () => {
         axios
-            .get('http://localhost:5000/apitender/formprice/getall')
+            .get(`${BASE_URL}/formprice/getall`)
             .then(response => {
                 const data = response.data;
                 setFormPrices(data);
@@ -32,7 +33,7 @@ const FormPriceManagement = () => {
         }
 
         axios
-            .put(`http://localhost:5000/apitender/formprice/${formName}/price`, { price: updatedPrice })
+            .put(`${BASE_URL}/formprice/${formName}/price`, { price: updatedPrice })
             .then(response => {
                 const data = response.data;
                 if (data.error) {

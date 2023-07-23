@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import UserCards from "./UserCards";
 import UserSideBar from "./UserSideBar";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const UserDetails = () => {
   const [userData, setUserData] = useState([]);
@@ -12,7 +13,7 @@ const UserDetails = () => {
     let id = userDataObject?.userId;
     console.log(id);
     if (id) {
-      fetch(`http://localhost:5000/apitender/userdetails/DetailsbyId/${id}`)
+      fetch(`${BASE_URL}/userdetails/DetailsbyId/${id}`)
         .then((response) => response.json())
         .then((data) => {
           setUserData(data);

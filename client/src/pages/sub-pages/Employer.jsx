@@ -8,6 +8,7 @@ import payment from "../../components/payment";
 import uploadFileToS3 from "../file-uploading/FileUpload";
 import { NavLink } from "react-router-dom";
 import { sideNavigationButtons } from "../../components/Forms";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Employer = () => {
   const [company, setCompany] = useState("");
@@ -83,7 +84,7 @@ const Employer = () => {
     const {
       data: { price },
     } = await axios.get(
-      "http://localhost:5000/apitender/formprice/Employer/price"
+      `${BASE_URL}/formprice/Employer/price`
     );
     return price;
   };
@@ -140,7 +141,7 @@ const Employer = () => {
     const token = localStorage.getItem("token");
     axios
       .post(
-        "http://localhost:5000/apitender/services/employer/submit-form",
+        `${BASE_URL}/services/employer/submit-form`,
         requestBody,
         {
           headers: {

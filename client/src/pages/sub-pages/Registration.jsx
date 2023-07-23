@@ -8,6 +8,7 @@ import payment from "../../components/payment";
 import uploadFileToS3 from "../file-uploading/FileUpload";
 import { sideNavigationButtons } from "../../components/Forms";
 import { NavLink } from "react-router-dom";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Registration = () => {
   const [company, setCompany] = useState("");
@@ -79,7 +80,7 @@ const Registration = () => {
     const {
       data: { price },
     } = await axios.get(
-      "http://localhost:5000/apitender/formprice/Registration/price"
+      `${BASE_URL}/formprice/Registration/price`
     );
     return price;
   };
@@ -87,7 +88,7 @@ const Registration = () => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/apitender/options/alloptions?array=categories"
+        `${BASE_URL}/options/alloptions?array=categories`
       );
       setCategories(response.data[0].categories);
     } catch (error) {
@@ -149,7 +150,7 @@ const Registration = () => {
     const token = localStorage.getItem("token");
     axios
       .post(
-        "http://localhost:5000/apitender/services/register/registration",
+        `${BASE_URL}/services/register/registration`,
         requestBody,
         {
           headers: {

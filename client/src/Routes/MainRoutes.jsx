@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
-import Home from '../pages/Home';
+import Home from '../pages/Home/Home';
 import AdvancedSearch from '../pages/AdvancedSearch';
 import TenderListingPage from '../pages/TenderListingPage';
 import ContactUsPage from '../pages/ContactPage';
 import Tender from '../pages/Tender';
 import TenderForm from '../components/Forms';
-import Login from '../pages/Login';
-import Signup from '../pages/Signup';
+import Login from '../pages/auth/Login';
+import Signup from '../pages/auth/Signup';
 import TenderByCategaries from '../pages/TenderByCategaries';
 import NotFound from '../components/NotFound';
 import EarnGems from '../pages/GemRegistration';

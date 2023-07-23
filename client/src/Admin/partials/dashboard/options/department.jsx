@@ -4,6 +4,7 @@ import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Department = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -17,7 +18,7 @@ const Department = () => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/apitender/options/alloptions?array=departments");
+      const response = await axios.get(`${BASE_URL}/options/alloptions?array=departments`);
       console.log(response.data[0].departments);
       setDepartments(response.data[0].departments);
     } catch (error) {
@@ -32,7 +33,7 @@ const Department = () => {
     }
   
     try {
-      const response = await axios.post("http://localhost:5000/apitender/options/departments", { departments: [newDepartment] });
+      const response = await axios.post(`${BASE_URL}/options/departments`, { departments: [newDepartment] });
       setDepartments(response.data.departments);
       setNewDepartment("");
     } catch (error) {
@@ -42,7 +43,7 @@ const Department = () => {
 
   const deleteDepartment = async (department) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/apitender/options/departments/${department}`);
+      const response = await axios.delete(`${BASE_URL}/options/departments/${department}`);
       setDepartments(response.data.departments);
     } catch (error) {
       console.error(error);

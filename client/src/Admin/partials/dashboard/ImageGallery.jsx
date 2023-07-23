@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { AiFillDelete } from "react-icons/ai";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const ImageGallery = () => {
   const [imageUrls, setImageUrls] = useState([]);
@@ -12,7 +13,7 @@ const ImageGallery = () => {
   const fetchImages = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/apiTender/images/allimages"
+        `${BASE_URL}/images/allimages`
       );
       setImageUrls(response.data);
     } catch (error) {
@@ -23,7 +24,7 @@ const ImageGallery = () => {
   const handleImageDelete = async (filename) => {
     try {
       await axios.delete(
-        `http://localhost:5000/apiTender/images/delete/${encodeURIComponent(
+        `${BASE_URL}/images/delete/${encodeURIComponent(
           filename
         )}`
       );
@@ -33,6 +34,7 @@ const ImageGallery = () => {
     }
   };
 
+
   return (
     <div className="p-20">
       <h2 className="text-xl font-bold mb-4">Image Gallery</h2>
@@ -41,15 +43,11 @@ const ImageGallery = () => {
           <div key={index} className="relative">
             <img
               className="w-full h-80 object-cover rounded-lg"
-              src={imageUrl}
+              src={imageUrl.substring(0, imageUrl.lastIndexOf('/') + 1)}
               alt={`Image ${index + 1}`}
             />
             <button
-              onClick={() =>
-                handleImageDelete(
-                  imageUrl.substring(imageUrl.lastIndexOf("/") + 1)
-                )
-              }
+              onClick={() => handleImageDelete(imageUrl)}
               className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full"
             >
               <AiFillDelete />

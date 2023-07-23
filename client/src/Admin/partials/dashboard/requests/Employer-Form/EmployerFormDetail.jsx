@@ -10,6 +10,7 @@ import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { saveAs } from 'file-saver';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const EmployerFormDetail = () => {
   const [formData, setFormData] = useState(null);
@@ -17,7 +18,7 @@ const EmployerFormDetail = () => {
   const { id } = useParams();
   useEffect(() => {
     // Fetch data from the API
-    fetch(`http://localhost:5000/apitender/services/employer/forms/${id}`)
+    fetch(`${BASE_URL}/services/employer/forms/${id}`)
       .then((response) => response.json())
       .then((data) => setFormData(data))
       .catch((error) => console.log(error));
@@ -36,7 +37,7 @@ const EmployerFormDetail = () => {
   };
 
   function updateDetails() {
-    fetch(`http://localhost:5000/apitender/services/employer/forms/${id}`, {
+    fetch(`${BASE_URL}/services/employer/forms/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

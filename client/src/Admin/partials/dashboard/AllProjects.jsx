@@ -9,6 +9,7 @@ import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 function AllProjects() {
   const [userData, setUserData] = useState([]);
@@ -25,7 +26,7 @@ function AllProjects() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/apitender/projects/getall",
+          `${BASE_URL}/projects/getall`,
           {
             headers: {
               "Content-Type": "application/json",

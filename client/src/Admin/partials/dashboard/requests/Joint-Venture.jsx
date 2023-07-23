@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const JointVenture = () => {
   const [contactForms, setContactForms] = useState([]);
@@ -18,7 +19,7 @@ const JointVenture = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:5000/apitender/Joint%20Venture",
+        `${BASE_URL}/Joint%20Venture`,
         {
           headers: {
             auth: token,

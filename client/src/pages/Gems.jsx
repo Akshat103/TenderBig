@@ -1,5 +1,5 @@
 import React from 'react'
-import GemsImg from '../Admin/images/gems-hero.jpg'
+const GemsImg = `${import.meta.env.BASE_URL}images/gems-hero.jpg`;
 import { Link } from 'react-router-dom'
 
 export default function Gems() {
@@ -12,26 +12,11 @@ export default function Gems() {
     <div className=' relative h-auto md:h-[600px] w-full my-10'>
     
     <img src={GemsImg} alt="gems_img" className=" h-auto md:h-[600px] w-full my-10" />
-    {/* <div className='absolute top-0 grid w-full h-full grid-cols-2 '>
-        <div className='flex items-center justify-center'>
-
-        <Link to='/gemregistration' className='px-8 py-4 font-bold text-white bg-black rounded w-[250px] text-center h-fit cursor-pointer'>Gems Registration</Link>
-        </div>
-        <div className='flex items-center justify-center'>
-
-        <Link to='/gemslist' className='px-8 py-4 font-bold text-white bg-black rounded w-[250px] text-center h-fit cursor-pointer'>Gems</Link>
-        </div>
-    </div> */}
     </div>
     <div className='grid w-full h-full grid-cols-1 md:grid-cols-2 gap-8'>
 
         <Link to='/gemregistration' className='px-8 py-4 font-bold text-center text-white bg-red-700 rounded cursor-pointer hover:bg-red-800 h-fit'>Gems Registration</Link>
         <Link to='/gemslist' className='w-full px-8 py-4 font-bold text-center text-white bg-red-700 rounded cursor-pointer hover:bg-red-800 h-fit'>Gems</Link>
-        {/* <div className='w-full '>
-        </div>
-        <div className='w-full'>
-
-        </div> */}
     </div>
     
     <div className="my-10">

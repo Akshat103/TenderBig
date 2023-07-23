@@ -6,8 +6,7 @@ import { locations } from "../../../../constants/countriesData";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { Country, State, City } from 'country-state-city';
-
-
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const OtherInformationAndPurchaserDetail = ({ formData, handleChange, handleSubmit, previousPage }) => {
 
@@ -317,7 +316,7 @@ const Forms = () => {
         const requestBody = JSON.stringify(formData);
         // console.log(requestBody);
 
-        fetch("http://localhost:5000/apitender/tenderdetails/add-tenderResults", {
+        fetch(`${BASE_URL}/tenderdetails/add-tenderResults`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

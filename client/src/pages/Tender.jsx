@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const TenderByCategory = () => {
   const { referenceNo } = useParams();
@@ -9,7 +10,7 @@ const TenderByCategory = () => {
   useEffect(() => {
     const fetchTenderDetails = async () => {
       try {
-        const baseUrl = "http://localhost:5000/apitender/tenderdetails/tender";
+        const baseUrl = `${BASE_URL}/tenderdetails/tender`;
         const token = localStorage.getItem("token");
 
         const headers = {

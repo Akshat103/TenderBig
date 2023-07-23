@@ -8,6 +8,7 @@ import { faArrowRight, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const RegistrationList = () => {
     const [forms, setForms] = useState([]);
@@ -17,14 +18,14 @@ const RegistrationList = () => {
 
     useEffect(() => {
         // Fetch data from the API
-        fetch("http://localhost:5000/apitender/services/register/registration")
+        fetch(`${BASE_URL}/services/register/registration`)
             .then((response) => response.json())
             .then((data) => setForms(data))
             .catch((error) => console.log(error));
     }, []);
 
     function deleteDetails(id) {
-        fetch(`http://localhost:5000/apitender/services/register/registration/${id}`, {
+        fetch(`${BASE_URL}/services/register/registration/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

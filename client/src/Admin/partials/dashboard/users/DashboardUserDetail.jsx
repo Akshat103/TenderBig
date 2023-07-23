@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Sidebar from '../../Sidebar';
 import Header from '../../Header';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 function UserDetails() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -16,7 +17,7 @@ function UserDetails() {
     const fetchUserDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/apiTender/userdetails/single-user/${userId}`,
+          `${BASE_URL}/userdetails/single-user/${userId}`,
           {
             method: 'GET',
             headers: {
@@ -39,7 +40,7 @@ function UserDetails() {
     try {
       // Make API call to delete the user
       await axios.delete(
-        `http://localhost:5000/apiTender/userdetails/delete/${userId}`,
+        `${BASE_URL}/userdetails/delete/${userId}`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -63,7 +64,7 @@ function UserDetails() {
     try {
       // Make API call to update the user role
       await axios.put(
-        'http://localhost:5000/apiTender/userdetails/updaterole',
+        `${BASE_URL}/userdetails/updaterole`,
         {
           userId: userId,
           userRole: selectedRole,

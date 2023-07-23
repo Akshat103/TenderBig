@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Login = () => {
 
@@ -22,7 +21,7 @@ const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault();
         // Make API request to login
-        fetch("http://localhost:5000/apitender/signin", {
+        fetch(`${BASE_URL}/signin`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

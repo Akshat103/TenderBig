@@ -11,6 +11,7 @@ import {
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const TenderOffline = () => {
   const [forms, setForms] = useState([]);
@@ -20,14 +21,14 @@ const TenderOffline = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    fetch("http://localhost:5000/apitender/services/tender/offline/getall")
+    fetch(`${BASE_URL}/services/tender/offline/getall`)
       .then((response) => response.json())
       .then((data) => setForms(data))
       .catch((error) => console.log(error));
   }, []);
 
   function deleteFormById(id) {
-    fetch(`http://localhost:5000/apitender/services/tender/offline/${id}`, {
+    fetch(`${BASE_URL}/services/tender/offline/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

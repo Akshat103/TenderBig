@@ -6,6 +6,7 @@ import { ProgressBar, Step } from "react-step-progress-bar";
 import "react-step-progress-bar/styles.css";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const SeekerFormDetail = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -13,7 +14,7 @@ const SeekerFormDetail = () => {
   const { id } = useParams();
   useEffect(() => {
     // Fetch data from the API
-    fetch(`http://localhost:5000/apitender/services/seeker/forms/${id}`)
+    fetch(`${BASE_URL}/services/seeker/forms/${id}`)
       .then((response) => response.json())
       .then((data) => setFormData(data))
       .catch((error) => console.log(error));
@@ -31,7 +32,7 @@ const SeekerFormDetail = () => {
   };
 
   function updateDetails() {
-    fetch(`http://localhost:5000/apitender/services/seeker/forms/${id}`, {
+    fetch(`${BASE_URL}/services/seeker/forms/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

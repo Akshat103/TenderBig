@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Navbar from "../../components/Navbar";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import Footer from "../../components/Footer"
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const TenderFillingOffline = () => {
   const [name, setName] = useState("");
@@ -65,7 +65,7 @@ const TenderFillingOffline = () => {
     };
     const token = localStorage.getItem('token');
     axios
-      .post("http://localhost:5000/apitender/services/tender/offline", formData, {
+      .post(`${BASE_URL}/services/tender/offline`, formData, {
         headers: {
           'auth': token
         }

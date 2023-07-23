@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import { locations } from "../../constants/countriesData"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
-import uploadFileToS3 from "../../pages/file-uploading/FileUpload";
+import uploadFileToS3 from "../file-uploading/FileUpload";
 import { ProgressBar, Step } from 'react-step-progress-bar';
 import { Country, State, City } from 'country-state-city';
 import payment from "../../components/payment";
 import { sideNavigationButtons } from "../../components/Forms";
 import { NavLink } from "react-router-dom";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const uploadMultipleFilesToS3 = async (files) => {
     const uploadPromises = files.map(async (file) => {
@@ -283,7 +283,7 @@ const OnlineTenderForm = () => {
     }, []);
 
     const fetchLicenses = async () => {
-        const response = await axios.get("http://localhost:5000/apitender/options/alloptions?array=licenses");
+        const response = await axios.get(`${BASE_URL}/options/alloptions?array=licenses`);
         setLicenses(response.data[0].licenses);
     }
 
@@ -337,7 +337,7 @@ const OnlineTenderForm = () => {
     };
 
     const getAmount = async () => {
-        const { data: { price } } = await axios.get("http://localhost:5000/apitender/formprice/Online%20Tender/price");
+        const { data: { price } } = await axios.get(`${BASE_URL}/formprice/Online%20Tender/price`);
         return price;
     }
 
@@ -377,7 +377,7 @@ const OnlineTenderForm = () => {
                 requestBody.purchaserPhoto = photoUrl;
 
                 const token = localStorage.getItem('token');
-                const response = await axios.post('http://localhost:5000/apitender/services/tender/online', requestBody, {
+                const response = await axios.post(`${BASE_URL}/services/tender/online`, requestBody, {
                     headers: {
                         'auth': token
                     }

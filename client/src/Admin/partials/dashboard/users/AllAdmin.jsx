@@ -8,6 +8,7 @@ import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 function AllAdmin() {
   const [userData, setUserData] = useState([]);
@@ -24,7 +25,7 @@ function AllAdmin() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/apitender/userdetails/users/admin",
+          `${BASE_URL}/userdetails/users/admin`,
           {
             method: "GET",
             headers: {

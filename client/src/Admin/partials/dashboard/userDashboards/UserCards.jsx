@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import payment from '../../../../../src/components/payment';
 import axios from 'axios';
-
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 
 const UserCards = ({ title, description, buttonLink1, buttonLink2, formData }) => {
@@ -15,7 +15,7 @@ const UserCards = ({ title, description, buttonLink1, buttonLink2, formData }) =
 
     const getAmount = async (Formprice) => {
         console.log(Formprice)
-        const { data: { price } } = await axios.get(`http://localhost:5000/apitender/formprice/${Formprice}/price`);
+        const { data: { price } } = await axios.get(`${BASE_URL}/formprice/${Formprice}/price`);
         return price;
     }
 
@@ -25,7 +25,7 @@ const UserCards = ({ title, description, buttonLink1, buttonLink2, formData }) =
         console.log(requestBody);
         const token = localStorage.getItem('token');
         axios
-            .post(`http://localhost:5000/apitender/services/${formName1}`, requestBody, {
+            .post(`${BASE_URL}/services/${formName1}`, requestBody, {
                 headers: {
                     'auth': token
                 }

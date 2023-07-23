@@ -4,6 +4,7 @@ import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const License = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -17,7 +18,7 @@ const License = () => {
 
   const fetchLicenses = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/apitender/options/alloptions?array=licenses");
+      const response = await axios.get(`${BASE_URL}/options/alloptions?array=licenses`);
       console.log(response.data[0].licenses);
       setLicenses(response.data[0].licenses);
     } catch (error) {
@@ -31,7 +32,7 @@ const License = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/apitender/options/licenses", { licenses: [newLicenses] });
+      const response = await axios.post(`${BASE_URL}/options/licenses`, { licenses: [newLicenses] });
       setLicenses(response.data.licenses);
       setNewLicenses("");
     } catch (error) {
@@ -42,7 +43,7 @@ const License = () => {
 
   const deleteLicenses = async (license) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/apitender/options/licenses/${license}`);
+      const response = await axios.delete(`${BASE_URL}/options/licenses/${license}`);
       setLicenses(response.data.licenses);
     } catch (error) {
       console.error(error);

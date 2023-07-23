@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const ContactFormList = () => {
   const [contactForms, setContactForms] = useState([]);
@@ -24,7 +25,7 @@ const ContactFormList = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:5000/apitender/get-allcontactforms",
+        `${BASE_URL}/get-allcontactforms`,
         {
           headers: {
             auth: token,

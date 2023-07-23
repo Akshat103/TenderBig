@@ -12,6 +12,7 @@ import {
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const SeekerForm = () => {
     const [forms, setForms] = useState([]);
@@ -21,14 +22,14 @@ const SeekerForm = () => {
 
     useEffect(() => {
         // Fetch data from the API
-        fetch("http://localhost:5000/apitender/services/seeker/forms")
+        fetch(`${BASE_URL}/services/seeker/forms`)
             .then((response) => response.json())
             .then((data) => setForms(data))
             .catch((error) => console.log(error));
     }, []);
 
     function deleteSeekerDetail(id) {
-        fetch(`http://localhost:5000/apitender/services/seeker/forms/${id}`, {
+        fetch(`${BASE_URL}/services/seeker/forms/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

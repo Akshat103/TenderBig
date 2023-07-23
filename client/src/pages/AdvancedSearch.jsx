@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { locations } from "../constants/countriesData"
 import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
-import Footer from '../components/Footer';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 
 const TenderCard = ({ tender }) => {
@@ -120,7 +120,7 @@ const AdvancedSearchForm = () => {
           ],
         };
 
-        const response = await axios.post('http://localhost:5000/apitender/tenderdetails/advance-search', body, { headers });
+        const response = await axios.post(`${BASE_URL}/tenderdetails/advance-search`, body, { headers });
         console.log(response.data);
         setTenderDetails(response.data);
       } catch (error) {
@@ -194,7 +194,7 @@ const AdvancedSearchForm = () => {
     ];
 
     try {
-      const response = await axios.post('http://localhost:5000/apitender/tenderdetails/advance-search', filteredFormData, { headers });
+      const response = await axios.post(`${BASE_URL}/tenderdetails/advance-search`, filteredFormData, { headers });
       console.log(response.data);
       setTenderDetails(response.data);
     } catch (error) {

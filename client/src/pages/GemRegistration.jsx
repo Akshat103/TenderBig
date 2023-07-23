@@ -4,6 +4,7 @@ import { Country, State, City } from 'country-state-city';
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { sideNavigationButtons } from "../components/Forms";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const GemRegistration = () => {
   const [formData, setFormData] = useState({
@@ -75,7 +76,7 @@ const GemRegistration = () => {
   }
   <input value="test" type="checkbox" onChange={handleChange} />
   const getAmount=async()=>{
-    const {data:{price}} = await axios.get("http://localhost:5000/apiTender/formprice/Gem%20Registration/price");
+    const {data:{price}} = await axios.get(`${BASE_URL}/formprice/Gem%20Registration/price`);
     return price;
 }
 
@@ -90,7 +91,7 @@ const handleSubmit = async (e) => {
         console.log('Payment success:', success);
         const requestBody = JSON.stringify(formData);
 
-        fetch("http://localhost:5000/apiTender/services/gem/submit", {
+        fetch(`${BASE_URL}/services/gem/submit`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

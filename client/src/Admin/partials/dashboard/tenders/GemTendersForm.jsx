@@ -3,6 +3,7 @@ import axios from "axios";
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Gem = () => {
     const [startIndex, setStartIndex] = useState(0);
@@ -24,7 +25,7 @@ const Gem = () => {
     useEffect(() => {
         const fetchTenderData = async () => {
             try {
-                const Url = "http://localhost:5000/apitender/tenderdetails/gem";
+                const Url = `${BASE_URL}/tenderdetails/gem`;
 
                 const token = localStorage.getItem("token");
 

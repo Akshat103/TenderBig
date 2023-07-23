@@ -12,6 +12,7 @@ import {
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const GemRegistration = () => {
   const [forms, setForms] = useState([]);
@@ -21,14 +22,14 @@ const GemRegistration = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    fetch("http://localhost:5000/apitender/services/gem/getall")
+    fetch(`${BASE_URL}/services/gem/getall`)
       .then((response) => response.json())
       .then((data) => setForms(data))
       .catch((error) => console.log(error));
   }, []);
 
   function deleteDetails(id) {
-    fetch(`http://localhost:5000/apitender/services/gem/${id}`, {
+    fetch(`${BASE_URL}/services/gem/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

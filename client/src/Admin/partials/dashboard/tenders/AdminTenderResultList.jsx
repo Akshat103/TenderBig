@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
@@ -26,7 +26,7 @@ function AdminTenderResultList() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/apiTender/tenderdetails/alltenderResults"
+          `${BASE_URL}/tenderdetails/alltenderResults`
         );
         setUserData(response.data);
       } catch (error) {

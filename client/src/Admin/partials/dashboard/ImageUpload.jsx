@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import ImageGallery from './ImageGallery';
 import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const ImageUploadForm = () => {
     const [selectedFiles, setSelectedFiles] = useState([]);
@@ -21,7 +22,7 @@ const ImageUploadForm = () => {
         });
         setIsUploading(true);
         try {
-            const response = await axios.post('http://localhost:5000/apiTender/images/upload', formData, {
+            const response = await axios.post(`${BASE_URL}/images/upload`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

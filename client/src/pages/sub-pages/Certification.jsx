@@ -6,6 +6,7 @@ import uploadFileToS3 from "../file-uploading/FileUpload";
 import axios from "axios";
 import { Country, State, City } from 'country-state-city';
 import payment from "../../components/payment";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 function CompanyForm({ onSubmit, licenses }) {
     const [companyName, setCompanyName] = useState('');
@@ -23,7 +24,7 @@ function CompanyForm({ onSubmit, licenses }) {
     const [others, setOthers] = useState("");
 
     const getAmount=async()=>{
-        const {data:{price}} = await axios.get("http://localhost:5000/apitender/formprice/Company%20Certification/price");
+        const {data:{price}} = await axios.get(`${BASE_URL}/formprice/Company%20Certification/price`);
         return price;
     }
 
@@ -314,7 +315,7 @@ function IndividualForm({ onSubmit, licenses }) {
         cityNames = Array.from(new Set(Object.values(cityData).map((city) => city.name)));
     }
     const getAmount=async()=>{
-        const {data:{price}} = await axios.get("http://localhost:5000/apitender/formprice/Individual%20Certification/price");
+        const {data:{price}} = await axios.get(`${BASE_URL}/formprice/Individual%20Certification/price`);
         return price;
     }
 
@@ -671,7 +672,7 @@ const Certification = () => {
 
 
     const fetchLicenses = async () => {
-        const response = await axios.get("http://localhost:5000/apitender/options/alloptions?array=licenses");
+        const response = await axios.get(`${BASE_URL}/options/alloptions?array=licenses`);
         setLicenses(response.data[0].licenses);
     }
 
@@ -699,7 +700,7 @@ const Certification = () => {
 
         const token = localStorage.getItem('token');
         axios
-            .post("http://localhost:5000/apitender/services/ccert/certification", data, {
+            .post(`${BASE_URL}/services/ccert/certification`, data, {
                 headers: {
                     'auth': token
                 }
@@ -720,7 +721,7 @@ const Certification = () => {
         const token = localStorage.getItem('token');
         console.log(data)
         axios
-            .post("http://localhost:5000/apitender/services/icert/certification", data, {
+            .post(`${BASE_URL}/services/icert/certification`, data, {
                 headers: {
                     'auth': token
                 }

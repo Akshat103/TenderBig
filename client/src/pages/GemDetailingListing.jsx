@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 function GemDetailingListing() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -15,7 +16,7 @@ function GemDetailingListing() {
     const fetchTenderDetails = async () => {
       try {
         const response = await axios.get(
-          `/apiTender/tenderdetails/tender/${tenderId}`,
+          `${BASE_URL}/tenderdetails/tender/${tenderId}`,
           {
             method: 'GET',
             headers: {
@@ -38,7 +39,7 @@ function GemDetailingListing() {
     try {
       // Make API call to approve the tender
       await axios.post(
-        `/apiTender/tenderdetails/tender/${tenderId}/switchApprovedStatus`,
+        `${BASE_URL}/tenderdetails/tender/${tenderId}/switchApprovedStatus`,
         {},
         {
           headers: {
@@ -59,7 +60,7 @@ function GemDetailingListing() {
     try {
       // Make API call to reject the tender
       await axios.post(
-        `/apiTender/tenderdetails/tender/${tenderId}/switchActiveStatus`,
+        `${BASE_URL}/tenderdetails/tender/${tenderId}/switchActiveStatus`,
         {},
         {
           headers: {
@@ -79,7 +80,7 @@ function GemDetailingListing() {
     try {
       // Make API call to delete the tender
       await axios.delete(
-        `/apiTender/tenderdetails/tender/${tenderId}`,
+        `${BASE_URL}/tenderdetails/tender/${tenderId}`,
         {
           headers: {
             'Content-Type': 'application/json',

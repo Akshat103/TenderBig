@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const ContactUsPage = () => {
   const [name, setName] = useState("");
@@ -60,7 +61,7 @@ const ContactUsPage = () => {
     };
     const token = localStorage.getItem('token');
     axios
-      .post("http://localhost:5000/apitender/post-contactform", formData, {
+      .post(`${BASE_URL}/post-contactform`, formData, {
         headers: {
           'auth': token
         }

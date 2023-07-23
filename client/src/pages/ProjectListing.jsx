@@ -3,8 +3,9 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-import ProjectImg from '../Admin/images/project-hero.jpg'
+const ProjectImg = `${import.meta.env.BASE_URL}images/project-hero.jpg`;
 
 const ProjectCard = ({ project }) => {
   const [showDetails, setShowDetails] = useState(false);
@@ -69,7 +70,7 @@ const ProjectList = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/apitender/projects/getall")
+      .get(`${BASE_URL}/projects/getall`)
       .then((response) => {
         console.log(response, 'response')
         setProjects(response.data);

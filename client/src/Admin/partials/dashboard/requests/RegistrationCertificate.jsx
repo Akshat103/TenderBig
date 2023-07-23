@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const RegistrationCertification = () => {
   const [contactForms, setContactForms] = useState([]);
@@ -9,8 +10,6 @@ const RegistrationCertification = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [formsPerPage] = useState(10);
   const [selectedService, setSelectedService] = useState("All");
-
-
 
   useEffect(() => {
     fetchContactForms();
@@ -20,7 +19,7 @@ const RegistrationCertification = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:5000/apitender/Registration%20%2F%20Certificate",
+        `${BASE_URL}/Registration%20%2F%20Certificate`,
         {
           headers: {
             auth: token,

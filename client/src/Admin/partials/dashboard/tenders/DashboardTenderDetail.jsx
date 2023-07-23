@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Sidebar from '../../Sidebar';
 import Header from '../../Header';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 function DashboardTenderDetail() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -16,7 +17,7 @@ function DashboardTenderDetail() {
   const fetchTenderDetails = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/apiTender/tenderdetails/tender/${tenderId}`,
+        `${BASE_URL}/tenderdetails/tender/${tenderId}`,
         {
           method: 'GET',
           headers: {
@@ -41,7 +42,7 @@ function DashboardTenderDetail() {
     try {
       // Make API call to approve the tender
       await axios.post(
-        `http://localhost:5000/apiTender/tenderdetails/tender/${tenderId}/switchApprovedStatus`,
+        `${BASE_URL}/tenderdetails/tender/${tenderId}/switchApprovedStatus`,
         {},
         {
           headers: {
@@ -62,7 +63,7 @@ function DashboardTenderDetail() {
     try {
       // Make API call to reject the tender
       await axios.post(
-        `http://localhost:5000/apiTender/tenderdetails/tender/${tenderId}/switchActiveStatus`,
+        `${BASE_URL}/tenderdetails/tender/${tenderId}/switchActiveStatus`,
         {},
         {
           headers: {
@@ -82,7 +83,7 @@ function DashboardTenderDetail() {
     try {
       // Make API call to delete the tender
       await axios.delete(
-        `http://localhost:5000/apiTender/tenderdetails/tender/${tenderId}`,
+        `${BASE_URL}/tenderdetails/tender/${tenderId}`,
         {
           headers: {
             'Content-Type': 'application/json',

@@ -8,6 +8,7 @@ import payment from "../../components/payment";
 import axios from "axios";
 import { sideNavigationButtons } from "../../components/Forms";
 import { NavLink } from "react-router-dom";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Secondpage = ({ formData, handleChange, previousPage }) => {
   return (
@@ -292,7 +293,7 @@ const Seeker = () => {
     const {
       data: { price },
     } = await axios.get(
-      "http://localhost:5000/apitender/formprice/Seeker/price"
+      `${BASE_URL}/formprice/Seeker/price`
     );
     return price;
   };
@@ -327,7 +328,7 @@ const Seeker = () => {
   const StoreAtDB = (requestBody) => {
     const token = localStorage.getItem("token");
 
-    fetch("http://localhost:5000/apitender/services/seeker/submit-form", {
+    fetch(`${BASE_URL}/services/seeker/submit-form`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

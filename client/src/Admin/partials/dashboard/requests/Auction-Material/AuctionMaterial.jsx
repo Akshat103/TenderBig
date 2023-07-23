@@ -7,6 +7,7 @@ import { faArrowLeft, faArrowRight, faEdit, faTrash } from "@fortawesome/free-so
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const AuctionMaterial = () => {
     const [forms, setForms] = useState([]);
@@ -16,7 +17,7 @@ const AuctionMaterial = () => {
 
     useEffect(() => {
         // Fetch data from the API
-        fetch("http://localhost:5000/apitender/services/aumt/auction-material")
+        fetch(`${BASE_URL}/services/aumt/auction-material`)
             .then((response) => response.json())
             .then((data) => setForms(data.data))
             .catch((error) => console.log(error));
@@ -24,7 +25,7 @@ const AuctionMaterial = () => {
 
 
     function handleDelete(id) {
-        fetch(`http://localhost:5000/apitender/services/aumt/auction-material/${id}`, {
+        fetch(`${BASE_URL}/services/aumt/auction-material/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

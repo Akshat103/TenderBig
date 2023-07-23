@@ -8,7 +8,9 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 import "jspdf-autotable";
+
 function RegularUsers() {
   const [userData, setUserData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,7 +22,7 @@ function RegularUsers() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/apitender/userdetails/users/user",
+          `${BASE_URL}/userdetails/users/user`,
           {
             method: "GET",
             headers: {

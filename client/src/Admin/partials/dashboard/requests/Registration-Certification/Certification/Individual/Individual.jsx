@@ -12,6 +12,7 @@ import {
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const IndividualList = () => {
   const [forms, setForms] = useState([]);
@@ -21,7 +22,7 @@ const IndividualList = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    fetch("http://localhost:5000/apitender/services/icert/certification")
+    fetch(`${BASE_URL}/services/icert/certification`)
       .then((response) => response.json())
       .then((data) => setForms(data))
       .catch((error) => console.log(error));
@@ -29,7 +30,7 @@ const IndividualList = () => {
 
   function deleteFormDetails(id) {
     fetch(
-      `http://localhost:5000/apitender/services/icert/certification/${id}`,
+      `${BASE_URL}/services/icert/certification/${id}`,
       {
         method: "DELETE",
         headers: {

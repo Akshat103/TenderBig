@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import { locations } from "../constants/countriesData"
+import { locations } from "../../constants/countriesData"
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Signup = () => {
     const [formData, setFormData] = useState({
@@ -26,7 +25,7 @@ const Signup = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Make API request with form data
-        fetch('http://localhost:5000/apitender/signup', {
+        fetch(`${BASE_URL}/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

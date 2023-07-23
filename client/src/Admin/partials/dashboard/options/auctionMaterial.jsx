@@ -4,6 +4,7 @@ import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Material = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -17,7 +18,7 @@ const Material = () => {
 
   const fetchAuctionMaterial = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/apitender/options/alloptions?array=AuctionMaterials");
+      const response = await axios.get(`${BASE_URL}/options/alloptions?array=AuctionMaterials`);
       console.log(response.data[0].AuctionMaterials);
       setAuctionMaterial(response.data[0].AuctionMaterials);
     } catch (error) {
@@ -31,7 +32,7 @@ const Material = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/apitender/options/auctionmaterials", { auctionMaterials: [newAuctionMaterial] });
+      const response = await axios.post(`${BASE_URL}/options/auctionmaterials`, { auctionMaterials: [newAuctionMaterial] });
       setAuctionMaterial(response.data.AuctionMaterials);
       setNewAuctionMaterial("");
     } catch (error) {
@@ -42,7 +43,7 @@ const Material = () => {
 
   const deleteAuctionMaterials = async (auctionmaterial) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/apitender/options/auctionmaterials/${auctionmaterial}`);
+      const response = await axios.delete(`${BASE_URL}/options/auctionmaterials/${auctionmaterial}`);
       setAuctionMaterial(response.data.AuctionMaterials);
     } catch (error) {
       console.error(error);

@@ -5,6 +5,7 @@ import axios from "axios";
 import { regionData } from "../constants/countriesData.js";
 import { useNavigate } from "react-router-dom";
 import { tenderBysectorProducts } from "./TenderListingPage.jsx";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
   const navigate = useNavigate();
@@ -73,7 +74,7 @@ const TenderResults = () => {
     const fetchTenderData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/apitender/tenderdetails/alltenderResults"
+          `${BASE_URL}/tenderdetails/alltenderResults`
         );
         setTenderData(response.data);
       } catch (error) {
@@ -92,7 +93,7 @@ const TenderResults = () => {
         const country = encodeURIComponent(selectedCountry);
         const product = encodeURIComponent(selectedProduct);
 
-        const baseUrl = "http://localhost:5000/apitender/tenderdetails/search";
+        const baseUrl = `${BASE_URL}/tenderdetails/search`;
 
         const detailsArray = [
           "summary",

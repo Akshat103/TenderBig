@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import logo from "../assets/logo.png";
-import logo from "../Admin/images/tender-logo.png";
-import PhoneImg from '../Admin/images/phone.png'
-import LandlineImg from '../Admin/images/landline.png'
-import WAImg from '../Admin/images/whatsapp.png'
+const logo = `${import.meta.env.BASE_URL}images/tender-logo.png`;
+const PhoneImg = `${import.meta.env.BASE_URL}images/phone.png`;
+const LandlineImg = `${import.meta.env.BASE_URL}images/landline.png`;
+const WAImg = `${import.meta.env.BASE_URL}images/whatsapp.png`;
 
 const Navbar = () => {
   const auth = JSON.parse(localStorage.getItem("user"));

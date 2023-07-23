@@ -4,6 +4,7 @@ import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Sector = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -17,7 +18,7 @@ const Sector = () => {
 
   const fetchSectors = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/apitender/options/alloptions?array=sectors");
+      const response = await axios.get(`${BASE_URL}/options/alloptions?array=sectors`);
       console.log(response.data[0].sectors);
       setSectors(response.data[0].sectors);
     } catch (error) {
@@ -32,7 +33,7 @@ const Sector = () => {
     }
   
     try {
-      const response = await axios.post("http://localhost:5000/apitender/options/sectors", { sectors: [newSector] });
+      const response = await axios.post(`${BASE_URL}/options/sectors`, { sectors: [newSector] });
       setSectors(response.data.sectors);
       setNewSector("");
     } catch (error) {
@@ -42,7 +43,7 @@ const Sector = () => {
   
   const deleteSector = async (sector) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/apitender/options/sectors/${sector}`);
+      const response = await axios.delete(`${BASE_URL}/options/sectors/${sector}`);
       setSectors(response.data.sectors);
     } catch (error) {
       console.error(error);

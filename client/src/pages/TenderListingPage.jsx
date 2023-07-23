@@ -3,8 +3,9 @@ import axios from "axios";
 import { regionData, geopoliticalData } from "../constants/countriesData.js";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import TenderImg from '../Admin/images/tender-hero.jpg'
+const TenderImg = `${import.meta.env.BASE_URL}images/tender-hero.jpg`;
 import InputSlider from "react-input-slider";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
   const navigate = useNavigate();
@@ -114,7 +115,7 @@ const TenderListingPage = () => {
         const userCategory = encodeURIComponent(selectedUserCategory);
         const value = encodeURIComponent(minValue);
 
-        const baseUrl = "http://localhost:5000/apitender/tenderdetails/search";
+        const baseUrl = `${BASE_URL}/tenderdetails/search`;
 
         const detailsArray = [
           "summary",

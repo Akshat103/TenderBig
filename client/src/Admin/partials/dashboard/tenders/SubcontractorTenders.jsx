@@ -3,6 +3,7 @@ import axios from "axios";
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Subcontractor = () => {
   const [startIndex, setStartIndex] = useState(0);
@@ -19,12 +20,12 @@ const Subcontractor = () => {
   const [tenderData, setTenderData] = useState([]);
   const [approvedFilter, setApprovedFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortOrder, setSortOrder] = useState("desc"); // Track the current sort order
+  const [sortOrder, setSortOrder] = useState("desc"); 
 
   useEffect(() => {
     const fetchTenderData = async () => {
       try {
-        const Url = "http://localhost:5000/apitender/tenderdetails/subcontractor";
+        const Url = `${BASE_URL}/tenderdetails/subcontractor`;
 
         const token = localStorage.getItem("token");
 

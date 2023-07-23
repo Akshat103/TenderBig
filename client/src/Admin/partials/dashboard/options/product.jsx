@@ -4,6 +4,7 @@ import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Product = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -17,7 +18,7 @@ const Product = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/apitender/options/alloptions?array=products");
+      const response = await axios.get(`${BASE_URL}/options/alloptions?array=products`);
       console.log(response.data[0].products);
       setProducts(response.data[0].products);
     } catch (error) {
@@ -32,7 +33,7 @@ const Product = () => {
     }
   
     try {
-      const response = await axios.post("http://localhost:5000/apitender/options/products", { products: [newProduct] });
+      const response = await axios.post(`${BASE_URL}/options/products`, { products: [newProduct] });
       setProducts(response.data.products);
       setNewProduct("");
     } catch (error) {
@@ -42,7 +43,7 @@ const Product = () => {
 
   const deleteProduct = async (product) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/apitender/options/products/${product}`);
+      const response = await axios.delete(`${BASE_URL}/options/products/${product}`);
       setProducts(response.data.products);
     } catch (error) {
       console.error(error);

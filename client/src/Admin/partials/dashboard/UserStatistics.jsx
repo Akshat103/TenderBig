@@ -11,6 +11,7 @@ import {
   FaUser,
   FaCheckCircle,
 } from 'react-icons/fa';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const UserStatistics = () => {
   const [statistics, setStatistics] = useState(null);
@@ -34,7 +35,7 @@ const UserStatistics = () => {
       };
 
       const response = await axios.get(
-        'http://localhost:5000/apitender/userdetails/statistics',
+        `${BASE_URL}/userdetails/statistics`,
         config
       );
       setStatistics(response.data);

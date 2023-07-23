@@ -304,7 +304,6 @@ class Tender {
         }
     }
 
-
     async postEditTender(req, res) {
         const tenderId = req.params.tenderId;
         let {
@@ -753,7 +752,6 @@ class Tender {
             res.status(500).json({ error: 'Internal server error' });
         }
     }
-
 
 }
 

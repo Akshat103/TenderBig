@@ -99,8 +99,8 @@ const Employer = () => {
         const resume = e.target.resume.files[0];
         const other = e.target.other.files[0];
 
-        const getresumeUrl = await uploadFileToS3(resume);
-        const getotherUrl = await uploadFileToS3(other);
+        const getresumeUrl = await uploadFileToS3(resume,"pdf");
+        const getotherUrl = await uploadFileToS3(other,"pdf");
 
         const formData = {
           company,

@@ -106,9 +106,9 @@ const Registration = () => {
         const gst = e.target.gst.files[0];
         const pan = e.target.pan.files[0];
 
-        const getRegUrl = await uploadFileToS3(reg);
-        const getGstUrl = await uploadFileToS3(gst);
-        const getPanUrl = await uploadFileToS3(pan);
+        const getRegUrl = await uploadFileToS3(reg,"pdf");
+        const getGstUrl = await uploadFileToS3(gst,"pdf");
+        const getPanUrl = await uploadFileToS3(pan,"pdf");
 
         const formData = {
           Gem,

@@ -38,9 +38,9 @@ function CompanyForm({ onSubmit, licenses }) {
                 const cgst = e.target.cgst.files[0];
                 const cpan = e.target.cpan.files[0];
 
-                const getdocUrl = await uploadFileToS3(doc);
-                const getgstUrl = await uploadFileToS3(cgst);
-                const getpanUrl = await uploadFileToS3(cpan);
+                const getdocUrl = await uploadFileToS3(doc,"pdf");
+                const getgstUrl = await uploadFileToS3(cgst,"pdf");
+                const getpanUrl = await uploadFileToS3(cpan,"pdf");
 
                 const data = {
                     companyName,
@@ -330,10 +330,10 @@ function IndividualForm({ onSubmit, licenses }) {
                 const pan = e.target.pan.files[0];
                 const signature = e.target.signature.files[0];
 
-                const getphotoUrl = await uploadFileToS3(photo);
-                const getaadharUrl = await uploadFileToS3(aadhar);
-                const getpanUrl = await uploadFileToS3(pan);
-                const getsignatureUrl = await uploadFileToS3(signature);
+                const getphotoUrl = await uploadFileToS3(photo,"image");
+                const getaadharUrl = await uploadFileToS3(aadhar,"pdf");
+                const getpanUrl = await uploadFileToS3(pan,"pdf");
+                const getsignatureUrl = await uploadFileToS3(signature,"image");
 
                 const data = {
                     name,

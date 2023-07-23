@@ -102,8 +102,15 @@ const JointVenture = () => {
       directors.map(async (director) => {
         const uploads = await Promise.all(
           Object.entries(director.uploads).map(async ([fieldName, file]) => {
-            const fileUrl = await uploadFileToS3(file);
-            return { [fieldName]: { name: file.name, url: fileUrl } };
+            console.log(fieldName, file)
+            if(fieldName=="photo") {
+              const fileUrl = await uploadFileToS3(file,"image");
+              return { [fieldName]: { name: file.name, url: fileUrl } };
+            }
+            else{
+              const fileUrl = await uploadFileToS3(file,"pdf");
+              return { [fieldName]: { name: file.name, url: fileUrl } };
+            }
           })
         );
 
@@ -189,13 +196,13 @@ const JointVenture = () => {
         let requestBody = formData;
 
         requestBody.companyUploads.cinUpload[0] = await uploadFileToS3(
-          requestBody.companyUploads.cinUpload[0]
+          requestBody.companyUploads.cinUpload[0], "pdf"
         );
         requestBody.companyUploads.gstUpload[0] = await uploadFileToS3(
-          requestBody.companyUploads.gstUpload[0]
+          requestBody.companyUploads.gstUpload[0], "pdf"
         );
         requestBody.companyUploads.panUpload[0] = await uploadFileToS3(
-          requestBody.companyUploads.panUpload[0]
+          requestBody.companyUploads.panUpload[0], "pdf"
         );
 
         const updatedDirectors = await uploadFilesForDirectors(

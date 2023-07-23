@@ -1,22 +1,32 @@
 async function uploadFileToS3(file, fileType) {
     try {
         // Step 1: Get the signed URL for file upload
-        const { signedUrl } = await fetch('http://localhost:5000/apitender/s3/uploadurl')
-            .then((response) => response.json());
-
-       // Step 2: Upload the file to S3 using the signed URL
-        await fetch(signedUrl, {
-            method: 'PUT',
+        const { signedUrl } = await fetch('http://localhost:5000/apitender/s3/uploadurl', {
+            method: 'POST',
             headers: {
-                'Content-Type': 'multipart/form-data',
+                'Content-Type': 'application/json',
             },
-            body: file,
-        });
+            body: JSON.stringify({ fileType }),
+        }).then((response) => response.json());
 
-        // Step 3: Extract the file URL
-        const fileUrl = signedUrl.split('?')[0];
+        // Step 2: Upload the file to S3 using the signed URL
+        try {
+            await fetch(signedUrl, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': fileType === 'pdf' ? 'application/pdf' : 'image/jpeg',
+                },
+                body: file,
+            });
+            // Step 3: Extract the file URL
+            const fileUrl = signedUrl.split('?')[0];
 
-        return fileUrl;
+            return fileUrl;
+        }
+        catch (error) {
+            console.error(error);
+        }
+
     } catch (error) {
         console.error(error);
         // Handle error

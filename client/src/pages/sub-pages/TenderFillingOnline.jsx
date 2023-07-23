@@ -12,7 +12,7 @@ import { NavLink } from "react-router-dom";
 
 const uploadMultipleFilesToS3 = async (files) => {
     const uploadPromises = files.map(async (file) => {
-        const result = await uploadFileToS3(file);
+        const result = await uploadFileToS3(file, "pdf");
         return result;
     });
 
@@ -358,15 +358,24 @@ const OnlineTenderForm = () => {
                 const work = requestBody.work;
                 const tenderDocs = requestBody.tenderDocs;
 
+                const photo = e.target.photo.files[0];
+                const aadhar = e.target.aadhar.files[0];
+
                 const biddingDocsUrls = await uploadMultipleFilesToS3(biddingDocs);
                 const rentUrls = await uploadMultipleFilesToS3(rent);
                 const workUrls = await uploadMultipleFilesToS3(work);
                 const tenderDocsUrls = await uploadMultipleFilesToS3(tenderDocs);
 
+                const photoUrl = await uploadFileToS3(photo, "image");
+                const aadharUrl = await uploadFileToS3(aadhar, "pdf");
+
                 requestBody.biddingDocs = biddingDocsUrls;
                 requestBody.rent = rentUrls;
                 requestBody.work = workUrls;
                 requestBody.tenderDocs = tenderDocsUrls;
+                requestBody.purchaserAadhar = aadharUrl;
+                requestBody.purchaserPhoto = photoUrl;
+
                 const token = localStorage.getItem('token');
                 const response = await axios.post('http://localhost:5000/apitender/services/tender/online', requestBody, {
                     headers: {
@@ -417,47 +426,46 @@ const OnlineTenderForm = () => {
 
     const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-  const checkScreenSize = () => {
-    setIsSmallScreen(window.innerWidth > 480); // Adjust the breakpoint as needed
-  };
-
-  useEffect(() => {
-    checkScreenSize(); // Call the function to set the initial screen size
-
-    window.addEventListener("resize", checkScreenSize); // Add event listener
-
-    return () => {
-      window.removeEventListener("resize", checkScreenSize); // Clean up the event listener
+    const checkScreenSize = () => {
+        setIsSmallScreen(window.innerWidth > 480); // Adjust the breakpoint as needed
     };
-  }, []);
+
+    useEffect(() => {
+        checkScreenSize(); // Call the function to set the initial screen size
+
+        window.addEventListener("resize", checkScreenSize); // Add event listener
+
+        return () => {
+            window.removeEventListener("resize", checkScreenSize); // Clean up the event listener
+        };
+    }, []);
 
     return (
         <div className="flex items-center justify-center">
             <div
-          className={`max-w-[1244px] ${
-            !isSmallScreen ? "w-full" : "grid grid-cols-12 gap-16"
-          } mt-5`}
-        >
-          <div className="col-span-4 px-2 mt-6 mb-6">
-            {isSmallScreen ? (
-              <div className="w-full mt-2 ">
-                <ul className="">
-                  <h1 className="text-2xl font-bold text-gray-700 ">
-                    Our Services
-                  </h1>
-                  <div className="col-span-4 px-2 mt-6 mb-6">
-                    {sideNavigationButtons.map((button) => (
-                      <NavLink to={button.link}>
-                        <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">
-                          {button.name}
+                className={`max-w-[1244px] ${!isSmallScreen ? "w-full" : "grid grid-cols-12 gap-16"
+                    } mt-5`}
+            >
+                <div className="col-span-4 px-2 mt-6 mb-6">
+                    {isSmallScreen ? (
+                        <div className="w-full mt-2 ">
+                            <ul className="">
+                                <h1 className="text-2xl font-bold text-gray-700 ">
+                                    Our Services
+                                </h1>
+                                <div className="col-span-4 px-2 mt-6 mb-6">
+                                    {sideNavigationButtons.map((button) => (
+                                        <NavLink to={button.link}>
+                                            <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">
+                                                {button.name}
+                                            </div>
+                                        </NavLink>
+                                    ))}
+                                </div>
+                            </ul>
                         </div>
-                      </NavLink>
-                    ))}
-                  </div>
-                </ul>
-              </div>
-            ) : null}
-          </div>
+                    ) : null}
+                </div>
                 <div className="col-span-8 px-8 py-8 mx-auto mt-6 mb-6 rounded-lg shadow-lg border-[2px] border-black/20">
 
                     <ProgressBar
@@ -826,6 +834,7 @@ const OnlineTenderForm = () => {
                                                 <span className="relative top-0 right-0 text-red-700">*</span>
                                             </label>
                                             <input
+                                                multiple
                                                 type="file"
                                                 name="rent"
                                                 accept=".pdf"
@@ -841,6 +850,7 @@ const OnlineTenderForm = () => {
                                                 <span className="relative top-0 right-0 text-red-700">*</span>
                                             </label>
                                             <input
+                                                multiple
                                                 type="file"
                                                 name="work"
                                                 accept=".pdf"

@@ -47,6 +47,8 @@ const TenderOnline = new mongoose.Schema({
     work: [String],
     biddingDocs: [String],
     tenderDocs: [String],
+    purchaserAadhar: String,
+    purchaserPhoto: String
 },
     { timestamps: true });
 

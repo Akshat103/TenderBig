@@ -2,9 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { regionData, geopoliticalData } from "../constants/countriesData.js";
+import { regionData } from "../constants/countriesData.js";
 import { useNavigate } from "react-router-dom";
-import GemsImg from '../Admin/images/gems-hero.jpg'
 import { tenderBysectorProducts } from "./TenderListingPage.jsx";
 
 const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
@@ -47,8 +46,6 @@ const TenderResults = () => {
 
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedFundingAgency, setSelectedFundingAgency] = useState("");
-  const [selectedGeoPolitical, setSelectedGeoPolitical] = useState("");
   const [selectedProduct, setSelectedProduct] = useState("");
   const [tenderData, setTenderData] = useState([]);
 
@@ -66,14 +63,6 @@ const TenderResults = () => {
 
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
-  };
-
-  const handleFundingAgencyChange = (e) => {
-    setSelectedFundingAgency(e.target.value);
-  };
-
-  const handleGeoPoliticalChange = (e) => {
-    setSelectedGeoPolitical(e.target.value);
   };
 
   const handleProductChange = (e) => {
@@ -101,8 +90,6 @@ const TenderResults = () => {
       try {
         const region = encodeURIComponent(selectedRegion);
         const country = encodeURIComponent(selectedCountry);
-        const financier = encodeURIComponent(selectedFundingAgency);
-        const geopolitical = encodeURIComponent(selectedGeoPolitical);
         const product = encodeURIComponent(selectedProduct);
 
         const baseUrl = "http://localhost:5000/apitender/tenderdetails/search";
@@ -122,12 +109,6 @@ const TenderResults = () => {
         }
         if (country) {
           searchUrl += `&country=${country}`;
-        }
-        if (financier) {
-          searchUrl += `&financier=${financier}`;
-        }
-        if (geopolitical) {
-          searchUrl += `&geopolitical=${geopolitical}`;
         }
         if (product) {
           searchUrl += `&product=${product}`;
@@ -163,8 +144,6 @@ const TenderResults = () => {
     fetchData();
   }, [
     selectedCountry,
-    selectedFundingAgency,
-    selectedGeoPolitical,
     selectedProduct,
     selectedRegion,
   ]);
@@ -276,53 +255,6 @@ const TenderResults = () => {
                 </select>
               </div>
 
-              <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
-                <label
-                  htmlFor="fundingAgency"
-                  className="block text-xl font-bold  mb-0.5 px-4 py-3 text-white bg-black"
-                >
-                  Funding Agency
-                </label>
-                <select
-                  id="fundingAgency"
-                  name="fundingAgency"
-                  size={5}
-                  value={selectedFundingAgency}
-                  onChange={handleFundingAgencyChange}
-                  className="w-full px-4 py-2 bg-white"
-                >
-                  <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All Funding Agencies</option>
-                  {fundingAgencies.map((agency) => (
-                    <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white" key={agency.name} value={agency.value}>
-                      {agency.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
-                <label
-                  htmlFor="product"
-                  className="block text-xl font-bold  mb-0.5 px-4 py-3 text-white bg-black"
-                >
-                  Tenders By Geo-Political Region
-                </label>
-                <select
-                  id="product"
-                  name="product"
-                  size={5}
-                  value={selectedGeoPolitical}
-                  onChange={handleGeoPoliticalChange}
-                  className="w-full px-4 py-2 bg-white"
-                >
-                  <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All Geo-Political Region</option>
-                  {Object.keys(geopoliticalData).map((key) => (
-                    <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white" key={key} value={key}>
-                      {key} Tenders
-                    </option>
-                  ))}
-                </select>
-              </div>
               <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
                 <label
                   htmlFor="product"

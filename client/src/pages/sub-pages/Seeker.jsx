@@ -308,9 +308,9 @@ const Seeker = () => {
         const profilePhoto = e.target.profilePhoto.files[0];
         const aadhar = e.target.aadhar.files[0];
 
-        const resumeUrl = await uploadFileToS3(resume);
-        const photoUrl = await uploadFileToS3(profilePhoto);
-        const aadharUrl = await uploadFileToS3(aadhar);
+        const resumeUrl = await uploadFileToS3(resume,"pdf");
+        const photoUrl = await uploadFileToS3(profilePhoto,"image");
+        const aadharUrl = await uploadFileToS3(aadhar,"pdf");
 
         const requestBody = formData;
         requestBody.resumeUrl = resumeUrl;

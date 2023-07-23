@@ -11,7 +11,7 @@ import payment from '../../../components/payment';
 
 const uploadMultipleFilesToS3 = async (files) => {
   const uploadPromises = files.map(async (file) => {
-    const result = await uploadFileToS3(file);
+    const result = await uploadFileToS3(file,"pdf");
     return result;
   });
 
@@ -23,7 +23,7 @@ const AuctionMaterialForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [auctionMaterials, setAuctionMaterials] = useState([]);
   const [formErrors, setFormErrors] = useState({});
-  const [isFormIncomplete, setIsFormIncomplete] = useState(false); // New state to track incomplete form
+  const [isFormIncomplete, setIsFormIncomplete] = useState(false);
 
   useEffect(() => {
     fetchAuctionMaterial();
@@ -290,6 +290,7 @@ const AuctionMaterialForm = () => {
         requestBody.workExperience.workExperience = workExperienceUrls;
         requestBody.workExperience.workOrderSamples = workOrderSamplesUrls;
         requestBody.workExperience.workProfiles = workProfilesUrls;
+
         const token = localStorage.getItem('token');
         const response = await axios.post(
           'http://localhost:5000/apitender/services/aumt/auction-material',

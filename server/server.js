@@ -1,4 +1,5 @@
 require('./config/db');
+require('./controller/updateSubscriptions');
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');

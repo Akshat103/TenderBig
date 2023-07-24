@@ -5,8 +5,9 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const ImageGallery = () => {
   const [imageUrls, setImageUrls] = useState([]);
-
+  const location = window.location.origin
   useEffect(() => {
+    console.log(window.location.origin)
     fetchImages();
   }, []);
 
@@ -43,7 +44,7 @@ const ImageGallery = () => {
           <div key={index} className="relative">
             <img
               className="w-full h-80 object-cover rounded-lg"
-              src={imageUrl.substring(0, imageUrl.lastIndexOf('/dashboard') + 1)}
+              src={`${location}/${imageUrl}`}
               alt={`Image ${index + 1}`}
             />
             <button

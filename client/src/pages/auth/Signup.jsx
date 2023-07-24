@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { locations } from "../../constants/countriesData"
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+import { Country, State, City } from 'country-state-city';
 
 const Signup = () => {
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -13,6 +14,25 @@ const Signup = () => {
         state: '',
         city: ''
     });
+
+
+    const countryData = Country.getAllCountries();
+    const countryNames = Object.values(countryData).map((country) => country.name);
+
+    let stateNames = [];
+    if (formData.country) {
+        const countryCode = countryData.find((country) => country.name === formData.country)?.isoCode;
+        const stateData = State.getStatesOfCountry(countryCode);
+        stateNames = Array.from(new Set(Object.values(stateData).map((state) => state.name)));
+    }
+
+    let cityNames = [];
+    if (formData.country) {
+        const countryCode = countryData.find((country) => country.name === formData.country)?.isoCode;
+        const cityData = City.getCitiesOfCountry(countryCode);
+        cityNames = Array.from(new Set(Object.values(cityData).map((city) => city.name)));
+    }
+
     const [successMessage, setSuccessMessage] = useState('');
 
     const handleChange = (e) => {
@@ -160,7 +180,7 @@ const Signup = () => {
                                             onChange={handleChange}
                                             className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                                         >
-                                            {locations.map((country, index) => (
+                                            {countryNames.map((country, index) => (
                                                 <option key={index} value={country}>
                                                     {country}
                                                 </option>
@@ -172,27 +192,41 @@ const Signup = () => {
                                     <label className="block font-semibold">
                                         State
                                         <span className="text-red-700 relative top-0 right-0">*</span>
-                                        <input required
-                                            type="text"
+                                        <select
+                                            required
                                             name="state"
                                             value={formData.state}
                                             onChange={handleChange}
-                                            className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                                            placeholder="Enter State"
-                                        />
+                                            className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                        >
+                                            <option value="">Select a state</option>
+                                            {stateNames.map((state) => (
+                                                <option key={state} value={state}>
+                                                    {state}
+                                                </option>
+                                            ))}
+                                        </select>
                                     </label>
                                 </div>
                                 <div className="mb-4">
                                     <label className="block font-semibold">
                                         City
                                         <input
+                                            required
                                             type="text"
                                             name="city"
                                             value={formData.city}
                                             onChange={handleChange}
-                                            className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                                            placeholder="Enter City"
+                                            className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                            placeholder="Enter a city"
+                                            autoComplete="off"
+                                            list="cityNamesList"
                                         />
+                                        <datalist id="cityNamesList">
+                                            {cityNames.map((city) => (
+                                                <option key={city} value={city} />
+                                            ))}
+                                        </datalist>
                                     </label>
                                 </div>
                             </div>

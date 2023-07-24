@@ -22,11 +22,18 @@ function AdminTenderResultList() {
     navigate("/dashboard/tender/results/forms");
   };
 
+  const token = localStorage.getItem("token")
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/tenderdetails/alltenderResults`
+          `${BASE_URL}/tenderdetails/alltenderResults`,
+          {
+            headers: {
+              auth: token,
+            },
+          }
         );
         setUserData(response.data);
       } catch (error) {

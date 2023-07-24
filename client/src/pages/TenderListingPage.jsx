@@ -38,51 +38,37 @@ const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
   );
 };
 
-export const tenderBysectorProducts = [
-  // {value: "", name: 'All Products'},
-  { value: "Rehabilitation", name: 'Rehabilitation Tenders' },
-  { value: "Medical Equipment", name: 'Medical Equipment Tenders' },
-  { value: "Bank", name: 'Bank Tenders' },
-  { value: "Cleaning", name: 'Cleaning Tenders' },
-  { value: "Construction", name: 'Construction Tenders' },
-  { value: "Defence", name: 'Defence Tenders' },
-  { value: "Electrical", name: 'Electrical Tenders' },
-  { value: "Security", name: 'Security Tenders' },
-  { value: "Transport", name: 'Transport Tenders' },
-  { value: "Airport", name: 'Airport Tenders' },
-  { value: "CCTV", name: 'CCTV Tenders' },
-  { value: "Education", name: 'Education Tenders' },
-  { value: "Energy", name: 'Energy Tenders' },
-  { value: "Healthcare", name: 'Healthcare Tenders' },
-  { value: "HR", name: 'HR Tenders' },
-  { value: "Insurance", name: 'Insurance Tenders' },
-  { value: "IT", name: 'IT Tenders' },
-  { value: "Medical", name: 'Medical Tenders' },
-  { value: "Mining", name: 'Mining Tenders' },
-  { value: "Oil And Gas", name: 'Oil And Gas Tender' },
-  { value: "Printing", name: 'Printing Tenders' },
-  { value: "Solar", name: 'Solar Tenders' },
-  { value: "Sports", name: 'Sports Tenders' },
-  { value: "Telecom", name: 'Telecom Tenders' },
-  { value: "Tourism", name: 'Tourism Tenders' },
-  { value: "Training", name: 'Training Tenders' }]
-
 const TenderListingPage = () => {
-  const [countries, setCountries] = useState([]);
 
+  const [countries, setCountries] = useState([]);
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedProduct, setSelectedProduct] = useState("");
   const [selectedUserCategory, setUserCategory] = useState("");
   const [tenderData, setTenderData] = useState([]);
-
   const [minValue, setMinValue] = useState(0);
+  const [sectors, setSectors] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
   const handleMinValueChange = (slider) => {
     setMinValue(slider.x);
+  };
+
+  useEffect(() => {
+    // Fetch all sectors
+    fetchSectors();
+  }, []);
+
+  const fetchSectors = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/options/alloptions?array=sectors`);
+      console.log(response.data[0].sectors);
+      setSectors(response.data[0].sectors);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleRegionChange = (e) => {
@@ -239,7 +225,6 @@ const TenderListingPage = () => {
     <>
       <div className="p-4 mx-auto max-w-7xl">
 
-
         <h1 className="my-4 text-3xl font-bold text-center">
           About Tenders
         </h1>
@@ -321,15 +306,6 @@ const TenderListingPage = () => {
                 >
                   Tenders By Sector
                 </label>
-                {/* <div className="flex flex-col items-start mt-4 gap-x-4 gap-y-1 h-[150px] overflow-y-scroll px-4 mb-4">
-                  {tenderBysectorProducts.map((tenderBySectorProductObj) => (
-                    <div className="flex items-center gap-3 text-lg" key={tenderBySectorProductObj.name}>
-
-                    <input type="checkbox" onChange={handleProductChange} value={tenderBySectorProductObj.value}  name={tenderBySectorProductObj.name} />
-                    <label>{tenderBySectorProductObj.name}</label>
-                    </div>
-                  ))}
-                </div> */}
 
                 <select
                   id="product"
@@ -339,41 +315,14 @@ const TenderListingPage = () => {
                   onChange={handleProductChange}
                   className="w-full px-4 py-2 bg-white"
                 >
-                  <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All Products</option>
-                  {tenderBysectorProducts.map((tenderBySectorProductObj) => (
-                    <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white" key={tenderBySectorProductObj.name} value={tenderBySectorProductObj.value}>
-                      {tenderBySectorProductObj.name}
+                  <option value="" className="text-lg  px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All Sectors</option>
+                  {sectors.map((tenderBySectorProductObj) => (
+                    <option className="py-1 mb-0.5 px-4 text-black text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white" key={tenderBySectorProductObj.name} value={tenderBySectorProductObj.value}>
+                      {tenderBySectorProductObj}
                     </option>
                   ))}
 
-                  {/* <option value="Rehabilitation">Rehabilitation Tenders</option>
-                  <option value="Medical Equipment">
-                    Medical Equipment Tenders
-                  </option>
-                  <option value="Bank">Bank Tenders</option>
-                  <option value="Cleaning">Cleaning Tenders</option>
-                  <option value="Construction">Construction Tenders</option>
-                  <option value="Defence">Defence Tenders</option>
-                  <option value="Electrical">Electrical Tenders</option>
-                  <option value="Security">Security Tenders</option>
-                  <option value="Transport">Transport Tenders</option>
-                  <option value="Airport">Airport Tenders</option>
-                  <option value="CCTV">CCTV Tenders</option>
-                  <option value="Education">Education Tenders</option>
-                  <option value="Energy">Energy Tenders</option>
-                  <option value="Healthcare">Healthcare Tenders</option>
-                  <option value="HR">HR Tenders</option>
-                  <option value="Insurance">Insurance Tenders</option>
-                  <option value="IT">IT Tenders</option>
-                  <option value="Medical">Medical Tenders</option>
-                  <option value="Mining">Mining Tenders</option>
-                  <option value="Oil And Gas">Oil And Gas Tenders</option>
-                  <option value="Printing">Printing Tenders</option>
-                  <option value="Solar">Solar Tenders</option>
-                  <option value="Sports">Sports Tenders</option>
-                  <option value="Telecom">Telecom Tenders</option>
-                  <option value="Tourism">Tourism Tenders</option>
-                  <option value="Training">Training Tenders</option> */}
+                  
                 </select>
               </div>
 

@@ -161,9 +161,6 @@ const IndividualList = () => {
                       Name
                     </th>
                     <th className="w-1/5 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
-                      Address
-                    </th>
-                    <th className="w-1/5 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
                       Contact Number
                     </th>
                     <th className="w-1/5 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
@@ -171,6 +168,9 @@ const IndividualList = () => {
                     </th>
                     <th className="w-1/5 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
                       Received At
+                    </th>
+                    <th className="w-1/5 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
+                      Action
                     </th>
                   </tr>
                 </thead>
@@ -189,9 +189,6 @@ const IndividualList = () => {
                           {form.name}
                         </td>
                         <td className="w-1/5 px-4 py-2 font-medium border-b whitespace-nowrap">
-                          {form.address}
-                        </td>
-                        <td className="w-1/5 px-4 py-2 font-medium border-b whitespace-nowrap">
                           {form.mobileNumber}
                         </td>
                         <td className="w-1/5 px-4 py-2 font-medium border-b whitespace-nowrap">
@@ -199,14 +196,6 @@ const IndividualList = () => {
                         </td>
                         <td className="w-1/5 px-4 py-2 font-medium border-b whitespace-nowrap">
                           {formatReceivedAt(form.createdAt)}
-                        </td>
-                        <td className="px-4 py-2 font-medium border-b whitespace-nowrap w-1/10">
-                          <button
-                            className="text-blue-500 hover:text-blue-700"
-                            onClick={() => viewDetails(form._id)}
-                          >
-                            <FontAwesomeIcon icon={faEdit} />
-                          </button>
                         </td>
                         <td className="px-4 py-2 font-medium border-b whitespace-nowrap w-1/10">
                           <button

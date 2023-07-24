@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config/keys");
+const userModel = require("../models/userModel");
 
 exports.verifyToken = (req, res, next) => {
   const token = req.headers.auth;
@@ -63,18 +64,11 @@ exports.isNotUser = (req, res, next) => {
 };
 
 exports.checkSubscription = async (req, res, next) => {
-  const token = req.header("auth");
-
-  if (!token) {
-    return res.status(401).json({
-      status: "error",
-      message: "Authentication token not provided.",
-    });
-  }
+  const token = req.headers.auth;
 
   try {
     const decodedToken = jwt.verify(token, JWT_SECRET);
-    const userId = decodedToken._id;
+    const userId = decodedToken.data._id;
 
     const user = await userModel.findById(userId);
     if (!user) {

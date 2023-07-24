@@ -24,7 +24,7 @@ function DashboardUsers() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}userdetails/allusers`,
+          `${BASE_URL}/userdetails/allusers`,
           {
             method: "GET",
             headers: {

@@ -8,6 +8,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { ProgressBar, Step } from "react-step-progress-bar";
+import { Country, State, City } from 'country-state-city';
 
 const OtherInformationAndPurchaserDetail = ({
   formData,
@@ -337,6 +338,23 @@ const TenderForm = () => {
     tenderDetailNoticeType: "",
   });
 
+  const countryData = Country.getAllCountries();
+  const countryNames = Object.values(countryData).map((country) => country.name);
+
+  let stateNames = [];
+  if (formData.country) {
+    const countryCode = countryData.find((country) => country.name === formData.country)?.isoCode;
+    const stateData = State.getStatesOfCountry(countryCode);
+    stateNames = Array.from(new Set(Object.values(stateData).map((state) => state.name)));
+  }
+
+  let cityNames = [];
+  if (formData.country) {
+    const countryCode = countryData.find((country) => country.name === formData.country)?.isoCode;
+    const cityData = City.getCitiesOfCountry(countryCode);
+    cityNames = Array.from(new Set(Object.values(cityData).map((city) => city.name)));
+  }
+
   const clearInputs = () => {
     setFormData({
       summary: "",
@@ -634,7 +652,7 @@ const TenderForm = () => {
                         onChange={handleChange}
                         className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                       >
-                        {locations.map((country, index) => (
+                        {countryNames.map((country, index) => (
                           <option key={index} value={country}>
                             {country}
                           </option>
@@ -647,28 +665,43 @@ const TenderForm = () => {
                       <span className="relative top-0 right-0 text-red-700">
                         *
                       </span>
-                      <input
+                      <select
                         required
-                        type="text"
                         name="state"
                         value={formData.state}
                         onChange={handleChange}
                         className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                        placeholder="Enter State"
-                      />
+                      >
+                        <option value="">Select a state</option>
+                        {stateNames.map((state) => (
+                          <option key={state} value={state}>
+                            {state}
+                          </option>
+                        ))}
+                      </select>
+
                     </label>
                   </div>
                   <div className="grid grid-cols-2 gap-4 mt-1.5 mb-1.5">
                     <label className="block font-semibold">
                       City
+
                       <input
+                        required
                         type="text"
                         name="city"
                         value={formData.city}
                         onChange={handleChange}
                         className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                        placeholder="Enter City"
+                        placeholder="Enter a city"
+                        autoComplete="off"
+                        list="cityNamesList"
                       />
+                      <datalist id="cityNamesList">
+                        {cityNames.map((city) => (
+                          <option key={city} value={city} />
+                        ))}
+                      </datalist>
                     </label>
                     <label className="block font-semibold">
                       Deadline

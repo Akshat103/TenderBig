@@ -9,6 +9,7 @@ import uploadFileToS3 from "../file-uploading/FileUpload";
 import { NavLink } from "react-router-dom";
 import { sideNavigationButtons } from "../../components/Forms";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+import { Country, State, City } from 'country-state-city';
 
 const Employer = () => {
   const [company, setCompany] = useState("");
@@ -35,6 +36,25 @@ const Employer = () => {
   const [workingdays, setWorkingdays] = useState("");
   const [seekerpost, setSeekerpost] = useState("");
   const [isVisible, setIsVisible] = useState(false);
+
+  const countryData = Country.getAllCountries();
+  const countryNames = Object.values(countryData).map((country) => country.name);
+
+  let stateNames = [];
+  if (country) {
+    let selectedCountry = country;
+    const countryCode = countryData.find((country) => country.name === selectedCountry)?.isoCode;
+    const stateData = State.getStatesOfCountry(countryCode);
+    stateNames = Array.from(new Set(Object.values(stateData).map((state) => state.name)));
+  }
+
+  let cityNames = [];
+  if (country) {
+    let selectedCountry = country;
+    const countryCode = countryData.find((country) => country.name === selectedCountry)?.isoCode;
+    const cityData = City.getCitiesOfCountry(countryCode);
+    cityNames = Array.from(new Set(Object.values(cityData).map((city) => city.name)));
+  }
 
   useEffect(() => {
     setIsVisible(true);
@@ -442,18 +462,26 @@ const Employer = () => {
               <div className="md:flex">
               <div className="flex">
                 <div className="mx-1 mb-4 basis-1/2">
-                  <label htmlFor="city" className="flex items-center">
-                    <AiOutlineUser className="mr-2" />
-                    City
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    id="city"
-                    className="w-full px-3 py-2 border border-gray-300 rounded"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                  />
+                <label className="block font-semibold">
+                      City
+
+                      <input
+                        required
+                        type="text"
+                        name="city"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                        placeholder="Enter a city"
+                        autoComplete="off"
+                        list="cityNamesList"
+                      />
+                      <datalist id="cityNamesList">
+                        {cityNames.map((city) => (
+                          <option key={city} value={city} />
+                        ))}
+                      </datalist>
+                    </label>
                 </div>
                 <div className="mx-1 mb-4 basis-1/2">
                   <label htmlFor="zipcode" className="flex items-center">
@@ -472,21 +500,27 @@ const Employer = () => {
                 </div>
                 <div className="flex">
                 <div className="mx-1 mb-4 basis-1/2">
-                  <label className="block mb-2 font-semibold">
-                    State
-                    <span className="relative top-0 right-0 text-red-700">
-                      *
-                    </span>
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    name="state"
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
-                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                    placeholder="Enter State"
-                  />
+                <label className="block font-semibold">
+                      State
+                      <span className="relative top-0 right-0 text-red-700">
+                        *
+                      </span>
+                      <select
+                        required
+                        name="state"
+                        value={state}
+                        onChange={(e) => setState(e.target.value)}
+                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                      >
+                        <option value="">Select a state</option>
+                        {stateNames.map((state) => (
+                          <option key={state} value={state}>
+                            {state}
+                          </option>
+                        ))}
+                      </select>
+
+                    </label>
                 </div>
                 <div className="mx-1 mb-4 basis-1/2">
                   <label className="block mb-2 font-semibold">
@@ -502,7 +536,7 @@ const Employer = () => {
                     onChange={(e) => setCountry(e.target.value)}
                     className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                   >
-                    {locations.map((country, index) => (
+                    {countryNames.map((country, index) => (
                       <option key={index} value={country}>
                         {country}
                       </option>

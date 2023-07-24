@@ -439,6 +439,8 @@ class Tender {
                 'procurementSummary.deadline': { $gte: currentDate }
             };
 
+            console.log(req.userSubscription)
+
             const { region, geopolitical, country, sector, financier, state, city, product, userCategory, value } = req.query;
             const { details } = req.body;
 

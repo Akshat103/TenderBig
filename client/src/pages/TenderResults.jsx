@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { regionData } from "../constants/countriesData.js";
 import { useNavigate } from "react-router-dom";
-import { tenderBysectorProducts } from "./TenderListingPage.jsx";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
@@ -17,7 +16,7 @@ const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
   };
 
   console.log(tenderId);
-  
+
 
   return (
     <div className="bg-white shadow-lg rounded p-6 mb-4 border-[2px] border-black/20">
@@ -44,14 +43,29 @@ const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
 
 const TenderResults = () => {
   const [countries, setCountries] = useState([]);
-
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedProduct, setSelectedProduct] = useState("");
   const [tenderData, setTenderData] = useState([]);
+  const [sectors, setSectors] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+
+  useEffect(() => {
+    // Fetch all sectors
+    fetchSectors();
+  }, []);
+
+  const fetchSectors = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/options/alloptions?array=sectors`);
+      console.log(response.data[0].sectors);
+      setSectors(response.data[0].sectors);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleRegionChange = (e) => {
     const selectedRegion = e.target.value;
@@ -122,7 +136,7 @@ const TenderResults = () => {
           auth: token,
         };
 
-        
+
         const response = await axios.post(searchUrl, { details: detailsArray }, { headers });
         console.log(response, "gems");
         if (response.status === 401) {
@@ -272,9 +286,9 @@ const TenderResults = () => {
                   className="w-full px-4 py-2 bg-white"
                 >
                   <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All Products</option>
-                  {tenderBysectorProducts.map((tenderBySectorProductObj) => (
+                  {sectors.map((tenderBySectorProductObj) => (
                     <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white" key={tenderBySectorProductObj.name} value={tenderBySectorProductObj.value}>
-                      {tenderBySectorProductObj.name}
+                      {tenderBySectorProductObj}
                     </option>
                   ))}
                 </select>
@@ -282,16 +296,16 @@ const TenderResults = () => {
             </div>
           </div>
           <div className="mt-8 sm:col-span-2 md:col-span-2">
-        {tenderData.length > 0 ? (
-          tenderData.map((tender) => (
-            <TenderCard
-              key={tender.tenderId}
-              title={tender.summary}
-              deadline={tender.deadline}
-              location={tender.country}
-              referenceNo={tender.state}
-              tenderId={tender.tenderId}
-o
+            {tenderData.length > 0 ? (
+              tenderData.map((tender) => (
+                <TenderCard
+                  key={tender.tenderId}
+                  title={tender.summary}
+                  deadline={tender.deadline}
+                  location={tender.country}
+                  referenceNo={tender.state}
+                  tenderId={tender.tenderId}
+                  o
                 />
               ))
             ) : (
@@ -310,11 +324,10 @@ o
                   <button
                     key={pageNumber}
                     onClick={() => goToPage(pageNumber)}
-                    className={`px-4 py-2 rounded hover:bg-black hover:text-white hover:border hover:border-black transition-colors duration-300 ${
-                      pageNumber === currentPage
+                    className={`px-4 py-2 rounded hover:bg-black hover:text-white hover:border hover:border-black transition-colors duration-300 ${pageNumber === currentPage
                         ? "text-white bg-black"
                         : "text-black bg-white"
-                    }`}
+                      }`}
                   >
                     {pageNumber}
                   </button>

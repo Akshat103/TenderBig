@@ -212,7 +212,7 @@ const JointVenture = () => {
         requestBody.directors = updatedDirectors;
         const token = localStorage.getItem("token");
         const response = await axios.post(
-          `${BASE_URL}services/jv/submitjv`,
+          `${BASE_URL}/services/jv/submitjv`,
           requestBody,
           {
             headers: {

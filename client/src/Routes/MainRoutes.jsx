@@ -44,7 +44,7 @@ const MainRoutes = () => {
         <Route path='/gemslist' element={<GemListing />} />
         <Route path='/tenderfilling' element={<TenderFilling />}></Route>
         <Route path='/tenderfillingonline' element={<TenderFillingOnline />}></Route>
-        <Route path='/tenderfilliDngoffline' element={<TenderFillingOffline />}></Route>
+        <Route path='/tenderfillingoffline' element={<TenderFillingOffline />}></Route>
         <Route path='/regandcert' element={<RegAndCert />}></Route>
         <Route path='/registration' element={<Registration />}></Route>
         <Route path='/auctionmaterial' element={<AuctionMaterialForm />}></Route>

@@ -2,9 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { regionData, geopoliticalData } from "../constants/countriesData.js";
+import { regionData } from "../constants/countriesData.js";
 import { useNavigate } from "react-router-dom";
-import {  tenderBysectorProducts } from "./TenderListingPage.jsx";
 import InputSlider from "react-input-slider";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -72,9 +71,25 @@ const GemListing = () => {
   const [selectedProduct, setSelectedProduct] = useState("");
   const [tenderData, setTenderData] = useState([]);
   const [minValue, setMinValue] = useState(0);
+  const [sectors, setSectors] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+
+  useEffect(() => {
+    // Fetch all sectors
+    fetchSectors();
+  }, []);
+
+  const fetchSectors = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/options/alloptions?array=sectors`);
+      console.log(response.data[0].sectors);
+      setSectors(response.data[0].sectors);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleRegionChange = (e) => {
     const selectedRegion = e.target.value;
@@ -321,9 +336,9 @@ const GemListing = () => {
                   className="w-full px-4 py-2 bg-white"
                 >
                   <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All Products</option>
-                  {tenderBysectorProducts.map((tenderBySectorProductObj) => (
+                  {sectors.map((tenderBySectorProductObj) => (
                     <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white" key={tenderBySectorProductObj.name} value={tenderBySectorProductObj.value}>
-                      {tenderBySectorProductObj.name}
+                      {tenderBySectorProductObj}
                     </option>
                   ))}
                 </select>

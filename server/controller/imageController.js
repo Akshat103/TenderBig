@@ -46,7 +46,7 @@ const getImages = (req, res) => {
   
   const deleteImage = (req, res) => {
     const { filename } = req.params;
-    const filePath = path.join('dist/uploads', filename);
+    const filePath = path.join('dist/', filename);
     fs.unlink(filePath, (err) => {
       if (err) {
         return res.status(500).json(err);

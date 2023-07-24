@@ -34,7 +34,10 @@ const userSchema = new mongoose.Schema(
             required: true,
         },
         subscription: {
-            id: String,
+            id: {
+                type: String,
+                default: "none",
+            },
             status: {
                 type: String,
                 default: "inactive",

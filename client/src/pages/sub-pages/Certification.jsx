@@ -7,6 +7,7 @@ import axios from "axios";
 import { Country, State, City } from 'country-state-city';
 import payment from "../../components/payment";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+import { useNavigate } from 'react-router-dom';
 
 function CompanyForm({ onSubmit, licenses }) {
     const [companyName, setCompanyName] = useState('');
@@ -665,6 +666,8 @@ const Certification = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [licenses, setLicenses] = useState([]);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         setIsVisible(true);
         fetchLicenses();
@@ -706,9 +709,11 @@ const Certification = () => {
                 }
             })
             .then((response) => {
-                console.log("Form data sent successfully:", response.data);
-                alert("We will contact you soon!!!");
-                window.location.href = '/certification';
+                if(response.data.success){
+                    console.log("Form data sent successfully");
+                    alert(response.data.message);
+                    navigate('/certification');
+                }
             })
             .catch((error) => {
                 console.error("Error sending form data:", error);
@@ -727,9 +732,11 @@ const Certification = () => {
                 }
             })
             .then((response) => {
-                console.log("Form data sent successfully:", response.data);
-                alert("We will contact you soon!!!");
-                window.location.href = '/certification';
+                if(response.data.success){
+                    console.log("Form data sent successfully");
+                    alert(response.data.message);
+                    navigate('/certification');
+                }
             })
             .catch((error) => {
                 console.error("Error sending form data:", error);

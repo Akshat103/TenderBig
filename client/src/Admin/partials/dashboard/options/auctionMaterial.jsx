@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Sidebar from "../../Sidebar";
-import Header from "../../Header";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Material = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [auctionMaterials, setAuctionMaterial] = useState([]);
   const [newAuctionMaterial, setNewAuctionMaterial] = useState("");
 
@@ -51,14 +48,6 @@ const Material = () => {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-        <main>
-          {/* Site header */}
-          <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <h1 className="text-xl font-bold mb-4">Auction Material</h1>
@@ -112,9 +101,7 @@ const Material = () => {
               )}
             </div>
           </div>
-        </main>
-      </div>
-    </div>
+        
   );
 };
 

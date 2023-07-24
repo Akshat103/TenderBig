@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../../../Sidebar";
-import Header from "../../../Header";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -189,19 +187,8 @@ const GemRegistration = () => {
     doc.autoTable(tableConfig);
     doc.save("gem_registration_requests.pdf");
   };
-  
 
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
-    <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-x-auto overflow-y-auto">
-        <main>
-          {/* Site header */}
-          <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
           <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
             <h1 className="mb-4 text-xl font-bold">
               Gem Registration Requests
@@ -319,9 +306,6 @@ const GemRegistration = () => {
               </div>
             </div>
           </div>
-        </main>
-      </div>
-    </div>
   );
 };
 

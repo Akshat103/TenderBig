@@ -29,6 +29,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const handleImages = () => {
     navigate('/dashboard/images')
   }
+  
 
   const trigger = useRef(null);
   const sidebar = useRef(null);

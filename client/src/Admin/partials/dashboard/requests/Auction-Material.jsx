@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Sidebar from "../../Sidebar";
-import Header from "../../Header";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const AuctionMaterial = () => {
@@ -91,15 +89,6 @@ const AuctionMaterial = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-auto">
-        <main>
-          {/* Site header */}
-          <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto overflow-x-auto">
             <h1 className="text-xl font-bold mb-4">Requests for Auction Material</h1>
             {/* Table */}
@@ -177,9 +166,6 @@ const AuctionMaterial = () => {
               </nav>
             </div>
           </div>
-        </main>
-      </div>
-    </div>
   );
 };
 

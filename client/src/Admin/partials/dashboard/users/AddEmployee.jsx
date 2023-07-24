@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import Sidebar from "../../Sidebar";
-import Header from "../../Header";
 import { locations } from "../../../../constants/countriesData"
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
 const AddEmployee = () => {
     const [formData, setFormData] = useState({
         name: '',
@@ -56,22 +55,8 @@ const AddEmployee = () => {
                 alert("All fields are required!!!")
             });
     };
-
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+    
     return (
-        <div className="flex h-screen overflow-hidden ">
-            {/* Sidebar */}
-
-            <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-            {/* Content area */}
-            <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden ">
-                <main>
-                    {/*  Site header 
-        import Header from '../partials/Header';
-        */}
-                    <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
                     <div className="px-4 sm:px-6 lg:px-8 py-8 flex justify-center shadow-2xl rounded-lg">
                         {/* Dashboard actions */}
                         <div className="md:w-1/2">
@@ -202,9 +187,6 @@ const AddEmployee = () => {
                             </div>
                         </div>
                     </div>
-                </main>
-            </div>
-        </div>
     );
 };
 

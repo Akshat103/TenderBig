@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Sidebar from "../../Sidebar";
-import Header from "../../Header";
 import { faArrowLeft, faArrowRight, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as XLSX from "xlsx";
@@ -185,15 +183,6 @@ const ContactFormList = () => {
   // };
 
   return (
-    <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
-        <main>
-          {/* Site header */}
-          <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
           <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
             <h1 className="mb-4 text-xl font-bold">Contact Requests</h1>
 
@@ -360,9 +349,6 @@ const ContactFormList = () => {
             </div>
 
           </div>
-        </main>
-      </div>
-    </div>
   );
 };
 

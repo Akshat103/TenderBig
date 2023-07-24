@@ -44,7 +44,9 @@ class Contact {
     async getByService(req, res) {
         try {
             const { selectedService } = req.params;
+            console.log(selectedService)
             const contactForms = await ContactForm.find({ selectedService });
+            console.log(contactForms)
             res.json(contactForms);
         } catch (error) {
             console.error(error);

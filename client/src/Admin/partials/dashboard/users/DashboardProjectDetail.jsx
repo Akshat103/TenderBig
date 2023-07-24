@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import Sidebar from "../../Sidebar";
-import Header from "../../Header";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 function ProjectDetails() {
@@ -88,15 +86,6 @@ function ProjectDetails() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-      {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-        <main>
-          {/* Site header */}
-          <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-xl mx-auto flex justify-center">
             {/* Dashboard actions */}
             <div className="container mx-auto py-8 px-4 ">
@@ -282,9 +271,7 @@ function ProjectDetails() {
               )}
             </div>
           </div>
-        </main>
-      </div>
-    </div>
+
   );
 }
 

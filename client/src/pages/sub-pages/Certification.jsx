@@ -712,7 +712,7 @@ const Certification = () => {
                 if(response.data.success){
                     console.log("Form data sent successfully");
                     alert(response.data.message);
-                    navigate('/certification');
+                    navigate('/regandcert');
                 }
             })
             .catch((error) => {
@@ -734,8 +734,9 @@ const Certification = () => {
             .then((response) => {
                 if(response.data.success){
                     console.log("Form data sent successfully");
+                    console.log(response)
                     alert(response.data.message);
-                    navigate('/certification');
+                    navigate('/regandcert');
                 }
             })
             .catch((error) => {

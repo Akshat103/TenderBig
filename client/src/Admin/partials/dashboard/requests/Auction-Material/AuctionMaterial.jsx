@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../../../Sidebar";
-import Header from "../../../Header";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -74,121 +72,95 @@ const AuctionMaterial = () => {
 
     const downloadAsExcel = () => {
         const selectedData = forms.slice(
-          (currentPage - 1) * formsPerPage,
-          currentPage * formsPerPage
-        );
-    
-        const formattedData = selectedData.map((form) => ({
-          "Company Name": form.companyName,
-          "Contact Person Name": form.contactPersonName,
-          "Contact Person Number": form.contactPersonNumber,
-          Country: form.country,
-          "Received At": formatReceivedAt(form.createdAt),
-        }));
-    
-        const worksheet = XLSX.utils.json_to_sheet(formattedData);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Auction Material");
-        const excelBuffer = XLSX.write(workbook, {
-          bookType: "xlsx",
-          type: "array",
-        });
-    
-        const data = new Blob([excelBuffer], {
-          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        });
-        saveAs(data, "auction_material.xlsx");
-      };
-    
-      const downloadAsPDF = () => {
-        const doc = new jsPDF();
-    
-        const tableData = forms
-          .slice(
             (currentPage - 1) * formsPerPage,
             currentPage * formsPerPage
-          )
-          .map((form) => ({
+        );
+
+        const formattedData = selectedData.map((form) => ({
             "Company Name": form.companyName,
             "Contact Person Name": form.contactPersonName,
             "Contact Person Number": form.contactPersonNumber,
             Country: form.country,
             "Received At": formatReceivedAt(form.createdAt),
-          }));
-    
+        }));
+
+        const worksheet = XLSX.utils.json_to_sheet(formattedData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Auction Material");
+        const excelBuffer = XLSX.write(workbook, {
+            bookType: "xlsx",
+            type: "array",
+        });
+
+        const data = new Blob([excelBuffer], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
+        saveAs(data, "auction_material.xlsx");
+    };
+
+    const downloadAsPDF = () => {
+        const doc = new jsPDF();
+
+        const tableData = forms
+            .slice(
+                (currentPage - 1) * formsPerPage,
+                currentPage * formsPerPage
+            )
+            .map((form) => ({
+                "Company Name": form.companyName,
+                "Contact Person Name": form.contactPersonName,
+                "Contact Person Number": form.contactPersonNumber,
+                Country: form.country,
+                "Received At": formatReceivedAt(form.createdAt),
+            }));
+
         const tableConfig = {
-          head: [
-            [
-              "Company Name",
-              "Contact Person Name",
-              "Contact Person Number",
-              "Country",
-              "Received At",
+            head: [
+                [
+                    "Company Name",
+                    "Contact Person Name",
+                    "Contact Person Number",
+                    "Country",
+                    "Received At",
+                ],
             ],
-          ],
-          body: tableData.map((row) => Object.values(row)),
+            body: tableData.map((row) => Object.values(row)),
         };
-    
+
         doc.autoTable(tableConfig);
         doc.save("auction_material.pdf");
-      };
-
-      
-
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+    };
 
     if (!forms) {
         return (
-            <div className="flex h-screen overflow-hidden">
-                {/* Sidebar */}
-                <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-                {/* Content area */}
-                <div className="relative flex flex-col flex-1 overflow-x-auto overflow-y-auto bg-gray-100">
-                    <main>
-                        {/* Site header */}
-                        <Header
-                            sidebarOpen={sidebarOpen}
-                            setSidebarOpen={setSidebarOpen}
-                        />
-                        <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
-                            <div className="flex justify-center">
-                                <div className="p-6 bg-white rounded-lg shadow-lg">
-                                    <h2 className="mb-4 text-xl font-bold">Auction Material</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </main>
+            <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
+                <div className="flex justify-center">
+                    <div className="p-6 bg-white rounded-lg shadow-lg">
+                        <h2 className="mb-4 text-xl font-bold">Auction Material</h2>
+                    </div>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="flex h-screen overflow-hidden">
-            {/* Sidebar */}
-            <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-            {/* Content area */}
-            <div className="relative flex flex-col flex-1 overflow-x-auto overflow-y-auto bg-gray-100">
-                <main>
-                    {/* Site header */}
-                    <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
                     <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
                         <h1 className="mb-4 text-xl font-bold">Auction Material</h1>
                         {/* Download buttons */}
-                <div className="flex justify-end mb-4">
-                <button
-                  className="px-4 py-2 mr-2 font-bold text-white bg-green-700 rounded focus:outline-none focus:ring-2"
-                  onClick={downloadAsExcel}
-                >
-                  Download Excel
-                </button>
-                {/* <button
+                        <div className="flex justify-end mb-4">
+                            <button
+                                className="px-4 py-2 mr-2 font-bold text-white bg-green-700 rounded focus:outline-none focus:ring-2"
+                                onClick={downloadAsExcel}
+                            >
+                                Download Excel
+                            </button>
+                            {/* <button
                   className="px-4 py-2 font-bold text-white bg-red-700 rounded focus:outline-none focus:ring-2"
                   onClick={downloadAsPDF}
                 >
                   Download PDF
                 </button> */}
-              </div>
+                        </div>
                         {/* Table */}
                         <div className="overflow-hidden border rounded-lg shadow-2xl">
                             <table className="min-w-full py-3 divide-y divide-gray-200 table-fixed">
@@ -282,9 +254,6 @@ const AuctionMaterial = () => {
                             </div>
                         </div>
                     </div>
-                </main>
-            </div>
-        </div>
     );
 };
 

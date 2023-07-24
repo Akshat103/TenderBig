@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Sidebar from "../Sidebar";
-import Header from "../Header";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -103,22 +101,8 @@ const CurrentTenders = () => {
     navigate(`/dashboard/tender/${tenderId}`)
   };
   
-
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
-    <div className="flex h-screen overflow-hidden ">
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-      {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-auto">
-        <main>
-          {/*  Site header */}
-          <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            {/* Dashboard actions */}
-
-            {/* Cards */}
             <div className="grid grid-cols-15 gap-6">
               {/* Table */}
               <section className="container mx-auto p-6 font-mono overflow-x-auto">
@@ -219,10 +203,7 @@ const CurrentTenders = () => {
                 </div>
               </section>
             </div>
-          </div>
-        </main>
-      </div>
-    </div>
+
   );
 };
 

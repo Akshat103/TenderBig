@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema(
             },
             type: {
                 type: String,
-                enum:["One State Plan","All India","Global"],
+                enum:["One State Plan","All India","Global","none"],
                 default: "none",
             },
             state: {

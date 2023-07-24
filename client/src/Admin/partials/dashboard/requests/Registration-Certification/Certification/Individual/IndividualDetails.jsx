@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Sidebar from "../../../../../Sidebar";
-import Header from "../../../../../Header";
 import { ProgressBar, Step } from 'react-step-progress-bar';
 import 'react-step-progress-bar/styles.css';
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -27,9 +25,6 @@ const IndividualDetails = () => {
     };
 
     const handleUpdate = (id) => {
-        // Perform update logic here with the updated form data
-        // You can send a request to the API to update the data
-        // After updating, set isEditing to false to exit editing mode
         setIsEditing(false);
     };
 
@@ -45,8 +40,6 @@ const IndividualDetails = () => {
             .then((data) => {
                 console.log(data);
                 alert('form submitted')
-                // Perform any necessary actions after successful update
-                // For example, you can navigate to a different page or display a success message
             })
             .catch((error) => console.log(error));
     }
@@ -54,14 +47,6 @@ const IndividualDetails = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     if (!formData) {
         return (
-            <div className="flex h-screen overflow-hidden">
-                {/* Sidebar */}
-                <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-                {/* Content area */}
-                <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-auto">
-                    <main>
-                        {/* Site header */}
-                        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
                         <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
                             <div className="flex justify-center">
                                 <div className="bg-white rounded-lg shadow-lg p-6">
@@ -69,24 +54,12 @@ const IndividualDetails = () => {
                                 </div>
                             </div>
                         </div>
-                    </main>
-                </div>
-            </div>
         );
     }
     const stepNames = ['Tender Name', 'Company Name', /* Add step names here */];
 
     const progress = Math.round((formData.currentStep / (stepNames.length - 1)) * 100);
     return (
-        <div className="flex h-screen overflow-hidden">
-            {/* Sidebar */}
-            <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-            {/* Content area */}
-            <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-auto">
-                <main>
-                    {/* Site header */}
-                    <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
                     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
                         <div className="flex justify-center flex-shrink">
                         <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-20 w-full lg:w-3/4">
@@ -435,9 +408,6 @@ const IndividualDetails = () => {
                             </div></div>
                         </div>
                     </div>
-                </main>
-            </div>
-        </div>
     );
 };
 

@@ -30,6 +30,9 @@ const Navbar = () => {
   const dashboard = () => {
     navigate("/dashboard/admin");
   };
+  const Userdashboard = () => {
+    navigate("/userDashboard");
+  };
 
   const toggleMobileDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -40,7 +43,7 @@ const Navbar = () => {
       {/* contact bar */}
       <div className="h-[80px] flex items-center justify-between gap-8  text-black xl:px-80 lg:px-20 px-10 font-bold">
         <div className="flex items-center gap-8">
-          
+
           <div className="flex items-center gap-2">
             <img src={PhoneImg} alt="phone_img" className="w-8 h-8" />
             <div className="whitespace-nowrap">+91 1413953880</div>
@@ -53,59 +56,53 @@ const Navbar = () => {
             <img src={WAImg} alt="phone_img" className="w-8 h-8" />
             <div>8875515555</div>
           </div>
-          {/* <div className="px-4 py-2 text-white bg-black rounded">
-            Contact
-          </div> */}
-          
+
         </div>
 
-      <div>
+        <div>
           {auth ? (
-                  <>
-                    <div className="md:flex hidden flex-row gap-8">
-                      <button
-                        onClick={logout}
-                        className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
-                      >
-                        Logout
-                      </button>
+            <>
+              <div className="md:flex hidden flex-row gap-8">
+                <button
+                  onClick={logout}
+                  className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
+                >
+                  Logout
+                </button>
 
-                      {(auth.userRole == "admin" || auth.userRole == "hr" || auth.userRole == "employee" ||
-                        auth.userRole == "franchise" ) ? (
-                        <button
-                          onClick={dashboard}
-                          className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
-                        >
-                          Dashboard
-                        </button>
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                  </>
-                ) : (
-                  <Link
-                    to="/login"
+                {(auth.userRole == "admin" || auth.userRole == "hr" || auth.userRole == "employee" ||
+                  auth.userRole == "franchise") ? (
+                  <button
+                    onClick={dashboard}
                     className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
-                    >
-                    Login
-                  </Link>
+                  >
+                    Dashboard
+                  </button>
+                ) : (
+                  <></>
                 )}
-      </div>
-          
-       {/* <div className="flex items-center gap-8">
-        <button
-          onClick={logout}
-          className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
-        >
-          Logout
-        </button><button
-          onClick={logout}
-          className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
-        >
-          Dashboard
-        </button>
-       </div> */}
+
+                {(auth.userRole == "user") ? (
+                  <button
+                    onClick={Userdashboard}
+                    className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
+                  >
+                    Dashboard
+                  </button>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </>
+          ) : (
+            <Link
+              to="/login"
+              className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
+            >
+              Login
+            </Link>
+          )}
+        </div>
       </div>
       <nav className="bg-red-700 shadow ">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-4">
@@ -152,25 +149,10 @@ const Navbar = () => {
                   >
                     Apply for Tenders
                   </Link>
-
-                  {/* <Link
-                    to="/contact"
-                    className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
-                  >
-                    Contact
-                  </Link>
-                  <Link
-                    to="/tenderResults"
-                    className="px-3 py-2 text-lg font-medium text-gray-600 transition-colors duration-300 rounded-md hover:text-red-700"
-                  >
-                    Tender Results
-                  </Link> */}
                   <div className="relative">
                     <button
                       onClick={() => setDropdownOpen(true)}
                       onMouseEnter={() => setDropdownOpen(true)}
-                      // onMouseLeave={() => setDropdownOpen(false)}
-
                       className="px-3 py-2 text-lg font-bold text-white transition-colors duration-300 rounded-md hover:text-white"
                     >
                       Services
@@ -178,9 +160,8 @@ const Navbar = () => {
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
                         fill="currentColor"
-                        className={`ml-1 h-4 w-4 inline-block transform ${
-                          dropdownOpen ? "rotate-180" : ""
-                        }`}
+                        className={`ml-1 h-4 w-4 inline-block transform ${dropdownOpen ? "rotate-180" : ""
+                          }`}
                       >
                         <path
                           fillRule="evenodd"
@@ -192,7 +173,6 @@ const Navbar = () => {
                     {dropdownOpen && (
                       <div
                         className="absolute right-0 mt-2  bg-white border border-gray-200 rounded-md shadow-lg w-[290px] z-10"
-                        // onMouseEnter={() => setDropdownOpen(true)}
                         onMouseLeave={() => setDropdownOpen(false)}
                       >
                         <Link
@@ -343,34 +323,14 @@ const Navbar = () => {
                     Tender results
                   </Link>
 
-                  {/* {auth ? (
-                    <>
-                      <button
-                        onClick={logout}
-                        className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-red-700 rounded-md"
-                      >
-                        Logout
-                      </button>
+                  <Link
+                    to="/subscribe"
+                    className="px-3 py-2 text-lg font-bold text-white transition-colors duration-300 rounded-md hover:text-white"
+                  >
+                    Subscription
+                  </Link>
 
-                      {auth.userRole == "admin" ? (
-                        <button
-                          onClick={dashboard}
-                          className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-red-700 rounded-md"
-                        >
-                          Dashboard
-                        </button>
-                      ) : (
-                        <></>
-                      )}
-                    </>
-                  ) : (
-                    <Link
-                      to="/login"
-                      className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-red-700 rounded-md"
-                    >
-                      Login
-                    </Link>
-                  )} */}
+
                 </div>
               </div>
             </div>
@@ -468,176 +428,175 @@ const Navbar = () => {
                   Contact
                 </Link> */}
                 <div className="relative">
-                    <button
-                      onClick={() => setDropdownOpen(true)}
-                      onMouseEnter={() => setDropdownOpen(true)}
-                      // onMouseLeave={() => setDropdownOpen(false)}
+                  <button
+                    onClick={() => setDropdownOpen(true)}
+                    onMouseEnter={() => setDropdownOpen(true)}
+                    // onMouseLeave={() => setDropdownOpen(false)}
 
-                      className="block px-3 py-1 text-lg font-medium text-white transition-colors duration-300 rounded-md hover:text-red-100"
-                      >
-                      Services
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        className={`ml-1 h-4 w-4 inline-block transform ${
-                          dropdownOpen ? "rotate-180" : ""
+                    className="block px-3 py-1 text-lg font-medium text-white transition-colors duration-300 rounded-md hover:text-red-100"
+                  >
+                    Services
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className={`ml-1 h-4 w-4 inline-block transform ${dropdownOpen ? "rotate-180" : ""
                         }`}
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.293 6.293a1 1 0 0 1 1.414 0L10 9.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                  {dropdownOpen && (
+                    <div
+                      className="absolute right-0 mt-2  bg-gray-50 border border-gray-200 rounded-md shadow-lg w-[290px] z-10"
+                      // onMouseEnter={() => setDropdownOpen(true)}
+                      onMouseLeave={() => setDropdownOpen(false)}
+                    >
+                      <Link
+                        to="/careerandmanpower"
+                        onClick={toggleMenu}
+                        className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                       >
-                        <path
-                          fillRule="evenodd"
-                          d="M5.293 6.293a1 1 0 0 1 1.414 0L10 9.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
-                    {dropdownOpen && (
-                      <div
-                        className="absolute right-0 mt-2  bg-gray-50 border border-gray-200 rounded-md shadow-lg w-[290px] z-10"
-                        // onMouseEnter={() => setDropdownOpen(true)}
-                        onMouseLeave={() => setDropdownOpen(false)}
+                        <svg
+                          xmlns="https://www.svgrepo.com/show/498932/settings.svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          className={`ml-1 h-4 w-4 inline-block transform -rotate-90`}
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5.293 6.293a1 1 0 0 1 1.414 0L10 9.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        Career & Man Power
+                      </Link>
+
+                      <Link
+                        to="/regandcert"
+                        onClick={toggleMenu}
+                        className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
                       >
-                        <Link
-                          to="/careerandmanpower"
-                          onClick={toggleMenu}
-                          className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
+                        <svg
+                          xmlns="https://www.svgrepo.com/show/498932/settings.svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          className={`ml-1 h-4 w-4 inline-block transform -rotate-90`}
                         >
-                          <svg
-                            xmlns="https://www.svgrepo.com/show/498932/settings.svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className={`ml-1 h-4 w-4 inline-block transform -rotate-90`}
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M5.293 6.293a1 1 0 0 1 1.414 0L10 9.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          Career & Man Power
-                        </Link>
+                          <path
+                            fillRule="evenodd"
+                            d="M5.293 6.293a1 1 0 0 1 1.414 0L10 9.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        Registration/Certificate
+                      </Link>
 
-                        <Link
-                          to="/regandcert"
-                          onClick={toggleMenu}
-                          className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
+                      <Link
+                        to="/contact"
+                        onClick={toggleMenu}
+                        className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
+                      >
+                        <svg
+                          xmlns="https://www.svgrepo.com/show/498932/settings.svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          className={`ml-1 h-4 w-4 inline-block transform -rotate-90`}
                         >
-                          <svg
-                            xmlns="https://www.svgrepo.com/show/498932/settings.svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className={`ml-1 h-4 w-4 inline-block transform -rotate-90`}
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M5.293 6.293a1 1 0 0 1 1.414 0L10 9.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          Registration/Certificate
-                        </Link>
+                          <path
+                            fillRule="evenodd"
+                            d="M5.293 6.293a1 1 0 0 1 1.414 0L10 9.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z"
+                            clipRule="evenodd"
+                          />{" "}
+                        </svg>
+                        License
+                      </Link>
 
-                        <Link
-                          to="/contact"
-                          onClick={toggleMenu}
-                          className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
+                      <Link
+                        to="/auctionmaterial"
+                        className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
+                        onClick={toggleMenu}                        >
+                        <svg
+                          xmlns="https://www.svgrepo.com/show/498932/settings.svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          className={`ml-1 h-4 w-4 inline-block transform -rotate-90`}
                         >
-                          <svg
-                            xmlns="https://www.svgrepo.com/show/498932/settings.svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className={`ml-1 h-4 w-4 inline-block transform -rotate-90`}
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M5.293 6.293a1 1 0 0 1 1.414 0L10 9.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z"
-                              clipRule="evenodd"
-                            />{" "}
-                          </svg>
-                          License
-                        </Link>
+                          <path
+                            fillRule="evenodd"
+                            d="M5.293 6.293a1 1 0 0 1 1.414 0L10 9.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        Auction Material
+                      </Link>
 
-                        <Link
-                          to="/auctionmaterial"
-                          className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
-                          onClick={toggleMenu}                        >
-                          <svg
-                            xmlns="https://www.svgrepo.com/show/498932/settings.svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className={`ml-1 h-4 w-4 inline-block transform -rotate-90`}
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M5.293 6.293a1 1 0 0 1 1.414 0L10 9.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          Auction Material
-                        </Link>
+                      <Link
+                        to="/jointventure"
+                        onClick={toggleMenu}
+                        className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
+                      >
+                        <svg
+                          xmlns="https://www.svgrepo.com/show/498932/settings.svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          className={`ml-1 h-4 w-4 inline-block transform -rotate-90`}
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5.293 6.293a1 1 0 0 1 1.414 0L10 9.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        Joint Venture
+                      </Link>
 
-                        <Link
-                          to="/jointventure"
-                          onClick={toggleMenu}
-                          className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
+                      <Link
+                        to="/tenderfilling"
+                        onClick={toggleMenu}
+                        className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
+                      >
+                        <svg
+                          xmlns="https://www.svgrepo.com/show/498932/settings.svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          className={`ml-1 h-4 w-4 inline-block transform -rotate-90`}
                         >
-                          <svg
-                            xmlns="https://www.svgrepo.com/show/498932/settings.svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className={`ml-1 h-4 w-4 inline-block transform -rotate-90`}
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M5.293 6.293a1 1 0 0 1 1.414 0L10 9.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          Joint Venture
-                        </Link>
+                          <path
+                            fillRule="evenodd"
+                            d="M5.293 6.293a1 1 0 0 1 1.414 0L10 9.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        Tender Filling
+                      </Link>
+                      <Link
+                        to="/gemregistration"
+                        onClick={toggleMenu}
+                        className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
+                      >
+                        <svg
+                          xmlns="https://www.svgrepo.com/show/498932/settings.svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          className={`ml-1 h-4 w-4 inline-block transform -rotate-90`}
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5.293 6.293a1 1 0 0 1 1.414 0L10 9.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        Gem Registration
+                      </Link>
+                    </div>
+                  )}
 
-                        <Link
-                          to="/tenderfilling"
-                          onClick={toggleMenu}
-                          className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
-                        >
-                          <svg
-                            xmlns="https://www.svgrepo.com/show/498932/settings.svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className={`ml-1 h-4 w-4 inline-block transform -rotate-90`}
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M5.293 6.293a1 1 0 0 1 1.414 0L10 9.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          Tender Filling
-                        </Link>
-                        <Link
-                          to="/gemregistration"
-                          onClick={toggleMenu}
-                          className="block px-4 py-2 text-lg text-gray-800 hover:text-white hover:bg-red-700"
-                        >
-                          <svg
-                            xmlns="https://www.svgrepo.com/show/498932/settings.svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className={`ml-1 h-4 w-4 inline-block transform -rotate-90`}
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M5.293 6.293a1 1 0 0 1 1.414 0L10 9.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          Gem Registration
-                        </Link>
-                      </div>
-                    )}
-                    
-                  </div>
+                </div>
               </div>
               <div>
                 {auth ? (
@@ -650,9 +609,20 @@ const Navbar = () => {
                         Logout
                       </button>
 
-                      {auth.userRole == "admin" ? (
+                      {(auth.userRole == "admin" || auth.userRole == "hr" || auth.userRole == "employee" || auth.userRole == "franchise") ? (
                         <button
                           onClick={dashboard}
+                          className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
+                        >
+                          Dashboard
+                        </button>
+                      ) : (
+                        <></>
+                      )}
+
+                      {(auth.userRole == "user") ? (
+                        <button
+                          onClick={Userdashboard}
                           className="px-3 py-2 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
                         >
                           Dashboard
@@ -666,7 +636,7 @@ const Navbar = () => {
                   <Link
                     to="/login"
                     className="px-3 py-2 mx-4 text-lg font-medium text-white transition-colors duration-300 bg-black rounded-md"
-                    >
+                  >
                     Login
                   </Link>
                 )}

@@ -5,6 +5,7 @@ import axios from "axios";
 import { regionData } from "../constants/countriesData.js";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+import InputSlider from "react-input-slider";
 
 const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
   const navigate = useNavigate();
@@ -48,9 +49,14 @@ const TenderResults = () => {
   const [selectedProduct, setSelectedProduct] = useState("");
   const [tenderData, setTenderData] = useState([]);
   const [sectors, setSectors] = useState([]);
+  const [minValue, setMinValue] = useState(0);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+
+  const handleMinValueChange = (slider) => {
+    setMinValue(slider.x);
+  };
 
   useEffect(() => {
     // Fetch all sectors
@@ -106,6 +112,7 @@ const TenderResults = () => {
         const region = encodeURIComponent(selectedRegion);
         const country = encodeURIComponent(selectedCountry);
         const product = encodeURIComponent(selectedProduct);
+        const value = encodeURIComponent(minValue);
 
         const baseUrl = `${BASE_URL}/tenderresults/search`;
 
@@ -119,6 +126,9 @@ const TenderResults = () => {
         }
         if (product) {
           searchUrl += `&sector=${product}`;
+        }
+        if (value) {
+          searchUrl += `&value=${value}`;
         }
 
         const token = localStorage.getItem("token");
@@ -153,6 +163,7 @@ const TenderResults = () => {
     selectedCountry,
     selectedProduct,
     selectedRegion,
+    minValue
   ]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -284,6 +295,27 @@ const TenderResults = () => {
                     </option>
                   ))}
                 </select>
+              </div>
+
+              <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
+                <label
+                  htmlFor="slider"
+                  className="block text-xl font-bold text-gray-700 mb-0.5 px-4 py-3 text-white bg-black"
+                >
+                  Minimum Tender Amount
+                </label>
+
+                <div className="p-4">
+                  <InputSlider
+                    axis="x"
+                    x={minValue}
+                    xmax={100000000}
+                    onChange={handleMinValueChange}
+                  />
+                  <div className="flex justify-between">
+                    <span>Min: ${minValue}</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -32,11 +32,13 @@ import GemDetailingListing from '../pages/GemDetailingListing';
 // import TenderResults from '../pages/TenderResults';
 import UserDetails from '../Admin/partials/dashboard/users/DashboardUserDetail';
 import SubscribePage from '../pages/Subscription/Subscribe';
+import DasboardUserDetails from "../Admin/partials/dashboard/userDashboards/UserDetails";
 
 const MainRoutes = () => {
+
   return (
     <>
-      <Navbar />
+<Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<Projects />} />
@@ -69,8 +71,9 @@ const MainRoutes = () => {
         <Route path="*" element={<NotFound />} />
         <Route path="/tenderResults" element={<TenderResults />} />
         <Route path="/subscribe" element={<SubscribePage />} />
+        <Route path="/userDashboard" element={<DasboardUserDetails />} />
       </Routes>
-      <Footer />
+<Footer />
     </>
   );
 };

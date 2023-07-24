@@ -42,7 +42,7 @@ const Login = () => {
                 if (user.userRole == "admin" || user.userRole == "hr" || user.userRole == "employee" || user.userRole == "franchise")
                     navigate("/dashboard/admin");
                 else if (user.userRole == "user")
-                    navigate('/dashboard/userDashboard')
+                    navigate('/userDashboard')
                 else navigate("/");
                 console.log("Login successful");
             })

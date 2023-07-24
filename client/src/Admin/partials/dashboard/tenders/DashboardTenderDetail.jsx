@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import Sidebar from '../../Sidebar';
-import Header from '../../Header';
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 function DashboardTenderDetail() {
@@ -101,15 +99,6 @@ function DashboardTenderDetail() {
 
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-      {/* Content area */}
-      <div className="flex-1 overflow-y-auto">
-        {/* Site header */}
-        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
         <div className="px-4 py-8 max-w-9xl mx-auto">
           {/* Dashboard actions */}
           <div className="container mx-auto px-4 py-8 max-w-7xl">
@@ -261,8 +250,6 @@ function DashboardTenderDetail() {
             </button>
           </div>
         </div>
-      </div>
-    </div>
   );
 }
 

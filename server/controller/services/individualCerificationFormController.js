@@ -52,9 +52,9 @@ const submitForm = async (req, res) => {
       signatureUrl
     });
 
-    res.status(201).json({ success: true, data: newForm });
+    res.status(200).json({ success: true, message: "Form Submitted Successfully" });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 };
 

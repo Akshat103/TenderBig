@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // Import Router
 const tenderRouter = require("./routes/tenderRoutes");
+const tenderResultsRouter = require("./routes/tenderResultsRoutes");
 const userRouter = require("./routes/userRoutes");
 const contactRouter = require("./routes/contactRoutes");
 const authRouter = require("./routes/authRoutes");
@@ -30,6 +31,7 @@ const imageRoutes = require('./routes/imageRoutes')
 
 // Routes
 app.use("/apiTender/tenderdetails", tenderRouter);
+app.use("/apiTender/tenderresults", tenderResultsRouter);
 app.use("/apiTender/userdetails", userRouter);
 app.use("/apiTender", contactRouter);
 app.use("/apiTender", authRouter);

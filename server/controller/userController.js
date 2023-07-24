@@ -48,7 +48,6 @@ class User {
         }
     }
 
-
     async updateUserRole(req, res) {
         try {
 
@@ -224,13 +223,19 @@ class User {
                 });
             }
 
+            const Date = new Date(); // Get the current date
+
+            // Add 30 days to the current date
+            Date.setDate(currentDate.getDate() + 30);
+
             // Update the subscription status and plan type
             user.subscription.status = "active";
             user.subscription.type = planType;
+            user.subscription.date = Date;
             if (state) {
                 user.subscription.state = state;
             }
-            else{
+            else {
                 user.subscription.state = "none";
             }
 

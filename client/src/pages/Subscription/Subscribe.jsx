@@ -52,7 +52,7 @@ const SubscribePage = () => {
     };
 
     const handleSubscription = async (price, planType, selectedState = '') => {
-        var receipt = "sub";
+        var receipt = "subscription";
         const user = JSON.parse(localStorage.getItem("user"));
         const id = user._id;
 
@@ -123,7 +123,6 @@ const SubscribePage = () => {
                         </div>
                     </div>
                 </div>
-                {/* Modal */}
                 {/* Modal */}
                 {isModalOpen && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">

@@ -211,8 +211,8 @@ const ContactFormList = () => {
                   onChange={(e) => handleServiceChange(e.target.value)}
                 >
                   <option value="All">All</option>
-                  <option value="Career & Man Power">Career & Man Power</option>
-                  <option value="Registration / Certificate">
+                  <option value="Career&Man Power">Career & Man Power</option>
+                  <option value="Registration/Certificate">
                     Registration / Certificate
                   </option>
                   <option value="License">License</option>

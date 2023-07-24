@@ -34,16 +34,13 @@ const userSchema = new mongoose.Schema(
             required: true,
         },
         subscription: {
-            id: {
-                type: String,
-                default: "none",
-            },
             status: {
                 type: String,
                 default: "inactive",
             },
             type: {
                 type: String,
+                enum:["One State Plan","All India","Global"],
                 default: "none",
             },
             state: {

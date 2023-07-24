@@ -6,7 +6,10 @@ exports.verifyToken = (req, res, next) => {
   const token = req.headers.auth;
 
   if (!token) {
-    return res.status(401).json({ error: "Access denied. No token provided." });
+    return res.status(401).json({
+      success: false,
+      message: "Sign In Please!!!"
+  });
   }
 
   try {
@@ -71,7 +74,7 @@ exports.checkSubscription = async (req, res, next) => {
     const userId = decodedToken.data._id;
 
     const user = await userModel.findById(userId);
-    if (!user) {
+    if (!user && userId != "admin") {
       return res.status(404).json({
         status: "error",
         message: "User not found.",

@@ -64,7 +64,6 @@ const TenderListingPage = () => {
   const fetchSectors = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/options/alloptions?array=sectors`);
-      console.log(response.data[0].sectors);
       setSectors(response.data[0].sectors);
     } catch (error) {
       console.error(error);
@@ -138,18 +137,10 @@ const TenderListingPage = () => {
 
         const response = await axios.post(searchUrl, { details: detailsArray }, { headers });
 
-        if (response.status === 401) {
-          // Unauthorized - display error message
-          console.error("Unauthorized. Sign in first.");
-
-          return;
-        }
-
         setTenderData(response.data);
       } catch (error) {
         if (error.response && error.response.status === 401) {
-          console.error("Unauthorized. Sign in first.");
-
+          alert(error.response.data.message)
         } else {
           console.error("Error fetching tender data:", error);
         }

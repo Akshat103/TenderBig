@@ -6,10 +6,6 @@ const tenderResultSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    userId: {
-      type: String,
-      required: true,
-    },
     summary: {
       type: String,
       required: true,
@@ -78,6 +74,10 @@ const tenderResultSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    sector:{
+      type: String,
+      required: true,
+    }
   }
 );
 

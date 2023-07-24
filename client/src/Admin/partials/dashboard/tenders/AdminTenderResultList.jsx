@@ -28,7 +28,7 @@ function AdminTenderResultList() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/tenderdetails/alltenderResults`,
+          `${BASE_URL}/tenderresults/alltenderResults`,
           {
             headers: {
               auth: token,
@@ -94,7 +94,6 @@ function AdminTenderResultList() {
   const downloadAsExcel = () => {
     const selectedData = currentUsers.map((user) => ({
       "Tender Id": user.TenderId,
-      "User Id": user.userId,
       Summary: user.summary,
       Country: user.country,
       State: user.state,
@@ -127,7 +126,6 @@ function AdminTenderResultList() {
 
     const headers = [
       "Tender Id",
-      "User Id",
       "Summary",
       "Country",
       "State",
@@ -143,7 +141,6 @@ function AdminTenderResultList() {
 
     const selectedData = currentUsers.map((user) => [
       user.TenderId,
-      user.userId,
       user.summary,
       user.country,
       user.state,
@@ -155,6 +152,7 @@ function AdminTenderResultList() {
       user.userCategory,
       user.tenderValue,
       user.contractValue,
+      
     ]);
 
     const data = {
@@ -226,7 +224,6 @@ function AdminTenderResultList() {
                       <thead>
                         <tr className="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
                           <th className="px-4 py-3">Tender Id</th>
-                          <th className="px-4 py-3">User Id</th>
                           <th className="px-4 py-3">Summary</th>
                           <th className="px-4 py-3">Country</th>
                           <th className="px-4 py-3">State</th>
@@ -251,9 +248,6 @@ function AdminTenderResultList() {
                                   {tender.TenderId}
                                 </div>
                               </div>
-                            </td>
-                            <td className="px-4 py-3 text-ms font-semibold border">
-                              {tender.userId}
                             </td>
                             <td className="px-4 py-3 text-xs border">
                               <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">

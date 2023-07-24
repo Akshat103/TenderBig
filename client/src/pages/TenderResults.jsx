@@ -88,7 +88,7 @@ const TenderResults = () => {
     const fetchTenderData = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/tenderdetails/alltenderResults`
+          `${BASE_URL}/tenderresults/search`
         );
         setTenderData(response.data);
       } catch (error) {
@@ -107,17 +107,9 @@ const TenderResults = () => {
         const country = encodeURIComponent(selectedCountry);
         const product = encodeURIComponent(selectedProduct);
 
-        const baseUrl = `${BASE_URL}/tenderdetails/search`;
+        const baseUrl = `${BASE_URL}/tenderresults/search`;
 
-        const detailsArray = [
-          "summary",
-          "procurementSummary.deadline",
-          "procurementSummary.country",
-          "otherInformation.totNo",
-          "tenderId",
-        ];
-
-        let searchUrl = `${baseUrl}`;
+        let searchUrl = `${baseUrl}?`;
 
         if (region) {
           searchUrl += `&region=${region}`;
@@ -126,7 +118,7 @@ const TenderResults = () => {
           searchUrl += `&country=${country}`;
         }
         if (product) {
-          searchUrl += `&product=${product}`;
+          searchUrl += `&sector=${product}`;
         }
 
         const token = localStorage.getItem("token");
@@ -137,8 +129,8 @@ const TenderResults = () => {
         };
 
 
-        const response = await axios.post(searchUrl, { details: detailsArray }, { headers });
-        console.log(response, "gems");
+        const response = await axios.get(searchUrl, { }, { headers });
+
         if (response.status === 401) {
           // Unauthorized - display error message
           console.error("Unauthorized. Sign in first.");

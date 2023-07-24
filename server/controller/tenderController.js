@@ -1,7 +1,6 @@
 const tenderModel = require("../models/tenderModel");
 const { toTitleCase, toUpperCase, generateUUID } = require("../config/functions")
 const { regionData, geopoliticalData } = require("../config/countriesData");
-const tenderResultModel = require("../models/tenderResultModel");
 
 class Tender {
 
@@ -175,135 +174,6 @@ class Tender {
 
     }
 
-    async postAddTenderResults(req, res) {
-        let {
-            summary,
-            BRR,
-            Authority,
-            userCategory,
-            TendorNo,
-            TenderId,
-            country,
-            state,
-            city,
-            deadline,
-            contractValue,
-            tenderValue,
-            description
-
-        } = req.body;
-
-        const userId = req.userId;
-
-        try {
-            summary = toTitleCase(summary);
-
-            const tenderId = generateUUID();
-
-            const procurementSummary = {
-                country,
-                state,
-                city,
-                deadline: new Date(deadline)
-            };
-
-            const newTender = new tenderResultModel({
-                userId,
-                summary,
-                country,
-                state,
-                city,
-                deadline: new Date(deadline),
-                description,
-                BRR,
-                Authority,
-                userCategory,
-                TendorNo,
-                TenderId: tenderId,
-                contractValue,
-                tenderValue,
-            });
-            console.log(newTender);
-            newTender.save()
-                .then((data) => {
-                    return res.json({
-                        success: "Tender filled successfully.",
-                    });
-                })
-                .catch((err) => {
-                    // console.log(err);
-                    console.log('not run');
-                });
-
-        } catch (err) {
-            console.log(err);
-            return res.status(500).json({ error: err });
-        }
-
-    }
-
-    async getTenderResults(req, res) {
-        try {
-            const documents = await tenderResultModel.find();
-            res.json(documents);
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ error: 'Failed to retrieve documents.' });
-        }
-    }
-
-    async getTenderResultsByTenderId(req, res) {
-        const tenderId = req.params.TenderResultId;
-        if (!tenderId) {
-            return res.json({ error: "All filled must be required" });
-        } else {
-            try {
-                let singleTender = await tenderResultModel.find({ tenderId: tenderId });
-                if (singleTender) {
-                    return res.json({ Product: singleTender });
-                }
-            } catch (err) {
-                console.log(err);
-            }
-        }
-
-    }
-
-    async updateResultsFormById(req, res) {
-        const formId = req.params.id;
-        const updatedForm = req.body;
-        console.log(formId);
-        console.log(updatedForm);
-        try {
-            const result = await tenderResultModel.findByIdAndUpdate(formId, updatedForm, { new: true });
-            if (!result) {
-                return res.status(404).json({ message: 'Form not found' });
-            }
-
-            res.json(result);
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ message: 'Internal server error' });
-        }
-    }
-
-    async deleteResultsFormById(req, res) {
-        const formId = req.params.id;
-
-        try {
-            console.log(formId);
-            const deletedForm = await tenderResultModel.findByIdAndDelete(formId);
-            if (!deletedForm) {
-                return res.status(404).json({ message: 'Form not found' });
-            }
-
-            res.json({ message: 'Form deleted successfully' });
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ message: 'Internal server error' });
-        }
-    }
-
     async postEditTender(req, res) {
         const tenderId = req.params.tenderId;
         let {
@@ -438,8 +308,21 @@ class Tender {
                 'active': true,
                 'procurementSummary.deadline': { $gte: currentDate }
             };
+            const userSubscription = req.userSubscription;
 
-            console.log(req.userSubscription)
+            if (userSubscription.status == "inactive") {
+                return res.status(401).json({
+                    success: false,
+                    message: "Buy Subscription."
+                });
+            }
+
+            if (userSubscription.type == "One State Plan") {
+                const state = userSubscription.state;
+                query['procurementSummary.state'] = state;
+            } else if (userSubscription.type == "All India") {
+                query['procurementSummary.country'] = "India";
+            }
 
             const { region, geopolitical, country, sector, financier, state, city, product, userCategory, value } = req.query;
             const { details } = req.body;
@@ -452,7 +335,7 @@ class Tender {
                 const countriesInGeopolitical = geopoliticalData[geopolitical];
                 query['procurementSummary.country'] = { $in: countriesInGeopolitical };
             }
-            if (country) {
+            if (country && userSubscription.type != "All India") {
                 query['procurementSummary.country'] = country;
             }
             if (sector) {
@@ -485,15 +368,13 @@ class Tender {
                 }, {});
             }
 
-
             const results = await tenderModel.find(query, projection);
-
             res.json(results);
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'An error occurred during the search' });
         }
-    };
+    }
 
     // Advanced search endpoint
     async advanceSearch(req, res) {

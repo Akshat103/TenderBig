@@ -13,7 +13,6 @@ cron.schedule("0 0 * * *", async () => {
         for (const user of usersWithSubscriptions) {
             if (user.subscription.date < new Date()) {
                 user.subscription = {
-                    id: "none",
                     status: "inactive",
                     type: "none",
                     state: "none",

@@ -11,7 +11,6 @@ const UserDetails = () => {
     let userDataObject = userData1 ? JSON.parse(userData1) : null;
     setUserData(userDataObject);
     let id = userDataObject?.userId;
-    console.log(id);
     if (id) {
       fetch(`${BASE_URL}/userdetails/DetailsbyId/${id}`)
         .then((response) => response.json())
@@ -22,100 +21,111 @@ const UserDetails = () => {
     }
   }, []);
 
-  let careerManPower = userData[2]?.number + userData[3]?.number;
+  function getFormDetailsByName(formName) {
+    for (const key in userData) {
+      if (userData[key].formName == formName) {
+        return userData[key];
+      }
+    }
+    return null;
+  }
+
+  const Seeker = getFormDetailsByName('seeker');
+  const Employer = getFormDetailsByName('employer');
+  const Registration = getFormDetailsByName('registration');
+  const CompanyCert = getFormDetailsByName('Company');
+  const IndividualCert = getFormDetailsByName('Individual Certification');
+  const Jointventure = getFormDetailsByName('joint venture');
+  const AuctionMaterial = getFormDetailsByName('Auction Material');
+  const tenderOnline = getFormDetailsByName('Tender Online');
+  const Gem = getFormDetailsByName('Gem Registration');
+
   return (
     <div>
       <div className="flex flex-wrap justify-center m-5">
         <div className="grid grid-cols-3">
-          <UserCards
+          {Seeker ?
+            <UserCards
+              className="my-5"
+              title="Seeker"
+              description={Seeker.number}
+              buttonLink1=""
+              buttonLink2="/seeker"
+              formData={Seeker.latestForm}
+            /> : <></>
+          }
+          {Employer ? <UserCards
             className="my-5"
-            title="Career & Manpower"
-            description={careerManPower}
+            title="Employer"
+            description={Employer.number}
             buttonLink1=""
-            buttonLink2="/careerandmanpower"
-            formData={userData[2]?.latestForm}
-          />
-          <UserCards
+            buttonLink2="/employer"
+            formData={Employer.latestForm}
+          /> :<></>}
+
+          {Registration?<UserCards
             className="my-5"
             title="Registrations"
-            description={userData[6]?.number}
+            description={Registration.number}
             buttonLink1=""
             buttonLink2="/regandcert"
-            formData={userData[6]?.latestForm}
+            formData={Registration.latestForm}
+          />:<></>}
 
-          />
-          <UserCards
+          {CompanyCert?<UserCards
             className="my-5"
             title="Company Certifications"
-            description={userData[5]?.number}
+            description={CompanyCert.number}
             buttonLink1=""
             buttonLink2="/certification"
-            formData={userData[5]?.latestForm}
+            formData={CompanyCert.latestForm}
+          />:<></>}
 
-          />
-          <UserCards
-            className="my-5"
-            title="Licenses"
-            description={userData[1]?.number}
-            buttonLink1=""
-            buttonLink2="/contact"
-            formData={userData[1]?.latestForm}
-
-          />
-          <UserCards
+          {IndividualCert?<UserCards
             className="my-5"
             title="Individual Certifications"
-            description={userData[4]?.number}
+            description={IndividualCert.number}
             buttonLink1=""
             buttonLink2="/certification"
-            formData={userData[4]?.latestForm}
+            formData={IndividualCert.latestForm}
+          />:<></>}
 
-          />
-          <UserCards
-            className="my-5"
-            title="Auction Materials"
-            description={userData[0]?.number}
-            buttonLink1=""
-            buttonLink2="/auctionmaterial"
-            formData={userData[0]?.latestForm}
-
-          />
-          <UserCards
-            className="my-5"
-            title="Offline Tender Filling"
-            description={userData[8]?.number}
-            buttonLink1="/tenderfillingoffline"
-            buttonLink2="/tenderfillingoffline"
-            formData={userData[8]?.latestForm}
-
-          />
-          <UserCards
-            className="my-5"
-            title="Gem Registration"
-            description={userData[10]?.number}
-            buttonLink1=""
-            buttonLink2="/gemregistration"
-            formData={userData[10]?.latestForm}
-
-          />
-          <UserCards
+          {Jointventure?<UserCards
             className="my-5"
             title="Joint Venture"
-            description={userData[7]?.number}
+            description={Jointventure.number}
             buttonLink1=""
             buttonLink2="/jointventure"
-            formData={userData[7]?.latestForm}
+            formData={Jointventure.latestForm}
+          />:<></>}
 
-          />
-          <UserCards
+          {AuctionMaterial?<UserCards
+            className="my-5"
+            title="Auction Materials"
+            description={AuctionMaterial.number}
+            buttonLink1=""
+            buttonLink2="/auctionmaterial"
+            formData={AuctionMaterial.latestForm}
+          />:<></>}
+
+          {tenderOnline?<UserCards
             className="my-5"
             title="Online Tender Filling"
             description={userData[9]?.number}
             buttonLink1=""
             buttonLink2="/tenderfillingonline"
             formData={userData[9]?.latestForm}
+          />:<></>}
 
-          />
+          {Gem?<UserCards
+            className="my-5"
+            title="Gem Registration"
+            description={userData[10]?.number}
+            buttonLink1=""
+            buttonLink2="/gemregistration"
+            formData={userData[10]?.latestForm}
+          />:<></>}
+
         </div>
       </div>
     </div>

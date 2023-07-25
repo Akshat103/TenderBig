@@ -4,120 +4,113 @@ import payment from '../../../../../src/components/payment';
 import axios from 'axios';
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-
 const UserCards = ({ title, description, buttonLink1, buttonLink2, formData }) => {
     const navigate = useNavigate();
     const [titleName, setTitleName] = useState(title);
     const [count, setCount] = useState(description);
     const [formData1, setFormData1] = useState(formData);
-    const [formName, setFormName] = useState("");
-    // console.log(count);
+    let formLink;
+    const [dataStored, setDataStored] = useState(false);
 
-    const getAmount = async (Formprice) => {
-        console.log(Formprice)
-        const { data: { price } } = await axios.get(`${BASE_URL}/formprice/${Formprice}/price`);
+    const getAmount = async (form) => {
+        const { data: { price } } = await axios.get(`${BASE_URL}/formprice/${form}/price`);
         return price;
     }
 
-    const StoreAtDB = (requestBody, formName1) => {
-
-        console.log(formName1);
-        console.log(requestBody);
+    const StoreAtDB = (requestBody, link) => {
         const token = localStorage.getItem('token');
+
+        // Remove unwanted fields from the requestBody
+        const filteredRequestBody = Object.keys(requestBody).reduce((acc, key) => {
+            if (!['_id', '__v', 'createdAt', 'updatedAt'].includes(key)) {
+                acc[key] = requestBody[key];
+            }
+            return acc;
+        }, {});
+
         axios
-            .post(`${BASE_URL}/services/${formName1}`, requestBody, {
+            .post(`${BASE_URL}/services/${link}`, filteredRequestBody, {
                 headers: {
                     'auth': token
                 }
             })
             .then((response) => {
                 console.log(" data updated:", response.data);
+                setDataStored(true);
                 alert("We will contact you soon!!!");
-
             })
             .catch((error) => {
                 console.error("Error sending form data:", error);
-                // alert("Oops something went wrong!!!");
+                alert("Oops something went wrong!!!");
             });
     }
 
+    const handleRerender = () => {
+        setDataStored(false);
+    }
+
+
+    if (dataStored) {
+        handleRerender();
+    }
+
     const handleAutoClick = async () => {
-        console.log(description)
-        console.log(count);
         if (Number(description) === 0) {
             alert('you does not have any form');
             return navigate(buttonLink2);
         }
-        console.log('this is auto click button')
         let price;
-        //  console.log(titleName);
         if (titleName === "Registrations") {
-            let value = "Registration";
-            price = await getAmount(value)
-            setFormName("register/registration");
+            price = await getAmount("Registration")
+            formLink = "register/registration";
         }
-        else if (titleName === "Career & Manpower") {
-            let value = "Seeker";
-            price = await getAmount(value)
-            setFormName("seeker/submit-form");
-
+        else if (titleName === "Seeker") {
+            price = await getAmount("Seeker")
+            formLink = "seeker/submit-form";
+        }
+        else if (titleName === "Employer") {
+            price = await getAmount("Employer")
+            formLink = "employer/submit-form";
         }
         else if (titleName === "Company Certifications") {
-            let value = "Company%20Certification";
-            price = await getAmount(value)
-            setFormName("ccert/certification");
-
+            price = await getAmount("Company%20Certification")
+            formLink = "ccert/certification";
         }
         else if (titleName === "Individual Certifications") {
-            let value = "Individual%20Certification";
-            price = await getAmount(value)
-            setFormName("icert/certification");
+            price = await getAmount("Individual%20Certification")
+            formLink = "icert/certification";
 
         }
         else if (titleName === "Joint Venture") {
-            let value = "Joint%20Venture";
-            price = await getAmount(value)
-            setFormName("jv/submitjv");
+            price = await getAmount("Joint%20Venture")
+            formLink = "jv/submitjv";
         }
-        else if (titleName === "Tender Offline") {
-            let value = "Joint%20Venture";  // this value also wrong not getting value
-            price = await getAmount(value);
-            setFormName("tender/offline");
-        }
-
         else if (titleName === "Auction Materials") {
-            let value = "Auction%20Material";
-            price = await getAmount(value)
-            setFormName("aumt/auction-material");
+            price = await getAmount("Auction%20Material")
+            formLink = "aumt/auction-material";
         }
         else if (titleName === "Gem Registration") {
-            let value = "Gem%20Registration";
-            price = await getAmount(value)
-            setFormName("gem/submit");
-
+            price = await getAmount("Gem%20Registration")
+            formLink = "gem/submit";
         }
         else if (titleName === "Tender Online") {
-            let value = "Joint%20Venture";  // i am not getting any api to take price
-            price = await getAmount(value);
-            setFormName("tender/online");
-
+            price = await getAmount("Online%20Tender");
+            formLink = "tender/online";
         }
-        //  const price = await getAmount(Formprice);
+
         const receipt = titleName;
-        //  console.log(price);
         payment(price, receipt)
             .then(async success => {
                 console.log('Payment success:', success);
                 console.log(receipt, price);
                 alert("payment successful ")
-                console.log(formData, formName);
-                StoreAtDB(formData, formName);
+                console.log(formData, formLink);
+                StoreAtDB(formData, formLink);
             })
             .catch(error => {
                 console.error('Payment error:', error);
-                // Handle the error if the payment fails
+                console.log("Payment Failed.")
             });
-        // navigate(buttonLink1);
     };
 
     const handleNewClick = () => {

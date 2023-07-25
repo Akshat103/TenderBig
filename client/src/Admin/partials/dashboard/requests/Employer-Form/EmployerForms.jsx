@@ -242,6 +242,12 @@ const EmployerForms = () => {
                     <th className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b cursor-pointer text-md">
                       Received At
                     </th>
+                    <th className="w-1/6 px-6 py-3 font-bold tracking-wider text-right text-gray-900 uppercase border-b cursor-pointer text-md">
+                    <FontAwesomeIcon icon={faEdit} />
+                    </th>
+                    <th className="w-1/6 px-6 py-3 font-bold tracking-wider text-right text-gray-900 uppercase border-b cursor-pointer text-md">
+                    <FontAwesomeIcon icon={faTrash} />
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -262,7 +268,7 @@ const EmployerForms = () => {
                           {form.cwork}
                         </td>
                         <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
-                          {form.jobexp}
+                          {form.jobpost}
                         </td>
                         <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
                           {form.companyprofile}
@@ -273,7 +279,7 @@ const EmployerForms = () => {
                         <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
                           {formatReceivedAt(form.createdAt)}
                         </td>
-                        <td className="w-1/12 px-4 py-2 font-medium border-b whitespace-nowrap">
+                        <td className="w-1/12 px-4 py-2 font-medium border-b whitespace-nowrap text-center">
                           <button
                             className="text-blue-500 hover:text-blue-700"
                             onClick={() => viewDetails(form._id)}
@@ -281,7 +287,7 @@ const EmployerForms = () => {
                             <FontAwesomeIcon icon={faEdit} />
                           </button>
                         </td>
-                        <td className="w-1/12 px-4 py-2 font-medium border-b whitespace-nowrap">
+                        <td className="w-1/12 px-4 py-2 font-medium border-b whitespace-nowrap text-center">
                           <button
                             className="text-red-500 hover:text-red-700"
                             onClick={() => deleteEmployerDetail(form._id)}

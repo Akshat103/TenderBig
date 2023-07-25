@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 import payment from "../../components/payment";
 import { State } from 'country-state-city';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const SubscribePage = () => {
     const [oneState, setOneState] = useState();
@@ -89,37 +89,39 @@ const SubscribePage = () => {
                 alert("Payment Failed")
             });
     }
-
+    // #1f1d5a
     return (
-        <div className="flex justify-center items-center h-screen bg-gray-100">
-            <div className="bg-white rounded-lg shadow-lg p-8 ">
-                <h2 className="text-2xl font-bold mb-6">Subscribe Now</h2>
+        <div className='min-h-screen  bg-gray-100 py-20'>
 
-                <div className='flex'>
-                    <div className="grid grid-cols-2 gap-4">
+        <div className="flex justify-center items-center ">
+            <div className="bg-white rounded-lg shadow-lg p-8 border-[2px] border-black/20 ">
+                <h2 className="text-3xl font-bold mb-6 text-center">Subscribe Now</h2>
+
+                <div className='grid md:grid-cols-3 gap-10'>
+                    <div className="">
                         {/* One State Plan */}
-                        <div className="border p-4 rounded-md">
+                        <div className="border-[2px] py-4 px-6 rounded-md w-[330px] cursor-pointer hover:bg-red-100/40 hover:border-red-100/40 duration-200 linear">
                             <h3 className="text-lg font-semibold mb-2">One State Plan</h3>
                             <p className="text-gray-600 mb-4">${oneState}/month</p>
-                            <button className="bg-red-500 text-white rounded-md py-2 px-4 hover:bg-blue-600" onClick={() => handleOneState(oneState)}>Subscribe</button>
+                            <button className="bg-red-700 text-white rounded-md py-2 px-4 hover:bg-red-800" onClick={() => handleOneState(oneState)}>Subscribe</button>
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="">
                         {/* All India Plan */}
-                        <div className="border p-4 rounded-md">
+                        <div  className="border-[2px] py-4 px-6 rounded-md w-[330px] cursor-pointer hover:bg-red-100/40 hover:border-red-100/40 duration-200 linear">
                             <h3 className="text-lg font-semibold mb-2">All India Plan</h3>
                             <p className="text-gray-600 mb-4">${allIndia}/month</p>
-                            <button className="bg-red-500 text-white rounded-md py-2 px-4 hover:bg-blue-600" onClick={() => handleSubscription(allIndia, "All India")}>Subscribe</button>
+                            <button className="bg-red-700 text-white rounded-md py-2 px-4 hover:bg-red-800" onClick={() => handleSubscription(allIndia, "All India")}>Subscribe</button>
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="">
                         {/* Global Plan */}
-                        <div className="border p-4 rounded-md">
+                        <div  className="border-[2px] py-4 px-6 rounded-md w-[330px] cursor-pointer hover:bg-red-100/40 hover:border-red-100/40 duration-200 linear">
                             <h3 className="text-lg font-semibold mb-2">Global Plan</h3>
                             <p className="text-gray-600 mb-4">${global}/month</p>
-                            <button className="bg-red-500 text-white rounded-md py-2 px-4 hover:bg-blue-600" onClick={() => handleSubscription(global, "Global")}>Subscribe</button>
+                            <button className="bg-red-700 text-white rounded-md py-2 px-4 hover:bg-red-800" onClick={() => handleSubscription(global, "Global")}>Subscribe</button>
                         </div>
                     </div>
                 </div>
@@ -155,6 +157,7 @@ const SubscribePage = () => {
                     </div>
                 )}
             </div>
+        </div>
         </div>
     );
 };

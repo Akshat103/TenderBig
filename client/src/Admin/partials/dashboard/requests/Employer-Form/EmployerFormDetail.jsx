@@ -121,8 +121,11 @@ const downloadAsPDF = () => {
 
                 
                 {/* <div className="grid grid-cols-2 gap-11  "> */}
-                <div className="w-full">
-                  <label className="block mb-2 text-xl font-medium ">
+                {/* <div className="w-full"> */}
+                <div className="grid grid-cols-2 mb-4 mt-4 gap-11">
+
+                 <div>
+                 <label className="block mb-2 text-xl font-medium ">
                     Company Name
                   </label>
                   <input
@@ -134,7 +137,24 @@ const downloadAsPDF = () => {
                       setFormData({ ...formData, company: e.target.value })
                     }
                   />
+                 </div>
+                    <div>
+
+                  <label className="block mb-2 text-xl font-medium ">
+                    User ID
+                  </label>
+                  <input
+                    type="text"
+                    className="border text-lg border-gray-300 py-4 bg-gray-200 rounded-md px-9 p-2 me-12 w-full"
+                    value={formData.userId}
+                    readOnly={!isEditing}
+                    onChange={(e) =>
+                      setFormData({ ...formData, userId: e.target.value })
+                    }
+                  />
+                    </div>
                 </div>
+                {/* </div> */}
 
                 {/* </div> */}
                 <div className="grid grid-cols-2 mb-4 mt-4 gap-11">
@@ -264,6 +284,116 @@ const downloadAsPDF = () => {
                     />
                   </div>
                 </div>
+
+                <div className="grid grid-cols-2 gap-11">
+                  <div>
+                    <label className="block mb-2 mt-7 md:mt-0 text-xl font-medium">
+                      Job Post
+                    </label>
+                    <input
+                      type="text"
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      value={formData.jobpost}
+                      readOnly={!isEditing}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          jobpost: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <label className="block mb-2 text-xl font-medium">
+                      Office Timings
+                    </label>
+                    <input
+                      type="number"
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      value={formData.officetiming}
+                      readOnly={!isEditing}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          officetiming: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-11">
+                  <div>
+                    <label className="block mb-2 mt-7 md:mt-0 text-xl font-medium">
+                      Holidays
+                    </label>
+                    <input
+                      type="text"
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      value={formData.holidays}
+                      readOnly={!isEditing}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          holidays: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <label className="block mb-2 text-xl font-medium">
+                      Working Days
+                    </label>
+                    <input
+                      type="number"
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      value={formData.workingdays}
+                      readOnly={!isEditing}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          workingdays: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-11">
+                  <div>
+                    <label className="block mb-2 mt-7 md:mt-0 text-xl font-medium">
+                      Seeker Post
+                    </label>
+                    <input
+                      type="text"
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      value={formData.seekerpost}
+                      readOnly={!isEditing}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          seekerpost: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <label className="block mb-2 text-xl font-medium">
+                      GST Number
+                    </label>
+                    <input
+                      type="text"
+                      className="border text-lg border-gray-300 py-4 bg-gray-200 rounded-md p-2 w-full"
+                      value={formData.GST}
+                      readOnly={!isEditing}
+                      onChange={(e) =>
+                        setFormData({ ...formData, GST: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+                
+
                 <div className="grid grid-cols-2 gap-11">
                   <div>
                     <label className="block mb-2 text-xl font-medium">
@@ -295,18 +425,34 @@ const downloadAsPDF = () => {
                     />
                   </div>
                 </div>
+
+                <div>
+                  <label className="block mb-2 text-xl font-medium">
+                      Address
+                    </label>
+                    <textarea
+                      type="text"
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      value={formData.address}
+                      readOnly={!isEditing}
+                      onChange={(e) =>
+                        setFormData({ ...formData, address: e.target.value })
+                      }
+                    />
+                </div>
+
                 <div className="grid grid-cols-2 gap-11">
-                  <div>
+                <div>
                     <label className="block mb-2 text-xl font-medium">
-                      GST Number
+                      City
                     </label>
                     <input
                       type="text"
-                      className="border text-lg border-gray-300 py-4 bg-gray-200 rounded-md p-2 w-full"
-                      value={formData.GST}
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      value={formData.city}
                       readOnly={!isEditing}
                       onChange={(e) =>
-                        setFormData({ ...formData, GST: e.target.value })
+                        setFormData({ ...formData, city: e.target.value })
                       }
                     />
                   </div>
@@ -328,36 +474,6 @@ const downloadAsPDF = () => {
                 <div className="grid grid-cols-2 gap-11">
                 <div>
                     <label className="block mb-2 text-xl font-medium">
-                      Country
-                    </label>
-                    <input
-                      type="text"
-                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
-                      value={formData.country}
-                      readOnly={!isEditing}
-                      onChange={(e) =>
-                        setFormData({ ...formData, country: e.target.value })
-                      }
-                    />
-                  </div>
-                  <div>
-                    <label className="block mb-2 text-xl font-medium">
-                      City
-                    </label>
-                    <input
-                      type="text"
-                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
-                      value={formData.city}
-                      readOnly={!isEditing}
-                      onChange={(e) =>
-                        setFormData({ ...formData, city: e.target.value })
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-11">
-                  <div>
-                    <label className="block mb-2 text-xl font-medium">
                       Zip Code
                     </label>
                     <input
@@ -370,8 +486,28 @@ const downloadAsPDF = () => {
                       }
                     />
                   </div>
+                <div>
+                    <label className="block mb-2 text-xl font-medium">
+                      Country
+                    </label>
+                    <input
+                      type="text"
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      value={formData.country}
+                      readOnly={!isEditing}
+                      onChange={(e) =>
+                        setFormData({ ...formData, country: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+                
+                <div className="mt-5 flex flex-wrap items-center gap-4 font-bold text-white">
+                   <a href={formData.resumeUrl} target="_blank" className="px-4  rounded-md py-2 bg-red-700 cursor-pointer">Resume</a>
+                   <a href={formData.otherUrl} target="_blank" className="px-4 rounded-md py-2 bg-red-700 cursor-pointer">Doc 1</a>
                   
                 </div>
+
                 <div className="grid grid-cols-2 gap-11">
                   
                   {/* <div> */}

@@ -2,21 +2,26 @@ const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config/keys");
 const userModel = require("../models/userModel");
 
-exports.verifyToken = (req, res, next) => {
+exports.verifyToken = async (req, res, next) => {
   const token = req.headers.auth;
 
   if (!token) {
     return res.status(401).json({
       success: false,
       message: "Sign In Please!!!"
-  });
+    });
   }
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    req.userRole = decoded.data.userRole;
-    req.userId = decoded.data.userId;
-    req._id = decoded.data._id;
+
+    const userId = decoded.data._id;
+
+    const user = await userModel.findById(userId);
+    req.userRole = user.userRole;
+    req.userId = user.userId;
+    req._id = user._id;
+
     next();
   } catch (err) {
     console.error(err);

@@ -121,10 +121,12 @@ const AdvancedSearchForm = () => {
         };
 
         const response = await axios.post(`${BASE_URL}/tenderdetails/advance-search`, body, { headers });
-        console.log(response.data);
+
         setTenderDetails(response.data);
       } catch (error) {
-        console.error(error);
+        if(error.response.data.success == false){
+          alert(error.response.data.message)
+        }
       }
     };
 
@@ -195,10 +197,16 @@ const AdvancedSearchForm = () => {
 
     try {
       const response = await axios.post(`${BASE_URL}/tenderdetails/advance-search`, filteredFormData, { headers });
-      console.log(response.data);
+
       setTenderDetails(response.data);
     } catch (error) {
-      console.error(error);
+      if(error.response.data.success == false){
+        alert(error.response.data.message)
+        setTenderDetails([]);
+      }else{
+        alert(error.response.data.error)
+        setTenderDetails([]);
+      }
     }
   };
 

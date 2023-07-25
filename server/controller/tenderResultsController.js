@@ -137,33 +137,34 @@ class TenderResult {
             const query = {
                 'deadline': { $gte: currentDate }
             };
-            const userSubscription = req.userSubscription;
-console.log("/search")
-            // if (userSubscription.status == "inactive") {
-            //     return res.status(401).json({
-            //         success: false,
-            //         message: "Buy Subscription."
-            //     });
-            // }
 
-            // if (userSubscription.type == "One State Plan") {
-            //     const state = userSubscription.state;
-            //     query['procurementSummary.state'] = state;
-            // } else if (userSubscription.type == "All India") {
-            //     query['procurementSummary.country'] = "India";
-            // }
+            const userSubscription = req.userSubscription;
+
+            if (userSubscription.status != "active") {
+                return res.status(401).json({
+                    success: false,
+                    message: "Buy Subscription."
+                });
+            }
+
+            if (userSubscription.type == "One State Plan") {
+                const state = userSubscription.state;
+                query['state'] = state;
+            } else if (userSubscription.type == "All India") {
+                query['country'] = "India";
+            }
 
             const { region, geopolitical, country, sector, state, city, value } = req.query;
 
-            if (region && regionData.hasOwnProperty(region)) {
+            if (region && regionData.hasOwnProperty(region) && userSubscription.type == "Global") {
                 const countriesInRegion = regionData[region];
                 query['country'] = { $in: countriesInRegion };
             }
-            if (geopolitical && geopoliticalData.hasOwnProperty(geopolitical)) {
+            if (geopolitical && geopoliticalData.hasOwnProperty(geopolitical) && userSubscription.type == "Global") {
                 const countriesInGeopolitical = geopoliticalData[geopolitical];
                 query['country'] = { $in: countriesInGeopolitical };
             }
-            if (country) {
+            if (country && userSubscription.type == "Global") {
                 query['country'] = country;
             }
             if (sector) {

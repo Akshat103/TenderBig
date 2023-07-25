@@ -98,7 +98,7 @@ const AllTendersSection = () => {
                                   <span>&#x25BC;</span>
                                 )}
                               </th>
-                              <th className="px-4 py-3">User Category</th>
+                              <th className="px-4 py-3">Category</th>
                               <th className="px-4 py-3">Approved</th>
                             </tr>
                             <tr>
@@ -117,12 +117,12 @@ const AllTendersSection = () => {
                                   onChange={(e) => setUserCategoryFilter(e.target.value)}
                                   className="px-2 py-1 w-full border border-gray-300 rounded-md"
                                 >
-                                  <option value="">All User Categories</option>
+                                  <option value="">All Categories</option>
                                   <option value="subcontractor">Subcontractor</option>
                                   <option value="contractor">Contractor</option>
-                                  <option value="admin">Admin</option>
-                                  <option value="hr">HR</option>
-                                  <option value="employee">Employee</option>
+                                  <option value="private">Private</option>
+                                  <option value="government">Government</option>
+                                  <option value="gem">Gem</option>
                                 </select>
                               </th>
                               <th>
@@ -217,7 +217,7 @@ const AllTendersSection = () => {
                                 <span>&#x25BC;</span>
                               )}
                             </th>
-                            <th className="px-4 py-3">User Category</th>
+                            <th className="px-4 py-3">Category</th>
                             <th className="px-4 py-3">Approved</th>
                           </tr>
                           <tr>
@@ -236,12 +236,12 @@ const AllTendersSection = () => {
                                 onChange={(e) => setUserCategoryFilter(e.target.value)}
                                 className="px-2 py-1 w-full border border-gray-300 rounded-md"
                               >
-                                <option value="">All User Categories</option>
+                                <option value="">All Categories</option>
                                 <option value="subcontractor">Subcontractor</option>
                                 <option value="contractor">Contractor</option>
-                                <option value="admin">Admin</option>
-                                <option value="hr">HR</option>
-                                <option value="employee">Employee</option>
+                                <option value="private">Private</option>
+                                <option value="government">Government</option>
+                                <option value="gem">Gem</option>
                               </select>
                             </th>
                             <th>

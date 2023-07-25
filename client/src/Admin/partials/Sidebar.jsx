@@ -29,7 +29,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const handleImages = () => {
     navigate('/dashboard/images')
   }
-  
+
 
   const trigger = useRef(null);
   const sidebar = useRef(null);
@@ -262,68 +262,68 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         <ul className={`pl-9 mt-1 ${!open && 'hidden'}`}>
                           {
                             userData.userRole === "admin" && (
-                              <li className="mb-1 last:mb-0">
-                                <NavLink
-                                  end
-                                  to="/dashboard/alladmin"
-                                  className={({ isActive }) =>
-                                    'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
-                                  }
-                                >
-                                  <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                    Admin
-                                  </span>
-                                </NavLink>
-                              </li>
+                              <>
+                                <li className="mb-1 last:mb-0">
+                                  <NavLink
+                                    end
+                                    to="/dashboard/alladmin"
+                                    className={({ isActive }) =>
+                                      'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
+                                    }
+                                  >
+                                    <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
+                                      Admin
+                                    </span>
+                                  </NavLink>
+                                </li>
 
+                                < li className="mb-1 last:mb-0">
+                                  <NavLink
+                                    end
+                                    to="/dashboard/allhr"
+                                    className={({ isActive }) =>
+                                      'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
+                                    }
+                                  >
+                                    <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
+                                      HR
+                                    </span>
+                                  </NavLink>
+                                </li>
+
+                              </>
                             )
                           }
                           {(userData.userRole == "admin" || userData.userRole == "hr") &&
-                            < li className="mb-1 last:mb-0">
-                              <NavLink
-                                end
-                                to="/dashboard/allhr"
-                                className={({ isActive }) =>
-                                  'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
-                                }
-                              >
-                                <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                  HR
-                                </span>
-                              </NavLink>
-                            </li>
+                            <li className="mb-1 last:mb-0">
+                            <NavLink
+                              end
+                              to="/dashboard/allemployee"
+                              className={({ isActive }) =>
+                                'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
+                              }
+                            >
+                              <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
+                                Employee
+                              </span>
+                            </NavLink>
+                          </li>
                           }
 
                           {(userData.userRole == "admin" || userData.userRole == "hr" || userData.userRole == "employee") &&
                             <li className="mb-1 last:mb-0">
-                              <NavLink
-                                end
-                                to="/dashboard/allemployee"
-                                className={({ isActive }) =>
-                                  'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
-                                }
-                              >
-                                <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                  Employee
-                                </span>
-                              </NavLink>
-                            </li>
-                          }
-
-                          {(userData.userRole == "admin" || userData.userRole == "hr" || userData.userRole == "employee" || userData.userRole == "franchise") &&
-                            <li className="mb-1 last:mb-0">
-                              <NavLink
-                                end
-                                to="/dashboard/allfranchise"
-                                className={({ isActive }) =>
-                                  'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
-                                }
-                              >
-                                <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                  Franchise
-                                </span>
-                              </NavLink>
-                            </li>
+                            <NavLink
+                              end
+                              to="/dashboard/allfranchise"
+                              className={({ isActive }) =>
+                                'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
+                              }
+                            >
+                              <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
+                                Franchise
+                              </span>
+                            </NavLink>
+                          </li>
                           }
 
                           {userData.userRole === "admin" && (

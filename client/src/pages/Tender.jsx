@@ -46,6 +46,33 @@ const TenderByCategory = () => {
     <div className="container px-4 py-8 mx-auto max-w-7xl">
       <h1 className="mb-8 text-3xl font-bold">Tender Details</h1>
 
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 mb-8">
+        <div className="bg-white rounded-lg shadow-md p-6 border-gray-400 border-[1px]">
+          <p>
+            <span className="font-bold">Summary:</span>{" "}
+            {tenderDetails.summary}
+          </p>
+          <p>
+            <span className="font-bold">Sector:</span>{" "}
+            {tenderDetails.sector}
+          </p>
+          <p>
+            <span className="font-bold">CPV No:</span>{" "}
+            {tenderDetails.cpvNo}
+          </p>
+          </div>
+          <div className="bg-white rounded-lg shadow-md p-6 border-gray-400 border-[1px]">
+          <p>
+            <span className="font-bold">Type:</span>{" "}
+            {tenderDetails.userCategory}
+          </p>
+          <p>
+            <span className="font-bold">Product:</span>{" "}
+            {tenderDetails.product}
+          </p>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         <div className="bg-white rounded-lg shadow-md p-6 border-gray-400 border-[1px]">
           <h2 className="mb-4 text-2xl font-bold text-red-700">

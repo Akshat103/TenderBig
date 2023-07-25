@@ -161,10 +161,10 @@ const ContactUsPage = () => {
                   <option value="">Select Service</option>
                   <option value="Career&ManPower">Career & Man Power</option>
                   <option value="Registration/Certificate">Registration/Certificate</option>
-                  <option value="Joint Venture">License</option>
+                  <option value="License">License</option>
                   <option value="Auction Material">Auction Material</option>
                   <option value="Joint Venture">Joint Venture</option>
-                  <option value="Tender Result">Online Bidding</option>
+                  <option value="Online Bidding">Online Bidding</option>
                   <option value="Tender Result">Tender Result</option>
                 </select>
               </div>

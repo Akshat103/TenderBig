@@ -32,7 +32,7 @@ const Subcontractor = () => {
           auth: token,
         };
 
-        const response = await axios.get(Url, {}, { headers });
+        const response = await axios.get(Url, { headers });
 
         if (response.status === 401) {
           // Unauthorized - display error message

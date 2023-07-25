@@ -21,7 +21,7 @@ const UserDetails = () => {
         .catch((error) => console.log(error));
     }
   }, []);
-  console.log(userData);
+
   let careerManPower = userData[2]?.number + userData[3]?.number;
   return (
     <div>

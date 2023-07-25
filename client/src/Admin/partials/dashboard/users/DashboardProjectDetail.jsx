@@ -61,7 +61,7 @@ function ProjectDetails() {
 
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/projects/${projectId}`)
+      .get(`${BASE_URL}/projects/byid/${projectId}`)
       .then((response) => {
         setProject(response.data);
         setEditedProject({

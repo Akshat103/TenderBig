@@ -41,8 +41,7 @@ async function updateProjectById(req, res) {
 
   const formId = req.params.id;
   const updatedForm = req.body;
-  console.log(formId);
-  console.log(updatedForm);
+
   try {
     const result = await Project.findByIdAndUpdate(formId, updatedForm, { new: true });
     if (!result) {
@@ -76,24 +75,45 @@ const deleteProjectById = async (req, res) => {
 // Search projects by sector, country, or both
 async function searchProjects(req, res) {
   const { sector, country } = req.body;
+  const userSubscription = req.userSubscription;
+
   const query = {};
 
   if (sector) {
     query.sector = sector;
   }
 
-  if (country) {
-    query.country = country;
+  if (userSubscription.status != "active") {
+    return res.status(401).json({
+      success: false,
+      message: "Buy Subscription."
+    });
   }
 
+  if (userSubscription.type === "One State Plan") {
+    const state = userSubscription.state;
+    query.state = state;
+  } else if (userSubscription.type === "All India") {
+    if (country) {
+      query.country = country;
+    } else {
+      query.country = "India";
+    }
+  } else if (userSubscription.type === "Global") {
+    if (country) {
+      query.country = country;
+    }
+  }
+console.log(query)
   try {
     const projects = await Project.find(query);
     res.status(200).json(projects);
   } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: 'Failed to search projects' });
+    console.log(error);
+    res.status(500).json({ error: "Failed to search projects" });
   }
 }
+
 
 module.exports = {
   submitForm,

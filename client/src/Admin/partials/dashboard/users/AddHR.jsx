@@ -35,8 +35,15 @@ const AddHR = () => {
             .then((response) => response.json())
             .then((data) => {
                 // Handle response data
-                console.log(data);
                 if (data.success) setSuccessMessage("User added successfully.");
+                if (data.error) {
+                    const error = data.error;
+                    if(error.email.length>0) alert(error.email)
+                    else if(error.name.length>0) alert(error.name)
+                    else if(error.password.length>0) alert(error.password)
+                    else if(error.phoneNumber.length>0) alert(error.phoneNumber)
+                    else alert("Something went wrong. Try again.")
+                }
                 // Clear input fields
                 setFormData({
                     name: '',

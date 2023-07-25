@@ -94,6 +94,7 @@ class Tender {
         } = req.body;
 
         const userId = req.userId;
+        const userRole = req.userRole;
 
         try {
             summary = toTitleCase(summary);
@@ -104,6 +105,14 @@ class Tender {
             organization = toUpperCase(organization);
 
             const tenderId = generateUUID();
+
+            let status;
+            if (userRole == "admin" || userRole == "hr" || userRole == "employee" || userRole == "franchise") {
+                status = true;
+            }
+            else {
+                status = false
+            }
 
             const procurementSummary = {
                 country,
@@ -152,7 +161,8 @@ class Tender {
                 otherInformation,
                 purchaserDetail,
                 tenderDetail,
-                approvedStatus: false,
+                active: status,
+                approvedStatus: status,
                 userCategory,
                 product
             });
@@ -308,58 +318,74 @@ class Tender {
                 'active': true,
                 'procurementSummary.deadline': { $gte: currentDate }
             };
-            const userSubscription = req.userSubscription;
 
-            if (userSubscription.status == "inactive") {
+            const userSubscription = req.userSubscription;
+            const userRole = req.userRole;
+
+            if (userRole === "user") {
+                query['userCategory'] = { $ne: 'gem' };
+            }
+
+            if (userSubscription.status != "active") {
                 return res.status(401).json({
                     success: false,
                     message: "Buy Subscription."
                 });
             }
 
-            if (userSubscription.type == "One State Plan") {
+            if (userSubscription.type === "One State Plan") {
                 const state = userSubscription.state;
                 query['procurementSummary.state'] = state;
-            } else if (userSubscription.type == "All India") {
+            } else if (userSubscription.type === "All India") {
                 query['procurementSummary.country'] = "India";
             }
 
             const { region, geopolitical, country, sector, financier, state, city, product, userCategory, value } = req.query;
             const { details } = req.body;
 
-            if (region && regionData.hasOwnProperty(region)) {
+            if (region && regionData.hasOwnProperty(region) && userSubscription.type === "Global") {
                 const countriesInRegion = regionData[region];
                 query['procurementSummary.country'] = { $in: countriesInRegion };
             }
-            if (geopolitical && geopoliticalData.hasOwnProperty(geopolitical)) {
+
+            if (geopolitical && geopoliticalData.hasOwnProperty(geopolitical) && userSubscription.type === "Global") {
                 const countriesInGeopolitical = geopoliticalData[geopolitical];
                 query['procurementSummary.country'] = { $in: countriesInGeopolitical };
             }
-            if (country && userSubscription.type != "All India") {
+
+            if (country && userSubscription.type === "All India") {
                 query['procurementSummary.country'] = country;
             }
+
             if (sector) {
                 query['sector'] = sector;
             }
+
             if (financier) {
                 query['otherInformation.financier'] = financier;
             }
+
             if (state) {
                 query['procurementSummary.state'] = state;
             }
+
             if (city) {
                 query['procurementSummary.city'] = city;
             }
+
             if (product) {
-                query['product'] = product;
+                query['sector'] = product;
             }
+
             if (userCategory) {
                 query['userCategory'] = userCategory;
             }
+
             if (value) {
                 query['otherInformation.tenderValue'] = { $gt: value };
             }
 
+            console.log(query);
             let projection;
             if (details) {
                 projection = details.reduce((acc, field) => {
@@ -400,10 +426,63 @@ class Tender {
                 return res.status(400).json({ error: 'Search criteria are missing.' });
             }
 
+            const userSubscription = req.userSubscription;
+
+
             const query = {
                 'approvedStatus': true,
                 'active': true,
             };
+
+            if (userSubscription.status != "active") {
+                return res.status(401).json({
+                    success: false,
+                    message: "Buy Subscription."
+                });
+            }
+
+            if (userSubscription.type === "One State Plan") {
+                const state = userSubscription.state;
+                if (!query['procurementSummary.state']) {
+                    query['procurementSummary.state'] = state;
+                }
+            } else if (userSubscription.type === "All India") {
+                if (!query['procurementSummary.country']) {
+                    query['procurementSummary.country'] = "India";
+                }
+            } else if (userSubscription.type === "Global" || location == "India") {
+                if (location) {
+                    if (Array.isArray(location)) {
+                        const countries = [];
+                        const regions = [];
+
+                        location.forEach((item) => {
+                            if (regionData.hasOwnProperty(item)) {
+                                regions.push(item);
+                            } else {
+                                countries.push(item);
+                            }
+                        });
+
+                        if (countries.length > 0) {
+                            query['procurementSummary.country'] = { $in: countries };
+                        }
+                        if (regions.length > 0) {
+                            const countriesInRegions = regions.reduce((acc, region) => {
+                                return acc.concat(regionData[region]);
+                            }, []);
+
+                            if (query['procurementSummary.country']) {
+                                query['procurementSummary.country'].$in = query['procurementSummary.country'].$in.concat(countriesInRegions);
+                            } else {
+                                query['procurementSummary.country'] = { $in: countriesInRegions };
+                            }
+                        }
+                    } else {
+                        query['procurementSummary.country'] = location;
+                    }
+                }
+            }
 
             if (totNo) {
                 query['otherInformation.totNo'] = totNo;
@@ -411,38 +490,6 @@ class Tender {
 
             if (documentNo) {
                 query['otherInformation.documentNo'] = documentNo;
-            }
-
-            if (location) {
-                if (Array.isArray(location)) {
-                    const countries = [];
-                    const regions = [];
-
-                    location.forEach((item) => {
-                        if (regionData.hasOwnProperty(item)) {
-                            regions.push(item);
-                        } else {
-                            countries.push(item);
-                        }
-                    });
-
-                    if (countries.length > 0) {
-                        query['procurementSummary.country'] = { $in: countries };
-                    }
-                    if (regions.length > 0) {
-                        const countriesInRegions = regions.reduce((acc, region) => {
-                            return acc.concat(regionData[region]);
-                        }, []);
-
-                        if (query['procurementSummary.country']) {
-                            query['procurementSummary.country'].$in = query['procurementSummary.country'].$in.concat(countriesInRegions);
-                        } else {
-                            query['procurementSummary.country'] = { $in: countriesInRegions };
-                        }
-                    }
-                } else {
-                    query['procurementSummary.country'] = location;
-                }
             }
 
             if (sector && Array.isArray(sector)) {
@@ -529,7 +576,7 @@ class Tender {
             }
 
             const tenders = await tenderModel.find(query, projection);
-
+            console.log(query)
             res.json(tenders);
         } catch (error) {
             console.error(error);

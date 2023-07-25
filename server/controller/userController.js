@@ -223,15 +223,16 @@ class User {
                 });
             }
 
-            const Date = new Date(); // Get the current date
+            // Get the current date
+            const currentDate = new Date();
 
             // Add 30 days to the current date
-            Date.setDate(currentDate.getDate() + 30);
+            currentDate.setDate(currentDate.getDate() + 30);
 
             // Update the subscription status and plan type
             user.subscription.status = "active";
             user.subscription.type = planType;
-            user.subscription.date = Date;
+            user.subscription.date = currentDate;
             if (state) {
                 user.subscription.state = state;
             }

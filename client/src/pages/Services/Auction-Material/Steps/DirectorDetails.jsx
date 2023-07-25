@@ -67,7 +67,7 @@ const Step3 = ({ formData, handleChange, handleNext, handlePrevious, setFormData
               Director PAN No
               <span className="relative top-0 right-0 text-red-700">*</span>
               <input
-                type="number"
+                type="text"
                 name="directorPan"
                 value={director.directorPan}
                 onChange={(event) => handleDirectorChange(index, event)}

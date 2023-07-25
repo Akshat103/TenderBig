@@ -55,7 +55,7 @@ const Step1 = ({ formData, handleChange, handleNext }) => {
             <span className="relative top-0 right-0 text-red-700">*</span>
             <input
               required
-              type="number"
+              type="text"
               name="cinReg"
               value={formData.cinReg}
               onChange={handleChange}
@@ -68,7 +68,7 @@ const Step1 = ({ formData, handleChange, handleNext }) => {
             <span className="relative top-0 right-0 text-red-700">*</span>
             <input
               required
-              type="number"
+              type="text"
               name="gst"
               value={formData.gst}
               onChange={handleChange}
@@ -81,7 +81,7 @@ const Step1 = ({ formData, handleChange, handleNext }) => {
             <span className="relative top-0 right-0 text-red-700">*</span>
             <input
               required
-              type="number"
+              type="text"
               name="pan"
               value={formData.pan}
               onChange={handleChange}

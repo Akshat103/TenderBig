@@ -25,35 +25,27 @@ const ProjectCard = ({ project }) => {
         <p className="text-gray-600">
           <strong>Detail:</strong> {project.detail}
         </p>
-      {/* {showDetails && ( */}
+        {/* {showDetails && ( */}
         {/* <div className="grid grid-cols-3"> */}
-          <p className="mb-2 text-gray-600">
-            <strong>Value:</strong> {project.value}
-          </p>
-          <p className="mb-2 text-gray-600">
-            <strong>City:</strong> {project.city}
-          </p>
-          <p className="mb-2 text-gray-600">
-            <strong>State:</strong> {project.state}
-          </p>
-          <p className="mb-2 text-gray-600">
-            <strong>Country:</strong> {project.country}
-          </p>
-          <p className="mb-2 text-gray-600">
-            <strong>Status:</strong> {project.status}
-          </p>
-          <p className="mb-2 text-gray-600">
-            <strong>Sector:</strong> {project.sector}
-          </p>
+        <p className="mb-2 text-gray-600">
+          <strong>Value:</strong> {project.value}
+        </p>
+        <p className="mb-2 text-gray-600">
+          <strong>City:</strong> {project.city}
+        </p>
+        <p className="mb-2 text-gray-600">
+          <strong>State:</strong> {project.state}
+        </p>
+        <p className="mb-2 text-gray-600">
+          <strong>Country:</strong> {project.country}
+        </p>
+        <p className="mb-2 text-gray-600">
+          <strong>Status:</strong> {project.status}
+        </p>
+        <p className="mb-2 text-gray-600">
+          <strong>Sector:</strong> {project.sector}
+        </p>
       </div>
-        {/* </div> */}
-      {/* )} */}
-      {/* <button
-        className="px-4 py-2 font-bold text-white transition-colors bg-red-700 rounded hover:bg-red-700"
-        onClick={handleViewDetails}
-      >
-        {showDetails ? "Hide Details" : "View Details"}
-      </button> */}
     </div>
   );
 };
@@ -69,8 +61,15 @@ const ProjectList = () => {
   const projectsPerPage = 3;
 
   useEffect(() => {
+
+    const token = localStorage.getItem("token")
+    const headers = {
+      "Content-Type": "application/json",
+      auth: token,
+    };
+
     axios
-      .get(`${BASE_URL}/projects/getall`)
+      .get(`${BASE_URL}/projects/search`, {headers})
       .then((response) => {
         console.log(response, 'response')
         setProjects(response.data);
@@ -165,45 +164,45 @@ const ProjectList = () => {
 
   return (
     <div className="p-4 mx-auto max-w-7xl">
-              <h1 className="my-4 text-3xl font-bold text-center">
-                About Projects
-              </h1>
-       
-        <img src={ProjectImg} alt="project_img" className="h-auto md:h-[600px] w-full my-5" />
-            
-            <div className="my-10">
-              <div className="flex flex-col text-xl leading-8 text-center gap-y-3">
-                <p>
-                Project tenders are specific procurement opportunities related to project-based contracts. 
-                These tenders are issued by organizations or entities looking to outsource a project's
-                execution to external contractors or suppliers. Project tenders are typically more comprehensive 
-                than regular procurement tenders, as they involve the entire scope of a project, including design, 
-                construction, implementation, and delivery.
-                </p>
+      <h1 className="my-4 text-3xl font-bold text-center">
+        About Projects
+      </h1>
 
-                <p>
+      <img src={ProjectImg} alt="project_img" className="h-auto md:h-[600px] w-full my-5" />
 
-                Project tenders outline the requirements, specifications, and deliverables of the project, along with 
-                any technical or quality standards that need to be met. They may include details about the project's
-                 objectives, timelines, budget, and evaluation criteria. Interested contractors or suppliers are invited
-                  to submit their bids, proposals, or tenders, providing their approach, pricing, resources, and
-                   qualifications to successfully complete the project.
-                </p>
-              </div>
-            </div>
-            <h1 className="my-4 text-3xl font-bold text-center">Project List</h1>
-            
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-        
+      <div className="my-10">
+        <div className="flex flex-col text-xl leading-8 text-center gap-y-3">
+          <p>
+            Project tenders are specific procurement opportunities related to project-based contracts.
+            These tenders are issued by organizations or entities looking to outsource a project's
+            execution to external contractors or suppliers. Project tenders are typically more comprehensive
+            than regular procurement tenders, as they involve the entire scope of a project, including design,
+            construction, implementation, and delivery.
+          </p>
+
+          <p>
+
+            Project tenders outline the requirements, specifications, and deliverables of the project, along with
+            any technical or quality standards that need to be met. They may include details about the project's
+            objectives, timelines, budget, and evaluation criteria. Interested contractors or suppliers are invited
+            to submit their bids, proposals, or tenders, providing their approach, pricing, resources, and
+            qualifications to successfully complete the project.
+          </p>
+        </div>
+      </div>
+      <h1 className="my-4 text-3xl font-bold text-center">Project List</h1>
+
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+
         <div className="col-span-1">
           <div className="">
             <h2 className="mb-2 text-lg font-bold">Filters</h2>
-            
+
             <div className="mb-4 border-[2px] border-black/20 shadow-xl">
               <label
                 htmlFor="country"
                 className="block text-xl font-bold mb-0.5 px-4 py-3 text-white bg-black"
-                >
+              >
                 Country
               </label>
               <select
@@ -216,86 +215,86 @@ const ProjectList = () => {
               >
                 <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All Countries</option>
                 {countries.map((country) => (
-                  <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white"  key={country} value={country}>
+                  <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white" key={country} value={country}>
                     {country}
                   </option>
                 ))}
               </select>
             </div>
-            
+
             {/* {selectedCountry && ( */}
-              <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
-                <label
-                  htmlFor="state"
-                  className="block text-xl font-bold  mb-0.5 px-4 py-3 text-white bg-black"
-                >
-                  State
-                </label>
-                <select
-                  id="state"
-                  name="state"
-                  size={5}
-                  value={selectedState}
-                  onChange={handleStateChange}
-                  className="w-full px-4 py-2 bg-white"
-                >
-                  <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All States</option>
-                  {Array.from(
-                    new Set(
-                      projects
-                        .filter(
-                          (project) => project.country === selectedCountry
-                        )
-                        .map((project) => project.state)
-                    )
-                  ).map((state) => (
-                    <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white"  key={state} value={state}>
-                      {state}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              
+            <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
+              <label
+                htmlFor="state"
+                className="block text-xl font-bold  mb-0.5 px-4 py-3 text-white bg-black"
+              >
+                State
+              </label>
+              <select
+                id="state"
+                name="state"
+                size={5}
+                value={selectedState}
+                onChange={handleStateChange}
+                className="w-full px-4 py-2 bg-white"
+              >
+                <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All States</option>
+                {Array.from(
+                  new Set(
+                    projects
+                      .filter(
+                        (project) => project.country === selectedCountry
+                      )
+                      .map((project) => project.state)
+                  )
+                ).map((state) => (
+                  <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white" key={state} value={state}>
+                    {state}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             {/* )} */}
             {/* {selectedState && ( */}
-              <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
-                <label
-                  htmlFor="city"
-                  className="block text-xl font-bold mb-0.5 px-4 py-3 text-white bg-black"
-                >
-                  City
-                </label>
-                <select
-                  id="city"
-                  name="city"
-                  size={5}
-                  value={selectedCity}
-                  onChange={handleCityChange}
-                  className="w-full px-4 py-2 bg-white"
-                >
-                  <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All Cities</option>
-                  {Array.from(
-                    new Set(
-                      projects
-                        .filter(
-                          (project) =>
-                            project.country === selectedCountry &&
-                            project.state === selectedState
-                        )
-                        .map((project) => project.city)
-                    )
-                  ).map((city) => (
-                    <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white"  key={city} value={city}>
-                      {city}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
+              <label
+                htmlFor="city"
+                className="block text-xl font-bold mb-0.5 px-4 py-3 text-white bg-black"
+              >
+                City
+              </label>
+              <select
+                id="city"
+                name="city"
+                size={5}
+                value={selectedCity}
+                onChange={handleCityChange}
+                className="w-full px-4 py-2 bg-white"
+              >
+                <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All Cities</option>
+                {Array.from(
+                  new Set(
+                    projects
+                      .filter(
+                        (project) =>
+                          project.country === selectedCountry &&
+                          project.state === selectedState
+                      )
+                      .map((project) => project.city)
+                  )
+                ).map((city) => (
+                  <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white" key={city} value={city}>
+                    {city}
+                  </option>
+                ))}
+              </select>
+            </div>
             {/* )} */}
           </div>
         </div>
 
-        
+
 
         <div className="col-span-2">
           {currentProjects.length > 0 ? (

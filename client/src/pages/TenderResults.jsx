@@ -91,11 +91,18 @@ const TenderResults = () => {
   };
 
   useEffect(() => {
+
+    const Url = `${BASE_URL}/tenderresults/search`;
+
+    const token = localStorage.getItem("token");
+    const headers = {
+      "Content-Type": "application/json",
+      auth: token,
+    };
+
     const fetchTenderData = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/tenderresults/search`
-        );
+        const response = await axios.get(Url, { headers });
         setTenderData(response.data);
       } catch (error) {
         console.error(error);
@@ -139,7 +146,7 @@ const TenderResults = () => {
         };
 
 
-        const response = await axios.get(searchUrl, { }, { headers });
+        const response = await axios.get(searchUrl, { headers });
 
         if (response.status === 401) {
           // Unauthorized - display error message
@@ -349,8 +356,8 @@ const TenderResults = () => {
                     key={pageNumber}
                     onClick={() => goToPage(pageNumber)}
                     className={`px-4 py-2 rounded hover:bg-black hover:text-white hover:border hover:border-black transition-colors duration-300 ${pageNumber === currentPage
-                        ? "text-white bg-black"
-                        : "text-black bg-white"
+                      ? "text-white bg-black"
+                      : "text-black bg-white"
                       }`}
                   >
                     {pageNumber}

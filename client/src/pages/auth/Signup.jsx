@@ -54,12 +54,8 @@ const Signup = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                // Handle response data
-                console.log(data);
-                if (data.error) {
-                    if (data.error.email) alert(data.error.email);
-                    if (data.error.phoneNumber) alert(data.error.phoneNumber);
-                } else {
+                if (data.success) {
+                    setSuccessMessage("User added successfully.")
                     setSuccessMessage(data.success);
                     // Clear input fields
                     setFormData({
@@ -71,6 +67,14 @@ const Signup = () => {
                         state: '',
                         city: ''
                     });
+                }
+                else {
+                    const error = data.error;
+                    if (error.email.length > 0) alert(error.email)
+                    else if (error.name.length > 0) alert(error.name)
+                    else if (error.password.length > 0) alert(error.password)
+                    else if (error.phoneNumber.length > 0) alert(error.phoneNumber)
+                    else alert("Something went wrong. Try again.")
                 }
             })
             .catch((error) => {

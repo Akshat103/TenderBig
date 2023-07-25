@@ -377,7 +377,7 @@ const Registration = () => {
                 </label>
                 <input
                   required
-                  type="number"
+                  type="text"
                   id="CIN"
                   className="w-full px-3 py-2 border border-gray-300 rounded"
                   value={CIN}
@@ -482,7 +482,7 @@ const Registration = () => {
                 </label>
                 <input
                   required
-                  type="number"
+                  type="text"
                   id="GST"
                   className="w-full px-3 py-2 border border-gray-300 rounded"
                   value={GST}
@@ -496,7 +496,7 @@ const Registration = () => {
                 </label>
                 <input
                   required
-                  type="number"
+                  type="text"
                   id="PAN"
                   className="w-full px-3 py-2 border border-gray-300 rounded"
                   value={PAN}

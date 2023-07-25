@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const tenderResultController = require("../controller/tenderResultsController");
-const { verifyToken, isNotUser, checkSubscription } = require("../middleware/auth")
+const { verifyToken, checkSubscription, isNotUser } = require("../middleware/auth")
 
 // tender results giving admin
 router.post("/add-tenderResults", tenderResultController.postAddTenderResults);
@@ -17,6 +17,6 @@ router.get("/alltenderResults", tenderResultController.getTenderResults)
 
 router.get("/byid/:TenderResultId", tenderResultController.getTenderResultsByTenderId);
 
-router.get("/search", tenderResultController.search);
+router.get("/search", verifyToken, checkSubscription, tenderResultController.search);
 
 module.exports = router;

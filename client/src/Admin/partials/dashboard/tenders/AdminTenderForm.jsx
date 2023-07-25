@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Country, State, City } from 'country-state-city';
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const OtherInformationAndPurchaserDetail = ({ formData, handleChange, handleSubmit, previousPage }) => {
@@ -274,6 +275,23 @@ const Forms = () => {
     tenderDetailNoticeType: "",
   });
 
+  const countryData = Country.getAllCountries();
+  const countryNames = Object.values(countryData).map((country) => country.name);
+
+  let stateNames = [];
+  if (formData.country) {
+    const countryCode = countryData.find((country) => country.name === formData.country)?.isoCode;
+    const stateData = State.getStatesOfCountry(countryCode);
+    stateNames = Array.from(new Set(Object.values(stateData).map((state) => state.name)));
+  }
+
+  let cityNames = [];
+  if (formData.country) {
+    const countryCode = countryData.find((country) => country.name === formData.country)?.isoCode;
+    const cityData = City.getCitiesOfCountry(countryCode);
+    cityNames = Array.from(new Set(Object.values(cityData).map((city) => city.name)));
+  }
+
   const clearInputs = () => {
     setFormData({
       summary: "",
@@ -387,245 +405,266 @@ const Forms = () => {
   };
 
   return (
-          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            {/* Dashboard actions */}
+    <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+      {/* Dashboard actions */}
 
-            {/* Cards */}
-            <div className="grid grid-cols-15 gap-6">
-              {/*---------> Table (Top Channels) */}
+      {/* Cards */}
+      <div className="grid grid-cols-15 gap-6">
+        {/*---------> Table (Top Channels) */}
 
-              <div className="max-w-3xl mx-auto mt-6 px-4 py-8 mb-6 shadow-2xl rounded-lg">
-                {currentPage === 1 && (
-                  <form onSubmit={handleSubmit}>
-                    {/* Global Section */}
-                    <h2 className="text-2xl font-bold mb-4 text-center ">Submit Tender Request</h2>
-                    <p className="text-red-700 font-thin font-serif text-sm">
-                      Fields marked with an asterisk (*) are mandatory.
-                    </p>
-                    <div className="p-2 rounded-lg">
-                      <label className="block mb-2 font-semibold relative">
-                        Summary
-                        <span className="text-red-700 relative top-0 right-0">*</span>
-                        <input
-                          required
-                          type="text"
-                          name="summary"
-                          value={formData.summary}
-                          onChange={handleChange}
-                          className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                          placeholder="Enter Summary"
-                        />
-                      </label>
-                      <div className=" grid grid-cols-2 gap-4 ">
-                        <div className="relative">
-                          <label className="block mb-2 font-semibold">
-                            Sector
-                            <span className="text-red-700 relative top-0 right-0">*</span>
-                          </label>
-                          <select
-                            required
-                            name="sector"
-                            value={formData.sector}
-                            onChange={handleChange}
-                            className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                          >
-                            <option value="">Select Sector</option>
-                            {sectors.map((sector) => (
-                              <option key={sector} value={sector}>
-                                {sector}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-
-                        <label className="block mb-2 font-semibold">
-                          CPV No
-                          <input
-                            type="text"
-                            name="cpvNo"
-                            value={formData.cpvNo}
-                            onChange={handleChange}
-                            className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            placeholder="Enter CPV No"
-                          />
-                        </label>
-
-                        <label className="block mb-2 font-semibold">
-                          Category
-                          <span className="text-red-700 relative top-0 right-0">*</span>
-                          <select required
-                            name="userCategory"
-                            value={formData.userCategory}
-                            onChange={handleChange}
-                            className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                          >
-                            <option value="">Select Category</option>
-                            <option value="contractor">Contractor</option>
-                            <option value="subcontractor">Sub Contractor</option>
-                            <option value="government">Government</option>
-                            <option value="private">Private</option>
-                            <option value="gem">Gem</option>
-                          </select>
-                        </label>
-                        
-                        <label className="block mb-2 font-semibold">
-                          Product
-                          <span className="text-red-700 relative top-0 right-0">*</span>
-                          <select
-                            required
-                            name="product"
-                            value={formData.product}
-                            onChange={handleChange}
-                            className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                          >
-                            <option value="">Select Product</option>
-                            {products.map((product) => (
-                              <option key={product} value={product}>
-                                {product}
-                              </option>
-                            ))}
-                          </select>
-                        </label>
-                      </div>
-                    </div>
-
-                    {/* procurementSummary and tenderDetail Sections */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {/* Procurement Summary Section */}
-                      <div className=" p-2 rounded-lg mt-2">
-                        <h2 className="text-2xl font-bold mb-4 ">Procurement Summary</h2>
-                        <div className="grid grid-cols-2 gap-4">
-                          <label className="block font-semibold">
-                            Country
-                            <span className="text-red-700 relative top-0 right-0">*</span>
-                            <select required
-                              name="country"
-                              value={formData.country}
-                              onChange={handleChange}
-                              className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            >
-                              {locations.map((country, index) => (
-                                <option key={index} value={country}>
-                                  {country}
-                                </option>
-                              ))}
-                            </select>
-                          </label>
-
-                          <label className="block font-semibold">
-                            State
-                            <span className="text-red-700 relative top-0 right-0">*</span>
-                            <input required
-                              type="text"
-                              name="state"
-                              value={formData.state}
-                              onChange={handleChange}
-                              className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                              placeholder="Enter State"
-                            />
-                          </label>
-                        </div>
-                        <div className="grid grid-cols-2 gap-4 mt-1.5 mb-1.5">
-                          <label className="block font-semibold">
-                            City
-                            <input
-                              type="text"
-                              name="city"
-                              value={formData.city}
-                              onChange={handleChange}
-                              className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                              placeholder="Enter City"
-                            />
-                          </label>
-                          <label className="block font-semibold">
-                            Deadline
-                            <span className="text-red-700 relative top-0 right-0">*</span>
-                            <input required
-                              type="date"
-                              name="procurementSummaryDeadline"
-                              value={formData.procurementSummaryDeadline}
-                              onChange={handleChange}
-                              className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                              placeholder="Enter Deadline"
-                            />
-                          </label>
-                        </div>
-                        <label className="block mb-2 font-semibold">
-                          Summary
-                          <input
-                            type="text"
-                            name="procurementSummarySummary"
-                            value={formData.procurementSummarySummary}
-                            onChange={handleChange}
-                            className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            placeholder="Enter Summary"
-                          />
-                        </label>
-                      </div>
-
-                      {/* tenderDetail Section */}
-                      <div className="p-2 rounded-lg mt-2">
-                        <h2 className="text-2xl font-bold mb-4 ">Tender Detail</h2>
-                        <label className="block mb-2 font-semibold">
-                          Description
-                          <input
-                            type="text"
-                            name="description"
-                            value={formData.description}
-                            onChange={handleChange}
-                            className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            placeholder="Enter Description"
-                          />
-                        </label>
-                        <label className="block mb-2 font-semibold">
-                          Organization
-                          <span className="text-red-700 relative top-0 right-0">*</span>
-                          <input required
-                            type="text"
-                            name="organization"
-                            value={formData.organization}
-                            onChange={handleChange}
-                            className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            placeholder="Enter Organization"
-                          />
-                        </label>
-                        <label className="block mb-2 font-semibold">
-                          Notice Type
-                          <span className="text-red-700 relative top-0 right-0">*</span>
-                          <input required
-                            type="text"
-                            name="tenderDetailNoticeType"
-                            value={formData.tenderDetailNoticeType}
-                            onChange={handleChange}
-                            className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            placeholder="Enter Notice Type"
-                          />
-                        </label>
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={nextPage}
-                      className="bg-[#182235] hover:bg-[#111a2b] text-white px-4 py-2 mt-8 rounded "
+        <div className="max-w-3xl mx-auto mt-6 px-4 py-8 mb-6 shadow-2xl rounded-lg">
+          {currentPage === 1 && (
+            <form onSubmit={handleSubmit}>
+              {/* Global Section */}
+              <h2 className="text-2xl font-bold mb-4 text-center ">Submit Tender Request</h2>
+              <p className="text-red-700 font-thin font-serif text-sm">
+                Fields marked with an asterisk (*) are mandatory.
+              </p>
+              <div className="p-2 rounded-lg">
+                <label className="block mb-2 font-semibold relative">
+                  Summary
+                  <span className="text-red-700 relative top-0 right-0">*</span>
+                  <input
+                    required
+                    type="text"
+                    name="summary"
+                    value={formData.summary}
+                    onChange={handleChange}
+                    className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                    placeholder="Enter Summary"
+                  />
+                </label>
+                <div className=" grid grid-cols-2 gap-4 ">
+                  <div className="relative">
+                    <label className="block mb-2 font-semibold">
+                      Sector
+                      <span className="text-red-700 relative top-0 right-0">*</span>
+                    </label>
+                    <select
+                      required
+                      name="sector"
+                      value={formData.sector}
+                      onChange={handleChange}
+                      className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                     >
-                      Next
-                    </button>
-                  </form>
-                )}
+                      <option value="">Select Sector</option>
+                      {sectors.map((sector) => (
+                        <option key={sector} value={sector}>
+                          {sector}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-                {currentPage === 2 && (
-                  <form onSubmit={handleSubmit}>
-                    <OtherInformationAndPurchaserDetail
-                      formData={formData}
-                      handleChange={handleChange}
-                      handleSubmit={handleSubmit}
-                      previousPage={previousPage}
+                  <label className="block mb-2 font-semibold">
+                    CPV No
+                    <input
+                      type="text"
+                      name="cpvNo"
+                      value={formData.cpvNo}
+                      onChange={handleChange}
+                      className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                      placeholder="Enter CPV No"
                     />
-                  </form>
-                )}
+                  </label>
+
+                  <label className="block mb-2 font-semibold">
+                    Category
+                    <span className="text-red-700 relative top-0 right-0">*</span>
+                    <select required
+                      name="userCategory"
+                      value={formData.userCategory}
+                      onChange={handleChange}
+                      className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                    >
+                      <option value="">Select Category</option>
+                      <option value="contractor">Contractor</option>
+                      <option value="subcontractor">Sub Contractor</option>
+                      <option value="government">Government</option>
+                      <option value="private">Private</option>
+                      <option value="gem">Gem</option>
+                    </select>
+                  </label>
+
+                  <label className="block mb-2 font-semibold">
+                    Product
+                    <span className="text-red-700 relative top-0 right-0">*</span>
+                    <select
+                      required
+                      name="product"
+                      value={formData.product}
+                      onChange={handleChange}
+                      className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                    >
+                      <option value="">Select Product</option>
+                      {products.map((product) => (
+                        <option key={product} value={product}>
+                          {product}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
               </div>
-            </div>
-          </div>
+
+              {/* procurementSummary and tenderDetail Sections */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Procurement Summary Section */}
+                <div className=" p-2 rounded-lg mt-2">
+                  <h2 className="text-2xl font-bold mb-4 ">Procurement Summary</h2>
+                  <div className="grid grid-cols-2 gap-4">
+                    <label className="block font-semibold">
+                      Country
+                      <span className="relative top-0 right-0 text-red-700">
+                        *
+                      </span>
+                      <select
+                        required
+                        name="country"
+                        value={formData.country}
+                        onChange={handleChange}
+                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                      >
+                        {countryNames.map((country, index) => (
+                          <option key={index} value={country}>
+                            {country}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+
+                    <label className="block font-semibold">
+                      State
+                      <span className="relative top-0 right-0 text-red-700">
+                        *
+                      </span>
+                      <select
+                        required
+                        name="state"
+                        value={formData.state}
+                        onChange={handleChange}
+                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                      >
+                        <option value="">Select a state</option>
+                        {stateNames.map((state) => (
+                          <option key={state} value={state}>
+                            {state}
+                          </option>
+                        ))}
+                      </select>
+
+                    </label>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 mt-1.5 mb-1.5">
+                    <label className="block font-semibold">
+                      City
+
+                      <input
+                        required
+                        type="text"
+                        name="city"
+                        value={formData.city}
+                        onChange={handleChange}
+                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                        placeholder="Enter a city"
+                        autoComplete="off"
+                        list="cityNamesList"
+                      />
+                      <datalist id="cityNamesList">
+                        {cityNames.map((city) => (
+                          <option key={city} value={city} />
+                        ))}
+                      </datalist>
+                    </label>
+                    <label className="block font-semibold">
+                      Deadline
+                      <span className="text-red-700 relative top-0 right-0">*</span>
+                      <input required
+                        type="date"
+                        name="procurementSummaryDeadline"
+                        value={formData.procurementSummaryDeadline}
+                        onChange={handleChange}
+                        className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                        placeholder="Enter Deadline"
+                      />
+                    </label>
+                  </div>
+                  <label className="block mb-2 font-semibold">
+                    Summary
+                    <input
+                      type="text"
+                      name="procurementSummarySummary"
+                      value={formData.procurementSummarySummary}
+                      onChange={handleChange}
+                      className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                      placeholder="Enter Summary"
+                    />
+                  </label>
+                </div>
+
+                {/* tenderDetail Section */}
+                <div className="p-2 rounded-lg mt-2">
+                  <h2 className="text-2xl font-bold mb-4 ">Tender Detail</h2>
+                  <label className="block mb-2 font-semibold">
+                    Description
+                    <input
+                      type="text"
+                      name="description"
+                      value={formData.description}
+                      onChange={handleChange}
+                      className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                      placeholder="Enter Description"
+                    />
+                  </label>
+                  <label className="block mb-2 font-semibold">
+                    Organization
+                    <span className="text-red-700 relative top-0 right-0">*</span>
+                    <input required
+                      type="text"
+                      name="organization"
+                      value={formData.organization}
+                      onChange={handleChange}
+                      className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                      placeholder="Enter Organization"
+                    />
+                  </label>
+                  <label className="block mb-2 font-semibold">
+                    Notice Type
+                    <span className="text-red-700 relative top-0 right-0">*</span>
+                    <input required
+                      type="text"
+                      name="tenderDetailNoticeType"
+                      value={formData.tenderDetailNoticeType}
+                      onChange={handleChange}
+                      className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                      placeholder="Enter Notice Type"
+                    />
+                  </label>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={nextPage}
+                className="bg-[#182235] hover:bg-[#111a2b] text-white px-4 py-2 mt-8 rounded "
+              >
+                Next
+              </button>
+            </form>
+          )}
+
+          {currentPage === 2 && (
+            <form onSubmit={handleSubmit}>
+              <OtherInformationAndPurchaserDetail
+                formData={formData}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                previousPage={previousPage}
+              />
+            </form>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 

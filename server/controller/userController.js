@@ -50,25 +50,34 @@ class User {
 
     async updateUserRole(req, res) {
         try {
+          let { userId, userRole } = req.body;
+      
+          const user = await userModel.findOne({ userId });
+      
+          if (!user) {
+            return res.json({ error: "User not found" });
+          }
+ 
+          user.userRole = userRole;
 
-            let { userId, userRole } = req.body;
+          if (userRole === 'user') {
+            user.subscription = {
+              status: 'inactive',
+              state: 'none',
+              type: 'none',
+              date: null,
+            };
+          }
 
-            const user = await userModel.findOneAndUpdate(
-                { userId: userId },
-                { userRole: userRole },
-                { new: true }
-            );
-
-            if (user) {
-                return res.json({ success: "User role updated successfully" });
-            } else {
-                return res.json({ error: "User not found" });
-            }
+          await user.save();
+      
+          return res.json({ success: "User role updated successfully" });
         } catch (error) {
-            console.error('Error updating user role:', error);
-            return { error: 'An error occurred while updating user role' };
+          console.error('Error updating user role:', error);
+          return res.json({ error: 'An error occurred while updating user role' });
         }
-    };
+      }
+      
 
     async deleteUser(req, res) {
 

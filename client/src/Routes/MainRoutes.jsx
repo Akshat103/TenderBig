@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import Home from '../pages/Home/Home';
 import AdvancedSearch from '../pages/AdvancedSearch';
 import TenderListingPage from '../pages/TenderListingPage';
@@ -36,9 +36,12 @@ import DasboardUserDetails from "../Admin/partials/dashboard/userDashboards/User
 
 const MainRoutes = () => {
 
+  const auth = localStorage.getItem('user');
+  const navigate = useNavigate();
+
   return (
     <>
-<Navbar />
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<Projects />} />
@@ -68,12 +71,16 @@ const MainRoutes = () => {
         <Route path="/forms" element={<TenderForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="*" element={<NotFound />} />
         <Route path="/tenderResults" element={<TenderResults />} />
         <Route path="/subscribe" element={<SubscribePage />} />
-        <Route path="/userDashboard" element={<DasboardUserDetails />} />
+        {
+          auth?
+          <Route path="/userDashboard" element={<DasboardUserDetails />} />
+          :<></>
+        }
+        <Route path="*" element={<NotFound />} />
       </Routes>
-<Footer />
+      <Footer />
     </>
   );
 };

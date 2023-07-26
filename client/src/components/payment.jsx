@@ -1,13 +1,19 @@
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-const payment = async (amount,receipt, subscription=false, planType, state, userId) => {
-    const { data: { key } } = await axios.get(`${BASE_URL}/payment/razorpaykey`);
+const payment = async (amount, receipt, subscription = false, planType, state, userId) => {
+    const token = localStorage.getItem('token');
 
-    const { data: { order_id } } = await axios.post(`${BASE_URL}/payment/createorder`,{
+    const headers = {
+        'auth': token
+    };
+
+    const { data: { key } } = await axios.get(`${BASE_URL}/payment/razorpaykey`, { headers });
+
+    const { data: { order_id } } = await axios.post(`${BASE_URL}/payment/createorder`, {
         amount,
         receipt
-    });
+    }, { headers });
 
     return new Promise((resolve, reject) => {
         var options = {
@@ -15,7 +21,7 @@ const payment = async (amount,receipt, subscription=false, planType, state, user
             "order_id": order_id,
             "handler": async function (response) {
                 try {
-                    if(subscription){
+                    if (subscription) {
                         const { data: { success } } = await axios.post(`${BASE_URL}/payment/verify-payment`, {
                             razorpay_payment_id: response.razorpay_payment_id,
                             razorpay_order_id: response.razorpay_order_id,
@@ -24,10 +30,10 @@ const payment = async (amount,receipt, subscription=false, planType, state, user
                             planType,
                             state,
                             userId
-                        });
+                        }, { headers });
                         resolve(success);
                     }
-                    if(!subscription){
+                    if (!subscription) {
                         const { data: { success } } = await axios.post(`${BASE_URL}/payment/verify-payment`, {
                             razorpay_payment_id: response.razorpay_payment_id,
                             razorpay_order_id: response.razorpay_order_id,

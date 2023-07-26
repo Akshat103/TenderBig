@@ -320,7 +320,6 @@ class Tender {
             };
 
             const userSubscription = req.userSubscription;
-            const userRole = req.userRole;
 
             query['userCategory'] = { $ne: 'gem' };
 

@@ -59,7 +59,7 @@ const Login = () => {
                 <div className="flex flex-col p-6 px-4 py-8 mx-auto mt-6 bg-white rounded-lg shadow-2xl md:flex-row place-content-center">
                     <div className="w-full m-2 mb-4 md:w-1/2 md:mb-0">
                         <img className="w-80"
-                            src={`${import.meta.env.BASE_URL}illustartion/login.jpg`}
+                            src={`${import.meta.env.BASE_URL}illustartion/login.svg`}
                             alt="login"
                         />
                     </div>

@@ -46,12 +46,8 @@ const MainRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/tenders" element={<TenderListingPage />} />
         <Route path='/gems' element={<Gems />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/tenderResults" element={<TenderResults />} />
         <Route path="/subscribe" element={<SubscribePage />} />
-        <Route path='/gemslist' element={<GemListing />} />
         <Route path='/tenderfilling' element={<TenderFilling />}></Route>
         <Route path='/regandcert' element={<RegAndCert />}></Route>
         <Route path='/regandcert' element={<RegAndCert />}></Route>
@@ -61,7 +57,6 @@ const MainRoutes = () => {
         <Route path="/tender/:referenceNo" element={<Tender />} />
         <Route path="/gem/:referenceNos" element={<GemDetailingListing />} />
         <Route path="/contact" element={<ContactUsPage />} />
-        <Route path="/tenderresults" element={<TenderResults />} />
         <Route path="/userDetails" element={<UserDetails />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/user-not-found" element={<NotLogedIn />} />
@@ -78,6 +73,10 @@ const MainRoutes = () => {
         <Route path='/tenderfillingoffline' element={<PrivateRoute element={TenderFillingOffline} />}></Route>
         <Route path="/gemregistration" element={<PrivateRoute element={EarnGems} />}></Route>
         <Route path="/forms" element={<PrivateRoute element={TenderForm} />} />
+        <Route path="/tenders" element={<PrivateRoute element={TenderListingPage} />} />
+        <Route path="/projects" element={<PrivateRoute element={Projects} />} />
+        <Route path='/gemslist' element={<PrivateRoute element={GemListing} />} />
+        <Route path="/tenderResults" element={<PrivateRoute element={TenderResults} />} />
 
       </Routes>
       <Footer />

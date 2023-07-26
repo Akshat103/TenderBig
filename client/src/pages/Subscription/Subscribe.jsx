@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import payment from "../../components/payment";
 import { State } from 'country-state-city';
+import Modal from "../../components/Modal";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const SubscribePage = () => {
@@ -10,11 +11,12 @@ const SubscribePage = () => {
     const [global, setGlobal] = useState();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedState, setSelectedState] = useState('');
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const token = localStorage.getItem('token');
 
-const headers = {
-      'auth': token
+    const headers = {
+        'auth': token
     };
 
     const getState = async () => {
@@ -57,16 +59,24 @@ const headers = {
         setSelectedState(event.target.value);
     };
 
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const preventCloseModal = (e) => {
+        e.stopPropagation();
+    };
+
     const handleSubscription = async (price, planType, selectedState = '') => {
+        
+        if (!token) {
+            setErrorMessage("Sign in Please.");
+            return
+        }
+        
         var receipt = "subscription";
         const user = JSON.parse(localStorage.getItem("user"));
         const id = user._id;
-
-        if (!user) {
-            alert("Login first");
-            return;
-        }
-             
 
         payment(price, receipt, true, planType, selectedState, id)
             .then(async (success) => {
@@ -86,71 +96,72 @@ const headers = {
     return (
         <div className='min-h-screen  bg-gray-100 py-20'>
 
-        <div className="flex justify-center items-center ">
-            <div className="bg-white rounded-lg shadow-lg p-8 border-[2px] border-black/20 ">
-                <h2 className="text-3xl font-bold mb-6 text-center">Subscribe Now</h2>
+            <div className="flex justify-center items-center ">
+                <div className="bg-white rounded-lg shadow-lg p-8 border-[2px] border-black/20 ">
+                    <h2 className="text-3xl font-bold mb-6 text-center">Subscribe Now</h2>
 
-                <div className='grid md:grid-cols-3 gap-10'>
-                    <div className="">
-                        {/* One State Plan */}
-                        <div className="border-[2px] py-4 px-6 rounded-md w-[330px] cursor-pointer hover:bg-red-100/40 hover:border-red-100/40 duration-200 linear">
-                            <h3 className="text-lg font-semibold mb-2">One State Plan</h3>
-                            <p className="text-gray-600 mb-4">${oneState}/month</p>
-                            <button className="bg-red-700 text-white rounded-md py-2 px-4 hover:bg-red-800" onClick={() => handleOneState(oneState)}>Subscribe</button>
+                    <div className='grid md:grid-cols-3 gap-10'>
+                        <div className="">
+                            {/* One State Plan */}
+                            <div className="border-[2px] py-4 px-6 rounded-md w-[330px] cursor-pointer hover:bg-red-100/40 hover:border-red-100/40 duration-200 linear">
+                                <h3 className="text-lg font-semibold mb-2">One State Plan</h3>
+                                <p className="text-gray-600 mb-4">${oneState}/month</p>
+                                <button className="bg-red-700 text-white rounded-md py-2 px-4 hover:bg-red-800" onClick={() => handleOneState(oneState)}>Subscribe</button>
+                            </div>
+                        </div>
+
+                        <div className="">
+                            {/* All India Plan */}
+                            <div className="border-[2px] py-4 px-6 rounded-md w-[330px] cursor-pointer hover:bg-red-100/40 hover:border-red-100/40 duration-200 linear">
+                                <h3 className="text-lg font-semibold mb-2">All India Plan</h3>
+                                <p className="text-gray-600 mb-4">${allIndia}/month</p>
+                                <button className="bg-red-700 text-white rounded-md py-2 px-4 hover:bg-red-800" onClick={() => handleSubscription(allIndia, "All India")}>Subscribe</button>
+                            </div>
+                        </div>
+
+                        <div className="">
+                            {/* Global Plan */}
+                            <div className="border-[2px] py-4 px-6 rounded-md w-[330px] cursor-pointer hover:bg-red-100/40 hover:border-red-100/40 duration-200 linear">
+                                <h3 className="text-lg font-semibold mb-2">Global Plan</h3>
+                                <p className="text-gray-600 mb-4">${global}/month</p>
+                                <button className="bg-red-700 text-white rounded-md py-2 px-4 hover:bg-red-800" onClick={() => handleSubscription(global, "Global")}>Subscribe</button>
+                            </div>
                         </div>
                     </div>
-
-                    <div className="">
-                        {/* All India Plan */}
-                        <div  className="border-[2px] py-4 px-6 rounded-md w-[330px] cursor-pointer hover:bg-red-100/40 hover:border-red-100/40 duration-200 linear">
-                            <h3 className="text-lg font-semibold mb-2">All India Plan</h3>
-                            <p className="text-gray-600 mb-4">${allIndia}/month</p>
-                            <button className="bg-red-700 text-white rounded-md py-2 px-4 hover:bg-red-800" onClick={() => handleSubscription(allIndia, "All India")}>Subscribe</button>
+                    {/* Modal */}
+                    {isModalOpen && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center" onClick={closeModal}>
+                            <div className="bg-white rounded-lg shadow-lg p-8" onClick={preventCloseModal}>
+                                <h2 className="text-2xl font-bold mb-6">Select State</h2>
+                                <select
+                                    className="border p-2 rounded-md w-full mb-4"
+                                    value={selectedState}
+                                    onChange={handleStateSelect}
+                                >
+                                    <option value="">Select a state</option>
+                                    {stateNames.map((state) => (
+                                        <option key={state} value={state}>
+                                            {state}
+                                        </option>
+                                    ))}
+                                </select>
+                                <button
+                                    className="bg-red-500 text-white rounded-md py-2 px-4 hover:bg-blue-600"
+                                    onClick={() => {
+                                        setIsModalOpen(false);
+                                        if (selectedState) {
+                                            handleSubscription(oneState, "One State Plan", selectedState);
+                                        }
+                                    }}
+                                >
+                                    Subscribe
+                                </button>
+                            </div>
                         </div>
-                    </div>
-
-                    <div className="">
-                        {/* Global Plan */}
-                        <div  className="border-[2px] py-4 px-6 rounded-md w-[330px] cursor-pointer hover:bg-red-100/40 hover:border-red-100/40 duration-200 linear">
-                            <h3 className="text-lg font-semibold mb-2">Global Plan</h3>
-                            <p className="text-gray-600 mb-4">${global}/month</p>
-                            <button className="bg-red-700 text-white rounded-md py-2 px-4 hover:bg-red-800" onClick={() => handleSubscription(global, "Global")}>Subscribe</button>
-                        </div>
-                    </div>
+                    )}
                 </div>
-                {/* Modal */}
-                {isModalOpen && (
-                    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                        <div className="bg-white rounded-lg shadow-lg p-8">
-                            <h2 className="text-2xl font-bold mb-6">Select State</h2>
-                            <select
-                                className="border p-2 rounded-md w-full mb-4"
-                                value={selectedState}
-                                onChange={handleStateSelect}
-                            >
-                                <option value="">Select a state</option>
-                                {stateNames.map((state) => (
-                                <option key={state} value={state}>
-                                    {state}
-                                </option>
-                            ))}
-                            </select>
-                            <button
-                                className="bg-red-500 text-white rounded-md py-2 px-4 hover:bg-blue-600"
-                                onClick={() => {
-                                    setIsModalOpen(false);
-                                    if (selectedState) {
-                                        handleSubscription(oneState, "One State Plan", selectedState);
-                                    }
-                                }}
-                            >
-                                Subscribe
-                            </button>
-                        </div>
-                    </div>
-                )}
             </div>
-        </div>
+            {errorMessage && <Modal message={errorMessage} />}
         </div>
     );
 };

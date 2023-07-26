@@ -35,7 +35,7 @@ const RegAndCert = () => {
           <h1 className="text-3xl font-bold text-center mb-4">Registration and Certification</h1>
           <div className="flex items-center justify-center flex-col md:flex-row">
             <img
-              src={`${import.meta.env.BASE_URL}illustartion/register.jpg`}
+              src={`${import.meta.env.BASE_URL}illustartion/register.svg`}
               className="w-2/5 md:w-1/2"
               alt="Contact illustration"
             />

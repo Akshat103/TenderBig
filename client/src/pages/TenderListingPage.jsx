@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 const TenderImg = `${import.meta.env.BASE_URL}images/tender-hero.jpg`;
 import InputSlider from "react-input-slider";
+import Modal from "../components/Modal.jsx"
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
@@ -51,7 +52,7 @@ const TenderListingPage = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-
+  const [errorMessage, setErrorMessage] = useState(null);
   const handleMinValueChange = (slider) => {
     setMinValue(slider.x);
   };
@@ -146,7 +147,9 @@ const TenderListingPage = () => {
         setTenderData(response.data);
       } catch (error) {
         if (error.response && error.response.status === 401) {
-          alert(error.response.data.message)
+
+          console.log(error.response.data.message)
+          setErrorMessage(error.response.data.message);
         } else {
           console.error("Error fetching tender data:", error);
         }
@@ -433,6 +436,7 @@ const TenderListingPage = () => {
 
 
         </div>
+        {errorMessage && <Modal message={errorMessage} />}
       </div>
     </>
   );

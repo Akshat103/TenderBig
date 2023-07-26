@@ -19,14 +19,14 @@ router.delete("/delete/:userId", verifyToken, usersController.deleteUser);
 router.get("/created/:weeks", verifyToken, isNotUser, usersController.newUsers);
 
 //Users By role
-router.get("/users/:userRole", usersController.ByUserRole);
+router.get("/users/:userRole", verifyToken, isNotUser, usersController.ByUserRole);
 
 //statistics
 router.get("/statistics", verifyToken, isNotUser, usersController.statistics);
 
 // getting all forms by id
-router.get("/DetailsbyId/:id", usersController.DetailsById);
+router.get("/DetailsbyId/:id", verifyToken, isNotUser, usersController.DetailsById);
 
-router.put('/update-status/:userId', usersController.updateSubscriptionStatus);
+router.put('/update-status/:userId', verifyToken, isNotUser, usersController.updateSubscriptionStatus);
 
 module.exports = router;

@@ -151,13 +151,13 @@ router.delete("/tender/offline/:id", verifyToken, isNotUser, tenderOfflineContro
 router.post("/tender/online", verifyToken, tenderOnlineController.submitForm);
 
 // Get All Tender Online Forms
-router.get("/tender/online/getall", tenderOnlineController.getAllForms);
+router.get("/tender/online/getall",verifyToken, isNotUser, tenderOnlineController.getAllForms);
 
 // Get Single Tender Online Form by ID
-router.get("/tender/online/:id", tenderOnlineController.getFormById);
+router.get("/tender/online/:id",verifyToken, isNotUser, tenderOnlineController.getFormById);
 
-router.put("/tender/online/:id", tenderOnlineController.updateFormById);
-router.delete("/tender/online/:id", tenderOnlineController.deleteFormById);
+router.put("/tender/online/:id", verifyToken, isNotUser, tenderOnlineController.updateFormById);
+router.delete("/tender/online/:id", verifyToken, isNotUser, tenderOnlineController.deleteFormById);
 
 
 //Gem Registration
@@ -165,12 +165,12 @@ router.delete("/tender/online/:id", tenderOnlineController.deleteFormById);
 router.post("/gem/submit", verifyToken, gemregistrationController.submitForm);
 
 // Get All Gem Registration Forms
-router.get("/gem/getall", gemregistrationController.getAllForms);
+router.get("/gem/getall",verifyToken, isNotUser, gemregistrationController.getAllForms);
 
 // Get Single Gem Registration by ID
-router.get("/gem/:id", gemregistrationController.getFormById);
-router.put("/gem/:id", gemregistrationController.updateFormById);
-router.delete("/gem/:id", gemregistrationController.deleteFormById);
+router.get("/gem/:id",verifyToken, isNotUser, gemregistrationController.getFormById);
+router.put("/gem/:id", verifyToken, isNotUser, gemregistrationController.updateFormById);
+router.delete("/gem/:id", verifyToken, isNotUser, gemregistrationController.deleteFormById);
 
 
 

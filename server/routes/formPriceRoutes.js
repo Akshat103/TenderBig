@@ -4,7 +4,7 @@ const formController = require('../controller/formPriceController');
 const { verifyToken, isAdmin, isNotUser} = require("../middleware/auth")
 
 // GET form price by form name
-router.get('/:formName/price', verifyToken, formController.getFormPrice);
+router.get('/:formName/price', formController.getFormPrice);
 
 // PUT update form price by form name
 router.put('/:formName/price', verifyToken, isNotUser, formController.updateFormPrice);

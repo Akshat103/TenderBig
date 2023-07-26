@@ -35,7 +35,7 @@ const CareerAndManpower = () => {
           <h1 className="text-3xl font-bold text-center mb-4">Career and Man Power</h1>
           <div className="flex items-center justify-center flex-col md:flex-row">
             <img
-              src={`${import.meta.env.BASE_URL}illustartion/c&m.jpg`}
+              src={`${import.meta.env.BASE_URL}illustartion/c&m.svg`}
               className="w-3/5 md:w-1/2"
               alt="Contact illustration"
             />

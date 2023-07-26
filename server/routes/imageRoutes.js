@@ -6,7 +6,7 @@ const { verifyToken, isNotUser, isAdmin } = require("../middleware/auth")
 
 // Define the route for uploading images
 router.post('/upload', verifyToken, isNotUser, imageController.uploadImages);
-router.get('/allimages', verifyToken, imageController.getImages);
+router.get('/allimages', imageController.getImages);
 router.delete('/delete/:filename', verifyToken, isNotUser, imageController.deleteImage);
 
 module.exports = router;

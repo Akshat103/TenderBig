@@ -14,9 +14,13 @@ const AuctionMaterial = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
 
+    const headers = {
+      'auth': token
+    };
+
     useEffect(() => {
         // Fetch data from the API
-        fetch(`${BASE_URL}/services/aumt/auction-material`)
+        fetch(`${BASE_URL}/services/aumt/auction-material`, { headers })
             .then((response) => response.json())
             .then((data) => setForms(data.data))
             .catch((error) => console.log(error));

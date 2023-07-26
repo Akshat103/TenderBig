@@ -322,9 +322,7 @@ class Tender {
             const userSubscription = req.userSubscription;
             const userRole = req.userRole;
 
-            if (userRole === "user") {
-                query['userCategory'] = { $ne: 'gem' };
-            }
+            query['userCategory'] = { $ne: 'gem' };
 
             if (userSubscription.status != "active") {
                 return res.status(401).json({

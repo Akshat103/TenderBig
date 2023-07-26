@@ -1,6 +1,6 @@
 // HRRoutes.js
 import { Route, Routes } from "react-router-dom";
-import PrivateRoute from "../PrivateRoute";
+import AdminRoute from "../AdminRoute";
 
 //User
 import AllEmployee from "../../Admin/partials/dashboard/users/AllEmployee";
@@ -13,10 +13,10 @@ const HRRoutes = () => {
         <Routes>
 
             {/* User */}
-            <Route path="/allemployee" element={<PrivateRoute element={AllEmployee} />} />
+            <Route path="/allemployee" element={<AdminRoute element={AllEmployee} />} />
 
             {/* Add Users */}
-            <Route path="/addemployee" element={<PrivateRoute element={AddEmployee} />} />
+            <Route path="/addemployee" element={<AdminRoute element={AddEmployee} />} />
 
         </Routes>
     );

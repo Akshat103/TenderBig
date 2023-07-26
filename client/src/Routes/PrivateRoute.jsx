@@ -1,9 +1,9 @@
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const checkIfUserIsAdmin = () => {
+const checkIfUserIsLogedIn = () => {
   const user = JSON.parse(localStorage.getItem('user'));
-  if (user && user.userRole === 'admin' || user.userRole === 'hr' || user.userRole === 'employee' || user.userRole === 'franchise') {
+  if (user && user.userRole) {
     return true;
   } else {
     return false;
@@ -12,8 +12,8 @@ const checkIfUserIsAdmin = () => {
 
 const PrivateRoute = ({ element: Component, ...rest }) => {
   // Check if the user is authenticated as an admin
-  const isAdmin = checkIfUserIsAdmin();
-  return isAdmin ? <Component {...rest} /> : <Navigate to="/" replace />;
+  const isLogedIn = checkIfUserIsLogedIn();
+  return isLogedIn ? <Component {...rest} /> : <Navigate to="/user-not-found" replace />;
 };
 
 PrivateRoute.propTypes = {

@@ -18,9 +18,15 @@ const TenderOnline = () => {
   const [formsPerPage] = useState(10);
   const navigate = useNavigate();
 
+  const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
   useEffect(() => {
     // Fetch data from the API
-    fetch(`${BASE_URL}/services/tender/online/getall`)
+    fetch(`${BASE_URL}/services/tender/online/getall`, { headers })
       .then((response) => response.json())
       .then((data) => setForms(data))
       .catch((error) => console.log(error));
@@ -31,6 +37,7 @@ const TenderOnline = () => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        auth:token
       },
     })
       .then((response) => response.json())

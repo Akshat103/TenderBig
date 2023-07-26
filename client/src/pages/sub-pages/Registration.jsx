@@ -76,11 +76,17 @@ const Registration = () => {
     setPAN("");
   };
 
+  const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
   const getAmount = async () => {
     const {
       data: { price },
     } = await axios.get(
-      `${BASE_URL}/formprice/Registration/price`
+      `${BASE_URL}/formprice/Registration/price`, { headers }
     );
     return price;
   };
@@ -88,7 +94,7 @@ const Registration = () => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/options/alloptions?array=categories`
+        `${BASE_URL}/options/alloptions?array=categories`, { headers }
       );
       setCategories(response.data[0].categories);
     } catch (error) {

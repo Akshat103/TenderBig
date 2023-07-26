@@ -3,11 +3,14 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 async function uploadFileToS3(file, fileType) {
     try {
+        const token = localStorage.getItem('token');
+
         // Step 1: Get the signed URL for file upload
         const { signedUrl } = await fetch(`${BASE_URL}/s3/uploadurl`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                auth:token
             },
             body: JSON.stringify({ fileType }),
         }).then((response) => response.json());
@@ -18,6 +21,7 @@ async function uploadFileToS3(file, fileType) {
                 method: 'PUT',
                 headers: {
                     'Content-Type': fileType === 'pdf' ? 'application/pdf' : 'image/jpeg',
+                    auth:token
                 },
                 body: file,
             });

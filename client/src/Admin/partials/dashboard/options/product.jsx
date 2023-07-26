@@ -7,6 +7,11 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 const Product = () => {
   const [products, setProducts] = useState([]);
   const [newProduct, setNewProduct] = useState("");
+  const token = localStorage.getItem('token');
+
+  const headers = {
+        'auth': token
+      };
 
   useEffect(() => {
     // Fetch all products
@@ -15,7 +20,7 @@ const Product = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/options/alloptions?array=products`);
+      const response = await axios.get(`${BASE_URL}/options/alloptions?array=products`, { headers });
       console.log(response.data[0].products);
       setProducts(response.data[0].products);
     } catch (error) {
@@ -29,7 +34,7 @@ const Product = () => {
     }
   
     try {
-      const response = await axios.post(`${BASE_URL}/options/products`, { products: [newProduct] });
+      const response = await axios.post(`${BASE_URL}/options/products`, { products: [newProduct] }, { headers });
       setProducts(response.data.products);
       setNewProduct("");
     } catch (error) {
@@ -39,7 +44,7 @@ const Product = () => {
 
   const deleteProduct = async (product) => {
     try {
-      const response = await axios.delete(`${BASE_URL}/options/products/${product}`);
+      const response = await axios.delete(`${BASE_URL}/options/products/${product}`, { headers });
       setProducts(response.data.products);
     } catch (error) {
       console.error(error);

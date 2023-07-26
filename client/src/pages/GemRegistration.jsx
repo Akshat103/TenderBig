@@ -7,6 +7,14 @@ import { sideNavigationButtons } from "../components/Forms";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const GemRegistration = () => {
+
+  const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -76,7 +84,7 @@ const GemRegistration = () => {
   }
   <input value="test" type="checkbox" onChange={handleChange} />
   const getAmount=async()=>{
-    const {data:{price}} = await axios.get(`${BASE_URL}/formprice/Gem%20Registration/price`);
+    const {data:{price}} = await axios.get(`${BASE_URL}/formprice/Gem%20Registration/price`, { headers });
     return price;
 }
 

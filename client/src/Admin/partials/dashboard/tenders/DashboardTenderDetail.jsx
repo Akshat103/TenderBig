@@ -85,7 +85,7 @@ function DashboardTenderDetail() {
         {
           headers: {
             'Content-Type': 'application/json',
-            auth: localStorage.getItem('token'),
+            auth: token,
           },
         }
       );

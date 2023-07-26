@@ -61,9 +61,15 @@ const TenderListingPage = () => {
     fetchSectors();
   }, []);
 
+  const token = localStorage.getItem('token');
+
+  const headers = {
+    'auth': token
+  };
+
   const fetchSectors = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/options/alloptions?array=sectors`);
+      const response = await axios.get(`${BASE_URL}/options/alloptions?array=sectors`, { headers });
       setSectors(response.data[0].sectors);
     } catch (error) {
       console.error(error);
@@ -313,7 +319,7 @@ const TenderListingPage = () => {
                     </option>
                   ))}
 
-                  
+
                 </select>
               </div>
 

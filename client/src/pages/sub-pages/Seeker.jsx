@@ -289,11 +289,17 @@ const Seeker = () => {
     setIsFormValid(validateForm());
   };
 
+  const token = localStorage.getItem('token');
+
+  const headers = {
+    'auth': token
+  };
+
   const getAmount = async () => {
     const {
       data: { price },
     } = await axios.get(
-      `${BASE_URL}/formprice/Seeker/price`
+      `${BASE_URL}/formprice/Seeker/price`, { headers }
     );
     return price;
   };
@@ -309,9 +315,9 @@ const Seeker = () => {
         const profilePhoto = e.target.profilePhoto.files[0];
         const aadhar = e.target.aadhar.files[0];
 
-        const resumeUrl = await uploadFileToS3(resume,"pdf");
-        const photoUrl = await uploadFileToS3(profilePhoto,"image");
-        const aadharUrl = await uploadFileToS3(aadhar,"pdf");
+        const resumeUrl = await uploadFileToS3(resume, "pdf");
+        const photoUrl = await uploadFileToS3(profilePhoto, "image");
+        const aadharUrl = await uploadFileToS3(aadhar, "pdf");
 
         const requestBody = formData;
         requestBody.resumeUrl = resumeUrl;
@@ -395,7 +401,7 @@ const Seeker = () => {
                 <div className="col-span-4 px-2 mt-6 mb-6">
                   {sideNavigationButtons.map((button) => (
                     <NavLink to={button.link}>
-                    <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">{button.name}</div>
+                      <div className="w-full px-8 py-3 mb-5 text-[18px] text-center text-black font-bold border-black border-[1px] hover:bg-black hover:text-white linear duration-300 shadow-md rounded cursor-pointer bg-white">{button.name}</div>
                     </NavLink>
                   ))}
                 </div>
@@ -501,7 +507,7 @@ const Seeker = () => {
                         name="tenMark"
                         value={formData.tenMark}
                         onChange={handleChange}
-                        className={`border ${!isSmallScreen? "w-36" : "flex-grow"} rounded-sm px-3 py-2 mt-1 flex-grow text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
+                        className={`border ${!isSmallScreen ? "w-36" : "flex-grow"} rounded-sm px-3 py-2 mt-1 flex-grow text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
                         placeholder={
                           formData.tenMarkType === "fixed"
                             ? "Enter Fixed Score"
@@ -537,7 +543,7 @@ const Seeker = () => {
                         name="twelveMark"
                         value={formData.twelveMark}
                         onChange={handleChange}
-                        className={`border ${!isSmallScreen? "w-36" : "flex-grow"} rounded-sm px-3 py-2 mt-1 flex-grow text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
+                        className={`border ${!isSmallScreen ? "w-36" : "flex-grow"} rounded-sm px-3 py-2 mt-1 flex-grow text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
                         placeholder={
                           formData.tenMarkType === "fixed"
                             ? "Enter Fixed Score"

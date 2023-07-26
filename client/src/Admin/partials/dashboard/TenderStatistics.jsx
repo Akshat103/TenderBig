@@ -9,11 +9,11 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const TenderStatistics = () => {
   const [statistics, setStatistics] = useState(null);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchTenderStatistics = async () => {
       try {
-        const token = localStorage.getItem("token");
         const config = {
           headers: {
             auth: token

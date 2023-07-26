@@ -14,13 +14,19 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const CompanyList = () => {
   const [forms, setForms] = useState([]);
+  const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
   const [currentPage, setCurrentPage] = useState(1);
   const [formsPerPage] = useState(10);
   const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch data from the API
-    fetch(`${BASE_URL}/services/ccert/certification`)
+    fetch(`${BASE_URL}/services/ccert/certification`, { headers })
       .then((response) => response.json())
       .then((data) => setForms(data))
       .catch((error) => console.log(error));
@@ -33,12 +39,12 @@ const CompanyList = () => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          auth:token
         },
       }
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setForms(forms.filter((form) => form._id !== id));
       })
       .catch((error) => console.log(error));

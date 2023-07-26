@@ -209,7 +209,6 @@ class User {
             delete gemRegistrationFormLatest?._id;
             allForms.push({ formName: 'Gem Registration', number: gemRegistrationFormCount, latestForm: gemRegistrationFormLatest });
 
-            console.log(allForms);
             res.json(allForms);
         } catch (error) {
             console.error(error);

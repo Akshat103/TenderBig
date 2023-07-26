@@ -11,7 +11,7 @@ const jointventureController = require('../controller/services/jointventureContr
 const tenderOfflineController = require("../controller/services/offlineTenderFormController");
 const gemregistrationController = require("../controller/services/gemregistrationFormController");
 const tenderOnlineController = require("../controller/services/onlineTenderFormController");
-const { verifyToken } = require('../middleware/auth');
+const { verifyToken, isNotUser } = require('../middleware/auth');
 
 //Career & Man Power
 
@@ -20,16 +20,16 @@ const { verifyToken } = require('../middleware/auth');
 router.post('/employer/submit-form', verifyToken, employerController.submitForm);
 
 // Route for getting all forms
-router.get('/employer/forms', employerController.getAllForms);
+router.get('/employer/forms', verifyToken, isNotUser, employerController.getAllForms);
 
 // Route for getting a single form
-router.get('/employer/forms/:id', employerController.getSingleForm);
+router.get('/employer/forms/:id', verifyToken, isNotUser, employerController.getSingleForm);
 
 //update request for employer
-router.put('/employer/forms/:id', employerController.updateSingleForm);
+router.put('/employer/forms/:id', verifyToken, isNotUser, employerController.updateSingleForm);
 
 //delete request for employer
-router.delete('/employer/forms/:id', employerController.deleteSingleForm);
+router.delete('/employer/forms/:id', verifyToken, isNotUser, employerController.deleteSingleForm);
 
 
 //Seeker 
@@ -37,14 +37,16 @@ router.delete('/employer/forms/:id', employerController.deleteSingleForm);
 router.post('/seeker/submit-form', verifyToken, seekerController.submitForm);
 
 // Route for getting all forms
-router.get('/seeker/forms', seekerController.getAllForms);
+router.get('/seeker/forms', verifyToken, isNotUser, seekerController.getAllForms);
 
 // Route for getting a single form
-router.get('/seeker/forms/:id', seekerController.getSingleForm);
+router.get('/seeker/forms/:id', verifyToken, isNotUser, seekerController.getSingleForm);
+
 // route for updating details
-router.put('/seeker/forms/:id', seekerController.updateSingleForm);
+router.put('/seeker/forms/:id', verifyToken, isNotUser, seekerController.updateSingleForm);
+
 //delete route for details
-router.delete('/seeker/forms/:id', seekerController.deleteSingleForm);
+router.delete('/seeker/forms/:id', verifyToken, isNotUser, seekerController.deleteSingleForm);
 
 
 //Registration/Certificate
@@ -54,61 +56,64 @@ router.delete('/seeker/forms/:id', seekerController.deleteSingleForm);
 router.post('/register/registration', verifyToken, registrationController.submitForm);
 
 // Route for getting all registration forms
-router.get('/register/registration', registrationController.getAllForms);
+router.get('/register/registration', verifyToken, isNotUser, registrationController.getAllForms);
 
 // Route for getting a single registration form by ID
-router.get('/register/registration/:id', registrationController.getFormById);
+router.get('/register/registration/:id', verifyToken, isNotUser, registrationController.getFormById);
 
 // route for update and delete 
-router.put('/register/registration/:id', registrationController.updateFormById);
-router.delete('/register/registration/:id', registrationController.deleteFormById);
+router.put('/register/registration/:id', verifyToken, isNotUser, registrationController.updateFormById);
 
+//Route to delete form
+router.delete('/register/registration/:id', verifyToken, isNotUser, registrationController.deleteFormById);
 
 
 //Company Certification
 // Route for submitting a certification form
-router.post('/ccert/certification', verifyToken, upload.any(), companyCertificationController.submitForm);
+router.post('/ccert/certification', verifyToken, companyCertificationController.submitForm);
 
 // Route for getting all certification forms
-router.get('/ccert/certification', companyCertificationController.getAllForms);
+router.get('/ccert/certification', verifyToken, isNotUser, companyCertificationController.getAllForms);
 
 // Route for getting a single certification form by ID
-router.get('/ccert/certification/:id', companyCertificationController.getFormById);
+router.get('/ccert/certification/:id', verifyToken, isNotUser, companyCertificationController.getFormById);
 
 // Routes fpr update
-router.put('/ccert/certification/:id', companyCertificationController.updateFormById);
+router.put('/ccert/certification/:id', verifyToken, isNotUser, companyCertificationController.updateFormById);
 
 // Routes for deleting company info
-router.delete('/ccert/certification/:id', companyCertificationController.deleteFormById);
+router.delete('/ccert/certification/:id', verifyToken, isNotUser, companyCertificationController.deleteFormById);
 
 
 //Individual Certification
 // Route for submitting a certification form
-router.post('/icert/certification', verifyToken, upload.any(), individualCertificationController.submitForm);
+router.post('/icert/certification', verifyToken, individualCertificationController.submitForm);
 
 // Route for getting all certification forms
-router.get('/icert/certification', individualCertificationController.getAllForms);
+router.get('/icert/certification', verifyToken, isNotUser, individualCertificationController.getAllForms);
 
 // Route for getting a single certification form by ID
-router.get('/icert/certification/:id', individualCertificationController.getFormById);
+router.get('/icert/certification/:id', verifyToken, isNotUser, individualCertificationController.getFormById);
 
 // update and delete for individual certification
-router.put('/icert/certification/:id', individualCertificationController.updateFormById);
-router.delete('/icert/certification/:id', individualCertificationController.deleteFormById);
+router.put('/icert/certification/:id', verifyToken, isNotUser, individualCertificationController.updateFormById);
+
+router.delete('/icert/certification/:id', verifyToken, isNotUser, individualCertificationController.deleteFormById);
 
 //Auction Materials
 // Route for submitting an auction material form
 router.post('/aumt/auction-material', verifyToken, auctionMaterialsController.submitForm);
 
 // Route for getting all auction material forms
-router.get('/aumt/auction-material', auctionMaterialsController.getAllForms);
+router.get('/aumt/auction-material', verifyToken, isNotUser, auctionMaterialsController.getAllForms);
 
 // Route for getting a single auction material form by ID
-router.get('/aumt/auction-material/:id', auctionMaterialsController.getFormById);
+router.get('/aumt/auction-material/:id', verifyToken, isNotUser, auctionMaterialsController.getFormById);
 
 // update and delete for auctuion material
-router.put('/aumt/auction-material/:id', auctionMaterialsController.updateFormById);
-router.delete('/aumt/auction-material/:id', auctionMaterialsController.deleteFormById);
+router.put('/aumt/auction-material/:id', verifyToken, isNotUser, auctionMaterialsController.updateFormById);
+
+router.delete('/aumt/auction-material/:id', verifyToken, isNotUser, auctionMaterialsController.deleteFormById);
 
 
 //Joint Venture
@@ -116,26 +121,27 @@ router.delete('/aumt/auction-material/:id', auctionMaterialsController.deleteFor
 router.post("/jv/submitjv", verifyToken, jointventureController.submitForm);
 
 // Get all Joint Venture forms
-router.get("/jv/getjv", jointventureController.getAllForms);
+router.get("/jv/getjv", verifyToken, isNotUser, jointventureController.getAllForms);
 
 // Get a single Joint Venture form
-router.get("/jv/:id", jointventureController.getFormById);
+router.get("/jv/:id", verifyToken, isNotUser, jointventureController.getFormById);
 
 //update joint venture form 
-router.put("/jv/:id", jointventureController.updateFormById);
+router.put("/jv/:id", verifyToken, isNotUser, jointventureController.updateFormById);
 
 // Delete Joint Venture form
-router.delete("/jv/:id", jointventureController.deleteFormById);
+router.delete("/jv/:id", verifyToken, isNotUser, jointventureController.deleteFormById);
+
 
 //Tender Offline
 // Submit Tender Offline Form
 router.post("/tender/offline", verifyToken, tenderOfflineController.submitForm);
 
 // Get All Tender Offline Forms
-router.get("/tender/offline/getall", tenderOfflineController.getAllForms);
+router.get("/tender/offline/getall", verifyToken, isNotUser, tenderOfflineController.getAllForms);
 
 // Get Single Tender Offline Form by ID
-router.delete("/tender/offline/:id", tenderOfflineController.getSingleForm);
+router.delete("/tender/offline/:id", verifyToken, isNotUser, tenderOfflineController.getSingleForm);
 // router.put("/tender/offline/:id", tenderOfflineController.updateSingleForm);
 // router.delete("/tender/offline/:id", tenderOfflineController.deleteSingleForm);
 

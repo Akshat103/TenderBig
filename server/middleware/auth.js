@@ -29,7 +29,7 @@ exports.verifyToken = async (req, res, next) => {
   }
 };
 
-exports.isAdmin = (req, res, next) => {
+exports.isAdmin = async(req, res, next) => {
   const token = req.headers.auth || req.query.token || req.cookies.token;
 
   if (!token) {
@@ -37,9 +37,14 @@ exports.isAdmin = (req, res, next) => {
   }
 
   try {
-    console.log(token);
     const decoded = jwt.verify(token, JWT_SECRET);
-    if (decoded.data.userRole != "admin") {
+
+    const userId = decoded.data._id;
+
+    const user = await userModel.findById(userId);
+    req.userRole = user.userRole;
+
+    if (userRole != "admin") {
       return res.status(403).json({ error: "Access denied. Admin role required." });
     }
     next();
@@ -49,7 +54,7 @@ exports.isAdmin = (req, res, next) => {
   }
 };
 
-exports.isNotUser = (req, res, next) => {
+exports.isNotUser = async(req, res, next) => {
   const token = req.headers.auth || req.query.token || req.cookies.token;
 
   if (!token) {
@@ -59,7 +64,11 @@ exports.isNotUser = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
 
-    const role = decoded.data.userRole;
+    const userId = decoded.data._id;
+
+    const user = await userModel.findById(userId);
+
+    const role = user.userRole;
     if (role == "admin" || role == "hr" || role == "employee" || role == "franchise") {
       next();
     } else {

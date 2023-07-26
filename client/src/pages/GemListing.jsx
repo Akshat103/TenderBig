@@ -39,7 +39,7 @@ const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
   //   }
   // }, [referenceNo]);
 
-  
+
 
   return (
     <div className="bg-white shadow-lg rounded p-6 mb-4 border-[2px] border-black/20">
@@ -82,9 +82,13 @@ const GemListing = () => {
   }, []);
 
   const fetchSectors = async () => {
+    const token = localStorage.getItem('token');
+
+    const headers = {
+      'auth': token
+    };
     try {
-      const response = await axios.get(`${BASE_URL}/options/alloptions?array=sectors`);
-      console.log(response.data[0].sectors);
+      const response = await axios.get(`${BASE_URL}/options/alloptions?array=sectors`, { headers });
       setSectors(response.data[0].sectors);
     } catch (error) {
       console.error(error);
@@ -185,7 +189,7 @@ const GemListing = () => {
           auth: token,
         };
 
-        
+
         const response = await axios.post(searchUrl, { details: detailsArray }, { headers });
         console.log(response, "gems");
         if (response.status === 401) {
@@ -368,15 +372,15 @@ const GemListing = () => {
             </div>
           </div>
           <div className="mt-8 sm:col-span-2 md:col-span-2">
-        {tenderData.length > 0 ? (
-          tenderData.map((tender) => (
-            <TenderCard
-              key={tender.tenderId}
-              title={tender.summary}
-              deadline={formatDate(tender.procurementSummary.deadline)}
-              location={tender.procurementSummary.country}
-              referenceNo={tender.sector}
-              tenderId={tender.tenderId}
+            {tenderData.length > 0 ? (
+              tenderData.map((tender) => (
+                <TenderCard
+                  key={tender.tenderId}
+                  title={tender.summary}
+                  deadline={formatDate(tender.procurementSummary.deadline)}
+                  location={tender.procurementSummary.country}
+                  referenceNo={tender.sector}
+                  tenderId={tender.tenderId}
 
                 />
               ))
@@ -396,11 +400,10 @@ const GemListing = () => {
                   <button
                     key={pageNumber}
                     onClick={() => goToPage(pageNumber)}
-                    className={`px-4 py-2 rounded hover:bg-black hover:text-white hover:border hover:border-black transition-colors duration-300 ${
-                      pageNumber === currentPage
+                    className={`px-4 py-2 rounded hover:bg-black hover:text-white hover:border hover:border-black transition-colors duration-300 ${pageNumber === currentPage
                         ? "text-white bg-black"
                         : "text-black bg-white"
-                    }`}
+                      }`}
                   >
                     {pageNumber}
                   </button>

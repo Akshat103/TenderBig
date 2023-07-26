@@ -8,11 +8,18 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const CompanyDetails = () => {
   const [formData, setFormData] = useState(null);
+
+  const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
   const [isEditing, setIsEditing] = useState(false);
   const { id } = useParams();
   useEffect(() => {
     // Fetch data from the API
-    fetch(`${BASE_URL}/services/ccert/certification/${id}`)
+    fetch(`${BASE_URL}/services/ccert/certification/${id}`, { headers })
       .then((response) => response.json())
       .then((data) => setFormData(data))
       .catch((error) => console.log(error));
@@ -33,6 +40,7 @@ const CompanyDetails = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          auth:token
         },
         body: JSON.stringify(formData),
       }

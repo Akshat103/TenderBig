@@ -14,6 +14,7 @@ function AllAdmin() {
   const [usersPerPage] = useState(8);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+  const token = localStorage.getItem('token');
 
   const AddAdmin = () => {
     navigate("/dashboard/addadmin");
@@ -28,7 +29,7 @@ function AllAdmin() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              auth: localStorage.getItem("token"),
+              auth: token,
             },
           }
         );

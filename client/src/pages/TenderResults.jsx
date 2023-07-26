@@ -63,10 +63,15 @@ const TenderResults = () => {
     fetchSectors();
   }, []);
 
+  const token = localStorage.getItem('token');
+
+  const headers = {
+    'auth': token
+  };
+
   const fetchSectors = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/options/alloptions?array=sectors`);
-      console.log(response.data[0].sectors);
+      const response = await axios.get(`${BASE_URL}/options/alloptions?array=sectors`, { headers });
       setSectors(response.data[0].sectors);
     } catch (error) {
       console.error(error);

@@ -4,16 +4,16 @@ const paymentsController = require("../controller/paymentController");
 const {verifyToken , isNotUser} = require("../middleware/auth")
 
 //Buy Subscription
-router.post("/subscribe", paymentsController.buySubscription);
+router.post("/subscribe", verifyToken, paymentsController.buySubscription);
 
 //Verify payment and save rerence in DB
-router.post("/paymentverification", paymentsController.verify);
+router.post("/paymentverification", verifyToken, paymentsController.verify);
 
 //Get Razorpay key 
-router.get("/razorpaykey", paymentsController.getrazorpaykey);
+router.get("/razorpaykey", verifyToken, paymentsController.getrazorpaykey);
 
-router.post("/createorder", paymentsController.createOrder);
+router.post("/createorder", verifyToken, paymentsController.createOrder);
 
-router.post("/verify-payment", paymentsController.verifyOrder);
+router.post("/verify-payment", verifyToken, paymentsController.verifyOrder);
 
 module.exports = router;

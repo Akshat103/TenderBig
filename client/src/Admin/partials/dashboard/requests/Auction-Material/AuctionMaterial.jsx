@@ -12,6 +12,7 @@ const AuctionMaterial = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [formsPerPage] = useState(10);
     const navigate = useNavigate();
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         // Fetch data from the API
@@ -26,7 +27,8 @@ const AuctionMaterial = () => {
         fetch(`${BASE_URL}/services/aumt/auction-material/${id}`, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                auth: token
             },
         })
             .then((response) => response.json())

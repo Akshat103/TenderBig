@@ -8,6 +8,13 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Forms = () => {
+
+    const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
     const countryData = Country.getAllCountries();  //
     const countryNames = Object.values(countryData).map((country) => country.name);
     const [formData, setFormData] = useState({
@@ -79,8 +86,7 @@ const Forms = () => {
   
     const fetchSectors = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/options/alloptions?array=sectors`);
-        console.log(response.data[0].sectors);
+        const response = await axios.get(`${BASE_URL}/options/alloptions?array=sectors`, { headers });
         setSectors(response.data[0].sectors);
       } catch (error) {
         console.error(error);

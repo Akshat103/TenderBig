@@ -12,8 +12,14 @@ const UserCards = ({ title, description, buttonLink1, buttonLink2, formData }) =
     let formLink;
     const [dataStored, setDataStored] = useState(false);
 
+    const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
     const getAmount = async (form) => {
-        const { data: { price } } = await axios.get(`${BASE_URL}/formprice/${form}/price`);
+        const { data: { price } } = await axios.get(`${BASE_URL}/formprice/${form}/price`, { headers });
         return price;
     }
 

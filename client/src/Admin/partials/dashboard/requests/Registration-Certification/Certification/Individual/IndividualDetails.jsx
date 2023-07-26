@@ -8,11 +8,18 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const IndividualDetails = () => {
     const [formData, setFormData] = useState(null);
+
+    const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
     const [isEditing, setIsEditing] = useState(false);
     const { id } = useParams();
     useEffect(() => {
         // Fetch data from the API
-        fetch(`${BASE_URL}/services/icert/certification/${id}`)
+        fetch(`${BASE_URL}/services/icert/certification/${id}`, { headers })
             .then((response) => response.json())
             .then((data) => {
                 setFormData(data)
@@ -33,8 +40,9 @@ const IndividualDetails = () => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                auth:token
             },
-            body: JSON.stringify(formData), // Replace formData with the updated data object
+            body: JSON.stringify(formData), 
         })
             .then((response) => response.json())
             .then((data) => {

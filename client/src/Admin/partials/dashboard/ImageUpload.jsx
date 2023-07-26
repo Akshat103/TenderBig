@@ -8,6 +8,7 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 const ImageUploadForm = () => {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [isUploading, setIsUploading] = useState(false);
+    const token = localStorage.getItem('token');
 
     const handleFileSelect = (files) => {
         setSelectedFiles(files);
@@ -23,6 +24,7 @@ const ImageUploadForm = () => {
             const response = await axios.post(`${BASE_URL}/images/upload`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    auth:token
                 },
             });
             setIsUploading(false);

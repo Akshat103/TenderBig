@@ -8,6 +8,7 @@ const Licenserequests = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [formsPerPage] = useState(10);
   const [selectedService, setSelectedService] = useState("All");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     fetchContactForms();
@@ -15,7 +16,6 @@ const Licenserequests = () => {
 
   const fetchContactForms = async () => {
     try {
-      const token = localStorage.getItem("token");
       const response = await axios.get(
         `${BASE_URL}/License`,
         {

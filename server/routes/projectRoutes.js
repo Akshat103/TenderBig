@@ -4,20 +4,19 @@ const projectController = require('../controller/projectController');
 const { verifyToken, isNotUser, checkSubscription } = require("../middleware/auth")
 
 // Submit form
-router.post('/submit', projectController.submitForm);
+router.post('/submit', verifyToken, projectController.submitForm);
 
 // Get all projects
-router.get('/getall', projectController.getAllProjects);
+router.get('/getall', verifyToken, projectController.getAllProjects);
 
 // Get project by ID
-router.get('/byid/:id', projectController.getProjectById);
+router.get('/byid/:id', verifyToken, projectController.getProjectById);
 
 // Search projects by sector, country, or both
 router.get('/search',verifyToken, checkSubscription, projectController.searchProjects);
 
-router.put('/:id', projectController.updateProjectById);
+router.put('/:id', verifyToken, projectController.updateProjectById);
 
-router.put('/:id', projectController.deleteProjectById);
-
+router.put('/:id', verifyToken, projectController.deleteProjectById);
 
 module.exports = router;

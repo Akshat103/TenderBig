@@ -6,13 +6,19 @@ const FormPriceManagement = () => {
     const [formPrices, setFormPrices] = useState([]);
     const [updatePrices, setUpdatePrices] = useState({});
 
+    const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
     useEffect(() => {
         fetchFormPrices();
     }, []);
 
     const fetchFormPrices = () => {
         axios
-            .get(`${BASE_URL}/formprice/getall`)
+            .get(`${BASE_URL}/formprice/getall`, { headers })
             .then(response => {
                 const data = response.data;
                 setFormPrices(data);
@@ -31,7 +37,7 @@ const FormPriceManagement = () => {
         }
 
         axios
-            .put(`${BASE_URL}/formprice/${formName}/price`, { price: updatedPrice })
+            .put(`${BASE_URL}/formprice/${formName}/price`, { price: updatedPrice }, { headers })
             .then(response => {
                 const data = response.data;
                 if (data.error) {

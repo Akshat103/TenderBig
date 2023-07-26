@@ -14,13 +14,19 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const SeekerForm = () => {
     const [forms, setForms] = useState([]);
+    const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
     const [currentPage, setCurrentPage] = useState(1);
     const [formsPerPage] = useState(10);
     const navigate = useNavigate();
 
     useEffect(() => {
         // Fetch data from the API
-        fetch(`${BASE_URL}/services/seeker/forms`)
+        fetch(`${BASE_URL}/services/seeker/forms`, { headers })
             .then((response) => response.json())
             .then((data) => setForms(data))
             .catch((error) => console.log(error));
@@ -30,7 +36,8 @@ const SeekerForm = () => {
         fetch(`${BASE_URL}/services/seeker/forms/${id}`, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                auth:token
             }
         })
             .then((response) => response.json())

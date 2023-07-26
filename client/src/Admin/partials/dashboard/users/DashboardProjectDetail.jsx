@@ -7,6 +7,12 @@ function ProjectDetails() {
   const [project, setProject] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
   const { projectId } = useParams();
 
   const [editedProject, setEditedProject] = useState({
@@ -28,7 +34,7 @@ function ProjectDetails() {
     axios
       .put(
         `${BASE_URL}/projects/${projectId}`,
-        editedProject
+        editedProject, { headers }
       )
       .then((response) => {
         setProject(response.data);
@@ -49,19 +55,19 @@ function ProjectDetails() {
 
   const handleDelete = () => {
     axios
-      .delete(`${BASE_URL}/projects/${projectId}`)
+      .delete(`${BASE_URL}/projects/${projectId}`, { headers })
       .then(() => {
         setIsDeleting(false);
       })
       .catch((error) => {
         console.log(error);
       });
-    navigate("/dashboard/allproject");
+      navigate("/dashboard/allproject");
   };
 
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/projects/byid/${projectId}`)
+      .get(`${BASE_URL}/projects/byid/${projectId}`, { headers })
       .then((response) => {
         setProject(response.data);
         setEditedProject({

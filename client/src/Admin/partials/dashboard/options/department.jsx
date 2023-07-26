@@ -7,6 +7,11 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 const Department = () => {
   const [departments, setDepartments] = useState([]);
   const [newDepartment, setNewDepartment] = useState("");
+  const token = localStorage.getItem('token');
+
+  const headers = {
+        'auth': token
+      };
 
   useEffect(() => {
     // Fetch all departments
@@ -15,7 +20,7 @@ const Department = () => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/options/alloptions?array=departments`);
+      const response = await axios.get(`${BASE_URL}/options/alloptions?array=departments`, { headers });
       console.log(response.data[0].departments);
       setDepartments(response.data[0].departments);
     } catch (error) {
@@ -25,12 +30,11 @@ const Department = () => {
 
   const addDepartment = async () => {
     if (!newDepartment.trim()) {
-      // If newDepartment is empty or contains only whitespace, return early without making the API call.
       return;
     }
   
     try {
-      const response = await axios.post(`${BASE_URL}/options/departments`, { departments: [newDepartment] });
+      const response = await axios.post(`${BASE_URL}/options/departments`, { departments: [newDepartment] }, { headers });
       setDepartments(response.data.departments);
       setNewDepartment("");
     } catch (error) {
@@ -40,7 +44,7 @@ const Department = () => {
 
   const deleteDepartment = async (department) => {
     try {
-      const response = await axios.delete(`${BASE_URL}/options/departments/${department}`);
+      const response = await axios.delete(`${BASE_URL}/options/departments/${department}`, { headers });
       setDepartments(response.data.departments);
     } catch (error) {
       console.error(error);

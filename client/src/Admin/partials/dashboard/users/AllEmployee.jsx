@@ -15,6 +15,7 @@ function AllEmployee() {
   const [usersPerPage] = useState(8);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+  const token = localStorage.getItem('token');
 
   const AddEmployee = () => {
     navigate("/dashboard/addemployee");
@@ -28,7 +29,7 @@ function AllEmployee() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              auth: localStorage.getItem("token"),
+              auth: token,
             },
           }
         );

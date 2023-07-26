@@ -11,16 +11,22 @@ const SubscribePage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedState, setSelectedState] = useState('');
 
+    const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
     const getState = async () => {
-        const { data: { price } } = await axios.get(`${BASE_URL}/formprice/One%20State/price`);
+        const { data: { price } } = await axios.get(`${BASE_URL}/formprice/One%20State/price`, { headers });
         setOneState(price);
     };
     const getIndia = async () => {
-        const { data: { price } } = await axios.get(`${BASE_URL}/formprice/All%20India/price`);
+        const { data: { price } } = await axios.get(`${BASE_URL}/formprice/All%20India/price`, { headers });
         setAllIndia(price);
     };
     const getGlobal = async () => {
-        const { data: { price } } = await axios.get(`${BASE_URL}/formprice/Global/price`);
+        const { data: { price } } = await axios.get(`${BASE_URL}/formprice/Global/price`, { headers });
         setGlobal(price);
     };
 
@@ -60,26 +66,13 @@ const SubscribePage = () => {
             alert("Login first");
             return;
         }
-        const requestBody = {
-            state: selectedState,
-            planType: planType
-        };
+             
 
-        payment(price, receipt)
+        payment(price, receipt, true, planType, selectedState, id)
             .then(async (success) => {
                 console.log("Payment success:", success);
-                const token = localStorage.getItem("token");
-                const response = await axios.put(
-                    `${BASE_URL}/userdetails/update-status/${id}`,
-                    requestBody,
-                    {
-                        headers: {
-                            auth: token,
-                        },
-                    }
-                );
-                if (response.data.status == "success") {
-                    alert(response.data.message);
+                if (success) {
+                    alert('Subscription activated successfully.');
                 } else {
                     alert("Something went wrong. Try again.");
                 }
@@ -89,7 +82,7 @@ const SubscribePage = () => {
                 alert("Payment Failed")
             });
     }
-    // #1f1d5a
+
     return (
         <div className='min-h-screen  bg-gray-100 py-20'>
 

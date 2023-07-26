@@ -7,7 +7,12 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 const License = () => {
   const [licenses, setLicenses] = useState([]);
   const [newLicenses, setNewLicenses] = useState("");
+  const token = localStorage.getItem('token');
 
+  const headers = {
+        'auth': token
+      };
+      
   useEffect(() => {
     // Fetch all licenses
     fetchLicenses();
@@ -15,7 +20,7 @@ const License = () => {
 
   const fetchLicenses = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/options/alloptions?array=licenses`);
+      const response = await axios.get(`${BASE_URL}/options/alloptions?array=licenses`, { headers });
       console.log(response.data[0].licenses);
       setLicenses(response.data[0].licenses);
     } catch (error) {
@@ -29,7 +34,7 @@ const License = () => {
     }
 
     try {
-      const response = await axios.post(`${BASE_URL}/options/licenses`, { licenses: [newLicenses] });
+      const response = await axios.post(`${BASE_URL}/options/licenses`, { licenses: [newLicenses] }, { headers });
       setLicenses(response.data.licenses);
       setNewLicenses("");
     } catch (error) {
@@ -40,7 +45,7 @@ const License = () => {
 
   const deleteLicenses = async (license) => {
     try {
-      const response = await axios.delete(`${BASE_URL}/options/licenses/${license}`);
+      const response = await axios.delete(`${BASE_URL}/options/licenses/${license}`, { headers });
       setLicenses(response.data.licenses);
     } catch (error) {
       console.error(error);

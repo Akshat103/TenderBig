@@ -10,6 +10,7 @@ import {
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+import axios from "axios"
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const EmployerForms = () => {
@@ -17,20 +18,32 @@ const EmployerForms = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [formsPerPage] = useState(10);
   const navigate = useNavigate();
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
-    // Fetch data from the API
-    fetch(`${BASE_URL}/services/employer/forms`)
-      .then((response) => response.json())
-      .then((data) => setForms(data))
-      .catch((error) => console.log(error));
-  }, []);
+
+    if (token) {
+      const headers = {
+        'auth': token
+      };
+
+      // Fetch data from the API with the token in the headers
+      axios.get(`${BASE_URL}/services/employer/forms`, { headers })
+        .then((response) => {
+          setForms(response.data);
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+        });
+    }
+  }, []); 
 
   function deleteEmployerDetail(id) {
     fetch(`${BASE_URL}/services/employer/forms/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        auth:token
       },
     })
       .then((response) => {

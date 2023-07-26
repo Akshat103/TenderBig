@@ -9,6 +9,12 @@ import payment from "../../components/payment";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 import { useNavigate } from 'react-router-dom';
 
+const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
 function CompanyForm({ onSubmit, licenses }) {
     const [companyName, setCompanyName] = useState('');
     const [companyProfile, setCompanyProfile] = useState('');
@@ -25,7 +31,7 @@ function CompanyForm({ onSubmit, licenses }) {
     const [others, setOthers] = useState("");
 
     const getAmount=async()=>{
-        const {data:{price}} = await axios.get(`${BASE_URL}/formprice/Company%20Certification/price`);
+        const {data:{price}} = await axios.get(`${BASE_URL}/formprice/Company%20Certification/price`, { headers });
         return price;
     }
 
@@ -316,7 +322,7 @@ function IndividualForm({ onSubmit, licenses }) {
         cityNames = Array.from(new Set(Object.values(cityData).map((city) => city.name)));
     }
     const getAmount=async()=>{
-        const {data:{price}} = await axios.get(`${BASE_URL}/formprice/Individual%20Certification/price`);
+        const {data:{price}} = await axios.get(`${BASE_URL}/formprice/Individual%20Certification/price`, { headers });
         return price;
     }
 
@@ -675,7 +681,7 @@ const Certification = () => {
 
 
     const fetchLicenses = async () => {
-        const response = await axios.get(`${BASE_URL}/options/alloptions?array=licenses`);
+        const response = await axios.get(`${BASE_URL}/options/alloptions?array=licenses`, { headers });
         setLicenses(response.data[0].licenses);
     }
 

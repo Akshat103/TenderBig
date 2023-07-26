@@ -1,9 +1,10 @@
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-const payment = async (amount,receipt) => {
-    const { data: { key } } = await axios.get("http://localhost:5000/apitender/payment/razorpaykey");
+const payment = async (amount,receipt, subscription=false, planType, state, userId) => {
+    const { data: { key } } = await axios.get(`${BASE_URL}/payment/razorpaykey`);
 
-    const { data: { order_id } } = await axios.post("http://localhost:5000/apitender/payment/createorder",{
+    const { data: { order_id } } = await axios.post(`${BASE_URL}/payment/createorder`,{
         amount,
         receipt
     });
@@ -14,12 +15,26 @@ const payment = async (amount,receipt) => {
             "order_id": order_id,
             "handler": async function (response) {
                 try {
-                    const { data: { success } } = await axios.post("http://localhost:5000/apitender/payment/verify-payment", {
-                        razorpay_payment_id: response.razorpay_payment_id,
-                        razorpay_order_id: response.razorpay_order_id,
-                        razorpay_signature: response.razorpay_signature
-                    });
-                    resolve(success);
+                    if(subscription){
+                        const { data: { success } } = await axios.post(`${BASE_URL}/payment/verify-payment`, {
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_signature: response.razorpay_signature,
+                            subscription,
+                            planType,
+                            state,
+                            userId
+                        });
+                        resolve(success);
+                    }
+                    if(!subscription){
+                        const { data: { success } } = await axios.post(`${BASE_URL}/payment/verify-payment`, {
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_signature: response.razorpay_signature,
+                        });
+                        resolve(success);
+                    }
                 } catch (error) {
                     reject(error);
                 }

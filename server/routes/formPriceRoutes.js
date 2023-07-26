@@ -1,16 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const formController = require('../controller/formPriceController'); 
+const formController = require('../controller/formPriceController');
+const { verifyToken, isAdmin, isNotUser} = require("../middleware/auth")
 
 // GET form price by form name
-router.get('/:formName/price', formController.getFormPrice);
+router.get('/:formName/price', verifyToken, formController.getFormPrice);
 
 // PUT update form price by form name
-router.put('/:formName/price', formController.updateFormPrice);
+router.put('/:formName/price', verifyToken, isNotUser, formController.updateFormPrice);
 
 // POST submit a form
-router.post('/submit', formController.submitForm);
+router.post('/submit', verifyToken, isNotUser, formController.submitForm);
 
-router.get('/getall', formController.getAllFormPrices);
+router.get('/getall', verifyToken, isNotUser, formController.getAllFormPrices);
 
 module.exports = router;

@@ -56,6 +56,12 @@ const Employer = () => {
     cityNames = Array.from(new Set(Object.values(cityData).map((city) => city.name)));
   }
 
+  const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
   useEffect(() => {
     setIsVisible(true);
   }, []);
@@ -104,7 +110,7 @@ const Employer = () => {
     const {
       data: { price },
     } = await axios.get(
-      `${BASE_URL}/formprice/Employer/price`
+      `${BASE_URL}/formprice/Employer/price`, { headers }
     );
     return price;
   };

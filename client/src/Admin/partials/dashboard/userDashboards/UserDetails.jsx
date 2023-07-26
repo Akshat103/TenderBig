@@ -6,13 +6,19 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 const UserDetails = () => {
   const [userData, setUserData] = useState([]);
 
+  const token = localStorage.getItem('token');
+
+  const headers = {
+    'auth': token
+  };
+
   useEffect(() => {
     let userData1 = localStorage.getItem("user");
     let userDataObject = userData1 ? JSON.parse(userData1) : null;
     setUserData(userDataObject);
     let id = userDataObject?.userId;
     if (id) {
-      fetch(`${BASE_URL}/userdetails/DetailsbyId/${id}`)
+      fetch(`${BASE_URL}/userdetails/DetailsbyId/${id}`, { headers })
         .then((response) => response.json())
         .then((data) => {
           setUserData(data);

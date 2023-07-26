@@ -7,15 +7,19 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 const Category = () => {
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState("");
+  const token = localStorage.getItem('token');
+
+  const headers = {
+    'auth': token
+  };
 
   useEffect(() => {
-    // Fetch all categories
     fetchCategories();
   }, []);
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/options/alloptions?array=categories`);
+      const response = await axios.get(`${BASE_URL}/options/alloptions?array=categories`, { headers });
       console.log(response.data[0].categories);
       setCategories(response.data[0].categories);
     } catch (error) {
@@ -25,12 +29,11 @@ const Category = () => {
 
   const addCategory = async () => {
     if (!newCategory.trim()) {
-      // If newCategory is empty or contains only whitespace, return early without making the API call.
       return;
     }
 
     try {
-      const response = await axios.post(`${BASE_URL}/options/categories`, { categories: [newCategory] });
+      const response = await axios.post(`${BASE_URL}/options/categories`, { categories: [newCategory] }, { headers });
       setCategories(response.data.categories);
       setNewCategory("");
     } catch (error) {
@@ -41,7 +44,7 @@ const Category = () => {
 
   const deleteCategory = async (category) => {
     try {
-      const response = await axios.delete(`${BASE_URL}/options/categories/${category}`);
+      const response = await axios.delete(`${BASE_URL}/options/categories/${category}`, { headers });
       setCategories(response.data.categories);
     } catch (error) {
       console.error(error);

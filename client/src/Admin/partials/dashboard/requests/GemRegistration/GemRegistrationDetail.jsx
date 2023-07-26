@@ -10,8 +10,15 @@ const GemRegistrationDetail = () => {
   const [data, setFormData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const { id } = useParams();
+
+  const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
   useEffect(() => {
-    fetch(`${BASE_URL}/services/gem/${id}`)
+    fetch(`${BASE_URL}/services/gem/${id}`, { headers })
       .then((response) => response.json())
       .then((data) => setFormData(data))
       .catch((error) => console.log(error));

@@ -10,9 +10,16 @@ const TenderOnlineDetail = () => {
     const [data, setFormData] = useState(null);
     const { id } = useParams();
     const [isEditing, setIsEditing] = useState(false);
+
+    const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
     useEffect(() => {
         // Fetch data from the API
-        fetch(`${BASE_URL}/services/tender/online/${id}`)
+        fetch(`${BASE_URL}/services/tender/online/${id}`, { headers })
             .then((response) => response.json())
             .then((data) => setFormData(data))
             .catch((error) => console.log(error));
@@ -32,6 +39,7 @@ const TenderOnlineDetail = () => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                auth:token
             },
             body: JSON.stringify(data), // Replace formData with the updated data object
         })

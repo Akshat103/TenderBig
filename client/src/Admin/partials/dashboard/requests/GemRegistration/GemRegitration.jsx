@@ -14,13 +14,20 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const GemRegistration = () => {
   const [forms, setForms] = useState([]);
+
+  const token = localStorage.getItem('token');
+
+  const headers = {
+    'auth': token
+  };
+
   const [currentPage, setCurrentPage] = useState(1);
   const [formsPerPage] = useState(10);
   const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch data from the API
-    fetch(`${BASE_URL}/services/gem/getall`)
+    fetch(`${BASE_URL}/services/gem/getall`, { headers })
       .then((response) => response.json())
       .then((data) => setForms(data))
       .catch((error) => console.log(error));
@@ -31,12 +38,11 @@ const GemRegistration = () => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        auth:token
       },
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        // Update the forms state to remove the deleted item
         setForms(forms.filter((form) => form._id !== id));
       })
       .catch((error) => console.log(error));
@@ -117,7 +123,7 @@ const GemRegistration = () => {
 
   const downloadAsPDF = () => {
     const doc = new jsPDF("p", "mm", "a4"); // Set page size to A4
-  
+
     const tableData = forms
       .slice((currentPage - 1) * formsPerPage, currentPage * formsPerPage)
       .map((form) => ({
@@ -137,7 +143,7 @@ const GemRegistration = () => {
         "City": form.city,
         "ZIP Code": form.zip,
       }));
-  
+
     const tableConfig = {
       head: [
         [
@@ -183,129 +189,129 @@ const GemRegistration = () => {
         valign: "middle",
       },
     };
-  
+
     doc.autoTable(tableConfig);
     doc.save("gem_registration_requests.pdf");
   };
 
   return (
-          <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
-            <h1 className="mb-4 text-xl font-bold">
-              Gem Registration Requests
-            </h1>
-            {/* Download buttons */}
-            <div className="flex justify-end mb-4">
-              <button
-                className="px-4 py-2 mr-2 font-bold text-white bg-green-700 rounded focus:outline-none focus:ring-2"
-                onClick={downloadAsExcel}
-              >
-                Download Excel
-              </button>
-              {/* <button
+    <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
+      <h1 className="mb-4 text-xl font-bold">
+        Gem Registration Requests
+      </h1>
+      {/* Download buttons */}
+      <div className="flex justify-end mb-4">
+        <button
+          className="px-4 py-2 mr-2 font-bold text-white bg-green-700 rounded focus:outline-none focus:ring-2"
+          onClick={downloadAsExcel}
+        >
+          Download Excel
+        </button>
+        {/* <button
                 className="px-4 py-2 font-bold text-white bg-red-700 rounded focus:outline-none focus:ring-2"
                 onClick={downloadAsPDF}
               >
                 Download PDF
               </button> */}
-            </div>
-            {/* Table */}
-            <div className="overflow-hidden border rounded-lg shadow-2xl">
-              <table className="min-w-full py-3 divide-y divide-gray-200 table-fixed">
-                <thead className="bg-gray-200">
-                  <tr>
-                    <th className="w-1/6 px-6 py-4 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
-                      Company Name
-                    </th>
-                    <th className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
-                      Contact Person Name
-                    </th>
-                    <th className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
-                      Email
-                    </th>
-                    <th className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
-                      Contact Number
-                    </th>
-                    <th className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
-                      Country
-                    </th>
+      </div>
+      {/* Table */}
+      <div className="overflow-hidden border rounded-lg shadow-2xl">
+        <table className="min-w-full py-3 divide-y divide-gray-200 table-fixed">
+          <thead className="bg-gray-200">
+            <tr>
+              <th className="w-1/6 px-6 py-4 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
+                Company Name
+              </th>
+              <th className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
+                Contact Person Name
+              </th>
+              <th className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
+                Email
+              </th>
+              <th className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
+                Contact Number
+              </th>
+              <th className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b text-md">
+                Country
+              </th>
 
-                    <th className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b cursor-pointer text-md">
-                      Received At
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {forms
-                    .slice(
-                      (currentPage - 1) * formsPerPage,
-                      currentPage * formsPerPage
-                    )
-                    .map((form) => (
-                      <tr key={form._id}>
-                        <td
-                          className="w-1/6 px-4 py-2 font-medium border-b cursor-pointer whitespace-nowrap"
-                          onClick={() => viewDetails(form._id)}
-                        >
-                          {form.companyName}
-                        </td>
-                        <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
-                          {form.name}
-                        </td>
-                        <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
-                          {form.email}
-                        </td>
-                        <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
-                          {form.contact}
-                        </td>
-                        <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
-                          {form.country}
-                        </td>
-                        <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
-                          {formatReceivedAt(form.createdAt)}
-                        </td>
-                        <td className="px-4 py-2 font-medium border-b whitespace-nowrap w-1/10">
-                          <button
-                            className="text-blue-500 hover:text-blue-700"
-                            onClick={() => viewDetails(form._id)}
-                          >
-                            <FontAwesomeIcon icon={faEdit} />
-                          </button>
-                        </td>
-                        <td className="px-4 py-2 font-medium border-b whitespace-nowrap w-1/10">
-                          <button
-                            className="text-red-500 hover:text-red-700"
-                            onClick={() => deleteDetails(form._id)}
-                          >
-                            <FontAwesomeIcon icon={faTrash} />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-              <div className="flex justify-between px-4 py-3 bg-gray-100 border-t border-gray-200 sm:px-6">
-                <div className="flex items-center">
-                  <button
-                    className="px-3 py-1 rounded-full focus:outline-none focus:shadow-outline-purple"
-                    onClick={previousPage}
-                    disabled={currentPage === 1}
+              <th className="w-1/6 px-6 py-3 font-bold tracking-wider text-left text-gray-900 uppercase border-b cursor-pointer text-md">
+                Received At
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {forms
+              .slice(
+                (currentPage - 1) * formsPerPage,
+                currentPage * formsPerPage
+              )
+              .map((form) => (
+                <tr key={form._id}>
+                  <td
+                    className="w-1/6 px-4 py-2 font-medium border-b cursor-pointer whitespace-nowrap"
+                    onClick={() => viewDetails(form._id)}
                   >
-                    <FontAwesomeIcon icon={faArrowLeft} />
-                  </button>
-                  <span className="px-2 text-sm">{currentPage}</span>
-                  <button
-                    className="px-3 py-1 rounded-full focus:outline-none focus:shadow-outline-purple"
-                    onClick={nextPage}
-                    disabled={
-                      currentPage === Math.ceil(forms.length / formsPerPage)
-                    }
-                  >
-                    <FontAwesomeIcon icon={faArrowRight} />
-                  </button>
-                </div>
-              </div>
-            </div>
+                    {form.companyName}
+                  </td>
+                  <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
+                    {form.name}
+                  </td>
+                  <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
+                    {form.email}
+                  </td>
+                  <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
+                    {form.contact}
+                  </td>
+                  <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
+                    {form.country}
+                  </td>
+                  <td className="w-1/6 px-4 py-2 font-medium border-b whitespace-nowrap">
+                    {formatReceivedAt(form.createdAt)}
+                  </td>
+                  <td className="px-4 py-2 font-medium border-b whitespace-nowrap w-1/10">
+                    <button
+                      className="text-blue-500 hover:text-blue-700"
+                      onClick={() => viewDetails(form._id)}
+                    >
+                      <FontAwesomeIcon icon={faEdit} />
+                    </button>
+                  </td>
+                  <td className="px-4 py-2 font-medium border-b whitespace-nowrap w-1/10">
+                    <button
+                      className="text-red-500 hover:text-red-700"
+                      onClick={() => deleteDetails(form._id)}
+                    >
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+        <div className="flex justify-between px-4 py-3 bg-gray-100 border-t border-gray-200 sm:px-6">
+          <div className="flex items-center">
+            <button
+              className="px-3 py-1 rounded-full focus:outline-none focus:shadow-outline-purple"
+              onClick={previousPage}
+              disabled={currentPage === 1}
+            >
+              <FontAwesomeIcon icon={faArrowLeft} />
+            </button>
+            <span className="px-2 text-sm">{currentPage}</span>
+            <button
+              className="px-3 py-1 rounded-full focus:outline-none focus:shadow-outline-purple"
+              onClick={nextPage}
+              disabled={
+                currentPage === Math.ceil(forms.length / formsPerPage)
+              }
+            >
+              <FontAwesomeIcon icon={faArrowRight} />
+            </button>
           </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

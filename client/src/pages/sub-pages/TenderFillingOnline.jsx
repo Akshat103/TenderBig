@@ -10,6 +10,12 @@ import { sideNavigationButtons } from "../../components/Forms";
 import { NavLink } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
+const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
 const uploadMultipleFilesToS3 = async (files) => {
     const uploadPromises = files.map(async (file) => {
         const result = await uploadFileToS3(file, "pdf");
@@ -283,7 +289,7 @@ const OnlineTenderForm = () => {
     }, []);
 
     const fetchLicenses = async () => {
-        const response = await axios.get(`${BASE_URL}/options/alloptions?array=licenses`);
+        const response = await axios.get(`${BASE_URL}/options/alloptions?array=licenses`, { headers });
         setLicenses(response.data[0].licenses);
     }
 
@@ -337,7 +343,7 @@ const OnlineTenderForm = () => {
     };
 
     const getAmount = async () => {
-        const { data: { price } } = await axios.get(`${BASE_URL}/formprice/Online%20Tender/price`);
+        const { data: { price } } = await axios.get(`${BASE_URL}/formprice/Online%20Tender/price`, { headers });
         return price;
     }
 

@@ -7,6 +7,11 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 const Sector = () => {
   const [sectors, setSectors] = useState([]);
   const [newSector, setNewSector] = useState("");
+  const token = localStorage.getItem('token');
+
+  const headers = {
+        'auth': token
+      };
 
   useEffect(() => {
     // Fetch all sectors
@@ -15,7 +20,7 @@ const Sector = () => {
 
   const fetchSectors = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/options/alloptions?array=sectors`);
+      const response = await axios.get(`${BASE_URL}/options/alloptions?array=sectors`, { headers });
       console.log(response.data[0].sectors);
       setSectors(response.data[0].sectors);
     } catch (error) {
@@ -30,7 +35,7 @@ const Sector = () => {
     }
   
     try {
-      const response = await axios.post(`${BASE_URL}/options/sectors`, { sectors: [newSector] });
+      const response = await axios.post(`${BASE_URL}/options/sectors`, { sectors: [newSector] }, { headers });
       setSectors(response.data.sectors);
       setNewSector("");
     } catch (error) {
@@ -40,7 +45,7 @@ const Sector = () => {
   
   const deleteSector = async (sector) => {
     try {
-      const response = await axios.delete(`${BASE_URL}/options/sectors/${sector}`);
+      const response = await axios.delete(`${BASE_URL}/options/sectors/${sector}`, { headers });
       setSectors(response.data.sectors);
     } catch (error) {
       console.error(error);

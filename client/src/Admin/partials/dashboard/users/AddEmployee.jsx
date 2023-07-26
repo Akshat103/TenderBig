@@ -14,6 +14,7 @@ const AddEmployee = () => {
         city: ''
     });
     const [successMessage, setSuccessMessage] = useState('');
+    const token = localStorage.getItem('token');
 
     const handleChange = (e) => {
         setFormData({
@@ -28,7 +29,8 @@ const AddEmployee = () => {
         fetch(`${BASE_URL}/signup`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                auth:token
             },
             body: JSON.stringify(formData)
         })

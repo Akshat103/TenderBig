@@ -14,7 +14,8 @@ const AddFranchise = () => {
         city: ''
     });
     const [successMessage, setSuccessMessage] = useState('');
-
+    const token = localStorage.getItem('token');
+    
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -28,7 +29,8 @@ const AddFranchise = () => {
         fetch(`${BASE_URL}/signup`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                auth:token
             },
             body: JSON.stringify(formData)
         })

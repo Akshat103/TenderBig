@@ -129,8 +129,8 @@ module.exports.createOrder = async (req, res) => {
 }
 
 module.exports.verifyOrder = async (req, res) => {
-    const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = req.body;
-    console.log(razorpay_payment_id, razorpay_order_id, razorpay_signature);
+    const { razorpay_payment_id, razorpay_order_id, razorpay_signature, subscription } = req.body;
+    console.log("at verify ", subscription);
 
     const body = razorpay_order_id + "|" + razorpay_payment_id;
 
@@ -139,10 +139,61 @@ module.exports.verifyOrder = async (req, res) => {
         .digest('hex');
 
     const isAuthentic = generated_signature === razorpay_signature;
-    console.log(generated_signature, razorpay_signature)
-    if (isAuthentic) return res.status(201).json({
-        success: true
-    })
+    if (isAuthentic) {
+
+        console.log("Payment verified")
+
+        if(subscription){
+            try {
+    
+                const { planType, state, userId } = req.body;
+                // Find the user by userId
+                const user = await userModel.findById(userId);
+    
+                if (!user) {
+                    return res.status(404).json({
+                        status: 'error',
+                        message: 'User not found.',
+                    });
+                }
+    
+                // Get the current date
+                const currentDate = new Date();
+    
+                // Add 30 days to the current date
+                currentDate.setDate(currentDate.getDate() + 30);
+    
+                // Update the subscription status and plan type
+                user.subscription.status = "active";
+                user.subscription.type = planType;
+                user.subscription.date = currentDate;
+                if (state) {
+                    user.subscription.state = state;
+                }
+                else {
+                    user.subscription.state = "none";
+                }
+    
+                await user.save();
+    
+                res.status(200).json({
+                    success: true,
+                    message: 'Subscription activated successfully.',
+                });
+            } catch (err) {
+                console.log(err);
+                res.status(500).json({
+                    status: 'error',
+                    message: 'Internal server error',
+                });
+            }
+        }
+
+        return res.status(201).json({
+            success: true
+        })
+
+    }
     else return res.status(400).json({
         success: false
     })

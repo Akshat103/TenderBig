@@ -17,6 +17,7 @@ function DashboardUsers() {
   const [userType, setUserType] = useState("all");
   const [subscriptionStatus, setSubscriptionStatus] = useState("all");
   const navigate = useNavigate();
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,7 +28,7 @@ function DashboardUsers() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              auth: localStorage.getItem("token"),
+              auth: token,
             },
           }
         );

@@ -17,6 +17,12 @@ const JointVenture = () => {
   const totalSteps = 4;
   const gaps = totalSteps - 1;
   const progress = Math.round((currentStep / gaps) * 100);
+  const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
   const [formData, setFormData] = useState({
     // 1. Company Details
     projectTenderName: "",
@@ -182,7 +188,7 @@ const JointVenture = () => {
     const {
       data: { price },
     } = await axios.get(
-      `${BASE_URL}/formprice/Joint%20Venture/price`
+      `${BASE_URL}/formprice/Joint%20Venture/price`, { headers }
     );
     return price;
   };

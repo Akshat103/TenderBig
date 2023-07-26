@@ -5,16 +5,22 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const ImageGallery = () => {
   const [imageUrls, setImageUrls] = useState([]);
-  const location = window.location.origin
+  const location = window.location.origin;
+
+  const token = localStorage.getItem('token');
+
+const headers = {
+      'auth': token
+    };
+
   useEffect(() => {
-    console.log(window.location.origin)
     fetchImages();
   }, []);
 
   const fetchImages = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/images/allimages`
+        `${BASE_URL}/images/allimages`, { headers }
       );
       setImageUrls(response.data);
     } catch (error) {
@@ -27,7 +33,7 @@ const ImageGallery = () => {
       await axios.delete(
         `${BASE_URL}/images/delete/${encodeURIComponent(
           filename
-        )}`
+        ), { headers }}`
       );
       fetchImages();
     } catch (error) {

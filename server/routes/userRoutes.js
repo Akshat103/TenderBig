@@ -25,7 +25,7 @@ router.get("/users/:userRole", verifyToken, isNotUser, usersController.ByUserRol
 router.get("/statistics", verifyToken, isNotUser, usersController.statistics);
 
 // getting all forms by id
-router.get("/DetailsbyId/:id", verifyToken, isNotUser, usersController.DetailsById);
+router.get("/DetailsbyId/:id", verifyToken,usersController.DetailsById);
 
 router.put('/update-status/:userId', verifyToken, isNotUser, usersController.updateSubscriptionStatus);
 

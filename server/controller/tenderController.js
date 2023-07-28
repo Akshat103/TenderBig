@@ -90,7 +90,8 @@ class Tender {
             organization,
             tenderDetailNoticeType,
             userCategory,
-            product
+            product,
+            type
         } = req.body;
 
         const userId = req.userId;
@@ -164,7 +165,8 @@ class Tender {
                 active: status,
                 approvedStatus: status,
                 userCategory,
-                product
+                product,
+                type
             });
 
             newTender.save()
@@ -215,7 +217,8 @@ class Tender {
             organization,
             tenderDetailNoticeType,
             userCategory,
-            product
+            product,
+            type
         } = req.body;
 
 
@@ -276,7 +279,8 @@ class Tender {
                     purchaserDetail,
                     tenderDetail,
                     userCategory,
-                    product
+                    product,
+                    type
                 });
 
             if (!updatedTender) {

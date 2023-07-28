@@ -344,6 +344,7 @@ const TenderForm = () => {
     description: "",
     organization: "",
     tenderDetailNoticeType: "",
+    type:""
   });
 
   const clearInputs = () => {
@@ -377,6 +378,7 @@ const TenderForm = () => {
       description: "",
       organization: "",
       tenderDetailNoticeType: "",
+      type:""
     });
   };
 
@@ -450,7 +452,7 @@ const TenderForm = () => {
   };
 
   const checkScreenSize = () => {
-    setIsSmallScreen(window.innerWidth > 480); // Adjust the breakpoint as needed
+    setIsSmallScreen(window.innerWidth > 480);
   };
 
   useEffect(() => {

@@ -64,13 +64,17 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: false
         },
+        PasswordChangedAt: Date,
         ResetPasswordToken: String,
-        ResetPasswordEcpire: String
+        ResetPasswordExpire: Date
     },
     {
         toJSON: {
             transform(doc, ret) {
                 delete ret.password;
+                delete ret.PasswordChangedAt;
+                delete ret.ResetPasswordToken;
+                delete ret.ResetPasswordExpire;
             },
         },
     },

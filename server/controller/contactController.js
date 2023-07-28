@@ -44,10 +44,29 @@ class Contact {
     async getByService(req, res) {
         try {
             const { selectedService } = req.params;
-            console.log(selectedService)
             const contactForms = await ContactForm.find({ selectedService });
-            console.log(contactForms)
             res.json(contactForms);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Server Error' });
+        }
+    }
+
+    async deleteById(req, res) {
+        try {
+            const { id } = req.params;
+            const deleted = await ContactForm.findByIdAndDelete(id);
+            if(deleted){
+                res.status(200).json({
+                    success:true,
+                    message:"Form deleted successfully."
+                });
+            }else{
+                res.status(404).json({
+                    success:false,
+                    message:"Form not found."
+                });
+            }
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Server Error' });

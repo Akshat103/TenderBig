@@ -9,10 +9,10 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 const JointVentureDetail = () => {
   const [data, setFormData] = useState(null);
 
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
 
   const headers = {
-    'auth': token
+    auth: token,
   };
 
   const [isEditing, setIsEditing] = useState(false);
@@ -39,7 +39,7 @@ const JointVentureDetail = () => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        auth: token
+        auth: token,
       },
       body: JSON.stringify(data),
     })
@@ -56,9 +56,7 @@ const JointVentureDetail = () => {
       <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
         <div className="flex justify-center">
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-bold mb-4">
-              Joint Venture Detail
-            </h2>
+            <h2 className="text-xl font-bold mb-4">Joint Venture Detail</h2>
           </div>
         </div>
       </div>
@@ -81,8 +79,7 @@ const JointVentureDetail = () => {
               <Step key={index}>
                 {({ accomplished }) => (
                   <div
-                    className={`step ${accomplished ? "completed" : null
-                      }`}
+                    className={`step ${accomplished ? "completed" : null}`}
                   />
                 )}
               </Step>
@@ -110,7 +107,7 @@ const JointVentureDetail = () => {
           {/* </div> */}
           <div className="grid grid-cols-2 mb-4 mt-4 gap-11">
             <div>
-              <label className="block mt-6 md:mt-0 mb-2 text-xl font-medium">
+              <label className="block md:mt-0 mb-2 text-xl font-medium">
                 City:
               </label>
               <input
@@ -118,9 +115,7 @@ const JointVentureDetail = () => {
                 className="border mt-2 md:mt-0 text-lg  border-gray-300 rounded-md p-2  py-4 w-full bg-gray-200"
                 value={data.city}
                 readOnly={!isEditing}
-                onChange={(e) =>
-                  setFormData({ ...data, city: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...data, city: e.target.value })}
               />
             </div>
             <div>
@@ -140,9 +135,7 @@ const JointVentureDetail = () => {
           </div>
           <div className="grid grid-cols-2 gap-11">
             <div>
-              <label className="block mb-2 text-xl font-medium">
-                Country:
-              </label>
+              <label className="block mb-2 text-xl font-medium">Country:</label>
               <input
                 type="text"
                 className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full  bg-gray-200"
@@ -154,9 +147,7 @@ const JointVentureDetail = () => {
               />
             </div>
             <div>
-              <label className="block mb-2 text-xl font-medium">
-                State:
-              </label>
+              <label className="block mb-2 text-xl font-medium">State:</label>
               <input
                 type="text"
                 className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
@@ -184,9 +175,7 @@ const JointVentureDetail = () => {
               />
             </div>
             <div>
-              <label className="block mb-2 text-xl font-medium">
-                Website:
-              </label>
+              <label className="block mb-2 text-xl font-medium">Website:</label>
               <input
                 type="text"
                 className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
@@ -198,6 +187,194 @@ const JointVentureDetail = () => {
               />
             </div>
           </div>
+          <div className="grid grid-cols-2 gap-11">
+            <div>
+              <label className="block mb-2 text-xl font-medium">CIN:</label>
+              <input
+                type="text"
+                className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                value={data.cin}
+                readOnly={!isEditing}
+                onChange={(e) => setFormData({ ...data, cin: e.target.value })}
+              />
+            </div>
+            <div>
+              <label className="block mb-2 text-xl font-medium">
+                Company Tel.:
+              </label>
+              <input
+                type="text"
+                className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                value={data.companyContactNo}
+                readOnly={!isEditing}
+                onChange={(e) =>
+                  setFormData({ ...data, companyContactNo: e.target.value })
+                }
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-11">
+            <div>
+              <label className="block mb-2 text-xl font-medium">
+                Company Profile:
+              </label>
+              <input
+                type="text"
+                className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                value={data.companyProfile}
+                readOnly={!isEditing}
+                onChange={(e) =>
+                  setFormData({ ...data, companyProfile: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <label className="block mb-2 text-xl font-medium">
+                Company Reg No:
+              </label>
+              <input
+                type="text"
+                className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                value={data.companyRegNo}
+                readOnly={!isEditing}
+                onChange={(e) =>
+                  setFormData({ ...data, companyRegNo: e.target.value })
+                }
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-11">
+            <div>
+              <label className="block mb-2 text-xl font-medium">Country</label>
+              <input
+                type="text"
+                className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                value={data.country}
+                readOnly={!isEditing}
+                onChange={(e) =>
+                  setFormData({ ...data, startDate: e.target.value })
+                }
+              />
+            </div>
+          </div>
+          {data.directors.map((datas, index) => (
+            <div key={index}>
+              <div className="grid grid-cols-2 gap-11">
+                <div>
+                  <label className="block mb-2 text-xl font-medium">
+                    Director Name {index + 1}:
+                  </label>
+                  <input
+                    type="text"
+                    className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                    value={datas.directorName}
+                    readOnly={!isEditing}
+                    onChange={(e) =>
+                      setFormData({ ...data, directorName: e.target.value })
+                    }
+                  />
+                </div>
+                <div>
+                  <label className="block mb-2 text-xl font-medium">
+                    Director Aadhar {index + 1}:
+                  </label>
+                  <input
+                    type="text"
+                    className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                    value={datas.directorAadhar}
+                    readOnly={!isEditing}
+                    onChange={(e) =>
+                      setFormData({ ...data, directorAadhar: e.target.value })
+                    }
+                  />
+                </div>
+                <div>
+                  <label className="block mb-2 text-xl font-medium">
+                    Director PAN {index + 1}:
+                  </label>
+                  <input
+                    type="text"
+                    className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                    value={datas.directorPan}
+                    readOnly={!isEditing}
+                    onChange={(e) =>
+                      setFormData({ ...data, directorPan: e.target.value })
+                    }
+                  />
+                </div>
+                <div>
+                  <label className="block mb-2 text-xl font-medium">
+                    Director DOB {index + 1}:
+                  </label>
+                  <input
+                    type="text"
+                    className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                    value={datas.directorDob}
+                    readOnly={!isEditing}
+                    onChange={(e) =>
+                      setFormData({ ...data, directorDob: e.target.value })
+                    }
+                  />
+                </div>
+                <div>
+                  <label className="block mb-2 text-xl font-medium">
+                    Director Father Name {index + 1}:
+                  </label>
+                  <input
+                    type="text"
+                    className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                    value={datas.directorFatherName}
+                    readOnly={!isEditing}
+                    onChange={(e) =>
+                      setFormData({
+                        ...data,
+                        directorFatherName: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {data && data.uploads ?
+           data.uploads.map((upload, index) => (
+            <div key={index}>
+              <div className="grid grid-cols-2 gap-11">
+                <div>
+                  <label className="block mb-2 text-xl font-medium">
+                    GST Name:
+                  </label>
+                  <input
+                    type="text"
+                    className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                    value={upload.gst.name}
+                    readOnly={!isEditing}
+                    onChange={(e) =>
+                      setFormData({ ...data, startDate: e.target.value })
+                    }
+                  />
+                </div>
+                <div>
+                  <label className="block mb-2 text-xl font-medium">
+                  GST URL:
+                  </label>
+                  <input
+                    type="text"
+                    className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                    value={upload.gst.url}
+                    readOnly={!isEditing}
+                    onChange={(e) =>
+                      setFormData({ ...data, endDate: e.target.value })
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+          )) : ( 
+            <p>Loading data</p>
+          )}
+          
           <div className="grid grid-cols-2 gap-11">
             <div>
               <label className="block mb-2 text-xl font-medium">
@@ -244,17 +421,13 @@ const JointVentureDetail = () => {
               />
             </div>
             <div>
-              <label className="block mb-2 text-xl font-medium">
-                GST:
-              </label>
+              <label className="block mb-2 text-xl font-medium">GST:</label>
               <input
                 type="text"
                 className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
                 value={data.gst}
                 readOnly={!isEditing}
-                onChange={(e) =>
-                  setFormData({ ...data, gst: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...data, gst: e.target.value })}
               />
             </div>
           </div>
@@ -403,9 +576,7 @@ const JointVentureDetail = () => {
                 className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
                 value={data.companyUploads.cinUpload[0]}
                 readOnly={!isEditing}
-                onChange={(e) =>
-                  setFormData({ ...data, city: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...data, city: e.target.value })}
               />
             </div>
             <div>
@@ -417,9 +588,7 @@ const JointVentureDetail = () => {
                 className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
                 value={data.companyUploads.gstUpload[0]}
                 readOnly={!isEditing}
-                onChange={(e) =>
-                  setFormData({ ...data, city: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...data, city: e.target.value })}
               />
             </div>
           </div>
@@ -433,23 +602,17 @@ const JointVentureDetail = () => {
                 className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
                 value={data.companyUploads.panUpload[0]}
                 readOnly={!isEditing}
-                onChange={(e) =>
-                  setFormData({ ...data, city: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...data, city: e.target.value })}
               />
             </div>
             <div>
-              <label className="block mb-2 text-xl font-medium">
-                PAN:
-              </label>
+              <label className="block mb-2 text-xl font-medium">PAN:</label>
               <input
                 type="text"
                 className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
                 value={data.pan}
                 readOnly={!isEditing}
-                onChange={(e) =>
-                  setFormData({ ...data, pan: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...data, pan: e.target.value })}
               />
             </div>
           </div>

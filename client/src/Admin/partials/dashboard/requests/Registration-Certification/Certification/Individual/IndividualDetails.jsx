@@ -84,8 +84,8 @@ const headers = {
                                     ))}
                                 </ProgressBar>
                                 <h2 className="text-3xl font-bold mb-4 mt-6 text-center">Individual Detail</h2>
-                                {/* <div className="grid grid-cols-2 gap-11  "> */}
-                                <div className="w-full">
+                                <div className="grid grid-cols-2 gap-11  ">
+                                <div>
                                     <label className="block mb-2 text-xl font-medium ">Father's Name:</label>
                                     <input
                                         type="text"
@@ -97,8 +97,20 @@ const headers = {
                                         }
                                     />
                                 </div>
+                                <div>
+                                    <label className="block mb-2 text-xl font-medium ">Father's Name:</label>
+                                    <input
+                                        type="text"
+                                        className="border text-lg border-gray-300 py-4 bg-gray-200 rounded-md px-9 p-2 me-12 w-full"
+                                        value={formData.name}
+                                        readOnly={!isEditing}
+                                        onChange={(e) =>
+                                            setFormData({ ...formData, name: e.target.value })
+                                        }
+                                    />
+                                </div>
 
-                                {/* </div> */}
+                                </div>
                                 <div className="grid grid-cols-2 mb-4 mt-4 gap-11">
                                     <div>
                                         <label className="block mb-2 text-xl font-medium">Date of Birth:</label>

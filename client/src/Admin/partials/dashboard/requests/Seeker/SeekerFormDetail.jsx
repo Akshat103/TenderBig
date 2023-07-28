@@ -422,7 +422,7 @@ const SeekerFormDetail = () => {
                 value={formData.aadhar}
                 readOnly={!isEditing}
                 onChange={(e) =>
-                  setFormData({ ...formData, company: e.target.value })
+                  setFormData({ ...formData, aadhar: e.target.value })
                 }
               />
             </div>

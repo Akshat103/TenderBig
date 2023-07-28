@@ -14,10 +14,16 @@ const ContactFormList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [formsPerPage] = useState(10);
   const [selectedService, setSelectedService] = useState("All");
+  const [forms, setForms] = useState([]);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     fetchContactForms();
   }, []);
+
+  const headers = {
+    'auth': token
+  };
 
   const fetchContactForms = async () => {
     try {
@@ -175,7 +181,19 @@ const ContactFormList = () => {
   };
 
   const handleDelete = (id) => {
-    // Handle the delete functionality
+    fetch(`${BASE_URL}/byid/${id}`, {
+      method: 'DELETE',
+      headers: {
+          'Content-Type': 'application/json',
+          auth:token
+      }
+  })
+      .then((response) => response.json())
+      .then((data) => {
+          console.log(data);
+          setForms(forms.filter((form) => form._id !== id));
+      })
+      .catch((error) => console.log(error));
   };
 
   // const handleEdit = (id) => {

@@ -87,7 +87,8 @@ const RegistrationDetails = () => {
           <h2 className="text-3xl font-bold mb-4 mt-6 text-center">
             Registration Detail
           </h2>
-          <div className="w-full">
+          <div className="grid grid-cols-2 mb-4 mt-4 gap-11">
+          <div>
             <label className="block mb-2 text-xl font-medium ">
               Company
             </label>
@@ -101,6 +102,21 @@ const RegistrationDetails = () => {
               }
             />
           </div>
+          <div>
+            <label className="block mb-2 text-xl font-medium ">
+              Company Est
+            </label>
+            <input
+              type="text"
+              className="border text-lg border-gray-300 py-4 bg-gray-200 rounded-md px-9 p-2 me-12 w-full"
+              value={formData.companyEstd}
+              readOnly={!isEditing}
+              onChange={(e) =>
+                setFormData({ ...formData, companyEstd: e.target.value })
+              }
+            />
+          </div>
+          </div>
 
           <div className="grid grid-cols-2 mb-4 mt-4 gap-11">
             <div>
@@ -109,7 +125,7 @@ const RegistrationDetails = () => {
               </label>
               <input
                 type="text"
-                className="border text-lg mt-7 md:mt-0  border-gray-300 rounded-md p-2  py-4 w-full bg-gray-200"
+                className="border text-lg  md:mt-0  border-gray-300 rounded-md p-2  py-4 w-full bg-gray-200"
                 value={formData.mobile}
                 readOnly={!isEditing}
                 onChange={(e) =>
@@ -391,7 +407,7 @@ const RegistrationDetails = () => {
               </label>
               <input
                 type="text"
-                className="border mt-8 md:mt-0 text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                className="border  md:mt-0 text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
                 value={formData.companystate}
                 readOnly={!isEditing}
                 onChange={(e) =>

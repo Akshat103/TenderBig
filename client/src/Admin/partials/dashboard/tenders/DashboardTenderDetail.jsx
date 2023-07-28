@@ -127,6 +127,10 @@ function DashboardTenderDetail() {
               <span className="font-bold">Product:</span>{" "}
               {tenderDetails.product}
             </p>
+            <p>
+              <span className="font-bold">For:</span>{" "}
+              {tenderDetails.type}
+            </p>
           </div>
         </div>
 

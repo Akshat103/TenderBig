@@ -47,7 +47,8 @@ const GemListing = () => {
   const [tenderData, setTenderData] = useState([]);
   const [minValue, setMinValue] = useState(0);
   const [sectors, setSectors] = useState([]);
-
+  const [selectedType, setSelectedType] = useState("");
+  
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -89,6 +90,10 @@ const GemListing = () => {
   const handleProductChange = (e) => {
     setSelectedProduct(e.target.value);
   };
+
+  const handleType = (e) => {
+    setSelectedType(e.target.value);
+  }
 
   useEffect(() => {
     const fetchTenderData = async () => {
@@ -132,6 +137,8 @@ const GemListing = () => {
         const country = encodeURIComponent(selectedCountry);
         const product = encodeURIComponent(selectedProduct);
         const value = encodeURIComponent(minValue);
+        const type = encodeURIComponent(selectedType);
+
         const baseUrl = `${BASE_URL}/tenderdetails/search?userCategory=gem`;
 
         const detailsArray = [
@@ -155,6 +162,9 @@ const GemListing = () => {
         }
         if (value) {
           searchUrl += `&value=${value}`;
+        }
+        if (type) {
+          searchUrl += `&type=${type}`;
         }
 
         const token = localStorage.getItem("token");
@@ -189,7 +199,8 @@ const GemListing = () => {
     selectedCountry,
     selectedProduct,
     selectedRegion,
-    minValue
+    minValue,
+    selectedType
   ]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -239,6 +250,11 @@ const GemListing = () => {
     const options = { day: "2-digit", month: "2-digit", year: "2-digit" };
     return date.toLocaleDateString(undefined, options);
   };
+
+  const types = [
+    { value: "buy", name: 'Buy' },
+    { value: "sell", name: 'Sell ' }
+  ]
 
   return (
     <>
@@ -343,6 +359,32 @@ const GemListing = () => {
                   </div>
                 </div>
               </div>
+
+              <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
+                <label
+                  htmlFor="type"
+                  className="block text-xl font-bold text-gray-700 mb-0.5 px-4 py-3 text-white bg-black"
+                >
+                  For
+                </label>
+
+                <select
+                  id="type"
+                  name="type"
+                  size={4}
+                  value={selectedType}
+                  onChange={handleType}
+                  className="w-full px-4 py-2 bg-white no-scrollbar"
+                >
+                  <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All </option>
+                  {types.map((type) => (
+                    <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white" key={type.name} value={type.value}>
+                      {type.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
 
             </div>
           </div>

@@ -280,6 +280,7 @@ const Forms = () => {
     description: "",
     organization: "",
     tenderDetailNoticeType: "",
+    type: ""
   });
 
   const countryNames = getCountries();
@@ -324,6 +325,7 @@ const Forms = () => {
       description: "",
       organization: "",
       tenderDetailNoticeType: "",
+      type: ""
     });
   }
 
@@ -468,42 +470,67 @@ const Forms = () => {
                     />
                   </label>
 
+                  <div className=" grid grid-cols-2 gap-4 ">
+                    <label className="block mb-2 font-semibold">
+                      Category
+                      <span className="text-red-700 relative top-0 right-0">*</span>
+                      <select required
+                        name="userCategory"
+                        value={formData.userCategory}
+                        onChange={handleChange}
+                        className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                      >
+                        <option value="">Select Category</option>
+                        <option value="contractor">Contractor</option>
+                        <option value="subcontractor">Sub Contractor</option>
+                        <option value="government">Government</option>
+                        <option value="private">Private</option>
+                        <option value="gem">Gem</option>
+                      </select>
+                    </label>
+
+                    <label className="block mb-2 font-semibold">
+                      Product
+                      <span className="text-red-700 relative top-0 right-0">*</span>
+                      <select
+                        required
+                        name="product"
+                        value={formData.product}
+                        onChange={handleChange}
+                        className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                      >
+                        <option value="">Select Product</option>
+                        {products.map((product) => (
+                          <option key={product} value={product}>
+                            {product}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  </div>
+
                   <label className="block mb-2 font-semibold">
-                    Category
-                    <span className="text-red-700 relative top-0 right-0">*</span>
-                    <select required
-                      name="userCategory"
-                      value={formData.userCategory}
+                    Want to
+                    <span className="relative top-0 right-0 text-red-700">
+                      *
+                    </span>
+                    <select
+                      required
+                      name="type"
+                      value={formData.type}
                       onChange={handleChange}
-                      className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                      className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                     >
-                      <option value="">Select Category</option>
-                      <option value="contractor">Contractor</option>
-                      <option value="subcontractor">Sub Contractor</option>
-                      <option value="government">Government</option>
-                      <option value="private">Private</option>
-                      <option value="gem">Gem</option>
+                      <option value="">Select</option>
+                      <option key='buy' value='buy'>
+                        Buy
+                      </option>
+                      <option key='sell' value='sell'>
+                        Sell
+                      </option>
                     </select>
                   </label>
 
-                  <label className="block mb-2 font-semibold">
-                    Product
-                    <span className="text-red-700 relative top-0 right-0">*</span>
-                    <select
-                      required
-                      name="product"
-                      value={formData.product}
-                      onChange={handleChange}
-                      className="border rounded-sm px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                    >
-                      <option value="">Select Product</option>
-                      {products.map((product) => (
-                        <option key={product} value={product}>
-                          {product}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
                 </div>
               </div>
 

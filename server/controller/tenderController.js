@@ -341,7 +341,7 @@ class Tender {
                 query['procurementSummary.country'] = "India";
             }
 
-            const { region, geopolitical, country, sector, financier, state, city, product, userCategory, value } = req.query;
+            const { region, geopolitical, country, sector, financier, state, city, product, userCategory, value, type } = req.query;
             const { details } = req.body;
 
             if (region && regionData.hasOwnProperty(region) && userSubscription.type === "Global") {
@@ -385,8 +385,11 @@ class Tender {
             if (value) {
                 query['otherInformation.tenderValue'] = { $gt: value };
             }
+            
+            if(type){
+                query['type'] = type;
+            }
 
-            console.log(query);
             let projection;
             if (details) {
                 projection = details.reduce((acc, field) => {

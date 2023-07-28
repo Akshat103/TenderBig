@@ -8,6 +8,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { ProgressBar, Step } from "react-step-progress-bar";
+import { getCountries, getStatesByCountry, getCitiesByCountryAndState } from '../utils/CountryData';
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const OtherInformationAndPurchaserDetail = ({
@@ -310,7 +311,7 @@ const TenderForm = () => {
   const token = localStorage.getItem('token');
 
   const headers = {
-      'auth': token
+    'auth': token
   };
 
 
@@ -344,7 +345,7 @@ const TenderForm = () => {
     description: "",
     organization: "",
     tenderDetailNoticeType: "",
-    type:""
+    type: ""
   });
 
   const clearInputs = () => {
@@ -378,9 +379,21 @@ const TenderForm = () => {
       description: "",
       organization: "",
       tenderDetailNoticeType: "",
-      type:""
+      type: ""
     });
   };
+
+  const countryNames = getCountries();
+
+  let stateNames = [];
+  if (formData.country) {
+    stateNames = getStatesByCountry(formData.country);
+  }
+
+  let cityNames = [];
+  if (formData.country && formData.state) {
+    cityNames = getCitiesByCountryAndState(formData.country, formData.state);
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -456,12 +469,12 @@ const TenderForm = () => {
   };
 
   useEffect(() => {
-    checkScreenSize(); // Call the function to set the initial screen size
+    checkScreenSize();
 
-    window.addEventListener("resize", checkScreenSize); // Add event listener
+    window.addEventListener("resize", checkScreenSize);
 
     return () => {
-      window.removeEventListener("resize", checkScreenSize); // Clean up the event listener
+      window.removeEventListener("resize", checkScreenSize);
     };
   }, []);
 
@@ -582,44 +595,69 @@ const TenderForm = () => {
                     />
                   </label>
 
-                  <label className="block mb-2 font-semibold">
-                    Category
-                    <span className="text-red-700 relative top-0 right-0">*</span>
-                    <select required
-                      name="userCategory"
-                      value={formData.userCategory}
-                      onChange={handleChange}
-                      className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                    >
-                      <option value="">Select Category</option>
-                      <option value="contractor">Contractor</option>
-                      <option value="subcontractor">Sub Contractor</option>
-                      <option value="government">Government</option>
-                      <option value="private">Private</option>
-                      <option value="gem">Gem</option>
-                    </select>
-                  </label>
+                  <div className="grid grid-cols-2 gap-8 ">
+                    <label className="block mb-2 font-semibold">
+                      Category
+                      <span className="text-red-700 relative top-0 right-0">*</span>
+                      <select required
+                        name="userCategory"
+                        value={formData.userCategory}
+                        onChange={handleChange}
+                        className="border rounded-sm  px-3 py-2 mt-1 w-full text-black bg-gray-100 focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                      >
+                        <option value="">Select Category</option>
+                        <option value="contractor">Contractor</option>
+                        <option value="subcontractor">Sub Contractor</option>
+                        <option value="government">Government</option>
+                        <option value="private">Private</option>
+                        <option value="gem">Gem</option>
+                      </select>
+                    </label>
+
+                    <label className="block mb-2 font-semibold">
+                      Product
+                      <span className="relative top-0 right-0 text-red-700">
+                        *
+                      </span>
+                      <select
+                        required
+                        name="product"
+                        value={formData.product}
+                        onChange={handleChange}
+                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                      >
+                        <option value="">Select Product</option>
+                        {products.map((product) => (
+                          <option key={product} value={product}>
+                            {product}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  </div>
 
                   <label className="block mb-2 font-semibold">
-                    Product
+                    Want to
                     <span className="relative top-0 right-0 text-red-700">
                       *
                     </span>
                     <select
                       required
-                      name="product"
-                      value={formData.product}
+                      name="type"
+                      value={formData.type}
                       onChange={handleChange}
                       className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                     >
-                      <option value="">Select Product</option>
-                      {products.map((product) => (
-                        <option key={product} value={product}>
-                          {product}
-                        </option>
-                      ))}
+                      <option value="">Select</option>
+                      <option key='buy' value='buy'>
+                        Buy
+                      </option>
+                      <option key='sell' value='sell'>
+                        Sell
+                      </option>
                     </select>
                   </label>
+
                 </div>
               </div>
 
@@ -631,19 +669,25 @@ const TenderForm = () => {
                     Procurement Summary
                   </h2>
                   <div className="grid grid-cols-2 gap-4">
+
                     <label className="block font-semibold">
                       Country
                       <span className="relative top-0 right-0 text-red-700">
                         *
                       </span>
-                      <input
-                      required
-                      name="country"
-                      value={formData.country}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                      placeholder="Enter Country"
-                    />
+                      <select
+                        required
+                        name="country"
+                        value={formData.country}
+                        onChange={handleChange}
+                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                      >
+                        {countryNames.map((country, index) => (
+                          <option key={index} value={country}>
+                            {country}
+                          </option>
+                        ))}
+                      </select>
                     </label>
 
                     <label className="block font-semibold">
@@ -651,18 +695,27 @@ const TenderForm = () => {
                       <span className="relative top-0 right-0 text-red-700">
                         *
                       </span>
-                      <input
-                      required
-                      name="state"
-                      value={formData.state}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                      placeholder="Enter Country"
-                    />
+                      <select
+                        required
+                        name="state"
+                        value={formData.state}
+                        onChange={handleChange}
+                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                      >
+                        <option value="">Select a state</option>
+                        {stateNames.map((state) => (
+                          <option key={state} value={state}>
+                            {state}
+                          </option>
+                        ))}
+                      </select>
+
                     </label>
+
                   </div>
                   <div className="grid grid-cols-2 gap-4 mt-1.5 mb-1.5">
-                    <label className="block font-semibold">
+
+                  <label className="block font-semibold">
                       City
 
                       <input
@@ -673,8 +726,16 @@ const TenderForm = () => {
                         onChange={handleChange}
                         className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                         placeholder="Enter a city"
+                        autoComplete="off"
+                        list="cityNamesList"
                       />
+                      <datalist id="cityNamesList">
+                        {cityNames.map((city) => (
+                          <option key={city} value={city} />
+                        ))}
+                      </datalist>
                     </label>
+
                     <label className="block font-semibold">
                       Deadline
                       <span className="relative top-0 right-0 text-red-700">

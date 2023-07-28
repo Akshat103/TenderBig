@@ -49,6 +49,7 @@ const TenderListingPage = () => {
   const [tenderData, setTenderData] = useState([]);
   const [minValue, setMinValue] = useState(0);
   const [sectors, setSectors] = useState([]);
+  const [selectedType, setSelectedType] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -98,6 +99,10 @@ const TenderListingPage = () => {
     setUserCategory(e.target.value);
   }
 
+  const handleType = (e) => {
+    setSelectedType(e.target.value);
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -106,6 +111,7 @@ const TenderListingPage = () => {
         const product = encodeURIComponent(selectedProduct);
         const userCategory = encodeURIComponent(selectedUserCategory);
         const value = encodeURIComponent(minValue);
+        const type = encodeURIComponent(selectedType);
 
         const baseUrl = `${BASE_URL}/tenderdetails/search`;
 
@@ -134,6 +140,9 @@ const TenderListingPage = () => {
         if (value) {
           searchUrl += `&value=${value}`;
         }
+        if (type) {
+          searchUrl += `&type=${type}`;
+        }
 
         const token = localStorage.getItem("token");
 
@@ -161,9 +170,9 @@ const TenderListingPage = () => {
     selectedRegion,
     selectedCountry,
     selectedProduct,
-    selectedRegion,
     selectedUserCategory,
-    minValue
+    minValue,
+    selectedType
   ]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -219,6 +228,11 @@ const TenderListingPage = () => {
     { value: "subcontractor", name: 'Sub Contractor ' },
     { value: "government", name: 'Government' },
     { value: "private", name: 'Private' },
+  ]
+
+  const types = [
+    { value: "buy", name: 'Buy' },
+    { value: "sell", name: 'Sell ' }
   ]
 
   return (
@@ -373,12 +387,34 @@ const TenderListingPage = () => {
                 </div>
               </div>
 
+              <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
+                <label
+                  htmlFor="type"
+                  className="block text-xl font-bold text-gray-700 mb-0.5 px-4 py-3 text-white bg-black"
+                >
+                  For
+                </label>
+
+                <select
+                  id="type"
+                  name="type"
+                  size={4}
+                  value={selectedType}
+                  onChange={handleType}
+                  className="w-full px-4 py-2 bg-white no-scrollbar"
+                >
+                  <option value="" className="text-lg px-4 py-1 mb-0.5 checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white">All </option>
+                  {types.map((type) => (
+                    <option className="py-1 mb-0.5 px-4 text-lg checked:text-white checked:shadow-[0_0_10px_100px_#b91c1c_inset] hover:shadow-[0_0_10px_100px_#b91c1c_inset] hover:text-white" key={type.name} value={type.value}>
+                      {type.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+
             </div>
           </div>
-
-
-
-
           <div className="mt-8 sm:col-span-2 md:col-span-2">
             {currentItems.length > 0 ? (
               <div>
@@ -429,12 +465,6 @@ const TenderListingPage = () => {
               <p>No tenders found.</p>
             )}
           </div>
-
-
-
-
-
-
         </div>
         {errorMessage && <Modal message={errorMessage} />}
       </div>

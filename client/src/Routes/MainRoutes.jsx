@@ -45,7 +45,15 @@ const MainRoutes = () => {
   return (
     <>
       <Navbar />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={
+        <div className="flex items-center justify-center h-screen">
+          <img
+            src={`${import.meta.env.BASE_URL}loader.gif`}
+            alt="Loading..."
+            className="w-24 h-24"
+          />
+        </div>
+      }>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />

@@ -4,7 +4,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import uploadFileToS3 from "../file-uploading/FileUpload";
 import { ProgressBar, Step } from 'react-step-progress-bar';
-import { Country, State, City } from 'country-state-city';
+import { getCountries, getStatesByCountry, getCitiesByCountryAndState } from '../../utils/CountryData';
 import payment from "../../components/payment";
 import { sideNavigationButtons } from "../../components/Forms";
 import { NavLink } from "react-router-dom";
@@ -265,21 +265,16 @@ const OnlineTenderForm = () => {
         companycountry: "",
     });
 
-    const countryData = Country.getAllCountries();
-    const countryNames = Object.values(countryData).map((country) => country.name);
+    const countryNames = getCountries();
 
     let stateNames = [];
     if (formData.companycountry) {
-        const countryCode = countryData.find((country) => country.name === formData.companycountry)?.isoCode;
-        const stateData = State.getStatesOfCountry(countryCode);
-        stateNames = Array.from(new Set(Object.values(stateData).map((state) => state.name)));
+      stateNames = getStatesByCountry(formData.companycountry);
     }
-
+  
     let cityNames = [];
-    if (formData.companycountry) {
-        const countryCode = countryData.find((country) => country.name === formData.companycountry)?.isoCode;
-        const cityData = City.getCitiesOfCountry(countryCode);
-        cityNames = Array.from(new Set(Object.values(cityData).map((city) => city.name)));
+    if (formData.companycountry && formData.companystate) {
+      cityNames = getCitiesByCountryAndState(formData.companycountry, formData.companystate);
     }
 
     const [licenses, setLicenses] = useState([]);

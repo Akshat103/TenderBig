@@ -19,8 +19,6 @@ function Header() {
     if (userData !== null && userData !== undefined) {
       let userDataObject = JSON.parse(userData);
       setUserData(userDataObject);
-      console.log(userData);
-      console.log('hello world')
     } else {
       console.log("there is no id")
     }
@@ -30,8 +28,6 @@ function Header() {
 
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
   const [sidebarExpanded, setSidebarExpanded] = useState(storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true');
-
-  console.log(sidebarOpen)
 
   return (
     <header className={`sticky top-0 dark:bg-[#182235] border-b border-slate-200 dark:border-slate-700 z-30 sm:flex sm:items-center sm:justify-between`}>

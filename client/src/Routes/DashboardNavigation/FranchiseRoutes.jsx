@@ -1,98 +1,100 @@
 // EmployeeRoutes.js
 import { Route, Routes } from "react-router-dom";
 import AdminRoute from "../AdminRoute";
+import { lazy } from 'react';
 
 //Dashboard Home Page
-import DashboardHome from "../../Admin/partials/dashboard/DashboardHome";
+const DashboardHome = lazy(() => import('../../Admin/partials/dashboard/DashboardHome'));
 
 // Users
-import RegularUsers from "../../Admin/partials/dashboard/users/RegularUsers";
+const RegularUsers = lazy(() => import('../../Admin/partials/dashboard/users/RegularUsers'));
 
 //Add User
-import AddUser from "../../Admin/partials/dashboard/users/AddUser";
+const AddUser = lazy(() => import('../../Admin/partials/dashboard/users/AddUser'));
 
 //User Details
-import DashboardUserDetail from "../../Admin/partials/dashboard/users/DashboardUserDetail";
+const DashboardUserDetail = lazy(() => import('../../Admin/partials/dashboard/users/DashboardUserDetail'));
 
 //Options
-import License from "../../Admin/partials/dashboard/options/licences";
-import Department from "../../Admin/partials/dashboard/options/department";
-import Sector from "../../Admin/partials/dashboard/options/sector";
-import Category from "../../Admin/partials/dashboard/options/category";
-import Product from "../../Admin/partials/dashboard/options/product";
-import Material from '../../Admin/partials/dashboard/options/auctionMaterial';
+const License = lazy(() => import('../../Admin/partials/dashboard/options/licences'));
+const Department = lazy(() => import('../../Admin/partials/dashboard/options/department'));
+const Sector = lazy(() => import('../../Admin/partials/dashboard/options/sector'));
+const Category = lazy(() => import('../../Admin/partials/dashboard/options/category'));
+const Product = lazy(() => import('../../Admin/partials/dashboard/options/product'));
+const Material = lazy(() => import('../../Admin/partials/dashboard/options/auctionMaterial'));
 
 //Tenders
-import AllTendersSection from "../../Admin/partials/dashboard/tenders/DashboardTenders";
-import Subcontractor from "../../Admin/partials/dashboard/tenders/SubcontractorTenders";
-import Contractor from "../../Admin/partials/dashboard/tenders/ContractorTenders";
-import Government from "../../Admin/partials/dashboard/tenders/GovernmentTenders";
-import Private from "../../Admin/partials/dashboard/tenders/privateTenders";
-import Gem from "../../Admin/partials/dashboard/tenders/GemTendersForm";
-import DashboardTenderDetail from "../../Admin/partials/dashboard/tenders/DashboardTenderDetail";
-import AdminForm from "../../Admin/partials/dashboard/tenders/AdminTenderForm";
+const AllTendersSection = lazy(() => import('../../Admin/partials/dashboard/tenders/DashboardTenders'));
+const Subcontractor = lazy(() => import('../../Admin/partials/dashboard/tenders/SubcontractorTenders'));
+const Contractor = lazy(() => import('../../Admin/partials/dashboard/tenders/ContractorTenders'));
+const Government = lazy(() => import('../../Admin/partials/dashboard/tenders/GovernmentTenders'));
+const Private = lazy(() => import('../../Admin/partials/dashboard/tenders/privateTenders'));
+const Gem = lazy(() => import('../../Admin/partials/dashboard/tenders/GemTendersForm'));
+const DashboardTenderDetail = lazy(() => import('../../Admin/partials/dashboard/tenders/DashboardTenderDetail'));
+const AdminForm = lazy(() => import('../../Admin/partials/dashboard/tenders/AdminTenderForm'));
 
 // Projects
-import AddProject from '../../Admin/partials/dashboard/AddProject';
-import AllProjects from "../../Admin/partials/dashboard/AllProjects";
-import DashboardProjectDetail from "../../Admin/partials/dashboard/users/DashboardProjectDetail";
+const AddProject = lazy(() => import('../../Admin/partials/dashboard/AddProject'));
+const AllProjects = lazy(() => import('../../Admin/partials/dashboard/AllProjects'));
+const DashboardProjectDetail = lazy(() => import('../../Admin/partials/dashboard/users/DashboardProjectDetail'));
 
 // Requests
 
 // Contacts
-import ContactFormList from "../../Admin/partials/dashboard/requests/ContactPage";
+const ContactFormList = lazy(() => import('../../Admin/partials/dashboard/requests/ContactPage'));
 
 //Employer Form
-import EmployerForms from "../../Admin/partials/dashboard/requests/Employer-Form/EmployerForms";
-import EmployerFormDetail from "../../Admin/partials/dashboard/requests/Employer-Form/EmployerFormDetail";
+const EmployerForms = lazy(() => import('../../Admin/partials/dashboard/requests/Employer-Form/EmployerForms'));
+const EmployerFormDetail = lazy(() => import('../../Admin/partials/dashboard/requests/Employer-Form/EmployerFormDetail'));
 
 //Seeker Form
-import Seeker from "../../Admin/partials/dashboard/requests/Seeker/SeekerForm";
-import SeekerFormDetail from "../../Admin/partials/dashboard/requests/Seeker/SeekerFormDetail";
+const Seeker = lazy(() => import('../../Admin/partials/dashboard/requests/Seeker/SeekerForm'));
+const SeekerFormDetail = lazy(() => import('../../Admin/partials/dashboard/requests/Seeker/SeekerFormDetail'));
 
 //Company Form
-import CompanyList from "../../Admin/partials/dashboard/requests/Registration-Certification/Certification/Company/Company";
-import CompanyDetails from "../../Admin/partials/dashboard/requests/Registration-Certification/Certification/Company/CompanyDetails";
+const CompanyList = lazy(() => import('../../Admin/partials/dashboard/requests/Registration-Certification/Certification/Company/Company'));
+const CompanyDetails = lazy(() => import('../../Admin/partials/dashboard/requests/Registration-Certification/Certification/Company/CompanyDetails'));
 
 //Individual Form
-import IndividualList from "../../Admin/partials/dashboard/requests/Registration-Certification/Certification/Individual/Individual";
-import IndividualDetails from "../../Admin/partials/dashboard/requests/Registration-Certification/Certification/Individual/IndividualDetails";
+const IndividualList = lazy(() => import('../../Admin/partials/dashboard/requests/Registration-Certification/Certification/Individual/Individual'));
+const IndividualDetails = lazy(() => import('../../Admin/partials/dashboard/requests/Registration-Certification/Certification/Individual/IndividualDetails'));
 
 //Registration Form
-import RegistrationList from "../../Admin/partials/dashboard/requests/Registration-Certification/Registration/Registration";
-import RegistrationDetails from "../../Admin/partials/dashboard/requests/Registration-Certification/Registration/RegistrationDetail";
+const RegistrationList = lazy(() => import('../../Admin/partials/dashboard/requests/Registration-Certification/Registration/Registration'));
+const RegistrationDetails = lazy(() => import('../../Admin/partials/dashboard/requests/Registration-Certification/Registration/RegistrationDetail'));
+
 
 // License Form
-import Licenserequests from "../../Admin/partials/dashboard/requests/License/License";
+const Licenserequests = lazy(() => import('../../Admin/partials/dashboard/requests/License/License'));
 
 //Auction Material Form
-import AuctionMaterialDetail from "../../Admin/partials/dashboard/requests/Auction-Material/AuctionMaterialDetail";
-import AuctionMaterial from "../../Admin/partials/dashboard/requests/Auction-Material/AuctionMaterial";
+const AuctionMaterialDetail = lazy(() => import('../../Admin/partials/dashboard/requests/Auction-Material/AuctionMaterialDetail'));
+const AuctionMaterial = lazy(() => import('../../Admin/partials/dashboard/requests/Auction-Material/AuctionMaterial'));
 
 //Joint Venture Form
-import JointVentureDetail from "../../Admin/partials/dashboard/requests/Joint-Venture/JointVentureDetail";
-import JointVenture from "../../Admin/partials/dashboard/requests/Joint-Venture/JointVenture";
+const JointVentureDetail = lazy(() => import('../../Admin/partials/dashboard/requests/Joint-Venture/JointVentureDetail'));
+const JointVenture = lazy(() => import('../../Admin/partials/dashboard/requests/Joint-Venture/JointVenture'));
 
 //Gem Registration Form
-import GemRegistrationDetail from "../../Admin/partials/dashboard/requests/GemRegistration/GemRegistrationDetail";
-import GemRegistration from "../../Admin/partials/dashboard/requests/GemRegistration/GemRegitration";
+const GemRegistrationDetail = lazy(() => import('../../Admin/partials/dashboard/requests/GemRegistration/GemRegistrationDetail'));
+const GemRegistration = lazy(() => import('../../Admin/partials/dashboard/requests/GemRegistration/GemRegitration'));
 
 //Tender Online Form
-import TenderOnlineDetail from "../../Admin/partials/dashboard/requests/TenderOnline/TenderOnlineDetail";
-import TenderOnline from "../../Admin/partials/dashboard/requests/TenderOnline/TenderOnline";
+const TenderOnlineDetail = lazy(() => import('../../Admin/partials/dashboard/requests/TenderOnline/TenderOnlineDetail'));
+const TenderOnline = lazy(() => import('../../Admin/partials/dashboard/requests/TenderOnline/TenderOnline'));
 
 //Tender Offline Form
-import TenderOffline from "../../Admin/partials/dashboard/requests/TenderOffline";
+const TenderOffline = lazy(() => import('../../Admin/partials/dashboard/requests/TenderOffline'));
 
 //Tender Result
-import AdminTenderResultList from "../../Admin/partials/dashboard/tenders/AdminTenderResultList";
-import AdminTenderResultForm from "../../Admin/partials/dashboard/tenders/AdminTenderResultForm";
+const AdminTenderResultList = lazy(() => import('../../Admin/partials/dashboard/tenders/AdminTenderResultList'));
+const AdminTenderResultForm = lazy(() => import('../../Admin/partials/dashboard/tenders/AdminTenderResultForm'));
 
 //Price
-import Prices from "../../Admin/partials/dashboard/Prices";
+const Prices = lazy(() => import('../../Admin/partials/dashboard/Prices'));
 
 //Images
-import ImageUpload from "../../Admin/partials/dashboard/ImageUpload";
+const ImageUpload = lazy(() => import('../../Admin/partials/dashboard/ImageUpload'));
 
 const FranchiseRoutes = () => {
   return (

@@ -8,7 +8,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { ProgressBar, Step } from "react-step-progress-bar";
-import { Country, State, City } from 'country-state-city';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const OtherInformationAndPurchaserDetail = ({
   formData,
@@ -306,6 +306,14 @@ export const sideNavigationButtons = [
 ];
 
 const TenderForm = () => {
+
+  const token = localStorage.getItem('token');
+
+  const headers = {
+      'auth': token
+  };
+
+
   const [formData, setFormData] = useState({
     summary: "",
     sector: "",
@@ -337,23 +345,6 @@ const TenderForm = () => {
     organization: "",
     tenderDetailNoticeType: "",
   });
-
-  const countryData = Country.getAllCountries();
-  const countryNames = Object.values(countryData).map((country) => country.name);
-
-  let stateNames = [];
-  if (formData.country) {
-    const countryCode = countryData.find((country) => country.name === formData.country)?.isoCode;
-    const stateData = State.getStatesOfCountry(countryCode);
-    stateNames = Array.from(new Set(Object.values(stateData).map((state) => state.name)));
-  }
-
-  let cityNames = [];
-  if (formData.country) {
-    const countryCode = countryData.find((country) => country.name === formData.country)?.isoCode;
-    const cityData = City.getCitiesOfCountry(countryCode);
-    cityNames = Array.from(new Set(Object.values(cityData).map((city) => city.name)));
-  }
 
   const clearInputs = () => {
     setFormData({
@@ -409,9 +400,8 @@ const TenderForm = () => {
   const fetchSectors = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/apitender/options/alloptions?array=sectors"
+        `${BASE_URL}/options/alloptions?array=sectors`, { headers }
       );
-      console.log(response.data[0].sectors);
       setSectors(response.data[0].sectors);
     } catch (error) {
       console.error(error);
@@ -421,9 +411,8 @@ const TenderForm = () => {
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/apitender/options/alloptions?array=products"
+        `${BASE_URL}/options/alloptions?array=products`, { headers }
       );
-      console.log(response.data[0].products);
       setProducts(response.data[0].products);
     } catch (error) {
       console.error(error);
@@ -438,7 +427,7 @@ const TenderForm = () => {
 
     const requestBody = JSON.stringify(formData);
 
-    fetch("http://localhost:5000/apitender/tenderdetails/add-tender", {
+    fetch(`${BASE_URL}/tenderdetails/add-tender`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -645,19 +634,14 @@ const TenderForm = () => {
                       <span className="relative top-0 right-0 text-red-700">
                         *
                       </span>
-                      <select
-                        required
-                        name="country"
-                        value={formData.country}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                      >
-                        {countryNames.map((country, index) => (
-                          <option key={index} value={country}>
-                            {country}
-                          </option>
-                        ))}
-                      </select>
+                      <input
+                      required
+                      name="country"
+                      value={formData.country}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                      placeholder="Enter Country"
+                    />
                     </label>
 
                     <label className="block font-semibold">
@@ -665,21 +649,14 @@ const TenderForm = () => {
                       <span className="relative top-0 right-0 text-red-700">
                         *
                       </span>
-                      <select
-                        required
-                        name="state"
-                        value={formData.state}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                      >
-                        <option value="">Select a state</option>
-                        {stateNames.map((state) => (
-                          <option key={state} value={state}>
-                            {state}
-                          </option>
-                        ))}
-                      </select>
-
+                      <input
+                      required
+                      name="state"
+                      value={formData.state}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                      placeholder="Enter Country"
+                    />
                     </label>
                   </div>
                   <div className="grid grid-cols-2 gap-4 mt-1.5 mb-1.5">
@@ -694,14 +671,7 @@ const TenderForm = () => {
                         onChange={handleChange}
                         className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                         placeholder="Enter a city"
-                        autoComplete="off"
-                        list="cityNamesList"
                       />
-                      <datalist id="cityNamesList">
-                        {cityNames.map((city) => (
-                          <option key={city} value={city} />
-                        ))}
-                      </datalist>
                     </label>
                     <label className="block font-semibold">
                       Deadline

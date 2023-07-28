@@ -2,11 +2,13 @@
 import { Route, Routes } from "react-router-dom";
 import AdminRoute from "../AdminRoute";
 
+import { lazy } from 'react';
+
 //User
-import AllEmployee from "../../Admin/partials/dashboard/users/AllEmployee";
+const AllEmployee = lazy(() => import('../../Admin/partials/dashboard/users/AllEmployee'));
 
 //Add users
-import AddEmployee from "../../Admin/partials/dashboard/users/AddEmployee";
+const AddEmployee = lazy(() => import('../../Admin/partials/dashboard/users/AddEmployee'));
 
 const HRRoutes = () => {
     return (

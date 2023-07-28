@@ -3,10 +3,11 @@ import { Route, Routes } from "react-router-dom";
 import AdminRoute from "../AdminRoute";
 
 // Users
-import AllFranchise from "../../Admin/partials/dashboard/users/AllFranchise";
+import { lazy } from 'react';
+const AllFranchise = lazy(() => import('../../Admin/partials/dashboard/users/AllFranchise'));
 
 //Add User
-import AddFranchise from "../../Admin/partials/dashboard/users/AddFranchise";
+const AddFranchise = lazy(() => import('../../Admin/partials/dashboard/users/AddFranchise'));
 
 const EmployeeRoutes = () => {
   return (

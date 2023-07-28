@@ -3,7 +3,7 @@ import { RiBuilding2Line, RiMapPin2Line } from "react-icons/ri";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
-import { Country, State, City } from "country-state-city";
+import { getCountries, getStatesByCountry, getCitiesByCountryAndState } from '../../utils/CountryData';
 import payment from "../../components/payment";
 import uploadFileToS3 from "../file-uploading/FileUpload";
 import { sideNavigationButtons } from "../../components/Forms";
@@ -175,33 +175,17 @@ const headers = {
       });
   };
 
-  const countryData = Country.getAllCountries();
-  const countryNames = Object.values(countryData).map(
-    (country) => country.name
-  );
+  const countryNames = getCountries();
 
   let stateNames = [];
   if (companycountry) {
-    const countryCode = countryData.find(
-      (country) => country.name === companycountry
-    )?.isoCode;
-    const stateData = State.getStatesOfCountry(countryCode);
-    stateNames = Array.from(
-      new Set(Object.values(stateData).map((state) => state.name))
-    );
+    stateNames = getStatesByCountry(companycountry);
   }
 
   let cityNames = [];
-  if (companycountry) {
-    const countryCode = countryData.find(
-      (country) => country.name === companycountry
-    )?.isoCode;
-    const cityData = City.getCitiesOfCountry(countryCode);
-    cityNames = Array.from(
-      new Set(Object.values(cityData).map((city) => city.name))
-    );
+  if (companycountry && companystate) {
+    cityNames = getCitiesByCountryAndState(companycountry, companystate);
   }
-
 
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 

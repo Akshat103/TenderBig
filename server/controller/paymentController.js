@@ -188,10 +188,11 @@ module.exports.verifyOrder = async (req, res) => {
                 });
             }
         }
-
-        return res.status(201).json({
-            success: true
-        })
+        else{
+            return res.status(201).json({
+                success: true
+            })
+        }
 
     }
     else return res.status(400).json({

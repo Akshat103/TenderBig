@@ -20,11 +20,6 @@ const HomePage = () => {
   const hasDialogShownBefore = localStorage.getItem("dialogShown");
   const [isOpen, setIsOpen] = useState(true);
 
-  useEffect(() => {
-    console.log("isOpen",isOpen);
-    console.log("handleClose", handleClose);
-  }, [])
-
   setTimeout(() => {
     setIsOpen(true);
   }, 50000);

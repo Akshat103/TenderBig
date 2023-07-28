@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import uploadFileToS3 from "../file-uploading/FileUpload";
 import axios from "axios";
-import { Country, State, City } from 'country-state-city';
+import { getCountries, getStatesByCountry, getCitiesByCountryAndState } from '../../utils/CountryData';
 import payment from "../../components/payment";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 import { useNavigate } from 'react-router-dom';
@@ -305,22 +305,18 @@ function IndividualForm({ onSubmit, licenses }) {
     const [email, setEmail] = useState('');
     const [requestLicense, setRequestLicense] = useState('');
 
-    const countryData = Country.getAllCountries();
-    const countryNames = Object.values(countryData).map((country) => country.name);
+    const countryNames = getCountries();
 
     let stateNames = [];
     if (companycountry) {
-        const countryCode = countryData.find((country) => country.name === companycountry)?.isoCode;
-        const stateData = State.getStatesOfCountry(countryCode);
-        stateNames = Array.from(new Set(Object.values(stateData).map((state) => state.name)));
+      stateNames = getStatesByCountry(companycountry);
+    }
+  
+    let cityNames = [];
+    if (companycountry && companystate) {
+      cityNames = getCitiesByCountryAndState(companycountry , companystate);
     }
 
-    let cityNames = [];
-    if (companycountry) {
-        const countryCode = countryData.find((country) => country.name === companycountry)?.isoCode;
-        const cityData = City.getCitiesOfCountry(countryCode);
-        cityNames = Array.from(new Set(Object.values(cityData).map((city) => city.name)));
-    }
     const getAmount=async()=>{
         const {data:{price}} = await axios.get(`${BASE_URL}/formprice/Individual%20Certification/price`, { headers });
         return price;
@@ -760,7 +756,7 @@ const Certification = () => {
 
                         <div className="w-full md:w-1/2 mb-4 md:mb-0">
                             <img
-                                src={`${import.meta.env.BASE_URL}illustartion/cert.jpg`}
+                                src={`${import.meta.env.BASE_URL}illustartion/cert.svg`}
                                 alt="Illustration"
                             />
                         </div>

@@ -1,17 +1,19 @@
 // AdminRoutes.js
 
+import { lazy } from 'react';
+
 import { Route, Routes } from "react-router-dom";
+
 import AdminRoute from "../AdminRoute";
 
 // Users
-import DashboardUsers from "../../Admin/partials/dashboard/users/DashboardUsers";
-import AllAdmin from "../../Admin/partials/dashboard/users/AllAdmin";
-import AllHR from "../../Admin/partials/dashboard/users/AllHR";
-
+const DashboardUsers = lazy(() => import('../../Admin/partials/dashboard/users/DashboardUsers'));
+const AllAdmin = lazy(() => import('../../Admin/partials/dashboard/users/AllAdmin'));
+const AllHR = lazy(() => import('../../Admin/partials/dashboard/users/AllHR'));
 
 //Add users
-import AddAdmin from "../../Admin/partials/dashboard/users/AddAdmin";
-import AddHR from "../../Admin/partials/dashboard/users/AddHR";
+const AddAdmin = lazy(() => import('../../Admin/partials/dashboard/users/AddAdmin'));
+const AddHR = lazy(() => import('../../Admin/partials/dashboard/users/AddHR'));
 
 const AdminRoutes = () => {
     return (

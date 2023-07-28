@@ -15,8 +15,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
     if (userData !== null && userData !== undefined) {
       let userDataObject = JSON.parse(userData);
       setUserData(userDataObject);
-      console.log(userData);
-      console.log('hello world')
     } else {
       console.log("there is no id")
     }

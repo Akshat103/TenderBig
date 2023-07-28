@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import payment from "../components/payment";
-import { Country, State, City } from 'country-state-city';
+import { getCountries, getStatesByCountry, getCitiesByCountryAndState } from '../utils/CountryData';
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { sideNavigationButtons } from "../components/Forms";
@@ -51,21 +51,16 @@ const headers = {
     });
   }
 
-  const countryData = Country.getAllCountries();
-  const countryNames = Object.values(countryData).map((country) => country.name);
+  const countryNames = getCountries();
 
   let stateNames = [];
   if (formData.country) {
-    const countryCode = countryData.find((country) => country.name === formData.country)?.isoCode;
-    const stateData = State.getStatesOfCountry(countryCode);
-    stateNames = Array.from(new Set(Object.values(stateData).map((state) => state.name)));
+    stateNames = getStatesByCountry(formData.country);
   }
 
   let cityNames = [];
-  if (formData.country) {
-    const countryCode = countryData.find((country) => country.name === formData.country)?.isoCode;
-    const cityData = City.getCitiesOfCountry(countryCode);
-    cityNames = Array.from(new Set(Object.values(cityData).map((city) => city.name)));
+  if (formData.country && formData.state) {
+    cityNames = getCitiesByCountryAndState(formData.country, formData.state);
   }
 
   // const [currentPage, setCurrentPage] = useState(1);

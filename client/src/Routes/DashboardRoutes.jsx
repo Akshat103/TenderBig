@@ -1,10 +1,14 @@
 import { useState } from "react";
+
 import Sidebar from "../Admin/partials/Sidebar";
 import Header from "../Admin/partials/Header";
+
 import AdminRoutes from "./DashboardNavigation/AdminRoutes";
 import HRRoutes from "./DashboardNavigation/HRRoutes";
 import EmployeeRoutes from "./DashboardNavigation/EmployeeRoutes";
 import FranchiseRoutes from "./DashboardNavigation/FranchiseRoutes";
+
+import { Suspense } from 'react';
 
 const DashboardRoutes = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -15,6 +19,7 @@ const DashboardRoutes = () => {
   };
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <div className="flex h-screen overflow-hidden">
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
@@ -55,6 +60,7 @@ const DashboardRoutes = () => {
         </main>
       </div>
     </div>
+    </Suspense>
   );
 };
 

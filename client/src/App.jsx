@@ -7,9 +7,13 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-          <Route path="/dashboard/*" element={<DashboardRoutes />} />
-          <Route path="/*" element={<MainRoutes />} />
-       </Routes>
+        {/* Load non-private routes */}
+        <Route path="/*" element={<MainRoutes />} />
+
+        {/* Load private routes when the user is logged in */}
+        <Route path="/dashboard/*" element={<DashboardRoutes />} />
+
+      </Routes>
     </BrowserRouter>
   );
 };

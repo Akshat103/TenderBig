@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { locations } from "../../../../constants/countriesData";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { Country, State, City } from 'country-state-city';
+import { getCountries, getStatesByCountry, getCitiesByCountryAndState } from '../../../../utils/CountryData';
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -15,8 +15,6 @@ const headers = {
       'auth': token
     };
 
-    const countryData = Country.getAllCountries();  //
-    const countryNames = Object.values(countryData).map((country) => country.name);
     const [formData, setFormData] = useState({
         summary: "",
         BRR: "",
@@ -34,18 +32,16 @@ const headers = {
         sector:""
     });
 
+    const countryNames = getCountries();
+
     let stateNames = [];
     if (formData.country) {
-        const countryCode = countryData.find((country) => country.name === formData.country)?.isoCode;
-        const stateData = State.getStatesOfCountry(countryCode);
-        stateNames = Array.from(new Set(Object.values(stateData).map((state) => state.name)));
+      stateNames = getStatesByCountry(formData.country);
     }
-
+  
     let cityNames = [];
-    if (formData.country) {
-        const countryCode = countryData.find((country) => country.name === formData.country)?.isoCode;
-        const cityData = City.getCitiesOfCountry(countryCode);
-        cityNames = Array.from(new Set(Object.values(cityData).map((city) => city.name)));
+    if (formData.country && formData.state) {
+      cityNames = getCitiesByCountryAndState(formData.country, formData.state);
     }
 
     const clearInputs = () => {

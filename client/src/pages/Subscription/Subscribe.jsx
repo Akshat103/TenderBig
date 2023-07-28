@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import payment from "../../components/payment";
-import { State } from 'country-state-city';
+import { getStatesByCountry } from '../../utils/CountryData';
 import Modal from "../../components/Modal";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -32,9 +32,7 @@ const SubscribePage = () => {
         setGlobal(price);
     };
 
-    let stateNames = [];
-    const stateData = State.getStatesOfCountry("IN");
-    stateNames = Array.from(new Set(Object.values(stateData).map((state) => state.name)));
+    const stateNames = getStatesByCountry('India');
 
     useEffect(() => {
 

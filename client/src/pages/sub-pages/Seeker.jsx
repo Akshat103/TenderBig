@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import uploadFileToS3 from "../file-uploading/FileUpload";
 import { ProgressBar, Step } from "react-step-progress-bar";
-import { Country, State, City } from "country-state-city";
+import { getCountries, getStatesByCountry, getCitiesByCountryAndState } from '../../utils/CountryData';
 import payment from "../../components/payment";
 import axios from "axios";
 import { sideNavigationButtons } from "../../components/Forms";
@@ -201,31 +201,16 @@ const Seeker = () => {
     aadharUrl: "",
   });
 
-  const countryData = Country.getAllCountries();
-  const countryNames = Object.values(countryData).map(
-    (country) => country.name
-  );
+  const countryNames = getCountries();
 
   let stateNames = [];
   if (formData.country) {
-    const countryCode = countryData.find(
-      (country) => country.name === formData.country
-    )?.isoCode;
-    const stateData = State.getStatesOfCountry(countryCode);
-    stateNames = Array.from(
-      new Set(Object.values(stateData).map((state) => state.name))
-    );
+    stateNames = getStatesByCountry(formData.country);
   }
 
   let cityNames = [];
-  if (formData.country) {
-    const countryCode = countryData.find(
-      (country) => country.name === formData.country
-    )?.isoCode;
-    const cityData = City.getCitiesOfCountry(countryCode);
-    cityNames = Array.from(
-      new Set(Object.values(cityData).map((city) => city.name))
-    );
+  if (formData.country && formData.state) {
+    cityNames = getCitiesByCountryAndState(formData.country, formData.state);
   }
 
   const clearInputs = () => {

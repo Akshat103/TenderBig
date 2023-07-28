@@ -3,8 +3,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function SimpleSlider() {
+
   const [imageUrls, setImageUrls] = useState([]);
 
   useEffect(() => {
@@ -13,7 +15,7 @@ export default function SimpleSlider() {
 
   const fetchImageUrls = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/apiTender/images/allimages");
+      const response = await axios.get(`${BASE_URL}/images/allimages`);
       setImageUrls(response.data);
     } catch (error) {
       console.error("Error fetching image URLs:", error);

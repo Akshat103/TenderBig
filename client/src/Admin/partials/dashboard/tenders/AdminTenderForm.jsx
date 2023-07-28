@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Country, State, City } from 'country-state-city';
+import { getCountries, getStatesByCountry, getCitiesByCountryAndState } from '../../../../utils/CountryData';
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const OtherInformationAndPurchaserDetail = ({ formData, handleChange, handleSubmit, previousPage }) => {
@@ -245,9 +245,9 @@ const Forms = () => {
 
   const token = localStorage.getItem('token');
 
-const headers = {
-      'auth': token
-    };
+  const headers = {
+    'auth': token
+  };
 
 
   const [formData, setFormData] = useState({
@@ -282,21 +282,16 @@ const headers = {
     tenderDetailNoticeType: "",
   });
 
-  const countryData = Country.getAllCountries();
-  const countryNames = Object.values(countryData).map((country) => country.name);
+  const countryNames = getCountries();
 
   let stateNames = [];
   if (formData.country) {
-    const countryCode = countryData.find((country) => country.name === formData.country)?.isoCode;
-    const stateData = State.getStatesOfCountry(countryCode);
-    stateNames = Array.from(new Set(Object.values(stateData).map((state) => state.name)));
+    stateNames = getStatesByCountry(formData.country);
   }
 
   let cityNames = [];
-  if (formData.country) {
-    const countryCode = countryData.find((country) => country.name === formData.country)?.isoCode;
-    const cityData = City.getCitiesOfCountry(countryCode);
-    cityNames = Array.from(new Set(Object.values(cityData).map((city) => city.name)));
+  if (formData.country && formData.state) {
+    cityNames = getCitiesByCountryAndState(formData.country, formData.state);
   }
 
   const clearInputs = () => {

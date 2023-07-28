@@ -16,31 +16,6 @@ const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
     });
   };
 
-  // useEffect(() => {
-  //   const fetchTenderDetails = async () => {
-  //     try {
-  //       const baseUrl = `${BASE_URL}/gem/${id}`;
-  //       const token = localStorage.getItem("token");
-
-  //       const headers = {
-  //         auth: token,
-  //       };
-
-  //       const response = await axios.get(`${baseUrl}/${referenceNo}`, { headers });
-  //       const tenderDetails = response.data.Product[0];
-  //       setTenderDetails(tenderDetails);
-  //     } catch (error) {
-  //       console.error("Error fetching tender details:", error);
-  //     }
-  //   };
-
-  //   if (referenceNo) {
-  //     fetchTenderDetails();
-  //   }
-  // }, [referenceNo]);
-
-
-
   return (
     <div className="bg-white shadow-lg rounded p-6 mb-4 border-[2px] border-black/20">
       <div className="flex justify-between">

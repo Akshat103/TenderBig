@@ -9,7 +9,7 @@ import uploadFileToS3 from "../file-uploading/FileUpload";
 import { NavLink } from "react-router-dom";
 import { sideNavigationButtons } from "../../components/Forms";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
-import { Country, State, City } from 'country-state-city';
+import { getCountries, getStatesByCountry, getCitiesByCountryAndState } from '../../utils/CountryData';
 
 const Employer = () => {
   const [company, setCompany] = useState("");
@@ -37,23 +37,16 @@ const Employer = () => {
   const [seekerpost, setSeekerpost] = useState("");
   const [isVisible, setIsVisible] = useState(false);
 
-  const countryData = Country.getAllCountries();
-  const countryNames = Object.values(countryData).map((country) => country.name);
+  const countryNames = getCountries();
 
   let stateNames = [];
   if (country) {
-    let selectedCountry = country;
-    const countryCode = countryData.find((country) => country.name === selectedCountry)?.isoCode;
-    const stateData = State.getStatesOfCountry(countryCode);
-    stateNames = Array.from(new Set(Object.values(stateData).map((state) => state.name)));
+    stateNames = getStatesByCountry(country);
   }
 
   let cityNames = [];
-  if (country) {
-    let selectedCountry = country;
-    const countryCode = countryData.find((country) => country.name === selectedCountry)?.isoCode;
-    const cityData = City.getCitiesOfCountry(countryCode);
-    cityNames = Array.from(new Set(Object.values(cityData).map((city) => city.name)));
+  if (country && state) {
+    cityNames = getCitiesByCountryAndState(country, state);
   }
 
   const token = localStorage.getItem('token');

@@ -24,7 +24,7 @@ const DashboardRoutes = () => {
         <img
           src={`${import.meta.env.BASE_URL}loader.gif`}
           alt="Loading..."
-          className="w-24 h-24"
+          className="w-18 h-18"
         />
       </div>
     }>

@@ -6,6 +6,9 @@ const { isAdmin, verifyToken, isNotUser } = require("../middleware/auth")
 //Get user deatils
 router.get("/single-user/:userId", verifyToken, usersController.getSingleUser);
 
+//Edit User
+router.put("/single-user/:userId", verifyToken, usersController.updateUserDetails);
+
 //To get all users
 router.get("/allusers", verifyToken, isNotUser, usersController.getAllUser);
 

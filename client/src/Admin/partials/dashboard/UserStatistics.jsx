@@ -191,7 +191,7 @@ const UserStatistics = () => {
           <img
             src={`${import.meta.env.BASE_URL}loader.gif`}
             alt="Loading..."
-            className="w-24 h-24 bg-transparent"
+            className="w-18 h-18 bg-transparent"
           />
         </div>
       )}

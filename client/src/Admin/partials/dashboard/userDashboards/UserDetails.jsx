@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import UserCards from "./UserCards";
-import UserSideBar from "./UserSideBar";
+import UserDetailsCard from "./userDetailsCard";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const UserDetails = () => {
@@ -48,7 +48,8 @@ const UserDetails = () => {
 
   return (
     <div>
-      <div className="flex flex-wrap justify-center m-5">
+      <UserDetailsCard/>
+      <div className="flex flex-wrap justify-center">
         <div className="grid grid-cols-3">
           {Seeker ?
             <UserCards

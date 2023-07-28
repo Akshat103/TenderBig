@@ -48,36 +48,81 @@ class User {
         }
     }
 
+    async updateUserDetails(req, res) {
+        const userId = req.params.userId;
+
+        if (req._id == userId) {
+            const {
+                name,
+                email,
+                phoneNumber,
+                country,
+                state,
+                city,
+            } = req.body;
+
+            try {
+                const updatedUser = await userModel.findByIdAndUpdate(
+                    userId,
+                    {
+                        name: name,
+                        email: email,
+                        phoneNumber: phoneNumber,
+                        country: country,
+                        state: state,
+                        city: city,
+                    },
+                    { new: true }
+                );
+
+                if (!updatedUser) {
+                    return res.status(404).json({ error: 'User not found' });
+                }
+
+                return res.status(200).json({
+                    success: true,
+                    message: "Details updated successfully.",
+                    user: updatedUser
+                });
+            } catch (err) {
+                console.error('Error updating user details:', err);
+                return res.status(500).json({ error: 'Internal server error' });
+            }
+        }
+        else {
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+    };
+
     async updateUserRole(req, res) {
         try {
-          let { userId, userRole } = req.body;
-      
-          const user = await userModel.findOne({ userId });
-      
-          if (!user) {
-            return res.json({ error: "User not found" });
-          }
- 
-          user.userRole = userRole;
+            let { userId, userRole } = req.body;
 
-          if (userRole === 'user') {
-            user.subscription = {
-              status: 'inactive',
-              state: 'none',
-              type: 'none',
-              date: null,
-            };
-          }
+            const user = await userModel.findOne({ userId });
 
-          await user.save();
-      
-          return res.json({ success: "User role updated successfully" });
+            if (!user) {
+                return res.json({ error: "User not found" });
+            }
+
+            user.userRole = userRole;
+
+            if (userRole === 'user') {
+                user.subscription = {
+                    status: 'inactive',
+                    state: 'none',
+                    type: 'none',
+                    date: null,
+                };
+            }
+
+            await user.save();
+
+            return res.json({ success: "User role updated successfully" });
         } catch (error) {
-          console.error('Error updating user role:', error);
-          return res.json({ error: 'An error occurred while updating user role' });
+            console.error('Error updating user role:', error);
+            return res.json({ error: 'An error occurred while updating user role' });
         }
-      }
-      
+    }
 
     async deleteUser(req, res) {
 

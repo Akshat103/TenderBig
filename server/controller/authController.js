@@ -238,7 +238,7 @@ class Auth {
 
   async resetPassword(req, res) {
 
-    const {otp} = req.body;
+    const { otp } = req.body;
 
     const resetPasswordToken = crypto.createHash('sha256').update(otp).digest('hex');
     try {
@@ -271,7 +271,7 @@ class Auth {
           console.log(error);
           return res.status(404).json({
             success: false,
-            message:  "Their was an error resetting password. Please try again."
+            message: "Their was an error resetting password. Please try again."
           });
         }
       }

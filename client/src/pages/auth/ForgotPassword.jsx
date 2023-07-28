@@ -6,6 +6,8 @@ const ForgotPassword = () => {
 
     const navigate = useNavigate();
 
+    const [loading, setLoading] = useState(false);
+
     const [email, setEmail] = useState();
     const [otp, setOtp] = useState();
 
@@ -39,60 +41,72 @@ const ForgotPassword = () => {
         }
     }, [password, conformPassword]);
 
-    const handleGetOtp = (e) => {
+    const handleGetOtp = async (e) => {
         e.preventDefault();
         // Make API request to login
-        fetch(`${BASE_URL}/forgot-password`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email: email }),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.success) {
-                    setOtpSent(true)
-                    alert(data.message)
-                }
-                else {
-                    alert(data.message)
-                }
+        try {
+            setLoading(true)
+            await fetch(`${BASE_URL}/forgot-password`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email: email }),
             })
-            .catch((error) => {
-                // Handle error
-                console.error(error);
-                alert("Something went wrong. Try again later.")
-            });
+                .then((response) => response.json())
+                .then((data) => {
+                    setLoading(false)
+                    if (data.success) {
+                        setOtpSent(true)
+                        alert(data.message)
+                    }
+                    else {
+                        alert(data.message)
+                    }
+                })
+                .catch((error) => {
+                    // Handle error
+                    console.error(error);
+                    alert("Something went wrong. Try again later.")
+                });
+
+        } catch (error) {
+            alert("Something went wrong. Try again.")
+        }
 
     };
 
     const handleResetRequest = (e) => {
         e.preventDefault();
         // Make API request to login
-        fetch(`${BASE_URL}/reset-password`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ password: password, conformPassword: conformPassword, otp: otp }),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.success) {
-                    setOtpSent(true)
-                    alert(data.message)
-                    navigate('/login')
-                }
-                else {
-                    alert(data.message)
-                }
+        try {
+            fetch(`${BASE_URL}/reset-password`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ password: password, conformPassword: conformPassword, otp: otp }),
             })
-            .catch((error) => {
-                // Handle error
-                console.error(error);
-                alert("Something went wrong. Try again later.")
-            });
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        setOtpSent(true)
+                        alert(data.message)
+                        navigate('/login')
+                    }
+                    else {
+                        alert(data.message)
+                    }
+                })
+                .catch((error) => {
+                    // Handle error
+                    console.error(error);
+                    alert("Something went wrong. Try again later.")
+                });
+        }
+        catch (error) {
+            alert("Something went wrong. Try again.")
+        }
 
     };
 
@@ -117,10 +131,27 @@ const ForgotPassword = () => {
                             </label>
                         </div>
                         <button
-                            className="px-4 py-2 font-bold text-white bg-red-700 rounded hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 mt-2 mb-2" onClick={handleGetOtp}
+                            className="flex items-center justify-center w-28 px-4 py-2 font-bold text-white bg-red-700 rounded hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 mt-2 mb-2"
+                            onClick={handleGetOtp}
                         >
-                            Get OTP
+                            {loading ? (
+                                <div>
+                                    <button
+                                        className="w-full h-full flex items-center justify-center px-4 py-2 font-bold text-white bg-red-700 rounded hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500"
+                                        onClick={handleGetOtp}
+                                    >
+                                        <img
+                                            src={`${import.meta.env.BASE_URL}reload.gif`}
+                                            alt="login"
+                                            className="w-5 h-5"
+                                        />
+                                    </button>
+                                </div>
+                            ) : (
+                                "Get OTP"
+                            )}
                         </button>
+
 
                         <div className="mb-4">
                             {otpSent ? <>
@@ -190,7 +221,7 @@ const ForgotPassword = () => {
                             </div>
 
                             <div className="text-center">
-                                Ready to Login{" "}
+                                Ready to Login?{" "}
                                 <Link
                                     to="/login"
                                     className="text-sm font-medium text-red-700 hover:text-red-800"

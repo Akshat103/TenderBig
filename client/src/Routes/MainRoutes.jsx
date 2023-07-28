@@ -5,6 +5,7 @@ import { lazy, Suspense } from 'react';
 // Lazy-loaded components for non-private routes
 const Home = lazy(() => import('../pages/Home/Home'));
 const Login = lazy(() => import('../pages/auth/Login'));
+const ForgotPassword = lazy(() => import('../pages/auth/ForgotPassword'));
 const Signup = lazy(() => import('../pages/auth/Signup'));
 const Gems = lazy(() => import('../pages/Gems'));
 const SubscribePage = lazy(() => import('../pages/Subscription/Subscribe'));
@@ -57,6 +58,7 @@ const MainRoutes = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/reset-password" element={<ForgotPassword />} />
           <Route path="/signup" element={<Signup />} />
           <Route path='/gems' element={<Gems />} />
           <Route path="/subscribe" element={<SubscribePage />} />

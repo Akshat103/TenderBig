@@ -1,8 +1,9 @@
 const userModel = require("../models/userModel");
 const { toTitleCase, validateEmail, generateUUID } = require("../config/functions");
 const bcrypt = require("bcrypt");
-const crypto = require('crypto');
+const { generateOTP } = require('../config/functions')
 const jwt = require("jsonwebtoken");
+const crypto = require('crypto');
 const { JWT_SECRET } = require("../config/keys");
 const sendEmail = require('../utils/email');
 require('dotenv').config();
@@ -177,7 +178,7 @@ class Auth {
     });
   }
 
-  async forgotPassword(req, res) {
+  async sendOTP(req, res) {
     const { email } = req.body;
 
     try {
@@ -190,8 +191,8 @@ class Auth {
         });
       }
 
-      const resetToken = crypto.randomBytes(32).toString('hex');
-      const resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+      const resetOTP = generateOTP();
+      const resetPasswordToken = crypto.createHash('sha256').update(resetOTP).digest('hex');
       const resetPasswordExpire = Date.now() + 10 * 60 * 1000;
 
       // Store the reset token and expiration in the user model
@@ -199,10 +200,7 @@ class Auth {
       user.ResetPasswordExpire = resetPasswordExpire;
       await user.save();
 
-      const resetUrl = `${req.protocol}://${req.get('host')}/apiTender/reset-password/${resetToken}`;
-
-      const message = `We have received a password reset request. Please use the below link to reset your password.\n\n${resetUrl}\n\nThis reset password link is valid only for 10 minutes.`;
-      console.log(resetUrl)
+      const message = `We have received a password reset request. Please use the below One Time Password to reset your password.\n\nThe OTP is ${resetOTP}.\n\nThis one time password is valid only for 10 minutes.`;
       try {
         await sendEmail({
           email: user.email,
@@ -212,7 +210,7 @@ class Auth {
 
         res.status(200).json({
           success: true,
-          message: "Reset password token has been sent to the user.",
+          message: "One Time Password has been sent to the email.",
         });
 
       }
@@ -239,43 +237,45 @@ class Auth {
   }
 
   async resetPassword(req, res) {
-    const resetToken = req.params.token;
 
-    const resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+    const {otp} = req.body;
 
+    const resetPasswordToken = crypto.createHash('sha256').update(otp).digest('hex');
     try {
       const user = await userModel.findOne({ ResetPasswordToken: resetPasswordToken, ResetPasswordExpire: { $gt: Date.now() } });
 
       if (!user) {
         return res.status(404).json({
           success: false,
-          message: "Token is invalid or expired."
+          message: "OTP is invalid or expired."
         });
       }
 
-      const { password, conformPassword } = req.body;
+      let { password, conformPassword } = req.body;
 
-      if(password === conformPassword){
-        try{
+      if (password === conformPassword) {
+        try {
+          password = bcrypt.hashSync(password, 10);
           user.password = password;
           user.ResetPasswordToken = undefined;
           user.ResetPasswordExpire = undefined;
           user.PasswordChangedAt = Date.now();
-          await user.save();
+          const updateduser = await user.save();
+          console.log(updateduser)
           return res.status(404).json({
             success: true,
             message: "Password changed successfully."
           });
         }
-        catch(error){
+        catch (error) {
           console.log(error);
           return res.status(404).json({
             success: false,
-            message: "Password changed successfully."
+            message:  "Their was an error resetting password. Please try again."
           });
         }
       }
-      else{
+      else {
         return res.status(404).json({
           success: false,
           message: "Their was an error resetting password. Please try again."

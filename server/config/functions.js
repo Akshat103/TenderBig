@@ -1,5 +1,6 @@
 /* This all of are helper function */
 const { v4: uuidv4 } = require('uuid');
+const crypto = require('crypto');
 
 exports.toTitleCase = function (str) {
   return str.replace(/\w\S*/g, function (txt) {
@@ -38,3 +39,8 @@ exports.sentenceCase = function (value) {
   if (typeof value !== 'string' || value.length === 0) return value;
   return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
 };
+
+exports.generateOTP = function () {
+  const otp = Math.floor(100000 + crypto.randomInt(900000));
+  return otp.toString();
+}

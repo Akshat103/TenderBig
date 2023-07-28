@@ -18,6 +18,10 @@ const Login = () => {
         });
     };
 
+    const handleForget = () => {
+        navigate('/reset-password')
+    }
+
     const handleLogin = (e) => {
         e.preventDefault();
         // Make API request to login
@@ -30,7 +34,7 @@ const Login = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                if(data.error){
+                if (data.error) {
                     alert(data.error);
                     return
                 }
@@ -102,11 +106,11 @@ const Login = () => {
                                 >
                                     Sign In
                                 </button>
-                                <a
-                                    className="text-sm font-medium text-red-700 cursor-pointer hover:text-red-800"
+                                <p
+                                    className="text-sm font-medium text-red-700 cursor-pointer hover:text-red-800" onClick={handleForget}
                                 >
                                     Forgot Password?
-                                </a>
+                                </p>
                             </div>
                         </form>
                         <div className="text-center">

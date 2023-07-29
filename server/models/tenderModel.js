@@ -12,32 +12,63 @@ const tenderModel = new mongoose.Schema(
         },
         summary: {
             type: String,
-            required: true
+            required: true,
+            set: (value) => {
+                // Convert to sentence case
+                if (typeof value !== 'string' || value.length === 0) return value;
+                return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+            },
         },
         sector: {
             type: String,
-            required: true
+            required: true,
+            set: (value) => {
+                // Convert to sentence case
+                if (typeof value !== 'string' || value.length === 0) return value;
+                return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+            },
         },
         cpvNo: {
             type: String,
-            required: false
+            required: false,
+            set: (value) => value.toUpperCase(),
         },
         procurementSummary: {
             country: {
                 type: String,
-                required: true
+                required: true,
+                set: (value) => {
+                    // Convert to sentence case
+                    if (typeof value !== 'string' || value.length === 0) return value;
+                    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+                },
             },
             state: {
                 type: String,
-                required: true
+                required: true,
+                set: (value) => {
+                    // Convert to sentence case
+                    if (typeof value !== 'string' || value.length === 0) return value;
+                    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+                },
             },
             city: {
                 type: String,
-                required: false
+                required: false,
+                set: (value) => {
+                    // Convert to sentence case
+                    if (typeof value !== 'string' || value.length === 0) return value;
+                    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+                },
             },
             summary: {
                 type: String,
-                required: false
+                required: false,
+                set: (value) => {
+                    // Convert to sentence case
+                    if (typeof value !== 'string' || value.length === 0) return value;
+                    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+                },
             },
             deadline: {
                 type: Date,
@@ -47,27 +78,49 @@ const tenderModel = new mongoose.Schema(
         otherInformation: {
             noticeType: {
                 type: String,
-                required: false
+                required: false,
+                set: (value) => {
+                    // Convert to sentence case
+                    if (typeof value !== 'string' || value.length === 0) return value;
+                    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+                },
             },
             totNo: {
                 type: String,
-                required: true
+                required: true,
+                set: (value) => value.toUpperCase(),
             },
             documentNo: {
                 type: String,
-                required: true
+                required: true,
+                set: (value) => value.toUpperCase(),
             },
             competition: {
                 type: String,
-                required: true
+                required: true,
+                set: (value) => {
+                    // Convert to sentence case
+                    if (typeof value !== 'string' || value.length === 0) return value;
+                    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+                },
             },
             financier: {
                 type: String,
-                required: true
+                required: true,
+                set: (value) => {
+                    // Convert to sentence case
+                    if (typeof value !== 'string' || value.length === 0) return value;
+                    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+                },
             },
             ownership: {
                 type: String,
-                required: true
+                required: true,
+                set: (value) => {
+                    // Convert to sentence case
+                    if (typeof value !== 'string' || value.length === 0) return value;
+                    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+                },
             },
             tenderValue: {
                 type: Number,
@@ -77,23 +130,48 @@ const tenderModel = new mongoose.Schema(
         purchaserDetail: {
             purchaser: {
                 type: String,
-                required: true
+                required: true,
+                set: (value) => {
+                    // Convert to sentence case
+                    if (typeof value !== 'string' || value.length === 0) return value;
+                    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+                  },
             },
             address: {
                 type: String,
-                required: true
+                required: true,
+                set: (value) => {
+                    // Convert to sentence case
+                    if (typeof value !== 'string' || value.length === 0) return value;
+                    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+                  },
             },
             city: {
                 type: String,
-                required: false
+                required: false,
+                set: (value) => {
+                    // Convert to sentence case
+                    if (typeof value !== 'string' || value.length === 0) return value;
+                    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+                  },
             },
             district: {
                 type: String,
-                required: false
+                required: false,
+                set: (value) => {
+                    // Convert to sentence case
+                    if (typeof value !== 'string' || value.length === 0) return value;
+                    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+                  },
             },
             state: {
                 type: String,
-                required: true
+                required: true,
+                set: (value) => {
+                    // Convert to sentence case
+                    if (typeof value !== 'string' || value.length === 0) return value;
+                    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+                  },
             },
             pin: {
                 type: String,
@@ -115,7 +193,12 @@ const tenderModel = new mongoose.Schema(
         tenderDetail: {
             description: {
                 type: String,
-                required: false
+                required: false,
+                set: (value) => {
+                    // Convert to sentence case
+                    if (typeof value !== 'string' || value.length === 0) return value;
+                    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+                  },
             },
             publishDate: {
                 type: Date,
@@ -123,11 +206,21 @@ const tenderModel = new mongoose.Schema(
             },
             organization: {
                 type: String,
-                required: true
+                required: true,
+                set: (value) => {
+                    // Convert to sentence case
+                    if (typeof value !== 'string' || value.length === 0) return value;
+                    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+                  },
             },
             noticeType: {
                 type: String,
-                required: false
+                required: false,
+                set: (value) => {
+                    // Convert to sentence case
+                    if (typeof value !== 'string' || value.length === 0) return value;
+                    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+                  },
             }
         },
         userCategory: {
@@ -137,7 +230,12 @@ const tenderModel = new mongoose.Schema(
         },
         product: {
             type: String,
-            required: true
+            required: true,
+            set: (value) => {
+                // Convert to sentence case
+                if (typeof value !== 'string' || value.length === 0) return value;
+                return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+              },
         },
         type: {
             type: String,

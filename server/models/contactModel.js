@@ -9,10 +9,20 @@ const contactFormSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
+        set: (value) => {
+            // Convert to sentence case
+            if (typeof value !== 'string' || value.length === 0) return value;
+            return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+        },
     },
     company: {
         type: String,
         required: true,
+        set: (value) => {
+            // Convert to sentence case
+            if (typeof value !== 'string' || value.length === 0) return value;
+            return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+        },
     },
     mobile: {
         type: Number,
@@ -25,10 +35,6 @@ const contactFormSchema = new mongoose.Schema({
     selectedService: {
         type: String,
         required: true,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
     },
 },
     { timestamps: true });

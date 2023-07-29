@@ -25,8 +25,6 @@ const ProjectCard = ({ project }) => {
         <p className="text-gray-600">
           <strong>Detail:</strong> {project.detail}
         </p>
-        {/* {showDetails && ( */}
-        {/* <div className="grid grid-cols-3"> */}
         <p className="mb-2 text-gray-600">
           <strong>Value:</strong> {project.value}
         </p>
@@ -222,7 +220,6 @@ const ProjectList = () => {
               </select>
             </div>
 
-            {/* {selectedCountry && ( */}
             <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
               <label
                 htmlFor="state"
@@ -243,7 +240,7 @@ const ProjectList = () => {
                   new Set(
                     projects
                       .filter(
-                        (project) => project.country === selectedCountry
+                        (project) => project.state === selectedCountry
                       )
                       .map((project) => project.state)
                   )

@@ -9,9 +9,9 @@ const ImageGallery = () => {
 
   const token = localStorage.getItem('token');
 
-const headers = {
-      'auth': token
-    };
+  const headers = {
+    'auth': token
+  };
 
   useEffect(() => {
     fetchImages();
@@ -29,12 +29,11 @@ const headers = {
   };
 
   const handleImageDelete = async (filename) => {
+    let newSrc = filename.replace('uploads/', '/');
+    newSrc = encodeURIComponent(newSrc)
     try {
-      await axios.delete(
-        `${BASE_URL}/images/delete/${encodeURIComponent(
-          filename
-        ), { headers }}`
-      );
+      await axios.delete(`${BASE_URL}/images/delete/${newSrc}`,
+        { headers })
       fetchImages();
     } catch (error) {
       console.error("Error deleting image:", error);

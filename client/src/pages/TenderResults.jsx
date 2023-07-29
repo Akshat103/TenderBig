@@ -48,7 +48,6 @@ const TenderCard = ({ title,country,Authority,TendorNo,description,userCategory,
       <p className="mb-4 absolute right-12 lg:right-96 text-gray-600"><strong>description:</strong> {description}</p>
       </div>
       <div className="flex">
-      <p className="mb-4 relative text-gray-600"><strong>userCategory:</strong> {userCategory}</p>
       <p className="mb-4 absolute right-12 lg:right-96 text-gray-600"><strong>tenderValue:</strong> {tenderValue}</p>
       </div>
       <p className="mb-4 text-gray-600"><strong>contractValue:</strong> {contractValue}</p>

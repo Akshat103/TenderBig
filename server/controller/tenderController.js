@@ -94,6 +94,39 @@ class Tender {
             type
         } = req.body;
 
+        if(!summary,
+            !sector,
+            !cpvNo,
+            !country,
+            !state,
+            !city,
+            !procurementSummarySummary,
+            !procurementSummaryDeadline,
+            !noticeType,
+            !totNo,
+            !documentNo,
+            !competition,
+            !financier,
+            !ownership,
+            !tenderValue,
+            !purchaser,
+            !paddress,
+            !pcity,
+            !pdistrict,
+            !pstate,
+            !ppin,
+            !ptelfax,
+            !email,
+            !url,
+            !description,
+            !organization,
+            !tenderDetailNoticeType,
+            !userCategory,
+            !product,
+            !type){
+                return res.status(500).json({ success: false, message: "All fields required." });
+        }
+
         const userId = req.userId;
         const userRole = req.userRole;
 
@@ -181,7 +214,7 @@ class Tender {
 
         } catch (err) {
             console.log(err);
-            return res.status(500).json({ error: err });
+            return res.status(500).json({ success: false, message: "Internal server error." });
         }
 
     }
@@ -580,7 +613,7 @@ class Tender {
             }
 
             const tenders = await tenderModel.find(query, projection);
-            console.log(query)
+
             res.json(tenders);
         } catch (error) {
             console.error(error);

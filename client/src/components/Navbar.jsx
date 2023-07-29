@@ -414,6 +414,27 @@ const Navbar = () => {
                   Gems
                 </Link>
                 <Link
+                  to="/contact"
+                  onClick={toggleMenu}
+                  className="block px-3 py-1 text-lg font-medium text-white transition-colors duration-300 rounded-md hover:text-red-100"
+                >
+                  Contact
+                </Link>
+                <Link
+                  to="/tenderresults"
+                  onClick={toggleMenu}
+                  className="block px-3 py-1 text-lg font-medium text-white transition-colors duration-300 rounded-md hover:text-red-100"
+                >
+                  Tender Results
+                </Link>
+                <Link
+                  to="/Subscribe"
+                  onClick={toggleMenu}
+                  className="block px-3 py-1 text-lg font-medium text-white transition-colors duration-300 rounded-md hover:text-red-100"
+                >
+                  Subscription
+                </Link>
+                <Link
                   to="/forms"
                   onClick={toggleMenu}
                   className="block px-3 py-1 text-lg font-medium text-white transition-colors duration-300 rounded-md hover:text-red-100"

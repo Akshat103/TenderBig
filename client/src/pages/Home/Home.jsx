@@ -226,27 +226,8 @@ const HomePage = () => {
           <div className="fixed inset-0 flex items-center justify-center p-4">
             {/* The actual dialog panel  */}
             <Dialog.Panel className="grid md:grid-cols-2 p-8 bg-white rounded gap-x-8">
-            {isSmallScreen ? (
-            <div class="md:col-span-1 invisible md:visible">
-            <ul class="">
-              <h1 class="mb-5 text-3xl font-bold text-black">
-                Our Services
-              </h1>
-                <div className="col-span-4 px-2 mt-6 mb-6">
-                  {navigationButtons.map((button) => (
-                    <NavLink to={button.link}>
-                      <div class="md:w-full lg:px-8 py-3 mb-4 text-18 md:text-center text-white font-bold border-black border-1px bg-red-700 focus:none hover:text-white linear duration-300 shadow-md rounded cursor-pointer">
-                        {button.name}
-                      </div>
-                    </NavLink>
-                  ))}
-                </div>
-              </ul>
-            </div>
-          ) : null}
-
-              <div className="md:w-full">
-                <div className="mb-5 text-3xl text-center font-bold text-black">
+            <div className="md:w-full">
+                <div className="text-3xl text-center font-bold text-black">
                   Enter Details
                 </div>
 
@@ -352,13 +333,32 @@ const HomePage = () => {
                   </div>
                 </form>
               </div>
-            </Dialog.Panel>
+
+              {/* {isSmallScreen ? ( */}
+                <div class="hidden md:block md:col-span-1">
+                  <ul class="">
+                    <h1 class="mb-5 text-3xl font-bold text-black">
+                      Our Services
+                    </h1>
+                    <div className="col-span-4 px-2 mt-6 mb-6">
+                      {navigationButtons.map((button) => (
+                        <NavLink to={button.link}>
+                          <div class="md:w-full lg:px-8 py-3 mb-4 text-18 md:text-center text-white font-bold border-black border-1px bg-red-700 focus:none hover:text-white linear duration-300 shadow-md rounded cursor-pointer">
+                            {button.name}
+                          </div>
+                        </NavLink>
+                      ))}
+                    </div>
+                  </ul>
+                </div>
+              {/* ) : null} */}
+
+                          </Dialog.Panel>
           </div>
         </Dialog>
       </div>
 
-      
-      <SimpleSlider/>
+      <SimpleSlider />
       <Home2 />
       <Home3 />
       <Home4 />

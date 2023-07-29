@@ -337,44 +337,134 @@ const JointVentureDetail = () => {
             </div>
           ))}
 
-          {data && data.uploads ?
-           data.uploads.map((upload, index) => (
-            <div key={index}>
-              <div className="grid grid-cols-2 gap-11">
-                <div>
-                  <label className="block mb-2 text-xl font-medium">
-                    GST Name:
-                  </label>
-                  <input
-                    type="text"
-                    className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
-                    value={upload.gst.name}
-                    readOnly={!isEditing}
-                    onChange={(e) =>
-                      setFormData({ ...data, startDate: e.target.value })
-                    }
-                  />
-                </div>
-                <div>
-                  <label className="block mb-2 text-xl font-medium">
-                  GST URL:
-                  </label>
-                  <input
-                    type="text"
-                    className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
-                    value={upload.gst.url}
-                    readOnly={!isEditing}
-                    onChange={(e) =>
-                      setFormData({ ...data, endDate: e.target.value })
-                    }
-                  />
+          {data.uploads &&
+            data.uploads.map((upload, index) => (
+              <div key={index}>
+                <div className="grid grid-cols-2 gap-11">
+                  {upload.gst && (
+                    <div>
+                      <label className="block mb-2 text-xl font-medium">
+                        GST Name:
+                      </label>
+                      <input
+                        type="text"
+                        className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                        value={upload.gst.name}
+                        readOnly={!isEditing}
+                        onChange={(e) => {
+                          const newUploads = [...data.uploads];
+                          newUploads[index].gst.name = e.target.value;
+                          setFormData({ ...data, uploads: newUploads });
+                        }}
+                      />
+                    </div>
+                  )}
+                  {upload.gst && (
+                    <div>
+                      <label className="block mb-2 text-xl font-medium">
+                        GST URL:
+                      </label>
+                      <input
+                        type="text"
+                        className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                        value={upload.gst.url}
+                        readOnly={!isEditing}
+                        onChange={(e) => {
+                          const newUploads = [...data.uploads];
+                          newUploads[index].gst.url = e.target.value;
+                          setFormData({ ...data, uploads: newUploads });
+                        }}
+                      />
+                    </div>
+                  )}
+                  <div>
+                    <label className="block mb-2 text-xl font-medium">
+                      PAN URL:
+                    </label>
+                    <input
+                      type="text"
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      value={upload.pan.url}
+                      readOnly={!isEditing}
+                      onChange={(e) =>
+                        setFormData({ ...data, url: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <label className="block mb-2 text-xl font-medium">
+                      PAN Name:
+                    </label>
+                    <input
+                      type="text"
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      value={upload.pan.name.url}
+                      readOnly={!isEditing}
+                      onChange={(e) =>
+                        setFormData({ ...data, url: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <label className="block mb-2 text-xl font-medium">
+                      Aadhar URL:
+                    </label>
+                    <input
+                      type="text"
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      value={upload.aadhar.url}
+                      readOnly={!isEditing}
+                      onChange={(e) =>
+                        setFormData({ ...data, url: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <label className="block mb-2 text-xl font-medium">
+                      Aadhar Name:
+                    </label>
+                    <input
+                      type="text"
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      value={upload.aadhar.name}
+                      readOnly={!isEditing}
+                      onChange={(e) =>
+                        setFormData({ ...data, url: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <label className="block mb-2 text-xl font-medium">
+                      Photo URL:
+                    </label>
+                    <input
+                      type="text"
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      value={upload.photo.url}
+                      readOnly={!isEditing}
+                      onChange={(e) =>
+                        setFormData({ ...data, url: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <label className="block mb-2 text-xl font-medium">
+                      Photo Name:
+                    </label>
+                    <input
+                      type="text"
+                      className="border text-lg border-gray-300 rounded-md p-2 py-4 w-full bg-gray-200"
+                      value={upload.photo.name}
+                      readOnly={!isEditing}
+                      onChange={(e) =>
+                        setFormData({ ...data, url: e.target.value })
+                      }
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          )) : ( 
-            <p>Loading data</p>
-          )}
-          
+            ))}
+
           <div className="grid grid-cols-2 gap-11">
             <div>
               <label className="block mb-2 text-xl font-medium">

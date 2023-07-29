@@ -10,11 +10,14 @@ import {
   FaUserCog,
   FaUser,
   FaCheckCircle,
+  FaHandshake 
 } from 'react-icons/fa';
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const UserStatistics = () => {
   const [statistics, setStatistics] = useState(null);
+
+  const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
     fetchUserStatistics();
@@ -44,29 +47,61 @@ const UserStatistics = () => {
     }
   };
 
-  const renderChart = () => {
+  let adminLabels;
+  let hrLabels;
+  let employeeLabels;
+  let franchiseLabels;
+  let adminData;
+  let hrData;
+  let employeeData;
+  let franchiseData;
+
+  if (statistics) {
+    adminLabels = ['Admin', 'HR', 'Employee', 'Franchise', 'Regular Users', 'Subscription Active'];
+    hrLabels = ['Employee', 'Franchise', 'Regular Users', 'Subscription Active'];
+    employeeLabels = ['Franchise', 'Regular Users', 'Subscription Active'];
+    franchiseLabels = ['Regular Users', 'Subscription Active'];
+
+    adminData = [
+      statistics.adminCount,
+      statistics.employeeCount,
+      statistics.hrCount,
+      statistics.franchiseCount,
+      statistics.userCount,
+      statistics.activeSubscriptionCount,
+    ];
+
+    hrData = [
+      statistics.employeeCount,
+      statistics.franchiseCount,
+      statistics.userCount,
+      statistics.activeSubscriptionCount,
+    ];
+
+    employeeData = [
+      statistics.franchiseCount,
+      statistics.userCount,
+      statistics.activeSubscriptionCount,
+    ];
+
+    franchiseData = [
+      statistics.userCount,
+      statistics.activeSubscriptionCount,
+    ];
+  }
+
+
+  const renderChart = (label, datas) => {
     if (!statistics) {
       return null;
     }
 
     const chartData = {
-      labels: [
-        'Admin Users',
-        'Employee Users',
-        'HR Users',
-        'Regular Users',
-        'Subscription Active',
-      ],
+      labels: label,
       datasets: [
         {
           label: 'User Statistics',
-          data: [
-            statistics.adminCount,
-            statistics.employeeCount,
-            statistics.hrCount,
-            statistics.userCount,
-            statistics.activeSubscriptionCount,
-          ],
+          data: datas,
           backgroundColor: [
             'rgba(75, 192, 192, 0.6)',
             'rgba(255, 205, 86, 0.6)',
@@ -108,11 +143,11 @@ const UserStatistics = () => {
         <>
           <h1 className="text-2xl font-bold mb-6">User Statistics</h1>
 
-          <div className="p-4 rounded-xl dark:border-gray-700">
+          {(user.userRole == 'admin') ? <div className="p-4 rounded-xl dark:border-gray-700">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
                 <div className="flex items-center justify-center rounded h-68 bg-white mb-4">
-                  <div className="container md:w-[500px] md:h-[500px] w-[250px]" >{renderChart()}</div>
+                  <div className="container md:w-[500px] md:h-[500px] w-[250px]" >{renderChart(adminLabels, adminData)}</div>
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -162,9 +197,12 @@ const UserStatistics = () => {
 
               </div>
 
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
               <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
                 <FaUser className="text-8xl text-blue-500 mb-4" />
-                <div className="text-gray-900 font-bold text-xl mb-2">Regular</div>
+                <div className="text-gray-900 font-bold text-xl mb-2">Regular Users</div>
                 <h1 className="text-2xl font-bold">{statistics.userCount}</h1>
                 <div className="mt-4">
                   <a href="#" className="text-blue-500 font-bold leading-none">
@@ -183,8 +221,171 @@ const UserStatistics = () => {
                   </a>
                 </div>
               </div>
+
+              <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                <FaHandshake className="text-8xl text-blue-500 mb-4" />
+                <div className="text-gray-900 font-bold text-xl mb-2">Franchise</div>
+                <h1 className="text-2xl font-bold">{statistics.franchiseCount}</h1>
+                <div className="mt-4">
+                  <a href="#" className="text-blue-500 font-bold leading-none">
+                    More Info
+                  </a>
+                </div>
+              </div>
+
             </div>
-          </div>
+          </div> : <></>}
+
+          {(user.userRole == 'hr') ? <div className="p-4 rounded-xl dark:border-gray-700">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                <div className="flex items-center justify-center rounded h-68 bg-white mb-4">
+                  <div className="container md:w-[500px] md:h-[500px] w-[250px]" >{renderChart(hrLabels, hrData)}</div>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+
+
+
+                <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                  <FaUserTie className="text-8xl text-blue-500 mb-4" />
+                  <div className="text-gray-900 font-bold text-xl mb-2">Employee</div>
+                  <h1 className="text-2xl font-bold">{statistics.employeeCount}</h1>
+                  <div className="mt-4">
+                    <a href="#" className="text-blue-500 font-bold leading-none">
+                      More Info
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                  <FaUser className="text-8xl text-blue-500 mb-4" />
+                  <div className="text-gray-900 font-bold text-xl mb-2">Users</div>
+                  <h1 className="text-2xl font-bold">{statistics.userCount}</h1>
+                  <div className="mt-4">
+                    <a href="#" className="text-blue-500 font-bold leading-none">
+                      More Info
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                  <FaCheckCircle className="text-8xl text-blue-500 mb-4" />
+                  <div className="text-gray-900 font-bold text-xl mb-2">Subscription Active</div>
+                  <h1 className="text-2xl font-bold">{statistics.activeSubscriptionCount}</h1>
+                  <div className="mt-4">
+                    <a href="#" className="text-blue-500 font-bold leading-none">
+                      More Info
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                  <FaHandshake className="text-8xl text-blue-500 mb-4" />
+                  <div className="text-gray-900 font-bold text-xl mb-2">Franchise</div>
+                  <h1 className="text-2xl font-bold">{statistics.franchiseCount}</h1>
+                  <div className="mt-4">
+                    <a href="#" className="text-blue-500 font-bold leading-none">
+                      More Info
+                    </a>
+                  </div>
+                </div>
+
+
+
+              </div>
+
+            </div>
+
+          </div> : <></>}
+
+          {(user.userRole == 'employee') ? <div className="p-4 rounded-xl dark:border-gray-700">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                <div className="flex items-center justify-center rounded h-68 bg-white mb-4">
+                  <div className="container md:w-[500px] md:h-[500px] w-[250px]" >{renderChart(employeeLabels, employeeData)}</div>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                  <FaUser className="text-8xl text-blue-500 mb-4" />
+                  <div className="text-gray-900 font-bold text-xl mb-2">Users</div>
+                  <h1 className="text-2xl font-bold">{statistics.userCount}</h1>
+                  <div className="mt-4">
+                    <a href="#" className="text-blue-500 font-bold leading-none">
+                      More Info
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                  <FaCheckCircle className="text-8xl text-blue-500 mb-4" />
+                  <div className="text-gray-900 font-bold text-xl mb-2">Subscription Active</div>
+                  <h1 className="text-2xl font-bold">{statistics.activeSubscriptionCount}</h1>
+                  <div className="mt-4">
+                    <a href="#" className="text-blue-500 font-bold leading-none">
+                      More Info
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                  <FaHandshake className="text-8xl text-blue-500 mb-4" />
+                  <div className="text-gray-900 font-bold text-xl mb-2">Franchise</div>
+                  <h1 className="text-2xl font-bold">{statistics.franchiseCount}</h1>
+                  <div className="mt-4">
+                    <a href="#" className="text-blue-500 font-bold leading-none">
+                      More Info
+                    </a>
+                  </div>
+                </div>
+
+
+
+              </div>
+
+            </div>
+
+          </div> : <></>}
+
+          {(user.userRole == 'franchise') ? <div className="p-4 rounded-xl dark:border-gray-700">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4">
+                <div className="flex items-center justify-center rounded h-68 bg-white mb-4">
+                  <div className="container md:w-[500px] md:h-[500px] w-[250px]" >{renderChart(franchiseLabels, franchiseData)}</div>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4 justify-center">
+                  <FaUser className="text-8xl text-blue-500 mb-4" />
+                  <div className="text-gray-900 font-bold text-xl mb-2">Users</div>
+                  <h1 className="text-2xl font-bold">{statistics.userCount}</h1>
+                  <div className="mt-4">
+                    <a href="#" className="text-blue-500 font-bold leading-none">
+                      More Info
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4 justify-center">
+                  <FaCheckCircle className="text-8xl text-blue-500 mb-4" />
+                  <div className="text-gray-900 font-bold text-xl mb-2">Subscription Active</div>
+                  <h1 className="text-2xl font-bold">{statistics.activeSubscriptionCount}</h1>
+                  <div className="mt-4">
+                    <a href="#" className="text-blue-500 font-bold leading-none">
+                      More Info
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div> : <></>}
         </>
       ) : (
         <div className="flex items-center justify-center h-screen">

@@ -195,7 +195,7 @@ function AllAdmin() {
                               <div className="flex items-center text-sm">
                                 <div
                                   onClick={() => {
-                                    showDetails(user.userId);
+                                    showDetails(user._id);
                                   }}
                                 >
                                   <p className="font-semibold text-black cursor-pointer">

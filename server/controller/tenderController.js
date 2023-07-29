@@ -656,9 +656,9 @@ class Tender {
             const approvedCount = await tenderModel.countDocuments({ approvedStatus: true });
             const contractorCount = await tenderModel.countDocuments({ userCategory: 'contractor' });
             const subcontractorCount = await tenderModel.countDocuments({ userCategory: 'subcontractor' });
-            const adminCount = await tenderModel.countDocuments({ userCategory: 'admin' });
-            const hrCount = await tenderModel.countDocuments({ userCategory: 'hr' });
-            const employeeCount = await tenderModel.countDocuments({ userCategory: 'employee' });
+            const governmentCount = await tenderModel.countDocuments({ userCategory: 'government' });
+            const privateCount = await tenderModel.countDocuments({ userCategory: 'private' });
+            const gemCount = await tenderModel.countDocuments({ userCategory: 'gem' });
 
             res.json({
                 totalCount,
@@ -667,9 +667,9 @@ class Tender {
                 approvedCount,
                 contractorCount,
                 subcontractorCount,
-                adminCount,
-                hrCount,
-                employeeCount
+                governmentCount,
+                privateCount,
+                gemCount
             });
         } catch (error) {
             res.status(500).json({ error: 'Unable to fetch tender statistics.' });

@@ -119,10 +119,6 @@ class Auth {
       });
     }
     try {
-      let data = await userModel.findOne({ email: email });
-      if (data) {
-
-      }
       const MAIL = process.env.DEFAULT_MAIL;
       const PASS = process.env.DEFAULT_PASS;
       if (MAIL == email && PASS == password) {

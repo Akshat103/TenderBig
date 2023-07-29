@@ -443,11 +443,8 @@ const OnlineTenderForm = () => {
 
     return (
         <div className="flex items-center justify-center">
-            <div
-                className={`max-w-[1244px] ${!isSmallScreen ? "w-full" : "grid grid-cols-12 gap-16"
-                    } mt-5`}
-            >
-                <div className="col-span-4 px-2 mt-6 mb-6">
+            <div className={`max-w-[1244px] ${!isSmallScreen ? "grid grid-cols-12 gap-16": "w-full" } mt-5`}>
+            <div className={`col-span-4 px-2 mt-6 mb-6 ${isSmallScreen ? "hidden" : "block"}`}>
                     {isSmallScreen ? (
                         <div className="w-full mt-2 ">
                             <ul className="">

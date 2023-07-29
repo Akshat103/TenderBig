@@ -143,6 +143,14 @@ function DashboardTenderDetail() {
               <span className="font-bold">Country:</span>{' '}
               {tenderDetails.procurementSummary?.country}
             </p>
+            <p>
+              <span className="font-bold">State:</span>{" "}
+              {tenderDetails.procurementSummary?.state}
+            </p>
+            <p>
+              <span className="font-bold">City:</span>{" "}
+              {tenderDetails.procurementSummary?.city}
+            </p>
             <p className="mb-2">
               <span className="font-bold">Summary:</span>{' '}
               {tenderDetails.procurementSummary?.summary}
@@ -258,7 +266,7 @@ function DashboardTenderDetail() {
           className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded mr-2"
           onClick={handleApprove}
         >
-          {tenderDetails.approvedStatus ? 'Approved': 'Rejected'}
+          {tenderDetails.approvedStatus ? 'Approved' : 'Rejected'}
         </button>
 
         <button

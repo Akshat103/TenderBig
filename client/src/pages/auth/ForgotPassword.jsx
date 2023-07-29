@@ -144,6 +144,7 @@ const ForgotPassword = () => {
                                             src={`${import.meta.env.BASE_URL}reload.gif`}
                                             alt="login"
                                             className="w-5 h-5"
+                                            loading="lazy"
                                         />
                                     </button>
                                 </div>

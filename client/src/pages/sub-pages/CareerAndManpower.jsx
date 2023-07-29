@@ -38,6 +38,7 @@ const CareerAndManpower = () => {
               src={`${import.meta.env.BASE_URL}illustartion/c&m.svg`}
               className="w-3/5 md:w-1/2"
               alt="Contact illustration"
+              loading="lazy"
             />
             <div className="md:w-2/3 mx-auto flex items-center justify-center flex-col space-y-3 md:space-y-0 md:space-x-3">
               <p className="text-2xl mb-4 font-semibold">Who is this?</p>

@@ -133,6 +133,7 @@ const Home4 = () => {
                 src={logo}
                 alt={`Logo ${index + 1}`}
                 className="w-6 h-auto mb-[16.5px] mr-2"
+                loading="lazy"
               />
             ))}
           </div>

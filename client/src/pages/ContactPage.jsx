@@ -86,6 +86,7 @@ const ContactUsPage = () => {
           <img
               src={`${import.meta.env.BASE_URL}illustartion/contact.svg`}
               alt="Illustration"
+              loading="lazy"
             />
           </div>
 

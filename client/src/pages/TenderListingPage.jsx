@@ -242,7 +242,7 @@ const TenderListingPage = () => {
         <h1 className="my-4 text-3xl font-bold text-center">
           About Tenders
         </h1>
-        <img src={TenderImg} alt="tender_img" className="h-auto md:h-[600px] w-full my-5" />
+        <img src={TenderImg} alt="tender_img" className="h-auto md:h-[600px] w-full my-5" loading="lazy"/>
 
         <div className="my-10">
 

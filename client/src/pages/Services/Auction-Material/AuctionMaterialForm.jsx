@@ -216,6 +216,7 @@ const AuctionMaterialForm = () => {
           src="https://img.freepik.com/free-vector/flat-design-illustration-customer-support_23-2148887720.jpg?w=740&t=st=1687066253~exp=1687066853~hmac=42f23f007ad72bd2ca440a69684ce6508082c1182b3c54179addffc4163960af"
           className=" md:w-1/2"
           alt="Contact illustration"
+          loading="lazy"
         />
         <div className="m-10">
           <ProgressBar

@@ -6,9 +6,11 @@ const bodyParser = require('body-parser');
 const cors = require("cors");
 const path = require('path');
 const app = express();
+const compression = require('compression');
 
 // Middleware
 app.use(cors());
+app.use(compression());
 app.use(express.static(path.join(__dirname, './dist')));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true, parameterLimit: 50000 }));

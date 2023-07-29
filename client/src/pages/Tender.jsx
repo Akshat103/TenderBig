@@ -60,8 +60,8 @@ const TenderByCategory = () => {
             <span className="font-bold">CPV No:</span>{" "}
             {tenderDetails.cpvNo}
           </p>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6 border-gray-400 border-[1px]">
+        </div>
+        <div className="bg-white rounded-lg shadow-md p-6 border-gray-400 border-[1px]">
           <p>
             <span className="font-bold">Type:</span>{" "}
             {tenderDetails.userCategory}
@@ -71,9 +71,9 @@ const TenderByCategory = () => {
             {tenderDetails.product}
           </p>
           <p>
-              <span className="font-bold">For:</span>{" "}
-              {tenderDetails.type}
-            </p>
+            <span className="font-bold">For:</span>{" "}
+            {tenderDetails.type}
+          </p>
         </div>
       </div>
 
@@ -85,6 +85,14 @@ const TenderByCategory = () => {
           <p>
             <span className="font-bold">Country:</span>{" "}
             {tenderDetails.procurementSummary.country}
+          </p>
+          <p>
+            <span className="font-bold">State:</span>{" "}
+            {tenderDetails.procurementSummary.state}
+          </p>
+          <p>
+            <span className="font-bold">City:</span>{" "}
+            {tenderDetails.procurementSummary.city}
           </p>
           <p>
             <span className="font-bold">Summary:</span>{" "}

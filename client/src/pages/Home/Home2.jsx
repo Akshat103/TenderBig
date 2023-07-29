@@ -37,6 +37,7 @@ const Home2 = () => {
               className="h-[60px] w-[60px] rounded-lg object-cover"
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbRaegO1q6JJvf6SX3o2JirYfE6Dq6ScMh4ltzfpPz8cynSwPIQQ6O2j2L3V09IJIqvo4&usqp=CAU"
               alt="Logo"
+              loading="lazy"
             />
             <TenderCard
               heading="Defence Tenders"
@@ -48,6 +49,7 @@ const Home2 = () => {
               className="h-[60px] w-[60px] rounded-lg object-cover"
               src="https://www.freightender.com/wp-content/uploads/2020/03/coche_def.jpg"
               alt="Logo"
+              loading="lazy"
             />
             <TenderCard
               heading="Transport Tenders"
@@ -59,6 +61,7 @@ const Home2 = () => {
               className="h-[60px] w-[60px] rounded-lg object-cover"
               src="https://images.unsplash.com/photo-1563068261-13ebbdf16aa3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
               alt="Logo"
+              loading="lazy"
             />
             <TenderCard
               heading="Electrical Tenders"
@@ -70,6 +73,7 @@ const Home2 = () => {
               className="h-[60px] w-[60px] rounded-lg object-cover"
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Power_pole.jpg/800px-Power_pole.jpg"
               alt="Logo"
+              loading="lazy"
             />
             <TenderCard
               heading="Software Tenders"
@@ -81,6 +85,7 @@ const Home2 = () => {
               className="h-[60px] w-[60px] rounded-lg object-cover"
               src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
               alt="Logo"
+              loading="lazy"
             />
             <TenderCard
               heading="Construction Tenders"
@@ -92,6 +97,7 @@ const Home2 = () => {
               className="h-[60px] w-[60px] rounded-lg object-cover"
               src="https://content.jdmagicbox.com/comp/def_content/digital-printers/shutterstock-1187101078-digital-printers-4-vw57s.jpg"
               alt="Logo"
+              loading="lazy"
             />
             <TenderCard
               heading="Printing Tenders"
@@ -103,6 +109,7 @@ const Home2 = () => {
               className="h-[60px] w-[60px] rounded-lg object-cover"
               src="https://images.unsplash.com/photo-1485182708500-e8f1f318ba72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=910&q=80"
               alt="Logo"
+              loading="lazy"
             />
             <TenderCard
               heading="Canteen Tenders"
@@ -114,6 +121,7 @@ const Home2 = () => {
               className="h-[60px] w-[60px] rounded-lg object-cover"
               src="https://images.unsplash.com/photo-1613665813446-82a78c468a1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=858&q=80"
               alt="Logo"
+              loading="lazy"
             />
             <TenderCard
               heading="Solar Tenders"

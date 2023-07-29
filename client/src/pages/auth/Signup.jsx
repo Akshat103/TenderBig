@@ -87,6 +87,7 @@ const Signup = () => {
                         <img
                             src={`${import.meta.env.BASE_URL}illustartion/signup.svg`}
                             alt="Illustration"
+                            loading="lazy"
                         />
                     </div>
 

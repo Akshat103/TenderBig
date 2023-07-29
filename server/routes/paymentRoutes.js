@@ -14,6 +14,6 @@ router.get("/razorpaykey", verifyToken, paymentsController.getrazorpaykey);
 
 router.post("/createorder", verifyToken, paymentsController.createOrder);
 
-router.post("/verify-payment", verifyToken, paymentsController.verifyOrder);
+router.post("/verify-payment", paymentsController.verifyOrder);
 
 module.exports = router;

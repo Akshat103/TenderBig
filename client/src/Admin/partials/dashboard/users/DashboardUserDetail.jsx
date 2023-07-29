@@ -25,8 +25,8 @@ function UserDetails() {
           },
         }
       );
-      setUser(response.data.User[0]);
-      setSelectedRole(response.data.User[0].userRole);
+      setUser(response.data.user);
+      setSelectedRole(response.data.user.userRole);
     } catch (error) {
       console.error(error);
     }
@@ -85,7 +85,13 @@ function UserDetails() {
   };
 
   if (!user) {
-    return <div>Loading...</div>;
+    return (<div className="flex items-center justify-center h-screen">
+      <img
+        src={`${import.meta.env.BASE_URL}loader.gif`}
+        alt="Loading..."
+        className="w-18 h-18"
+      />
+    </div>);
   }
 
   return (

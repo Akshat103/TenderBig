@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 import InputSlider from "react-input-slider";
 
-const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
+const TenderCard = ({ title,country,Authority,TendorNo,description,userCategory,contractValue, state,BRR, deadline, tenderValue,location, referenceNo, tenderId, summary, }) => {
   const navigate = useNavigate();
   // const { referenceNo } = useParams();
   const handleViewDetails = (tenderId) => {
@@ -27,17 +27,31 @@ const TenderCard = ({ title, deadline, location, referenceNo, tenderId }) => {
           Live
         </span>
       </div>
-      <p className="mb-4 text-gray-600">Deadline: {deadline}</p>
-      <p className="mb-4 text-gray-600">location: {location}</p>
-      <p className="mb-4 text-gray-600">Sector: {referenceNo}</p>
-      <p className="mb-4 text-gray-600">tenderId: {tenderId}</p>
-
-      <button
-        className="px-4 py-2 font-bold text-white transition-colors duration-300 bg-black rounded hover:bg-white hover:text-black hover:border hover:border-black linear"
-        onClick={() => handleViewDetails(tenderId)}
-      >
-        View Details
-      </button>
+      <div className="flex mt-2">
+      <p className="mb-4 relative text-gray-600"><strong>Deadline:</strong> {deadline}</p>
+      <p className="mb-4 absolute right-12 lg:right-96 text-gray-600"><strong>location:</strong> {location}</p>
+      </div>
+      <div className="flex">
+      <p className="mb-4 relative text-gray-600"><strong>Sector: </strong> {referenceNo}</p>
+      <p className="mb-4 absolute right-12 lg:right-96 text-gray-600"><strong>tenderId:</strong> {summary}</p>
+      </div>
+      <div className="flex">
+      <p className="mb-4 relative text-gray-600"><strong>country:</strong> {country}</p>
+      <p className="mb-4 absolute right-12 lg:right-96 text-gray-600"><strong>state:</strong> {state}</p>
+      </div>
+      <div className="flex">
+      <p className="mb-4 relative text-gray-600"><strong>BRR:</strong> {BRR}</p>
+      <p className="mb-4 absolute right-12 lg:right-96 text-gray-600"><strong>Authority:</strong> {Authority}</p>
+      </div>
+      <div className="flex">
+      <p className="mb-4 relative text-gray-600"><strong>TendorNo:</strong> {TendorNo}</p>
+      <p className="mb-4 absolute right-12 lg:right-96 text-gray-600"><strong>description:</strong> {description}</p>
+      </div>
+      <div className="flex">
+      <p className="mb-4 relative text-gray-600"><strong>userCategory:</strong> {userCategory}</p>
+      <p className="mb-4 absolute right-12 lg:right-96 text-gray-600"><strong>tenderValue:</strong> {tenderValue}</p>
+      </div>
+      <p className="mb-4 text-gray-600"><strong>contractValue:</strong> {contractValue}</p>
     </div>
   );
 };
@@ -341,7 +355,16 @@ const TenderResults = () => {
                   location={tender.country}
                   referenceNo={tender.state}
                   tenderId={tender.tenderId}
-                  o
+                  contractValue={tender.contractValue}
+                  tenderValue={tender.tenderValue}
+                  userCategory={tender.userCategory}
+                  description={tender.description}
+                  TendorNo={tender.TendorNo}
+                  Authority={tender.Authority}
+                  BRR={tender.BRR}
+                  state={tender.state}
+                  country={tender.country}
+                  summary={tender.summary}
                 />
               ))
             ) : (

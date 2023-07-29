@@ -758,6 +758,7 @@ const Certification = () => {
                             <img
                                 src={`${import.meta.env.BASE_URL}illustartion/cert.svg`}
                                 alt="Illustration"
+                                loading="lazy"
                             />
                         </div>
 

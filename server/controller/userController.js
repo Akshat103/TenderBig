@@ -21,9 +21,12 @@ class User {
         } else {
             try {
                 let User = await userModel
-                    .find({ userId: userId });
+                    .findById(userId);
                 if (User) {
-                    return res.json({ User });
+                    return res.json({
+                        success: true,
+                        user: User
+                    });
                 }
             } catch (err) {
                 console.log(err);

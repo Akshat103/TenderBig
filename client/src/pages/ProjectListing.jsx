@@ -168,7 +168,7 @@ const ProjectList = () => {
         About Projects
       </h1>
 
-      <img src={ProjectImg} alt="project_img" className="h-auto md:h-[600px] w-full my-5" />
+      <img src={ProjectImg} alt="project_img" className="h-auto md:h-[600px] w-full my-5" loading="lazy" />
 
       <div className="my-10">
         <div className="flex flex-col text-xl leading-8 text-center gap-y-3">

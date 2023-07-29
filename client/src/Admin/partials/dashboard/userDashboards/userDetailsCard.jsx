@@ -11,7 +11,39 @@ const UserDetailsCard = () => {
     const [editedState, setEditedState] = useState('');
     const [editedCity, setEditedCity] = useState('');
 
+    const token = localStorage.getItem("token");
+    const userId = JSON.parse(localStorage.getItem('user'))._id;
+
+    const getUserData = async () => {
+        await fetch(`${BASE_URL}/userdetails/single-user/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                auth: token
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    setUserDetails(data.user);
+                    localStorage.setItem("user", JSON.stringify(data.user));
+                }
+                else {
+                    alert("Something went wrong. Try again.")
+                }
+                setIsEditing(false);
+            })
+            .catch((error) => {
+                // Handle errors here
+                console.error('Error:', error);
+            });
+    }
+
     useEffect(() => {
+        async function fetchData() {
+            await getUserData();
+        }
+        fetchData();
         const user = JSON.parse(localStorage.getItem('user'));
         setUserDetails(user);
         setEditedName(user.name);
@@ -40,7 +72,6 @@ const UserDetailsCard = () => {
         setIsEditing(false);
     };
 
-    const token = localStorage.getItem("token");
 
     // Event handler for saving the edited data to the API
     const handleSave = () => {
@@ -53,7 +84,6 @@ const UserDetailsCard = () => {
             city: editedCity,
         };
 
-        const userId = JSON.parse(localStorage.getItem('user'))._id;
 
         fetch(`${BASE_URL}/userdetails/single-user/${userId}`, {
             method: 'PUT',
@@ -65,7 +95,6 @@ const UserDetailsCard = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                // Handle the API response here
                 if (data.success) {
                     setUserDetails(data.user);
                     localStorage.setItem("user", JSON.stringify(data.user));
@@ -188,7 +217,7 @@ const UserDetailsCard = () => {
                                     Subscription Date: {formatDate(userDetails?.subscription?.date)}
                                 </p>
                                 {(userDetails?.subscription.type == 'One State Plan') ? <p className="mt-2 text-gray-600">
-                                    State: {formatDate(userDetails?.subscription?.state)}
+                                    State: {userDetails?.subscription?.state}
                                 </p> : <></>}
                             </>
                         }

@@ -87,6 +87,7 @@ const Footer = () => {
                       alt="Email Icon"
                       width={20}
                       height={20}
+                      loading="lazy"
                     />
                   </span>
                   hi@tenderbig.in
@@ -98,6 +99,7 @@ const Footer = () => {
                       alt="Call Icon"
                       width={20}
                       height={20}
+                      loading="lazy"
                     />
                   </span>
                   +91-3453574072
@@ -109,7 +111,7 @@ const Footer = () => {
                       alt="Adress"
                       width={20}
                       height={20}
-                      className=""
+                      loading="lazy"
                     />
                     <p className="ml-1">S-30, 2nd floor Dwarika tower</p>
                     </div>
@@ -133,6 +135,7 @@ const Footer = () => {
                     alt="LinkedIn Icon"
                     width={32}
                     height={32}
+                    loading="lazy"
                   />
                 </a>
                 <a
@@ -145,6 +148,7 @@ const Footer = () => {
                     alt="Instagram Icon"
                     width={32}
                     height={32}
+                    loading="lazy"
                   />
                 </a>
                 <a
@@ -157,6 +161,7 @@ const Footer = () => {
                     alt="Facebook Icon"
                     width={32}
                     height={32}
+                    loading="lazy"
                   />
                 </a>
                 <a
@@ -169,6 +174,7 @@ const Footer = () => {
                     alt="Telegram Icon"
                     width={32}
                     height={32}
+                    loading="lazy"
                   />
                 </a>
                 <a
@@ -181,6 +187,7 @@ const Footer = () => {
                     alt="WhatsApp Icon"
                     width={32}
                     height={32}
+                    loading="lazy"
                   />
                 </a>
               </div>

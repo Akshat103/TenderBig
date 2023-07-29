@@ -11,7 +11,7 @@ export default function Gems() {
 
     <div className=' relative h-auto md:h-[600px] w-full my-10'>
     
-    <img src={GemsImg} alt="gems_img" className=" h-auto md:h-[600px] w-full my-10" />
+    <img src={GemsImg} alt="gems_img" className=" h-auto md:h-[600px] w-full my-10" loading="lazy" />
     </div>
     <div className='grid w-full h-full grid-cols-1 md:grid-cols-2 gap-8'>
 

@@ -11,6 +11,7 @@ const TenderCard = ({ sectorName, sectorData }) => {
           src={sectorData[0]}
           alt="Sector Image"
           className="mb-4 w-[300px] h-[200px]"
+          loading="lazy"
         />
         
         <ul className="list-disc ml-6">

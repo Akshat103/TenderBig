@@ -15,18 +15,7 @@ export default defineConfig({
         entryFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash][extname]',
         // Manually configure the chunks to optimize code-sharing
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            // Group all third-party modules into a vendor chunk
-            return 'vendor';
-          }
-          if (id.includes('components/')) {
-            // Group components into separate chunks
-            return 'components';
-          }
-          // Return null for all other modules to use the default chunk
-          return null;
-        },
+        manualChunks: undefined,
       },
     },
   },

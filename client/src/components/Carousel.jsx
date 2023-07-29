@@ -46,6 +46,7 @@ export default function SimpleSlider() {
               className="w-full h-80"
               src={imageUrl}
               alt={`Slider Image ${index + 1}`}
+              loading="lazy"
             />
           </div>
         ))}

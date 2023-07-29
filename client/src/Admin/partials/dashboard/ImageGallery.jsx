@@ -52,6 +52,7 @@ const headers = {
               className="w-full h-80 object-cover rounded-lg"
               src={`${location}/${imageUrl}`}
               alt={`Image ${index + 1}`}
+              loading="lazy"
             />
             <button
               onClick={() => handleImageDelete(imageUrl)}

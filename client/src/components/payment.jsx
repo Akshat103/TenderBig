@@ -1,7 +1,26 @@
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
+let razorpayScriptLoaded = false;
+
+const loadRazorpayScript = () => {
+    if (!razorpayScriptLoaded) {
+        const script = document.createElement("script");
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.async = true;
+        script.onload = () => {
+            razorpayScriptLoaded = true;
+        };
+        document.head.appendChild(script);
+    }
+};
+
 const payment = async (amount, receipt, subscription = false, planType, state, userId) => {
+
+    if (!razorpayScriptLoaded) {
+        loadRazorpayScript();
+    }
+
     const token = localStorage.getItem('token');
 
     const headers = {

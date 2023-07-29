@@ -65,6 +65,7 @@ const Login = () => {
                         <img className="w-80"
                             src={`${import.meta.env.BASE_URL}illustartion/login.svg`}
                             alt="login"
+                            loading="lazy"
                         />
                     </div>
                     <div className="w-full m-2 md:w-1/2">

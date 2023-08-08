@@ -174,7 +174,6 @@ const GemListing = () => {
           auth: token,
         };
 
-
         const response = await axios.post(searchUrl, { details: detailsArray }, { headers });
         console.log(response, "gems");
         if (response.status === 401) {

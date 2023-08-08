@@ -51,6 +51,10 @@ const jointventureSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+<<<<<<< HEAD
 const jointventureForm = mongoose.model('Joint-Venture-Form', jointventureSchema);
+=======
+const jointventureForm = mongoose.model('Joint-Venture', jointventureSchema);
+>>>>>>> 714f0838f679a43e8a3b4d00afb4f47ee5a74a3c
 
 module.exports = jointventureForm;

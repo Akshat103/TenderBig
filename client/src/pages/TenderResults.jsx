@@ -20,7 +20,6 @@ const TenderCard = ({ title,country,Authority,TendorNo,description,userCategory,
 
   console.log(tenderId);
 
-
   return (
     <div className="bg-white shadow-lg rounded p-6 mb-4 border-[2px] border-black/20">
       <div className="flex justify-between">

@@ -295,7 +295,6 @@ const ProjectList = () => {
         </div>
 
 
-
         <div className="col-span-2">
           {currentProjects.length > 0 ? (
             <div className="grid gap-4">

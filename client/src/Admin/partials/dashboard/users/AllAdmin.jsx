@@ -249,7 +249,6 @@ function AllAdmin() {
               </section>
             </div>
           </div>
-
   );
 }
 

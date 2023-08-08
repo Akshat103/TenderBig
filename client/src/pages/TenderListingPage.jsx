@@ -312,7 +312,6 @@ const TenderListingPage = () => {
                 </select>
               </div>
 
-
               <div className="mb-4 border-[2px] border-black/20 shadow-xl mt-8">
                 <label
                   htmlFor="region"
@@ -348,7 +347,6 @@ const TenderListingPage = () => {
                 >
                   Tenders By
                 </label>
-
                 <select
                   id="tenderby"
                   name="tenderby"

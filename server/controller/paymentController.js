@@ -50,7 +50,6 @@ module.exports.buySubscription = async (req, res) => {
         },
         { new: true }
     );
-
     return res.status(201).json({
         success: true,
         subscription

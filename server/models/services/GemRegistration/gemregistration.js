@@ -53,6 +53,10 @@ const gemregistrationSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+<<<<<<< HEAD
 const gemregistrationForm = mongoose.model("Gem-Registration-Form", gemregistrationSchema);
+=======
+const gemregistrationForm = mongoose.model("Gem-Registration", gemregistrationSchema);
+>>>>>>> 714f0838f679a43e8a3b4d00afb4f47ee5a74a3c
 
 module.exports = gemregistrationForm;

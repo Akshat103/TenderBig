@@ -42,6 +42,10 @@ const seekerModelSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+<<<<<<< HEAD
 const SeekerForm = mongoose.model("Seeker-Form", seekerModelSchema);
+=======
+const SeekerForm = mongoose.model("Seeker", seekerModelSchema);
+>>>>>>> 714f0838f679a43e8a3b4d00afb4f47ee5a74a3c
 
 module.exports = SeekerForm;

@@ -203,7 +203,6 @@ const CurrentTenders = () => {
                 </div>
               </section>
             </div>
-
   );
 };
 

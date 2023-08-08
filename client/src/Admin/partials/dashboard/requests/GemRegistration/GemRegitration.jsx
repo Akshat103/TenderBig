@@ -123,7 +123,6 @@ const GemRegistration = () => {
 
   const downloadAsPDF = () => {
     const doc = new jsPDF("p", "mm", "a4"); // Set page size to A4
-
     const tableData = forms
       .slice((currentPage - 1) * formsPerPage, currentPage * formsPerPage)
       .map((form) => ({
@@ -143,7 +142,6 @@ const GemRegistration = () => {
         "City": form.city,
         "ZIP Code": form.zip,
       }));
-
     const tableConfig = {
       head: [
         [

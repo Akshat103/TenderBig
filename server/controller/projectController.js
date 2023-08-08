@@ -41,7 +41,6 @@ async function updateProjectById(req, res) {
 
   const formId = req.params.id;
   const updatedForm = req.body;
-
   try {
     const result = await Project.findByIdAndUpdate(formId, updatedForm, { new: true });
     if (!result) {

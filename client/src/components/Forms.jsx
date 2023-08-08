@@ -666,7 +666,6 @@ const TenderForm = () => {
                     Procurement Summary
                   </h2>
                   <div className="grid grid-cols-2 gap-4">
-
                     <label className="block font-semibold">
                       Country
                       <span className="relative top-0 right-0 text-red-700">
